@@ -2,6 +2,7 @@
 
 ## Developed by:
 Aadil Ahmad
+Kristupas Jakubonis
 
 Madasar Shah for the team project
 
