@@ -1,6 +1,7 @@
 # teamproject
 
 ## Developed by:
+Aadil Ahmad
 
 Madasar Shah for the team project
 
