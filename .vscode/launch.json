@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-TeamprojectApp<teamproject>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "uk.ac.bham.teamproject.TeamprojectApp",
+            "projectName": "teamproject",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
