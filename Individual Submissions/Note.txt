@@ -1,0 +1,4 @@
+After submission, you must share your individual work with your team.
+You can upload your work to the Files section of your team on Canvas,
+or use any other way (e.g. OneDrive, git), so your team has access to everyone's contribution.
+You can share the source files/documents used to create your submission the same way.
