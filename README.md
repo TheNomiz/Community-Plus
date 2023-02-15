@@ -1,6 +1,8 @@
 # teamproject
 
 ## Developed by:
+Zeerak Pervez
+
 Aadil Ahmad
 
 Kristupas Jakubonis
