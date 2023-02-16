@@ -1,6 +1,6 @@
 {
   "global": {
-    "title": "Teamproject",
+    "title": "Community+",
     "browsehappy": "You are using an <strong>outdated</strong> browser. Please <a href=\"http://browsehappy.com/?locale=en\">upgrade your browser</a> to improve your experience.",
     "menu": {
       "home": "Home",
@@ -10,7 +10,7 @@
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {
-        "main": "Account",
+        "main": "Profile",
         "settings": "Settings",
         "password": "Password",
         "sessions": "Sessions",
