@@ -295,6 +295,12 @@
             <artifactId>metrics-core</artifactId>
         </dependency>
         <!-- jhipster-needle-maven-add-dependency -->
+    
+      <dependency>
+        <groupId>com.dimafeng</groupId>
+        <artifactId>testcontainers-scala-postgresql_3</artifactId>
+        <version>0.40.12</version>
+      </dependency>
     </dependencies>
 
     <build>
