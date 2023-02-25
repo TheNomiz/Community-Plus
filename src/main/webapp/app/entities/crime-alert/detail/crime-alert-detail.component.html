@@ -1,0 +1,48 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="crimeAlert">
+      <h2 data-cy="crimeAlertDetailsHeading"><span jhiTranslate="teamprojectApp.crimeAlert.detail.title">Crime Alert</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ crimeAlert.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="teamprojectApp.crimeAlert.title">Title</span></dt>
+        <dd>
+          <span>{{ crimeAlert.title }}</span>
+        </dd>
+        <dt><span jhiTranslate="teamprojectApp.crimeAlert.description">Description</span></dt>
+        <dd>
+          <span>{{ crimeAlert.description }}</span>
+        </dd>
+        <dt><span jhiTranslate="teamprojectApp.crimeAlert.date">Date</span></dt>
+        <dd>
+          <span>{{ crimeAlert.date | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="teamprojectApp.crimeAlert.lat">Lat</span></dt>
+        <dd>
+          <span>{{ crimeAlert.lat }}</span>
+        </dd>
+        <dt><span jhiTranslate="teamprojectApp.crimeAlert.lon">Lon</span></dt>
+        <dd>
+          <span>{{ crimeAlert.lon }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/crime-alert', crimeAlert.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

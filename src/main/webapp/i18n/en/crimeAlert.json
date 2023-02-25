@@ -1,0 +1,28 @@
+{
+  "teamprojectApp": {
+    "crimeAlert": {
+      "home": {
+        "title": "Crime Alerts",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Crime Alert",
+        "createOrEditLabel": "Create or edit a Crime Alert",
+        "notFound": "No Crime Alerts found"
+      },
+      "created": "A new Crime Alert is created with identifier {{ param }}",
+      "updated": "A Crime Alert is updated with identifier {{ param }}",
+      "deleted": "A Crime Alert is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Crime Alert {{ id }}?"
+      },
+      "detail": {
+        "title": "Crime Alert"
+      },
+      "id": "ID",
+      "title": "Title",
+      "description": "Description",
+      "date": "Date",
+      "lat": "Lat",
+      "lon": "Lon"
+    }
+  }
+}
