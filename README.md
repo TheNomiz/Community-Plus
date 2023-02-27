@@ -1,6 +1,7 @@
 # teamproject
 
 ## Developed by:
+
 Zeerak Pervez
 
 Aadil Ahmad
@@ -13,6 +14,8 @@ Meghna Jagadeesh
 
 Mohammed Ismail Mahroof
 Test
+
+Lakhminder Test
 
 Madasar Shah for the team project
 
