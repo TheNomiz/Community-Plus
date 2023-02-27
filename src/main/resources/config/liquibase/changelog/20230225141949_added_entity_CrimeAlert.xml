@@ -14,20 +14,23 @@
             <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="title" type="varchar(255)">
-                <constraints nullable="true" />
+            <column name="title" type="varchar(30)">
+                <constraints nullable="false" />
             </column>
             <column name="description" type="varchar(255)">
-                <constraints nullable="true" />
+                <constraints nullable="false" />
+            </column>
+            <column name="lat" type="decimal(21,2)">
+                <constraints nullable="false" />
+            </column>
+            <column name="lon" type="decimal(21,2)">
+                <constraints nullable="false" />
             </column>
             <column name="date" type="${datetimeType}">
                 <constraints nullable="false" />
             </column>
-            <column name="lat" type="decimal(21,2)">
-                <constraints nullable="true" />
-            </column>
-            <column name="lon" type="decimal(21,2)">
-                <constraints nullable="true" />
+            <column name="postedby_id" type="bigint">
+                <constraints nullable="false" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
@@ -53,9 +56,10 @@
             <column name="id" type="numeric"/>
             <column name="title" type="string"/>
             <column name="description" type="string"/>
-            <column name="date" type="date"/>
             <column name="lat" type="numeric"/>
             <column name="lon" type="numeric"/>
+            <column name="date" type="date"/>
+            <column name="postedby_id" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

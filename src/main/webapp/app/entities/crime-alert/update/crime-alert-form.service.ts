@@ -33,9 +33,10 @@ type CrimeAlertFormGroupContent = {
   id: FormControl<CrimeAlertFormRawValue['id'] | NewCrimeAlert['id']>;
   title: FormControl<CrimeAlertFormRawValue['title']>;
   description: FormControl<CrimeAlertFormRawValue['description']>;
-  date: FormControl<CrimeAlertFormRawValue['date']>;
   lat: FormControl<CrimeAlertFormRawValue['lat']>;
   lon: FormControl<CrimeAlertFormRawValue['lon']>;
+  date: FormControl<CrimeAlertFormRawValue['date']>;
+  postedby: FormControl<CrimeAlertFormRawValue['postedby']>;
 };
 
 export type CrimeAlertFormGroup = FormGroup<CrimeAlertFormGroupContent>;
@@ -55,13 +56,24 @@ export class CrimeAlertFormService {
           validators: [Validators.required],
         }
       ),
-      title: new FormControl(crimeAlertRawValue.title),
-      description: new FormControl(crimeAlertRawValue.description),
+      title: new FormControl(crimeAlertRawValue.title, {
+        validators: [Validators.required, Validators.minLength(3), Validators.maxLength(30)],
+      }),
+      description: new FormControl(crimeAlertRawValue.description, {
+        validators: [Validators.required, Validators.minLength(20)],
+      }),
+      lat: new FormControl(crimeAlertRawValue.lat, {
+        validators: [Validators.required],
+      }),
+      lon: new FormControl(crimeAlertRawValue.lon, {
+        validators: [Validators.required],
+      }),
       date: new FormControl(crimeAlertRawValue.date, {
         validators: [Validators.required],
       }),
-      lat: new FormControl(crimeAlertRawValue.lat),
-      lon: new FormControl(crimeAlertRawValue.lon),
+      postedby: new FormControl(crimeAlertRawValue.postedby, {
+        validators: [Validators.required],
+      }),
     });
   }
 

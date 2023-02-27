@@ -27,11 +27,13 @@ public class CrimeAlertCriteria implements Serializable, Criteria {
 
     private StringFilter description;
 
-    private InstantFilter date;
-
     private BigDecimalFilter lat;
 
     private BigDecimalFilter lon;
+
+    private InstantFilter date;
+
+    private LongFilter postedbyId;
 
     private Boolean distinct;
 
@@ -41,9 +43,10 @@ public class CrimeAlertCriteria implements Serializable, Criteria {
         this.id = other.id == null ? null : other.id.copy();
         this.title = other.title == null ? null : other.title.copy();
         this.description = other.description == null ? null : other.description.copy();
-        this.date = other.date == null ? null : other.date.copy();
         this.lat = other.lat == null ? null : other.lat.copy();
         this.lon = other.lon == null ? null : other.lon.copy();
+        this.date = other.date == null ? null : other.date.copy();
+        this.postedbyId = other.postedbyId == null ? null : other.postedbyId.copy();
         this.distinct = other.distinct;
     }
 
@@ -97,21 +100,6 @@ public class CrimeAlertCriteria implements Serializable, Criteria {
         this.description = description;
     }
 
-    public InstantFilter getDate() {
-        return date;
-    }
-
-    public InstantFilter date() {
-        if (date == null) {
-            date = new InstantFilter();
-        }
-        return date;
-    }
-
-    public void setDate(InstantFilter date) {
-        this.date = date;
-    }
-
     public BigDecimalFilter getLat() {
         return lat;
     }
@@ -142,6 +130,36 @@ public class CrimeAlertCriteria implements Serializable, Criteria {
         this.lon = lon;
     }
 
+    public InstantFilter getDate() {
+        return date;
+    }
+
+    public InstantFilter date() {
+        if (date == null) {
+            date = new InstantFilter();
+        }
+        return date;
+    }
+
+    public void setDate(InstantFilter date) {
+        this.date = date;
+    }
+
+    public LongFilter getPostedbyId() {
+        return postedbyId;
+    }
+
+    public LongFilter postedbyId() {
+        if (postedbyId == null) {
+            postedbyId = new LongFilter();
+        }
+        return postedbyId;
+    }
+
+    public void setPostedbyId(LongFilter postedbyId) {
+        this.postedbyId = postedbyId;
+    }
+
     public Boolean getDistinct() {
         return distinct;
     }
@@ -163,16 +181,17 @@ public class CrimeAlertCriteria implements Serializable, Criteria {
             Objects.equals(id, that.id) &&
             Objects.equals(title, that.title) &&
             Objects.equals(description, that.description) &&
-            Objects.equals(date, that.date) &&
             Objects.equals(lat, that.lat) &&
             Objects.equals(lon, that.lon) &&
+            Objects.equals(date, that.date) &&
+            Objects.equals(postedbyId, that.postedbyId) &&
             Objects.equals(distinct, that.distinct)
         );
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, description, date, lat, lon, distinct);
+        return Objects.hash(id, title, description, lat, lon, date, postedbyId, distinct);
     }
 
     // prettier-ignore
@@ -182,9 +201,10 @@ public class CrimeAlertCriteria implements Serializable, Criteria {
             (id != null ? "id=" + id + ", " : "") +
             (title != null ? "title=" + title + ", " : "") +
             (description != null ? "description=" + description + ", " : "") +
-            (date != null ? "date=" + date + ", " : "") +
             (lat != null ? "lat=" + lat + ", " : "") +
             (lon != null ? "lon=" + lon + ", " : "") +
+            (date != null ? "date=" + date + ", " : "") +
+            (postedbyId != null ? "postedbyId=" + postedbyId + ", " : "") +
             (distinct != null ? "distinct=" + distinct + ", " : "") +
             "}";
     }

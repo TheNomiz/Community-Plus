@@ -15,19 +15,44 @@ describe('CrimeAlert e2e test', () => {
   const crimeAlertPageUrlPattern = new RegExp('/crime-alert(\\?.*)?$');
   const username = Cypress.env('E2E_USERNAME') ?? 'user';
   const password = Cypress.env('E2E_PASSWORD') ?? 'user';
-  const crimeAlertSample = { date: '2023-02-24T23:33:46.800Z' };
+  // const crimeAlertSample = {"title":"policy systems","description":"ElectronicsXXXXXXXXX","lat":43045,"lon":23324,"date":"2023-02-25T01:57:46.819Z"};
 
   let crimeAlert;
+  // let user;
 
   beforeEach(() => {
     cy.login(username, password);
   });
+
+  /* Disabled due to incompatibility
+  beforeEach(() => {
+    // create an instance at the required relationship entity:
+    cy.authenticatedRequest({
+      method: 'POST',
+      url: '/api/users',
+      body: {"login":"synthesizing Berkshire","firstName":"Jaida","lastName":"Wiegand"},
+    }).then(({ body }) => {
+      user = body;
+    });
+  });
+   */
 
   beforeEach(() => {
     cy.intercept('GET', '/api/crime-alerts+(?*|)').as('entitiesRequest');
     cy.intercept('POST', '/api/crime-alerts').as('postEntityRequest');
     cy.intercept('DELETE', '/api/crime-alerts/*').as('deleteEntityRequest');
   });
+
+  /* Disabled due to incompatibility
+  beforeEach(() => {
+    // Simulate relationships api for better performance and reproducibility.
+    cy.intercept('GET', '/api/users', {
+      statusCode: 200,
+      body: [user],
+    });
+
+  });
+   */
 
   afterEach(() => {
     if (crimeAlert) {
@@ -39,6 +64,19 @@ describe('CrimeAlert e2e test', () => {
       });
     }
   });
+
+  /* Disabled due to incompatibility
+  afterEach(() => {
+    if (user) {
+      cy.authenticatedRequest({
+        method: 'DELETE',
+        url: `/api/users/${user.id}`,
+      }).then(() => {
+        user = undefined;
+      });
+    }
+  });
+   */
 
   it('CrimeAlerts menu should load CrimeAlerts page', () => {
     cy.visit('/');
@@ -75,11 +113,15 @@ describe('CrimeAlert e2e test', () => {
     });
 
     describe('with existing value', () => {
+      /* Disabled due to incompatibility
       beforeEach(() => {
         cy.authenticatedRequest({
           method: 'POST',
           url: '/api/crime-alerts',
-          body: crimeAlertSample,
+          body: {
+            ...crimeAlertSample,
+            postedby: user,
+          },
         }).then(({ body }) => {
           crimeAlert = body;
 
@@ -102,6 +144,17 @@ describe('CrimeAlert e2e test', () => {
         cy.visit(crimeAlertPageUrl);
 
         cy.wait('@entitiesRequestInternal');
+      });
+       */
+
+      beforeEach(function () {
+        cy.visit(crimeAlertPageUrl);
+
+        cy.wait('@entitiesRequest').then(({ response }) => {
+          if (response.body.length === 0) {
+            this.skip();
+          }
+        });
       });
 
       it('detail button click should load details CrimeAlert page', () => {
@@ -135,7 +188,7 @@ describe('CrimeAlert e2e test', () => {
         cy.url().should('match', crimeAlertPageUrlPattern);
       });
 
-      it('last delete button click should delete instance of CrimeAlert', () => {
+      it.skip('last delete button click should delete instance of CrimeAlert', () => {
         cy.get(entityDeleteButtonSelector).last().click();
         cy.getEntityDeleteDialogHeading('crimeAlert').should('exist');
         cy.get(entityConfirmDeleteButtonSelector).click();
@@ -159,16 +212,18 @@ describe('CrimeAlert e2e test', () => {
       cy.getEntityCreateUpdateHeading('CrimeAlert');
     });
 
-    it('should create an instance of CrimeAlert', () => {
+    it.skip('should create an instance of CrimeAlert', () => {
       cy.get(`[data-cy="title"]`).type('Salad').should('have.value', 'Salad');
 
-      cy.get(`[data-cy="description"]`).type('Handmade Guyana').should('have.value', 'Handmade Guyana');
+      cy.get(`[data-cy="description"]`).type('Handmade GuyanaXXXXX').should('have.value', 'Handmade GuyanaXXXXX');
 
-      cy.get(`[data-cy="date"]`).type('2023-02-25T00:02').blur().should('have.value', '2023-02-25T00:02');
+      cy.get(`[data-cy="lat"]`).type('59560').should('have.value', '59560');
 
-      cy.get(`[data-cy="lat"]`).type('15295').should('have.value', '15295');
+      cy.get(`[data-cy="lon"]`).type('15295').should('have.value', '15295');
 
-      cy.get(`[data-cy="lon"]`).type('14221').should('have.value', '14221');
+      cy.get(`[data-cy="date"]`).type('2023-02-25T10:55').blur().should('have.value', '2023-02-25T10:55');
+
+      cy.get(`[data-cy="postedby"]`).select(1);
 
       cy.get(entityCreateSaveButtonSelector).click();
 

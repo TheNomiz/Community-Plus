@@ -5,31 +5,46 @@
     {
       "fieldName": "title",
       "fieldType": "String",
-      "fieldValidateRules": []
+      "fieldValidateRules": ["required", "minlength", "maxlength"],
+      "fieldValidateRulesMaxlength": "30",
+      "fieldValidateRulesMinlength": "3"
     },
     {
       "fieldName": "description",
       "fieldType": "String",
-      "fieldValidateRules": []
+      "fieldValidateRules": ["required", "minlength"],
+      "fieldValidateRulesMinlength": "20"
+    },
+    {
+      "fieldName": "lat",
+      "fieldType": "BigDecimal",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "lon",
+      "fieldType": "BigDecimal",
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "date",
       "fieldType": "Instant",
       "fieldValidateRules": ["required"]
-    },
-    {
-      "fieldName": "lat",
-      "fieldType": "BigDecimal"
-    },
-    {
-      "fieldName": "lon",
-      "fieldType": "BigDecimal"
     }
   ],
   "jpaMetamodelFiltering": true,
   "name": "CrimeAlert",
   "pagination": "infinite-scroll",
   "readOnly": false,
-  "relationships": [],
+  "relationships": [
+    {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "crimeAlert",
+      "ownerSide": true,
+      "relationshipName": "postedby",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": ["required"]
+    }
+  ],
   "service": "serviceImpl"
 }

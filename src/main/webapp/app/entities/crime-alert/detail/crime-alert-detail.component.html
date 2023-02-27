@@ -22,10 +22,6 @@
         <dd>
           <span>{{ crimeAlert.description }}</span>
         </dd>
-        <dt><span jhiTranslate="teamprojectApp.crimeAlert.date">Date</span></dt>
-        <dd>
-          <span>{{ crimeAlert.date | formatMediumDatetime }}</span>
-        </dd>
         <dt><span jhiTranslate="teamprojectApp.crimeAlert.lat">Lat</span></dt>
         <dd>
           <span>{{ crimeAlert.lat }}</span>
@@ -33,6 +29,14 @@
         <dt><span jhiTranslate="teamprojectApp.crimeAlert.lon">Lon</span></dt>
         <dd>
           <span>{{ crimeAlert.lon }}</span>
+        </dd>
+        <dt><span jhiTranslate="teamprojectApp.crimeAlert.date">Date</span></dt>
+        <dd>
+          <span>{{ crimeAlert.date | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="teamprojectApp.crimeAlert.postedby">Postedby</span></dt>
+        <dd>
+          <span>{{ crimeAlert.postedby?.login }}</span>
         </dd>
       </dl>
 

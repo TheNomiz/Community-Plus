@@ -20,9 +20,10 @@
       "id": "ID",
       "title": "Title",
       "description": "Description",
-      "date": "Date",
       "lat": "Lat",
-      "lon": "Lon"
+      "lon": "Lon",
+      "date": "Date",
+      "postedby": "Postedby"
     }
   }
 }

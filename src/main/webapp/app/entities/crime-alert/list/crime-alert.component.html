@@ -50,12 +50,6 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" jhiSortBy="date">
-            <div class="d-flex">
-              <span jhiTranslate="teamprojectApp.crimeAlert.date">Date</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
           <th scope="col" jhiSortBy="lat">
             <div class="d-flex">
               <span jhiTranslate="teamprojectApp.crimeAlert.lat">Lat</span>
@@ -65,6 +59,18 @@
           <th scope="col" jhiSortBy="lon">
             <div class="d-flex">
               <span jhiTranslate="teamprojectApp.crimeAlert.lon">Lon</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="date">
+            <div class="d-flex">
+              <span jhiTranslate="teamprojectApp.crimeAlert.date">Date</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="postedby.login">
+            <div class="d-flex">
+              <span jhiTranslate="teamprojectApp.crimeAlert.postedby">Postedby</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
@@ -83,9 +89,12 @@
           </td>
           <td>{{ crimeAlert.title }}</td>
           <td>{{ crimeAlert.description }}</td>
-          <td>{{ crimeAlert.date | formatMediumDatetime }}</td>
           <td>{{ crimeAlert.lat }}</td>
           <td>{{ crimeAlert.lon }}</td>
+          <td>{{ crimeAlert.date | formatMediumDatetime }}</td>
+          <td>
+            {{ crimeAlert.postedby?.login }}
+          </td>
           <td class="text-end">
             <div class="btn-group">
               <button
@@ -103,12 +112,19 @@
                 [routerLink]="['/crime-alert', crimeAlert.id, 'edit']"
                 class="btn btn-primary btn-sm"
                 data-cy="entityEditButton"
+                *ngIf="accountService.hasAnyAuthority(['ROLE_ADMIN'])"
               >
                 <fa-icon icon="pencil-alt"></fa-icon>
                 <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
               </button>
 
-              <button type="submit" (click)="delete(crimeAlert)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+              <button
+                type="submit"
+                (click)="delete(crimeAlert)"
+                class="btn btn-danger btn-sm"
+                data-cy="entityDeleteButton"
+                *ngIf="accountService.hasAnyAuthority(['ROLE_ADMIN'])"
+              >
                 <fa-icon icon="times"></fa-icon>
                 <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
               </button>

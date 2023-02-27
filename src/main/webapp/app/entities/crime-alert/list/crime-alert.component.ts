@@ -11,6 +11,7 @@ import { ASC, DESC, SORT, ITEM_DELETED_EVENT, DEFAULT_SORT_DATA } from 'app/conf
 import { EntityArrayResponseType, CrimeAlertService } from '../service/crime-alert.service';
 import { CrimeAlertDeleteDialogComponent } from '../delete/crime-alert-delete-dialog.component';
 import { ParseLinks } from 'app/core/util/parse-links.service';
+import { AccountService } from 'app/core/auth/account.service';
 
 @Component({
   selector: 'jhi-crime-alert',
@@ -34,7 +35,8 @@ export class CrimeAlertComponent implements OnInit {
     protected activatedRoute: ActivatedRoute,
     public router: Router,
     protected parseLinks: ParseLinks,
-    protected modalService: NgbModal
+    protected modalService: NgbModal,
+    protected accountService: AccountService
   ) {}
 
   reset(): void {
@@ -134,6 +136,7 @@ export class CrimeAlertComponent implements OnInit {
     const queryObject = {
       page: pageToLoad - 1,
       size: this.itemsPerPage,
+      eagerload: true,
       sort: this.getSortQueryParam(predicate, ascending),
     };
     return this.crimeAlertService.query(queryObject).pipe(tap(() => (this.isLoading = false)));

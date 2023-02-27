@@ -96,14 +96,20 @@ public class CrimeAlertQueryService extends QueryService<CrimeAlert> {
             if (criteria.getDescription() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getDescription(), CrimeAlert_.description));
             }
-            if (criteria.getDate() != null) {
-                specification = specification.and(buildRangeSpecification(criteria.getDate(), CrimeAlert_.date));
-            }
             if (criteria.getLat() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getLat(), CrimeAlert_.lat));
             }
             if (criteria.getLon() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getLon(), CrimeAlert_.lon));
+            }
+            if (criteria.getDate() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getDate(), CrimeAlert_.date));
+            }
+            if (criteria.getPostedbyId() != null) {
+                specification =
+                    specification.and(
+                        buildSpecification(criteria.getPostedbyId(), root -> root.join(CrimeAlert_.postedby, JoinType.LEFT).get(User_.id))
+                    );
             }
         }
         return specification;

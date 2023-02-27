@@ -25,21 +25,31 @@ public class CrimeAlert implements Serializable {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "title")
+    @NotNull
+    @Size(min = 3, max = 30)
+    @Column(name = "title", length = 30, nullable = false)
     private String title;
 
-    @Column(name = "description")
+    @NotNull
+    @Size(min = 20)
+    @Column(name = "description", nullable = false)
     private String description;
+
+    @NotNull
+    @Column(name = "lat", precision = 21, scale = 2, nullable = false)
+    private BigDecimal lat;
+
+    @NotNull
+    @Column(name = "lon", precision = 21, scale = 2, nullable = false)
+    private BigDecimal lon;
 
     @NotNull
     @Column(name = "date", nullable = false)
     private Instant date;
 
-    @Column(name = "lat", precision = 21, scale = 2)
-    private BigDecimal lat;
-
-    @Column(name = "lon", precision = 21, scale = 2)
-    private BigDecimal lon;
+    @ManyToOne(optional = false)
+    @NotNull
+    private User postedby;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -82,19 +92,6 @@ public class CrimeAlert implements Serializable {
         this.description = description;
     }
 
-    public Instant getDate() {
-        return this.date;
-    }
-
-    public CrimeAlert date(Instant date) {
-        this.setDate(date);
-        return this;
-    }
-
-    public void setDate(Instant date) {
-        this.date = date;
-    }
-
     public BigDecimal getLat() {
         return this.lat;
     }
@@ -119,6 +116,32 @@ public class CrimeAlert implements Serializable {
 
     public void setLon(BigDecimal lon) {
         this.lon = lon;
+    }
+
+    public Instant getDate() {
+        return this.date;
+    }
+
+    public CrimeAlert date(Instant date) {
+        this.setDate(date);
+        return this;
+    }
+
+    public void setDate(Instant date) {
+        this.date = date;
+    }
+
+    public User getPostedby() {
+        return this.postedby;
+    }
+
+    public void setPostedby(User user) {
+        this.postedby = user;
+    }
+
+    public CrimeAlert postedby(User user) {
+        this.setPostedby(user);
+        return this;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
@@ -147,9 +170,9 @@ public class CrimeAlert implements Serializable {
             "id=" + getId() +
             ", title='" + getTitle() + "'" +
             ", description='" + getDescription() + "'" +
-            ", date='" + getDate() + "'" +
             ", lat=" + getLat() +
             ", lon=" + getLon() +
+            ", date='" + getDate() + "'" +
             "}";
     }
 }

@@ -69,11 +69,15 @@ public class CrimeAlertServiceImpl implements CrimeAlertService {
         return crimeAlertRepository.findAll(pageable).map(crimeAlertMapper::toDto);
     }
 
+    public Page<CrimeAlertDTO> findAllWithEagerRelationships(Pageable pageable) {
+        return crimeAlertRepository.findAllWithEagerRelationships(pageable).map(crimeAlertMapper::toDto);
+    }
+
     @Override
     @Transactional(readOnly = true)
     public Optional<CrimeAlertDTO> findOne(Long id) {
         log.debug("Request to get CrimeAlert : {}", id);
-        return crimeAlertRepository.findById(id).map(crimeAlertMapper::toDto);
+        return crimeAlertRepository.findOneWithEagerRelationships(id).map(crimeAlertMapper::toDto);
     }
 
     @Override

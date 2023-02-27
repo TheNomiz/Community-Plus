@@ -42,6 +42,14 @@ public interface CrimeAlertService {
     Page<CrimeAlertDTO> findAll(Pageable pageable);
 
     /**
+     * Get all the crimeAlerts with eager load of many-to-many relationships.
+     *
+     * @param pageable the pagination information.
+     * @return the list of entities.
+     */
+    Page<CrimeAlertDTO> findAllWithEagerRelationships(Pageable pageable);
+
+    /**
      * Get the "id" crimeAlert.
      *
      * @param id the id of the entity.

@@ -10,6 +10,9 @@ import { CrimeAlertFormService } from './crime-alert-form.service';
 import { CrimeAlertService } from '../service/crime-alert.service';
 import { ICrimeAlert } from '../crime-alert.model';
 
+import { IUser } from 'app/entities/user/user.model';
+import { UserService } from 'app/entities/user/user.service';
+
 import { CrimeAlertUpdateComponent } from './crime-alert-update.component';
 
 describe('CrimeAlert Management Update Component', () => {
@@ -18,6 +21,7 @@ describe('CrimeAlert Management Update Component', () => {
   let activatedRoute: ActivatedRoute;
   let crimeAlertFormService: CrimeAlertFormService;
   let crimeAlertService: CrimeAlertService;
+  let userService: UserService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -40,17 +44,43 @@ describe('CrimeAlert Management Update Component', () => {
     activatedRoute = TestBed.inject(ActivatedRoute);
     crimeAlertFormService = TestBed.inject(CrimeAlertFormService);
     crimeAlertService = TestBed.inject(CrimeAlertService);
+    userService = TestBed.inject(UserService);
 
     comp = fixture.componentInstance;
   });
 
   describe('ngOnInit', () => {
-    it('Should update editForm', () => {
+    it('Should call User query and add missing value', () => {
       const crimeAlert: ICrimeAlert = { id: 456 };
+      const postedby: IUser = { id: 4198 };
+      crimeAlert.postedby = postedby;
+
+      const userCollection: IUser[] = [{ id: 92048 }];
+      jest.spyOn(userService, 'query').mockReturnValue(of(new HttpResponse({ body: userCollection })));
+      const additionalUsers = [postedby];
+      const expectedCollection: IUser[] = [...additionalUsers, ...userCollection];
+      jest.spyOn(userService, 'addUserToCollectionIfMissing').mockReturnValue(expectedCollection);
 
       activatedRoute.data = of({ crimeAlert });
       comp.ngOnInit();
 
+      expect(userService.query).toHaveBeenCalled();
+      expect(userService.addUserToCollectionIfMissing).toHaveBeenCalledWith(
+        userCollection,
+        ...additionalUsers.map(expect.objectContaining)
+      );
+      expect(comp.usersSharedCollection).toEqual(expectedCollection);
+    });
+
+    it('Should update editForm', () => {
+      const crimeAlert: ICrimeAlert = { id: 456 };
+      const postedby: IUser = { id: 45094 };
+      crimeAlert.postedby = postedby;
+
+      activatedRoute.data = of({ crimeAlert });
+      comp.ngOnInit();
+
+      expect(comp.usersSharedCollection).toContain(postedby);
       expect(comp.crimeAlert).toEqual(crimeAlert);
     });
   });
@@ -120,6 +150,18 @@ describe('CrimeAlert Management Update Component', () => {
       expect(crimeAlertService.update).toHaveBeenCalled();
       expect(comp.isSaving).toEqual(false);
       expect(comp.previousState).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('Compare relationships', () => {
+    describe('compareUser', () => {
+      it('Should forward to userService', () => {
+        const entity = { id: 123 };
+        const entity2 = { id: 456 };
+        jest.spyOn(userService, 'compareUser');
+        comp.compareUser(entity, entity2);
+        expect(userService.compareUser).toHaveBeenCalledWith(entity, entity2);
+      });
     });
   });
 });

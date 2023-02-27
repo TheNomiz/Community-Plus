@@ -22,9 +22,10 @@ describe('CrimeAlert Form Service', () => {
             id: expect.any(Object),
             title: expect.any(Object),
             description: expect.any(Object),
-            date: expect.any(Object),
             lat: expect.any(Object),
             lon: expect.any(Object),
+            date: expect.any(Object),
+            postedby: expect.any(Object),
           })
         );
       });
@@ -37,9 +38,10 @@ describe('CrimeAlert Form Service', () => {
             id: expect.any(Object),
             title: expect.any(Object),
             description: expect.any(Object),
-            date: expect.any(Object),
             lat: expect.any(Object),
             lon: expect.any(Object),
+            date: expect.any(Object),
+            postedby: expect.any(Object),
           })
         );
       });

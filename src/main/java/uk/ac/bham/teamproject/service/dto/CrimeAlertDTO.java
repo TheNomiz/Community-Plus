@@ -14,16 +14,24 @@ public class CrimeAlertDTO implements Serializable {
 
     private Long id;
 
+    @NotNull
+    @Size(min = 3, max = 30)
     private String title;
 
+    @NotNull
+    @Size(min = 20)
     private String description;
+
+    @NotNull
+    private BigDecimal lat;
+
+    @NotNull
+    private BigDecimal lon;
 
     @NotNull
     private Instant date;
 
-    private BigDecimal lat;
-
-    private BigDecimal lon;
+    private UserDTO postedby;
 
     public Long getId() {
         return id;
@@ -49,14 +57,6 @@ public class CrimeAlertDTO implements Serializable {
         this.description = description;
     }
 
-    public Instant getDate() {
-        return date;
-    }
-
-    public void setDate(Instant date) {
-        this.date = date;
-    }
-
     public BigDecimal getLat() {
         return lat;
     }
@@ -71,6 +71,22 @@ public class CrimeAlertDTO implements Serializable {
 
     public void setLon(BigDecimal lon) {
         this.lon = lon;
+    }
+
+    public Instant getDate() {
+        return date;
+    }
+
+    public void setDate(Instant date) {
+        this.date = date;
+    }
+
+    public UserDTO getPostedby() {
+        return postedby;
+    }
+
+    public void setPostedby(UserDTO postedby) {
+        this.postedby = postedby;
     }
 
     @Override
@@ -101,9 +117,10 @@ public class CrimeAlertDTO implements Serializable {
             "id=" + getId() +
             ", title='" + getTitle() + "'" +
             ", description='" + getDescription() + "'" +
-            ", date='" + getDate() + "'" +
             ", lat=" + getLat() +
             ", lon=" + getLon() +
+            ", date='" + getDate() + "'" +
+            ", postedby=" + getPostedby() +
             "}";
     }
 }
