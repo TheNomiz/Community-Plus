@@ -12,6 +12,7 @@ import { EntityArrayResponseType, CrimeAlertService } from '../service/crime-ale
 import { CrimeAlertDeleteDialogComponent } from '../delete/crime-alert-delete-dialog.component';
 import { ParseLinks } from 'app/core/util/parse-links.service';
 import { AccountService } from 'app/core/auth/account.service';
+import { Map, TileLayer } from 'leaflet';
 
 @Component({
   selector: 'jhi-crime-alert',
@@ -53,6 +54,11 @@ export class CrimeAlertComponent implements OnInit {
   trackId = (_index: number, item: ICrimeAlert): number => this.crimeAlertService.getCrimeAlertIdentifier(item);
 
   ngOnInit(): void {
+    const map = new Map('map').setView([51.505, -0.09], 13);
+    const tileLayer = new TileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors',
+    });
+    tileLayer.addTo(map);
     this.load();
   }
 
