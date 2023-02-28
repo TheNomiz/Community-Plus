@@ -7,6 +7,10 @@
         <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
         <span jhiTranslate="teamprojectApp.crimeAlert.home.refreshListLabel">Refresh list</span>
       </button>
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="teamprojectApp.crimeAlert.home.ListViewListLabel">Open/Close list view</span>
+      </button>
 
       <button
         id="jh-create-entity"
