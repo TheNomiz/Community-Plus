@@ -51,6 +51,7 @@ public class SecurityConfiguration {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         // @formatter:off
         http
+            .requiresChannel(channel -> channel.requestMatchers(r -> r.getHeader("X-Forwarded-Proto") != null).requiresSecure())
             .csrf()
             .ignoringAntMatchers("/h2-console/**")
             .disable()
