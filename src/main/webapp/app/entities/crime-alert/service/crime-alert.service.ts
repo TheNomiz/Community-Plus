@@ -122,3 +122,28 @@ export class CrimeAlertService {
     });
   }
 }
+
+import axios from 'axios';
+
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+const getCrimeData = async () => {
+  const response = await axios.get('https://data.police.uk/api/crimes-street/all-crime?poly=52.268,0.543:52.794,0.238:52.130,0.478');
+
+  const crimeAlerts: NewCrimeAlert[] = response.data.map((crime: any) => {
+    const date = dayjs(crime.month);
+
+    return {
+      id: null,
+      title: crime.category,
+      description: null,
+      lat: crime.location.latitude,
+      lon: crime.location.longitude,
+      date,
+      postedby: 'admin',
+    };
+  });
+
+  return crimeAlerts;
+};
+
+export default getCrimeData;

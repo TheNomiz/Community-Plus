@@ -4,11 +4,12 @@ import { ActivatedRoute, Data, ParamMap, Router } from '@angular/router';
 import { combineLatest, filter, Observable, switchMap, tap } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { ICrimeAlert } from '../crime-alert.model';
-
+import { ICrimeAlert, NewCrimeAlert } from '../crime-alert.model';
+import axios from 'axios';
+import dayjs from 'dayjs/esm';
 import { ITEMS_PER_PAGE } from 'app/config/pagination.constants';
 import { ASC, DESC, SORT, ITEM_DELETED_EVENT, DEFAULT_SORT_DATA } from 'app/config/navigation.constants';
-import { EntityArrayResponseType, CrimeAlertService } from '../service/crime-alert.service';
+import getCrimeData, { EntityArrayResponseType, CrimeAlertService } from '../service/crime-alert.service';
 import { CrimeAlertDeleteDialogComponent } from '../delete/crime-alert-delete-dialog.component';
 import { ParseLinks } from 'app/core/util/parse-links.service';
 import { AccountService } from 'app/core/auth/account.service';
@@ -59,6 +60,7 @@ export class CrimeAlertComponent implements OnInit {
       attribution: '© OpenStreetMap contributors',
     });
     tileLayer.addTo(map);
+
     this.load();
   }
 
