@@ -108,6 +108,19 @@ Generic styles
 
 .footer {
   border-top: 1px solid rgba(0, 0, 0, 0.125);
+  background-color: #523ae8;
+  color: white;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 40px 112px 25px;
+  gap: 130px;
+
+  position: absolute;
+  width: 100%;
+  height: auto;
+  background: #523ae8;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
 .hand,
@@ -236,4 +249,5 @@ angular-cli removes postcss-rtl processed inline css, processed rules must be ad
     }
   }
 }
+
 /* jhipster-needle-scss-add-main JHipster will add new css style */

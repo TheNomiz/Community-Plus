@@ -1,5 +1,5 @@
-@import '~bootstrap/scss/functions';
-@import '~bootstrap/scss/variables';
+@import 'node_modules/bootstrap/scss/functions';
+@import 'node_modules/bootstrap/scss/variables';
 
 /* ==========================================================================
 Navbar
@@ -17,10 +17,10 @@ Navbar
 
 .navbar {
   padding: 0.2rem 1rem;
-
   a.nav-link {
     font-weight: 400;
   }
+  background-color: #523ae8;
 }
 
 /* ==========================================================================
@@ -31,6 +31,6 @@ Logo styles
   width: 45px;
   display: inline-block;
   vertical-align: middle;
-  background: url('../../../content/images/logo-jhipster.png') no-repeat center center;
+  background: url('../../../content/images/logo_community+.png') no-repeat center center;
   background-size: contain;
 }
