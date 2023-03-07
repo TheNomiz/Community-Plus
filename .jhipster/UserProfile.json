@@ -1,0 +1,40 @@
+{
+  "applications": "*",
+  "changelogDate": "20230307142854",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "user_profile",
+  "fields": [
+    {
+      "fieldName": "username",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "minlength"],
+      "fieldValidateRulesMinlength": "1"
+    },
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "minlength"],
+      "fieldValidateRulesMinlength": "1"
+    },
+    {
+      "fieldName": "password",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "minlength"],
+      "fieldValidateRulesMinlength": "10"
+    },
+    {
+      "fieldName": "occupation",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "minlength"],
+      "fieldValidateRulesMinlength": "3"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "UserProfile",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [],
+  "service": "no"
+}

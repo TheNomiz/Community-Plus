@@ -1,0 +1,44 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="userProfile">
+      <h2 data-cy="userProfileDetailsHeading"><span jhiTranslate="teamprojectApp.userProfile.detail.title">User Profile</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ userProfile.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="teamprojectApp.userProfile.username">Username</span></dt>
+        <dd>
+          <span>{{ userProfile.username }}</span>
+        </dd>
+        <dt><span jhiTranslate="teamprojectApp.userProfile.name">Name</span></dt>
+        <dd>
+          <span>{{ userProfile.name }}</span>
+        </dd>
+        <dt><span jhiTranslate="teamprojectApp.userProfile.password">Password</span></dt>
+        <dd>
+          <span>{{ userProfile.password }}</span>
+        </dd>
+        <dt><span jhiTranslate="teamprojectApp.userProfile.occupation">Occupation</span></dt>
+        <dd>
+          <span>{{ userProfile.occupation }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/user-profile', userProfile.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>
