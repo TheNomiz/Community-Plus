@@ -28,6 +28,12 @@ entity ChatMessage {
 entity EmergencyGuidePage {
   emergencyType String required
 }
+entity EmergencyStationsPage {
+  name String required
+  stationType String required
+  latitude Double required
+  longitude Double required
+}
 relationship OneToMany {
   ChatRoom{messages} to ChatMessage{room}
 }
