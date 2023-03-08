@@ -25,6 +25,9 @@ entity ChatMessage {
   content String required
   sentDate LocalDate required
 }
+entity EmergencyGuidePage {
+  emergencyType String required
+}
 relationship OneToMany {
   ChatRoom{messages} to ChatMessage{room}
 }
