@@ -1,0 +1,67 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="event">
+      <h2 data-cy="eventDetailsHeading"><span jhiTranslate="teamprojectApp.event.detail.title">Event</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ event.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="teamprojectApp.event.name">Name</span></dt>
+        <dd>
+          <span>{{ event.name }}</span>
+        </dd>
+        <dt><span jhiTranslate="teamprojectApp.event.description">Description</span></dt>
+        <dd>
+          <span>{{ event.description }}</span>
+        </dd>
+        <dt><span jhiTranslate="teamprojectApp.event.startDate">Start Date</span></dt>
+        <dd>
+          <span>{{ event.startDate | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="teamprojectApp.event.endDate">End Date</span></dt>
+        <dd>
+          <span>{{ event.endDate | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="teamprojectApp.event.imageUrl">Image Url</span></dt>
+        <dd>
+          <span>{{ event.imageUrl }}</span>
+        </dd>
+        <dt><span jhiTranslate="teamprojectApp.event.latitude">Latitude</span></dt>
+        <dd>
+          <span>{{ event.latitude }}</span>
+        </dd>
+        <dt><span jhiTranslate="teamprojectApp.event.longitude">Longitude</span></dt>
+        <dd>
+          <span>{{ event.longitude }}</span>
+        </dd>
+        <dt><span jhiTranslate="teamprojectApp.event.address">Address</span></dt>
+        <dd>
+          <span>{{ event.address }}</span>
+        </dd>
+        <dt><span jhiTranslate="teamprojectApp.event.eventroom">Eventroom</span></dt>
+        <dd>
+          <span *ngFor="let eventroom of event.eventrooms; let last = last">
+            <a [routerLink]="['/chat-room', eventroom.id, 'view']">{{ eventroom.id }}</a
+            >{{ last ? '' : ', ' }}
+          </span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/event', event.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

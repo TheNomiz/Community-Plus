@@ -1,0 +1,42 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="chatMessage">
+      <h2 data-cy="chatMessageDetailsHeading"><span jhiTranslate="teamprojectApp.chatMessage.detail.title">Chat Message</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ chatMessage.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="teamprojectApp.chatMessage.content">Content</span></dt>
+        <dd>
+          <span>{{ chatMessage.content }}</span>
+        </dd>
+        <dt><span jhiTranslate="teamprojectApp.chatMessage.sentDate">Sent Date</span></dt>
+        <dd>
+          <span>{{ chatMessage.sentDate | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="teamprojectApp.chatMessage.room">Room</span></dt>
+        <dd>
+          <div *ngIf="chatMessage.room">
+            <a [routerLink]="['/chat-room', chatMessage.room.id, 'view']">{{ chatMessage.room.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/chat-message', chatMessage.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

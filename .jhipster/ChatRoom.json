@@ -1,0 +1,43 @@
+{
+  "applications": "*",
+  "changelogDate": "20230308133813",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "chat_room",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "maxlength"],
+      "fieldValidateRulesMaxlength": "50"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "ChatRoom",
+  "pagination": "infinite-scroll",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "chatMessage",
+      "otherEntityRelationshipName": "room",
+      "relationshipName": "messages",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "event",
+      "otherEntityRelationshipName": "eventroom",
+      "ownerSide": false,
+      "relationshipName": "events",
+      "relationshipType": "many-to-many"
+    },
+    {
+      "otherEntityName": "business",
+      "otherEntityRelationshipName": "busroom",
+      "ownerSide": false,
+      "relationshipName": "businesses",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "service": "no"
+}

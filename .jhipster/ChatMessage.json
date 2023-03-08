@@ -1,0 +1,33 @@
+{
+  "applications": "*",
+  "changelogDate": "20230308133814",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "chat_message",
+  "fields": [
+    {
+      "fieldName": "content",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "sentDate",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "ChatMessage",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "chatRoom",
+      "otherEntityRelationshipName": "messages",
+      "relationshipName": "room",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "no"
+}

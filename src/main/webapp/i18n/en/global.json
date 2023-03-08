@@ -8,6 +8,11 @@
       "entities": {
         "main": "Entities",
         "crimeAlert": "Crime Alert",
+        "business": "Business",
+        "event": "Event",
+        "chatRoom": "Chat Room",
+        "chatMessage": "Chat Message",
+        "userProfile": "User Profile",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {

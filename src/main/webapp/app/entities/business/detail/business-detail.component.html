@@ -1,0 +1,67 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="business">
+      <h2 data-cy="businessDetailsHeading"><span jhiTranslate="teamprojectApp.business.detail.title">Business</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ business.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="teamprojectApp.business.name">Name</span></dt>
+        <dd>
+          <span>{{ business.name }}</span>
+        </dd>
+        <dt><span jhiTranslate="teamprojectApp.business.description">Description</span></dt>
+        <dd>
+          <span>{{ business.description }}</span>
+        </dd>
+        <dt><span jhiTranslate="teamprojectApp.business.category">Category</span></dt>
+        <dd>
+          <span>{{ business.category }}</span>
+        </dd>
+        <dt><span jhiTranslate="teamprojectApp.business.phoneNumber">Phone Number</span></dt>
+        <dd>
+          <span>{{ business.phoneNumber }}</span>
+        </dd>
+        <dt><span jhiTranslate="teamprojectApp.business.email">Email</span></dt>
+        <dd>
+          <span>{{ business.email }}</span>
+        </dd>
+        <dt><span jhiTranslate="teamprojectApp.business.websiteUrl">Website Url</span></dt>
+        <dd>
+          <span>{{ business.websiteUrl }}</span>
+        </dd>
+        <dt><span jhiTranslate="teamprojectApp.business.latitude">Latitude</span></dt>
+        <dd>
+          <span>{{ business.latitude }}</span>
+        </dd>
+        <dt><span jhiTranslate="teamprojectApp.business.longitude">Longitude</span></dt>
+        <dd>
+          <span>{{ business.longitude }}</span>
+        </dd>
+        <dt><span jhiTranslate="teamprojectApp.business.busroom">Busroom</span></dt>
+        <dd>
+          <span *ngFor="let busroom of business.busrooms; let last = last">
+            <a [routerLink]="['/chat-room', busroom.id, 'view']">{{ busroom.id }}</a
+            >{{ last ? '' : ', ' }}
+          </span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/business', business.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

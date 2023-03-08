@@ -49,6 +49,16 @@ public class CacheConfiguration {
             createCache(cm, uk.ac.bham.teamproject.domain.Authority.class.getName());
             createCache(cm, uk.ac.bham.teamproject.domain.User.class.getName() + ".authorities");
             createCache(cm, uk.ac.bham.teamproject.domain.CrimeAlert.class.getName());
+            createCache(cm, uk.ac.bham.teamproject.domain.Business.class.getName());
+            createCache(cm, uk.ac.bham.teamproject.domain.Business.class.getName() + ".busrooms");
+            createCache(cm, uk.ac.bham.teamproject.domain.Event.class.getName());
+            createCache(cm, uk.ac.bham.teamproject.domain.Event.class.getName() + ".eventrooms");
+            createCache(cm, uk.ac.bham.teamproject.domain.ChatRoom.class.getName());
+            createCache(cm, uk.ac.bham.teamproject.domain.ChatRoom.class.getName() + ".messages");
+            createCache(cm, uk.ac.bham.teamproject.domain.ChatRoom.class.getName() + ".events");
+            createCache(cm, uk.ac.bham.teamproject.domain.ChatRoom.class.getName() + ".businesses");
+            createCache(cm, uk.ac.bham.teamproject.domain.ChatMessage.class.getName());
+            createCache(cm, uk.ac.bham.teamproject.domain.UserProfile.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }
