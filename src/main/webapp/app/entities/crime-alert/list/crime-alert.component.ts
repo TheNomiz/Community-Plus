@@ -3,7 +3,7 @@ import { HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute, Data, ParamMap, Router } from '@angular/router';
 import { combineLatest, filter, Observable, switchMap, tap } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-
+import * as L from 'leaflet';
 import { ICrimeAlert, NewCrimeAlert } from '../crime-alert.model';
 import axios from 'axios';
 import dayjs from 'dayjs/esm';
@@ -55,12 +55,10 @@ export class CrimeAlertComponent implements OnInit {
   trackId = (_index: number, item: ICrimeAlert): number => this.crimeAlertService.getCrimeAlertIdentifier(item);
 
   ngOnInit(): void {
-    const map = new Map('map').setView([51.505, -0.09], 13);
-    const tileLayer = new TileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '© OpenStreetMap contributors',
-    });
-    tileLayer.addTo(map);
-
+    const map = L.map('map').setView([51.505, -0.09], 13);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
+    }).addTo(map);
     this.load();
   }
 
