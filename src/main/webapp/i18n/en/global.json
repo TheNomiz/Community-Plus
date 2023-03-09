@@ -13,6 +13,9 @@
         "chatRoom": "Chat Room",
         "chatMessage": "Chat Message",
         "userProfile": "User Profile",
+        "emergencyGuidePage": "Emergency Guide Page",
+        "emergencyStationsPage": "Emergency Stations Page",
+        "lostFoundPage": "Lost Found Page",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {

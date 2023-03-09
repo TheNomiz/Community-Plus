@@ -59,6 +59,9 @@ public class CacheConfiguration {
             createCache(cm, uk.ac.bham.teamproject.domain.ChatRoom.class.getName() + ".businesses");
             createCache(cm, uk.ac.bham.teamproject.domain.ChatMessage.class.getName());
             createCache(cm, uk.ac.bham.teamproject.domain.UserProfile.class.getName());
+            createCache(cm, uk.ac.bham.teamproject.domain.EmergencyGuidePage.class.getName());
+            createCache(cm, uk.ac.bham.teamproject.domain.EmergencyStationsPage.class.getName());
+            createCache(cm, uk.ac.bham.teamproject.domain.LostFoundPage.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }

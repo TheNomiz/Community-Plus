@@ -1,0 +1,27 @@
+{
+  "teamprojectApp": {
+    "emergencyStationsPage": {
+      "home": {
+        "title": "Emergency Stations Pages",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Emergency Stations Page",
+        "createOrEditLabel": "Create or edit a Emergency Stations Page",
+        "notFound": "No Emergency Stations Pages found"
+      },
+      "created": "A new Emergency Stations Page is created with identifier {{ param }}",
+      "updated": "A Emergency Stations Page is updated with identifier {{ param }}",
+      "deleted": "A Emergency Stations Page is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Emergency Stations Page {{ id }}?"
+      },
+      "detail": {
+        "title": "Emergency Stations Page"
+      },
+      "id": "ID",
+      "name": "Name",
+      "stationType": "Station Type",
+      "latitude": "Latitude",
+      "longitude": "Longitude"
+    }
+  }
+}

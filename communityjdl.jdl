@@ -1,30 +1,3 @@
-entity Business {
-  name String required minlength(3) maxlength(50)
-  description String required
-  category String required maxlength(50)
-  phoneNumber Integer required
-  email String maxlength(254)
-  websiteUrl String maxlength(255)
-  latitude Double required
-  longitude Double required
-}
-entity Event {
-  name String required minlength(3) maxlength(50)
-  description String required
-  startDate LocalDate required
-  endDate LocalDate required
-  imageUrl String maxlength(255)
-  latitude Double required
-  longitude Double required
-  address String required maxlength(255)
-}
-entity ChatRoom {
-  name String required maxlength(50)
-}
-entity ChatMessage {
-  content String required
-  sentDate LocalDate required
-}
 entity EmergencyGuidePage {
   emergencyType String required
 }
@@ -37,11 +10,5 @@ entity EmergencyStationsPage {
 entity LostFoundPage {
   description String required
 }
-relationship OneToMany {
-  ChatRoom{messages} to ChatMessage{room}
-}
-relationship ManyToMany{
-  Event{eventroom} to ChatRoom{events}
-  Business{busroom} to ChatRoom{businesses}
-}
-paginate Event, Business, ChatRoom with infinite-scroll
+
+paginate EmergencyGuidePage, EmergencyStationsPage, LostFoundPage with infinite-scroll
