@@ -42,7 +42,7 @@ import { RouterModule } from '@angular/router';
       {
         path: 'emergency-stations-page',
         data: { pageTitle: 'teamprojectApp.emergencyStationsPage.home.title' },
-        loadChildren: () => import('./emergency-stations-page/emergency-stations-page.module').then(m => m.EmergencyStationsPageModule),
+        loadChildren: () => import('../emergency-stations-page/emergency-stations-page.module').then(m => m.EmergencyStationsPageModule),
       },
       {
         path: 'lost-found-page',
