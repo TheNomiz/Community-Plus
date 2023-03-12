@@ -6,13 +6,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
 import uk.ac.bham.teamproject.domain.CrimeAlert;
 
 /**
  * Spring Data JPA repository for the CrimeAlert entity.
  */
-@Repository
 public interface CrimeAlertRepository extends JpaRepository<CrimeAlert, Long>, JpaSpecificationExecutor<CrimeAlert> {
     @Query("select crimeAlert from CrimeAlert crimeAlert where crimeAlert.postedby.login = ?#{principal.username}")
     List<CrimeAlert> findByPostedbyIsCurrentUser();
