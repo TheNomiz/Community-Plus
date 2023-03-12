@@ -10,11 +10,11 @@ import { IEvent } from 'app/entities/event/event.model';
 import { IBusiness } from 'app/entities/business/business.model';
 
 @Component({
-  selector: 'jhi-community-page',
-  templateUrl: './community-page.component.html',
-  styleUrls: ['./community-page.component.scss'],
+  selector: 'jhi-community',
+  templateUrl: './community.component.html',
+  styleUrls: ['./community.component.scss'],
 })
-export class CommunityPageComponent implements OnInit {
+export class CommunityComponent implements OnInit {
   chatRooms: IChatRoom[] = [];
   chatMessages: IChatMessage[] = [];
   events: IEvent[] = [];

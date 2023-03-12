@@ -49,6 +49,10 @@ import { RouterModule } from '@angular/router';
         data: { pageTitle: 'teamprojectApp.lostFoundPage.home.title' },
         loadChildren: () => import('./lost-found-page/lost-found-page.module').then(m => m.LostFoundPageModule),
       },
+      {
+        path: 'community',
+        loadChildren: () => import('./community/community.module').then(m => m.CommunityModule),
+      },
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ]),
   ],
