@@ -11,10 +11,12 @@ import { ASC, DESC, SORT, ITEM_DELETED_EVENT, DEFAULT_SORT_DATA } from 'app/conf
 import { EntityArrayResponseType, EmergencyStationsPageService } from '../service/emergency-stations-page.service';
 import { EmergencyStationsPageDeleteDialogComponent } from '../delete/emergency-stations-page-delete-dialog.component';
 import { ParseLinks } from 'app/core/util/parse-links.service';
+import * as L from 'leaflet';
 
 @Component({
   selector: 'jhi-emergency-stations-page',
   templateUrl: './emergency-stations-page.component.html',
+  styleUrls: ['./emergency-stations-page.component.scss'],
 })
 export class EmergencyStationsPageComponent implements OnInit {
   emergencyStationsPages?: IEmergencyStationsPage[];
@@ -52,6 +54,15 @@ export class EmergencyStationsPageComponent implements OnInit {
     this.emergencyStationsPageService.getEmergencyStationsPageIdentifier(item);
 
   ngOnInit(): void {
+    const map = L.map('map').setView([52.45, -1.93], 13);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
+    }).addTo(map);
+
+    L.marker([52.429636, -1.949548]).addTo(map).bindPopup('Bournville Police Station <br>Police Station').openPopup();
+
+    L.marker([52.4514, -1.941]).addTo(map).bindPopup('Queen Elizabeth Hospital <br>Hospital').openPopup();
+
     this.load();
   }
 

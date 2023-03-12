@@ -2,6 +2,8 @@
   <div class="container-fluid">
     <a class="navbar-brand logo" routerLink="/" (click)="collapseNavbar()">
       <span class="logo-img"></span>
+      <!-- <span jhiTranslate="global.title"  class="navbar-title">Teamproject</span> -->
+      <span class="navbar-version">{{ version }}</span>
     </a>
     <a
       class="navbar-toggler d-lg-none"
@@ -25,6 +27,15 @@
             </span>
           </a>
         </li>
+
+        <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+          <a class="nav-link" routerLink="emergency-stations-page" (click)="collapseNavbar()">
+            <span>
+              <span jhiTranslate="global.menu.emergencyStationsPage">Emergency Stations</span>
+            </span>
+          </a>
+        </li>
+
         <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
         <li
           *ngSwitchCase="true"
@@ -63,6 +74,18 @@
               >
                 <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
                 <span jhiTranslate="global.menu.entities.business">Business</span>
+              </a>
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="/src/main/webapp/app/community-page"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                <span>Community</span>
               </a>
             </li>
             <li>
@@ -125,7 +148,7 @@
                 <span jhiTranslate="global.menu.entities.emergencyGuidePage">Emergency Guide Page</span>
               </a>
             </li>
-            <li>
+            <!-- <li>
               <a
                 class="dropdown-item"
                 routerLink="emergency-stations-page"
@@ -136,7 +159,7 @@
                 <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
                 <span jhiTranslate="global.menu.entities.emergencyStationsPage">Emergency Stations Page</span>
               </a>
-            </li>
+            </li> -->
             <li>
               <a
                 class="dropdown-item"

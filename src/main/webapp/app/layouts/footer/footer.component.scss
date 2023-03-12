@@ -1,0 +1,16 @@
+@import 'node_modules/bootstrap/scss/functions';
+@import 'node_modules/bootstrap/scss/variables';
+
+/* ==========================================================================
+Button
+========================================================================== */
+.button {
+  background-color: #523ae8;
+  border: none;
+  color: white;
+  padding: 0 25px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 22px;
+}

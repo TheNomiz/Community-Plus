@@ -1,6 +1,18 @@
 <div>
   <h2 id="page-heading" data-cy="EmergencyStationsPageHeading">
-    <span jhiTranslate="teamprojectApp.emergencyStationsPage.home.title">Emergency Stations Pages</span>
+    <span jhiTranslate="teamprojectApp.emergencyStationsPage.home.title">Emergency Stations</span>
+
+    <br />
+    <br />
+
+    <div class="holder" id="holder">
+      <div class="filters" id="filters">
+        <h2>Filters</h2>
+      </div>
+      <div class="map" id="map"></div>
+    </div>
+
+    <br />
 
     <div class="d-flex justify-content-end">
       <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">

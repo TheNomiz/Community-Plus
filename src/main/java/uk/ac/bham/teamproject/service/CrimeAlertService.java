@@ -1,21 +1,10 @@
 package uk.ac.bham.teamproject.service;
 
-import com.google.gson.*;
-import java.math.BigDecimal;
-import java.time.Instant;
-import java.time.YearMonth;
-import java.time.ZoneOffset;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 import java.util.Optional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.ui.Model;
 import org.springframework.web.client.RestTemplate;
 import uk.ac.bham.teamproject.domain.CrimeAlert;
 import uk.ac.bham.teamproject.repository.CrimeAlertRepository;
@@ -26,7 +15,6 @@ import uk.ac.bham.teamproject.service.dto.CrimeAlertDTO;
  */
 
 public interface CrimeAlertService {
-    @Autowired
     /**
      * Save a crimeAlert.
      *
