@@ -25,7 +25,6 @@ import { FooterComponent } from './layouts/footer/footer.component';
 import { PageRibbonComponent } from './layouts/profiles/page-ribbon.component';
 import { ActiveMenuDirective } from './layouts/navbar/active-menu.directive';
 import { ErrorComponent } from './layouts/error/error.component';
-import { CommunityPageComponent } from './community-page/community-page.component';
 import { BusinessService } from 'app/entities/business/service/business.service';
 import { ChatMessageService } from 'app/entities/chat-message/service/chat-message.service';
 import { ChatRoomService } from 'app/entities/chat-room/service/chat-room.service';
@@ -54,15 +53,7 @@ import { EventService } from 'app/entities/event/service/event.service';
     ChatRoomService,
     EventService,
   ],
-  declarations: [
-    MainComponent,
-    NavbarComponent,
-    ErrorComponent,
-    PageRibbonComponent,
-    ActiveMenuDirective,
-    FooterComponent,
-    CommunityPageComponent,
-  ],
+  declarations: [MainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, ActiveMenuDirective, FooterComponent],
   bootstrap: [MainComponent],
 })
 export class AppModule {
