@@ -106,7 +106,7 @@ public class CrimeAlertServiceImpl implements CrimeAlertService {
         crimeAlertRepository.deleteById(id);
     }
 
-    @Scheduled(fixedDelay = 120000)
+    //@Scheduled(fixedDelay = 120000)
     public void updateCrimeAlerts() {
         // fetch data from the APIs
         List<CrimeAlert> crimeAlerts = new ArrayList<>();
