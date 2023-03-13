@@ -30,11 +30,6 @@ import { RouterModule } from '@angular/router';
         loadChildren: () => import('./chat-message/chat-message.module').then(m => m.ChatMessageModule),
       },
       {
-        path: 'user-profile',
-        data: { pageTitle: 'teamprojectApp.userProfile.home.title' },
-        loadChildren: () => import('./user-profile/user-profile.module').then(m => m.UserProfileModule),
-      },
-      {
         path: 'emergency-guide-page',
         data: { pageTitle: 'teamprojectApp.emergencyGuidePage.home.title' },
         loadChildren: () => import('./emergency-guide-page/emergency-guide-page.module').then(m => m.EmergencyGuidePageModule),
