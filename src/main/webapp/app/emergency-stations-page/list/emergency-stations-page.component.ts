@@ -59,9 +59,23 @@ export class EmergencyStationsPageComponent implements OnInit {
       attribution: '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
     }).addTo(map);
 
-    L.marker([52.429636, -1.949548]).addTo(map).bindPopup('Bournville Police Station <br>Police Station').openPopup();
+    const defaultIcon = L.icon({
+      iconUrl: '../../../content/images/Location_Marker.png',
+      shadowUrl: '../../../content/images/Location_Marker_Shadow.png',
 
-    L.marker([52.4514, -1.941]).addTo(map).bindPopup('Queen Elizabeth Hospital <br>Hospital').openPopup();
+      iconSize: [30, 45], // size of the icon
+      shadowSize: [40, 20], // size of the shadow
+      iconAnchor: [15, 45], // point of the icon which will correspond to marker's location
+      shadowAnchor: [0, 20], // the same for the shadow
+      popupAnchor: [0, -55], // point from which the popup should open relative to the iconAnchor
+    });
+
+    L.marker([52.429636, -1.949548], { icon: defaultIcon })
+      .addTo(map)
+      .bindPopup('Bournville Police Station <br>Police Station')
+      .openPopup();
+
+    L.marker([52.4514, -1.941], { icon: defaultIcon }).addTo(map).bindPopup('Queen Elizabeth Hospital <br>Hospital').openPopup();
 
     this.load();
   }
