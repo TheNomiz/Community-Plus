@@ -48,6 +48,10 @@ import { RouterModule } from '@angular/router';
         path: 'community',
         loadChildren: () => import('./community/community.module').then(m => m.CommunityModule),
       },
+      {
+        path: 'gdpr',
+        loadChildren: () => import('./gdpr/gdpr.module').then(m => m.GdprModule),
+      },
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ]),
   ],
