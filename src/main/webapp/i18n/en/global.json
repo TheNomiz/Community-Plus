@@ -13,9 +13,7 @@
         "event": "Event",
         "chatRoom": "Chat Room",
         "chatMessage": "Chat Message",
-        "userProfile": "User Profile",
         "emergencyGuidePage": "Emergency Guide Page",
-
         "lostFoundPage": "Lost Found Page",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },

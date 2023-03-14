@@ -23,7 +23,6 @@
     "enableTranslation": true,
     "entities": [
       "CrimeAlert",
-      "UserProfile",
       "Business",
       "Event",
       "ChatRoom",
