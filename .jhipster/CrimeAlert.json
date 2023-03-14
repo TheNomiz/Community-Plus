@@ -29,6 +29,11 @@
       "fieldName": "date",
       "fieldType": "Instant",
       "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "crimeID",
+      "fieldType": "Long",
+      "fieldValidateRules": ["required", "unique"]
     }
   ],
   "jpaMetamodelFiltering": true,

@@ -126,6 +126,27 @@
         </div>
 
         <div class="row mb-3">
+          <label class="form-label" jhiTranslate="teamprojectApp.crimeAlert.crimeID" for="field_crimeID">Crime ID</label>
+          <input type="number" class="form-control" name="crimeID" id="field_crimeID" data-cy="crimeID" formControlName="crimeID" />
+          <div *ngIf="editForm.get('crimeID')!.invalid && (editForm.get('crimeID')!.dirty || editForm.get('crimeID')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('crimeID')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('crimeID')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
           <label class="form-label" jhiTranslate="teamprojectApp.crimeAlert.postedby" for="field_postedby">Postedby</label>
           <select
             class="form-control"

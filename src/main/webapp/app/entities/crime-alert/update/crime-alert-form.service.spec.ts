@@ -25,6 +25,7 @@ describe('CrimeAlert Form Service', () => {
             lat: expect.any(Object),
             lon: expect.any(Object),
             date: expect.any(Object),
+            crimeID: expect.any(Object),
             postedby: expect.any(Object),
           })
         );
@@ -41,6 +42,7 @@ describe('CrimeAlert Form Service', () => {
             lat: expect.any(Object),
             lon: expect.any(Object),
             date: expect.any(Object),
+            crimeID: expect.any(Object),
             postedby: expect.any(Object),
           })
         );

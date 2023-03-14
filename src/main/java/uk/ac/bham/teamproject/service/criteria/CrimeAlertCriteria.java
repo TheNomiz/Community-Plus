@@ -33,6 +33,8 @@ public class CrimeAlertCriteria implements Serializable, Criteria {
 
     private InstantFilter date;
 
+    private LongFilter crimeID;
+
     private LongFilter postedbyId;
 
     private Boolean distinct;
@@ -46,6 +48,7 @@ public class CrimeAlertCriteria implements Serializable, Criteria {
         this.lat = other.lat == null ? null : other.lat.copy();
         this.lon = other.lon == null ? null : other.lon.copy();
         this.date = other.date == null ? null : other.date.copy();
+        this.crimeID = other.crimeID == null ? null : other.crimeID.copy();
         this.postedbyId = other.postedbyId == null ? null : other.postedbyId.copy();
         this.distinct = other.distinct;
     }
@@ -145,6 +148,21 @@ public class CrimeAlertCriteria implements Serializable, Criteria {
         this.date = date;
     }
 
+    public LongFilter getCrimeID() {
+        return crimeID;
+    }
+
+    public LongFilter crimeID() {
+        if (crimeID == null) {
+            crimeID = new LongFilter();
+        }
+        return crimeID;
+    }
+
+    public void setCrimeID(LongFilter crimeID) {
+        this.crimeID = crimeID;
+    }
+
     public LongFilter getPostedbyId() {
         return postedbyId;
     }
@@ -184,6 +202,7 @@ public class CrimeAlertCriteria implements Serializable, Criteria {
             Objects.equals(lat, that.lat) &&
             Objects.equals(lon, that.lon) &&
             Objects.equals(date, that.date) &&
+            Objects.equals(crimeID, that.crimeID) &&
             Objects.equals(postedbyId, that.postedbyId) &&
             Objects.equals(distinct, that.distinct)
         );
@@ -191,7 +210,7 @@ public class CrimeAlertCriteria implements Serializable, Criteria {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, description, lat, lon, date, postedbyId, distinct);
+        return Objects.hash(id, title, description, lat, lon, date, crimeID, postedbyId, distinct);
     }
 
     // prettier-ignore
@@ -204,6 +223,7 @@ public class CrimeAlertCriteria implements Serializable, Criteria {
             (lat != null ? "lat=" + lat + ", " : "") +
             (lon != null ? "lon=" + lon + ", " : "") +
             (date != null ? "date=" + date + ", " : "") +
+            (crimeID != null ? "crimeID=" + crimeID + ", " : "") +
             (postedbyId != null ? "postedbyId=" + postedbyId + ", " : "") +
             (distinct != null ? "distinct=" + distinct + ", " : "") +
             "}";

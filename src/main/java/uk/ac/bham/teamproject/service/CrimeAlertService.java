@@ -3,17 +3,11 @@ package uk.ac.bham.teamproject.service;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.web.client.RestTemplate;
-import uk.ac.bham.teamproject.domain.CrimeAlert;
-import uk.ac.bham.teamproject.repository.CrimeAlertRepository;
 import uk.ac.bham.teamproject.service.dto.CrimeAlertDTO;
 
 /**
  * Service Interface for managing {@link uk.ac.bham.teamproject.domain.CrimeAlert}.
  */
-
 public interface CrimeAlertService {
     /**
      * Save a crimeAlert.

@@ -31,6 +31,9 @@ public class CrimeAlertDTO implements Serializable {
     @NotNull
     private Instant date;
 
+    @NotNull
+    private Long crimeID;
+
     private UserDTO postedby;
 
     public Long getId() {
@@ -81,6 +84,14 @@ public class CrimeAlertDTO implements Serializable {
         this.date = date;
     }
 
+    public Long getCrimeID() {
+        return crimeID;
+    }
+
+    public void setCrimeID(Long crimeID) {
+        this.crimeID = crimeID;
+    }
+
     public UserDTO getPostedby() {
         return postedby;
     }
@@ -120,6 +131,7 @@ public class CrimeAlertDTO implements Serializable {
             ", lat=" + getLat() +
             ", lon=" + getLon() +
             ", date='" + getDate() + "'" +
+            ", crimeID=" + getCrimeID() +
             ", postedby=" + getPostedby() +
             "}";
     }

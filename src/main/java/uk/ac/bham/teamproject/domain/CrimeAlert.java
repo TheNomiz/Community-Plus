@@ -47,6 +47,10 @@ public class CrimeAlert implements Serializable {
     @Column(name = "date", nullable = false)
     private Instant date;
 
+    @NotNull
+    @Column(name = "crime_id", nullable = false, unique = true)
+    private Long crimeID;
+
     @ManyToOne(optional = false)
     @NotNull
     private User postedby;
@@ -131,6 +135,19 @@ public class CrimeAlert implements Serializable {
         this.date = date;
     }
 
+    public Long getCrimeID() {
+        return this.crimeID;
+    }
+
+    public CrimeAlert crimeID(Long crimeID) {
+        this.setCrimeID(crimeID);
+        return this;
+    }
+
+    public void setCrimeID(Long crimeID) {
+        this.crimeID = crimeID;
+    }
+
     public User getPostedby() {
         return this.postedby;
     }
@@ -173,6 +190,7 @@ public class CrimeAlert implements Serializable {
             ", lat=" + getLat() +
             ", lon=" + getLon() +
             ", date='" + getDate() + "'" +
+            ", crimeID=" + getCrimeID() +
             "}";
     }
 }

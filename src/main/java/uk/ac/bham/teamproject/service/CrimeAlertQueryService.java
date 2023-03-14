@@ -105,6 +105,9 @@ public class CrimeAlertQueryService extends QueryService<CrimeAlert> {
             if (criteria.getDate() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getDate(), CrimeAlert_.date));
             }
+            if (criteria.getCrimeID() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getCrimeID(), CrimeAlert_.crimeID));
+            }
             if (criteria.getPostedbyId() != null) {
                 specification =
                     specification.and(

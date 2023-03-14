@@ -64,6 +64,10 @@ class CrimeAlertResourceIT {
     private static final Instant DEFAULT_DATE = Instant.ofEpochMilli(0L);
     private static final Instant UPDATED_DATE = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
+    private static final Long DEFAULT_CRIME_ID = 1L;
+    private static final Long UPDATED_CRIME_ID = 2L;
+    private static final Long SMALLER_CRIME_ID = 1L - 1L;
+
     private static final String ENTITY_API_URL = "/api/crime-alerts";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -102,7 +106,8 @@ class CrimeAlertResourceIT {
             .description(DEFAULT_DESCRIPTION)
             .lat(DEFAULT_LAT)
             .lon(DEFAULT_LON)
-            .date(DEFAULT_DATE);
+            .date(DEFAULT_DATE)
+            .crimeID(DEFAULT_CRIME_ID);
         // Add required entity
         User user = UserResourceIT.createEntity(em);
         em.persist(user);
@@ -123,7 +128,8 @@ class CrimeAlertResourceIT {
             .description(UPDATED_DESCRIPTION)
             .lat(UPDATED_LAT)
             .lon(UPDATED_LON)
-            .date(UPDATED_DATE);
+            .date(UPDATED_DATE)
+            .crimeID(UPDATED_CRIME_ID);
         // Add required entity
         User user = UserResourceIT.createEntity(em);
         em.persist(user);
@@ -156,6 +162,7 @@ class CrimeAlertResourceIT {
         assertThat(testCrimeAlert.getLat()).isEqualByComparingTo(DEFAULT_LAT);
         assertThat(testCrimeAlert.getLon()).isEqualByComparingTo(DEFAULT_LON);
         assertThat(testCrimeAlert.getDate()).isEqualTo(DEFAULT_DATE);
+        assertThat(testCrimeAlert.getCrimeID()).isEqualTo(DEFAULT_CRIME_ID);
     }
 
     @Test
@@ -269,6 +276,24 @@ class CrimeAlertResourceIT {
 
     @Test
     @Transactional
+    void checkCrimeIDIsRequired() throws Exception {
+        int databaseSizeBeforeTest = crimeAlertRepository.findAll().size();
+        // set the field null
+        crimeAlert.setCrimeID(null);
+
+        // Create the CrimeAlert, which fails.
+        CrimeAlertDTO crimeAlertDTO = crimeAlertMapper.toDto(crimeAlert);
+
+        restCrimeAlertMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(crimeAlertDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<CrimeAlert> crimeAlertList = crimeAlertRepository.findAll();
+        assertThat(crimeAlertList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     void getAllCrimeAlerts() throws Exception {
         // Initialize the database
         crimeAlertRepository.saveAndFlush(crimeAlert);
@@ -283,7 +308,8 @@ class CrimeAlertResourceIT {
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
             .andExpect(jsonPath("$.[*].lat").value(hasItem(sameNumber(DEFAULT_LAT))))
             .andExpect(jsonPath("$.[*].lon").value(hasItem(sameNumber(DEFAULT_LON))))
-            .andExpect(jsonPath("$.[*].date").value(hasItem(DEFAULT_DATE.toString())));
+            .andExpect(jsonPath("$.[*].date").value(hasItem(DEFAULT_DATE.toString())))
+            .andExpect(jsonPath("$.[*].crimeID").value(hasItem(DEFAULT_CRIME_ID.intValue())));
     }
 
     @SuppressWarnings({ "unchecked" })
@@ -319,7 +345,8 @@ class CrimeAlertResourceIT {
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION))
             .andExpect(jsonPath("$.lat").value(sameNumber(DEFAULT_LAT)))
             .andExpect(jsonPath("$.lon").value(sameNumber(DEFAULT_LON)))
-            .andExpect(jsonPath("$.date").value(DEFAULT_DATE.toString()));
+            .andExpect(jsonPath("$.date").value(DEFAULT_DATE.toString()))
+            .andExpect(jsonPath("$.crimeID").value(DEFAULT_CRIME_ID.intValue()));
     }
 
     @Test
@@ -693,6 +720,97 @@ class CrimeAlertResourceIT {
 
     @Test
     @Transactional
+    void getAllCrimeAlertsByCrimeIDIsEqualToSomething() throws Exception {
+        // Initialize the database
+        crimeAlertRepository.saveAndFlush(crimeAlert);
+
+        // Get all the crimeAlertList where crimeID equals to DEFAULT_CRIME_ID
+        defaultCrimeAlertShouldBeFound("crimeID.equals=" + DEFAULT_CRIME_ID);
+
+        // Get all the crimeAlertList where crimeID equals to UPDATED_CRIME_ID
+        defaultCrimeAlertShouldNotBeFound("crimeID.equals=" + UPDATED_CRIME_ID);
+    }
+
+    @Test
+    @Transactional
+    void getAllCrimeAlertsByCrimeIDIsInShouldWork() throws Exception {
+        // Initialize the database
+        crimeAlertRepository.saveAndFlush(crimeAlert);
+
+        // Get all the crimeAlertList where crimeID in DEFAULT_CRIME_ID or UPDATED_CRIME_ID
+        defaultCrimeAlertShouldBeFound("crimeID.in=" + DEFAULT_CRIME_ID + "," + UPDATED_CRIME_ID);
+
+        // Get all the crimeAlertList where crimeID equals to UPDATED_CRIME_ID
+        defaultCrimeAlertShouldNotBeFound("crimeID.in=" + UPDATED_CRIME_ID);
+    }
+
+    @Test
+    @Transactional
+    void getAllCrimeAlertsByCrimeIDIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        crimeAlertRepository.saveAndFlush(crimeAlert);
+
+        // Get all the crimeAlertList where crimeID is not null
+        defaultCrimeAlertShouldBeFound("crimeID.specified=true");
+
+        // Get all the crimeAlertList where crimeID is null
+        defaultCrimeAlertShouldNotBeFound("crimeID.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllCrimeAlertsByCrimeIDIsGreaterThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        crimeAlertRepository.saveAndFlush(crimeAlert);
+
+        // Get all the crimeAlertList where crimeID is greater than or equal to DEFAULT_CRIME_ID
+        defaultCrimeAlertShouldBeFound("crimeID.greaterThanOrEqual=" + DEFAULT_CRIME_ID);
+
+        // Get all the crimeAlertList where crimeID is greater than or equal to UPDATED_CRIME_ID
+        defaultCrimeAlertShouldNotBeFound("crimeID.greaterThanOrEqual=" + UPDATED_CRIME_ID);
+    }
+
+    @Test
+    @Transactional
+    void getAllCrimeAlertsByCrimeIDIsLessThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        crimeAlertRepository.saveAndFlush(crimeAlert);
+
+        // Get all the crimeAlertList where crimeID is less than or equal to DEFAULT_CRIME_ID
+        defaultCrimeAlertShouldBeFound("crimeID.lessThanOrEqual=" + DEFAULT_CRIME_ID);
+
+        // Get all the crimeAlertList where crimeID is less than or equal to SMALLER_CRIME_ID
+        defaultCrimeAlertShouldNotBeFound("crimeID.lessThanOrEqual=" + SMALLER_CRIME_ID);
+    }
+
+    @Test
+    @Transactional
+    void getAllCrimeAlertsByCrimeIDIsLessThanSomething() throws Exception {
+        // Initialize the database
+        crimeAlertRepository.saveAndFlush(crimeAlert);
+
+        // Get all the crimeAlertList where crimeID is less than DEFAULT_CRIME_ID
+        defaultCrimeAlertShouldNotBeFound("crimeID.lessThan=" + DEFAULT_CRIME_ID);
+
+        // Get all the crimeAlertList where crimeID is less than UPDATED_CRIME_ID
+        defaultCrimeAlertShouldBeFound("crimeID.lessThan=" + UPDATED_CRIME_ID);
+    }
+
+    @Test
+    @Transactional
+    void getAllCrimeAlertsByCrimeIDIsGreaterThanSomething() throws Exception {
+        // Initialize the database
+        crimeAlertRepository.saveAndFlush(crimeAlert);
+
+        // Get all the crimeAlertList where crimeID is greater than DEFAULT_CRIME_ID
+        defaultCrimeAlertShouldNotBeFound("crimeID.greaterThan=" + DEFAULT_CRIME_ID);
+
+        // Get all the crimeAlertList where crimeID is greater than SMALLER_CRIME_ID
+        defaultCrimeAlertShouldBeFound("crimeID.greaterThan=" + SMALLER_CRIME_ID);
+    }
+
+    @Test
+    @Transactional
     void getAllCrimeAlertsByPostedbyIsEqualToSomething() throws Exception {
         User postedby;
         if (TestUtil.findAll(em, User.class).isEmpty()) {
@@ -727,7 +845,8 @@ class CrimeAlertResourceIT {
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
             .andExpect(jsonPath("$.[*].lat").value(hasItem(sameNumber(DEFAULT_LAT))))
             .andExpect(jsonPath("$.[*].lon").value(hasItem(sameNumber(DEFAULT_LON))))
-            .andExpect(jsonPath("$.[*].date").value(hasItem(DEFAULT_DATE.toString())));
+            .andExpect(jsonPath("$.[*].date").value(hasItem(DEFAULT_DATE.toString())))
+            .andExpect(jsonPath("$.[*].crimeID").value(hasItem(DEFAULT_CRIME_ID.intValue())));
 
         // Check, that the count call also returns 1
         restCrimeAlertMockMvc
@@ -775,7 +894,13 @@ class CrimeAlertResourceIT {
         CrimeAlert updatedCrimeAlert = crimeAlertRepository.findById(crimeAlert.getId()).get();
         // Disconnect from session so that the updates on updatedCrimeAlert are not directly saved in db
         em.detach(updatedCrimeAlert);
-        updatedCrimeAlert.title(UPDATED_TITLE).description(UPDATED_DESCRIPTION).lat(UPDATED_LAT).lon(UPDATED_LON).date(UPDATED_DATE);
+        updatedCrimeAlert
+            .title(UPDATED_TITLE)
+            .description(UPDATED_DESCRIPTION)
+            .lat(UPDATED_LAT)
+            .lon(UPDATED_LON)
+            .date(UPDATED_DATE)
+            .crimeID(UPDATED_CRIME_ID);
         CrimeAlertDTO crimeAlertDTO = crimeAlertMapper.toDto(updatedCrimeAlert);
 
         restCrimeAlertMockMvc
@@ -795,6 +920,7 @@ class CrimeAlertResourceIT {
         assertThat(testCrimeAlert.getLat()).isEqualByComparingTo(UPDATED_LAT);
         assertThat(testCrimeAlert.getLon()).isEqualByComparingTo(UPDATED_LON);
         assertThat(testCrimeAlert.getDate()).isEqualTo(UPDATED_DATE);
+        assertThat(testCrimeAlert.getCrimeID()).isEqualTo(UPDATED_CRIME_ID);
     }
 
     @Test
@@ -874,7 +1000,7 @@ class CrimeAlertResourceIT {
         CrimeAlert partialUpdatedCrimeAlert = new CrimeAlert();
         partialUpdatedCrimeAlert.setId(crimeAlert.getId());
 
-        partialUpdatedCrimeAlert.title(UPDATED_TITLE).lat(UPDATED_LAT).lon(UPDATED_LON);
+        partialUpdatedCrimeAlert.title(UPDATED_TITLE).lat(UPDATED_LAT).lon(UPDATED_LON).crimeID(UPDATED_CRIME_ID);
 
         restCrimeAlertMockMvc
             .perform(
@@ -893,6 +1019,7 @@ class CrimeAlertResourceIT {
         assertThat(testCrimeAlert.getLat()).isEqualByComparingTo(UPDATED_LAT);
         assertThat(testCrimeAlert.getLon()).isEqualByComparingTo(UPDATED_LON);
         assertThat(testCrimeAlert.getDate()).isEqualTo(DEFAULT_DATE);
+        assertThat(testCrimeAlert.getCrimeID()).isEqualTo(UPDATED_CRIME_ID);
     }
 
     @Test
@@ -907,7 +1034,13 @@ class CrimeAlertResourceIT {
         CrimeAlert partialUpdatedCrimeAlert = new CrimeAlert();
         partialUpdatedCrimeAlert.setId(crimeAlert.getId());
 
-        partialUpdatedCrimeAlert.title(UPDATED_TITLE).description(UPDATED_DESCRIPTION).lat(UPDATED_LAT).lon(UPDATED_LON).date(UPDATED_DATE);
+        partialUpdatedCrimeAlert
+            .title(UPDATED_TITLE)
+            .description(UPDATED_DESCRIPTION)
+            .lat(UPDATED_LAT)
+            .lon(UPDATED_LON)
+            .date(UPDATED_DATE)
+            .crimeID(UPDATED_CRIME_ID);
 
         restCrimeAlertMockMvc
             .perform(
@@ -926,6 +1059,7 @@ class CrimeAlertResourceIT {
         assertThat(testCrimeAlert.getLat()).isEqualByComparingTo(UPDATED_LAT);
         assertThat(testCrimeAlert.getLon()).isEqualByComparingTo(UPDATED_LON);
         assertThat(testCrimeAlert.getDate()).isEqualTo(UPDATED_DATE);
+        assertThat(testCrimeAlert.getCrimeID()).isEqualTo(UPDATED_CRIME_ID);
     }
 
     @Test

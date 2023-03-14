@@ -8,6 +8,7 @@ export interface ICrimeAlert {
   lat?: number | null;
   lon?: number | null;
   date?: dayjs.Dayjs | null;
+  crimeID?: number | null;
   postedby?: Pick<IUser, 'id' | 'login'> | null;
 }
 

@@ -36,6 +36,7 @@ type CrimeAlertFormGroupContent = {
   lat: FormControl<CrimeAlertFormRawValue['lat']>;
   lon: FormControl<CrimeAlertFormRawValue['lon']>;
   date: FormControl<CrimeAlertFormRawValue['date']>;
+  crimeID: FormControl<CrimeAlertFormRawValue['crimeID']>;
   postedby: FormControl<CrimeAlertFormRawValue['postedby']>;
 };
 
@@ -69,6 +70,9 @@ export class CrimeAlertFormService {
         validators: [Validators.required],
       }),
       date: new FormControl(crimeAlertRawValue.date, {
+        validators: [Validators.required],
+      }),
+      crimeID: new FormControl(crimeAlertRawValue.crimeID, {
         validators: [Validators.required],
       }),
       postedby: new FormControl(crimeAlertRawValue.postedby, {
