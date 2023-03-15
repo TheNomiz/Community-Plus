@@ -52,6 +52,11 @@ import { RouterModule } from '@angular/router';
         path: 'gdpr',
         loadChildren: () => import('./gdpr/gdpr.module').then(m => m.GdprModule),
       },
+      {
+        path: 'user-profile',
+        data: { pageTitle: 'teamprojectApp.userProfile.home.title' },
+        loadChildren: () => import('./user-profile/user-profile.module').then(m => m.UserProfileModule),
+      },
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ]),
   ],

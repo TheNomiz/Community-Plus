@@ -1,0 +1,401 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-user-profile-heading"
+        data-cy="UserProfileCreateUpdateHeading"
+        jhiTranslate="teamprojectApp.userProfile.home.createOrEditLabel"
+      >
+        Create or edit a User Profile
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="teamprojectApp.userProfile.username" for="field_username">Username</label>
+          <input type="text" class="form-control" name="username" id="field_username" data-cy="username" formControlName="username" />
+          <div *ngIf="editForm.get('username')!.invalid && (editForm.get('username')!.dirty || editForm.get('username')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('username')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="teamprojectApp.userProfile.verified" for="field_verified">Verified</label>
+          <input type="checkbox" class="form-check" name="verified" id="field_verified" data-cy="verified" formControlName="verified" />
+          <div *ngIf="editForm.get('verified')!.invalid && (editForm.get('verified')!.dirty || editForm.get('verified')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('verified')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="teamprojectApp.userProfile.privateAccount" for="field_privateAccount"
+            >Private Account</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="privateAccount"
+            id="field_privateAccount"
+            data-cy="privateAccount"
+            formControlName="privateAccount"
+          />
+          <div
+            *ngIf="
+              editForm.get('privateAccount')!.invalid && (editForm.get('privateAccount')!.dirty || editForm.get('privateAccount')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('privateAccount')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="teamprojectApp.userProfile.age" for="field_age">Age</label>
+          <input type="number" class="form-control" name="age" id="field_age" data-cy="age" formControlName="age" />
+          <div *ngIf="editForm.get('age')!.invalid && (editForm.get('age')!.dirty || editForm.get('age')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('age')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+            <small class="form-text text-danger" [hidden]="!editForm.get('age')?.errors?.number" jhiTranslate="entity.validation.number">
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="teamprojectApp.userProfile.accountType" for="field_accountType">Account Type</label>
+          <input
+            type="text"
+            class="form-control"
+            name="accountType"
+            id="field_accountType"
+            data-cy="accountType"
+            formControlName="accountType"
+          />
+          <div *ngIf="editForm.get('accountType')!.invalid && (editForm.get('accountType')!.dirty || editForm.get('accountType')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('accountType')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="teamprojectApp.userProfile.firstnames" for="field_firstnames">Firstnames</label>
+          <input
+            type="text"
+            class="form-control"
+            name="firstnames"
+            id="field_firstnames"
+            data-cy="firstnames"
+            formControlName="firstnames"
+          />
+          <div *ngIf="editForm.get('firstnames')!.invalid && (editForm.get('firstnames')!.dirty || editForm.get('firstnames')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('firstnames')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('firstnames')?.errors?.minlength"
+              jhiTranslate="entity.validation.minlength"
+              [translateValues]="{ min: 1 }"
+            >
+              This field is required to be at least 1 characters.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('firstnames')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 20 }"
+            >
+              This field cannot be longer than 20 characters.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="teamprojectApp.userProfile.lastname" for="field_lastname">Lastname</label>
+          <input type="text" class="form-control" name="lastname" id="field_lastname" data-cy="lastname" formControlName="lastname" />
+          <div *ngIf="editForm.get('lastname')!.invalid && (editForm.get('lastname')!.dirty || editForm.get('lastname')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('lastname')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('lastname')?.errors?.minlength"
+              jhiTranslate="entity.validation.minlength"
+              [translateValues]="{ min: 1 }"
+            >
+              This field is required to be at least 1 characters.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('lastname')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 20 }"
+            >
+              This field cannot be longer than 20 characters.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="teamprojectApp.userProfile.password" for="field_password">Password</label>
+          <input type="text" class="form-control" name="password" id="field_password" data-cy="password" formControlName="password" />
+          <div *ngIf="editForm.get('password')!.invalid && (editForm.get('password')!.dirty || editForm.get('password')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('password')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="teamprojectApp.userProfile.occupation" for="field_occupation">Occupation</label>
+          <input
+            type="text"
+            class="form-control"
+            name="occupation"
+            id="field_occupation"
+            data-cy="occupation"
+            formControlName="occupation"
+          />
+          <div *ngIf="editForm.get('occupation')!.invalid && (editForm.get('occupation')!.dirty || editForm.get('occupation')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('occupation')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('occupation')?.errors?.minlength"
+              jhiTranslate="entity.validation.minlength"
+              [translateValues]="{ min: 3 }"
+            >
+              This field is required to be at least 3 characters.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('occupation')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 20 }"
+            >
+              This field cannot be longer than 20 characters.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="teamprojectApp.userProfile.streetAddress" for="field_streetAddress">Street Address</label>
+          <input
+            type="text"
+            class="form-control"
+            name="streetAddress"
+            id="field_streetAddress"
+            data-cy="streetAddress"
+            formControlName="streetAddress"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="teamprojectApp.userProfile.city" for="field_city">City</label>
+          <input type="text" class="form-control" name="city" id="field_city" data-cy="city" formControlName="city" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="teamprojectApp.userProfile.postalCode" for="field_postalCode">Postal Code</label>
+          <input
+            type="text"
+            class="form-control"
+            name="postalCode"
+            id="field_postalCode"
+            data-cy="postalCode"
+            formControlName="postalCode"
+          />
+          <div *ngIf="editForm.get('postalCode')!.invalid && (editForm.get('postalCode')!.dirty || editForm.get('postalCode')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('postalCode')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="teamprojectApp.userProfile.bio" for="field_bio">Bio</label>
+          <input type="text" class="form-control" name="bio" id="field_bio" data-cy="bio" formControlName="bio" />
+          <div *ngIf="editForm.get('bio')!.invalid && (editForm.get('bio')!.dirty || editForm.get('bio')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('bio')?.errors?.minlength"
+              jhiTranslate="entity.validation.minlength"
+              [translateValues]="{ min: 1 }"
+            >
+              This field is required to be at least 1 characters.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('bio')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 150 }"
+            >
+              This field cannot be longer than 150 characters.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="teamprojectApp.userProfile.email" for="field_email">Email</label>
+          <input type="text" class="form-control" name="email" id="field_email" data-cy="email" formControlName="email" />
+          <div *ngIf="editForm.get('email')!.invalid && (editForm.get('email')!.dirty || editForm.get('email')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('email')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="teamprojectApp.userProfile.phoneNumber" for="field_phoneNumber">Phone Number</label>
+          <input
+            type="text"
+            class="form-control"
+            name="phoneNumber"
+            id="field_phoneNumber"
+            data-cy="phoneNumber"
+            formControlName="phoneNumber"
+          />
+          <div *ngIf="editForm.get('phoneNumber')!.invalid && (editForm.get('phoneNumber')!.dirty || editForm.get('phoneNumber')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('phoneNumber')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('phoneNumber')?.errors?.minlength"
+              jhiTranslate="entity.validation.minlength"
+              [translateValues]="{ min: 11 }"
+            >
+              This field is required to be at least 11 characters.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('phoneNumber')?.errors?.pattern"
+              jhiTranslate="entity.validation.pattern"
+              [translateValues]="{ pattern: 'Phone Number' }"
+            >
+              This field should follow pattern for Phone Number.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="teamprojectApp.userProfile.communityPoints" for="field_communityPoints"
+            >Community Points</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="communityPoints"
+            id="field_communityPoints"
+            data-cy="communityPoints"
+            formControlName="communityPoints"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="teamprojectApp.userProfile.language" for="field_language">Language</label>
+          <input type="text" class="form-control" name="language" id="field_language" data-cy="language" formControlName="language" />
+          <div *ngIf="editForm.get('language')!.invalid && (editForm.get('language')!.dirty || editForm.get('language')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('language')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="teamprojectApp.userProfile.gPS" for="field_gPS">G PS</label>
+          <input type="checkbox" class="form-check" name="gPS" id="field_gPS" data-cy="gPS" formControlName="gPS" />
+          <div *ngIf="editForm.get('gPS')!.invalid && (editForm.get('gPS')!.dirty || editForm.get('gPS')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('gPS')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="teamprojectApp.userProfile.darkmode" for="field_darkmode">Darkmode</label>
+          <input type="checkbox" class="form-check" name="darkmode" id="field_darkmode" data-cy="darkmode" formControlName="darkmode" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="teamprojectApp.userProfile.fontsize" for="field_fontsize">Fontsize</label>
+          <input type="number" class="form-control" name="fontsize" id="field_fontsize" data-cy="fontsize" formControlName="fontsize" />
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

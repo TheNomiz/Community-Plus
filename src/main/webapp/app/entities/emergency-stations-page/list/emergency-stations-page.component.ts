@@ -4,20 +4,20 @@ import { ActivatedRoute, Data, ParamMap, Router } from '@angular/router';
 import { combineLatest, filter, Observable, switchMap, tap } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { ICrimeAlert } from '../crime-alert.model';
+import { IEmergencyStationsPage } from '../emergency-stations-page.model';
 
 import { ITEMS_PER_PAGE } from 'app/config/pagination.constants';
 import { ASC, DESC, SORT, ITEM_DELETED_EVENT, DEFAULT_SORT_DATA } from 'app/config/navigation.constants';
-import { EntityArrayResponseType, CrimeAlertService } from '../service/crime-alert.service';
-import { CrimeAlertDeleteDialogComponent } from '../delete/crime-alert-delete-dialog.component';
+import { EntityArrayResponseType, EmergencyStationsPageService } from '../service/emergency-stations-page.service';
+import { EmergencyStationsPageDeleteDialogComponent } from '../delete/emergency-stations-page-delete-dialog.component';
 import { ParseLinks } from 'app/core/util/parse-links.service';
 
 @Component({
-  selector: 'jhi-crime-alert',
-  templateUrl: './crime-alert.component.html',
+  selector: 'jhi-emergency-stations-page',
+  templateUrl: './emergency-stations-page.component.html',
 })
-export class CrimeAlertComponent implements OnInit {
-  crimeAlerts?: ICrimeAlert[];
+export class EmergencyStationsPageComponent implements OnInit {
+  emergencyStationsPages?: IEmergencyStationsPage[];
   isLoading = false;
 
   predicate = 'id';
@@ -30,7 +30,7 @@ export class CrimeAlertComponent implements OnInit {
   page = 1;
 
   constructor(
-    protected crimeAlertService: CrimeAlertService,
+    protected emergencyStationsPageService: EmergencyStationsPageService,
     protected activatedRoute: ActivatedRoute,
     public router: Router,
     protected parseLinks: ParseLinks,
@@ -39,7 +39,7 @@ export class CrimeAlertComponent implements OnInit {
 
   reset(): void {
     this.page = 1;
-    this.crimeAlerts = [];
+    this.emergencyStationsPages = [];
     this.load();
   }
 
@@ -48,15 +48,16 @@ export class CrimeAlertComponent implements OnInit {
     this.load();
   }
 
-  trackId = (_index: number, item: ICrimeAlert): number => this.crimeAlertService.getCrimeAlertIdentifier(item);
+  trackId = (_index: number, item: IEmergencyStationsPage): number =>
+    this.emergencyStationsPageService.getEmergencyStationsPageIdentifier(item);
 
   ngOnInit(): void {
     this.load();
   }
 
-  delete(crimeAlert: ICrimeAlert): void {
-    const modalRef = this.modalService.open(CrimeAlertDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
-    modalRef.componentInstance.crimeAlert = crimeAlert;
+  delete(emergencyStationsPage: IEmergencyStationsPage): void {
+    const modalRef = this.modalService.open(EmergencyStationsPageDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
+    modalRef.componentInstance.emergencyStationsPage = emergencyStationsPage;
     // unsubscribe not needed because closed completes on modal close
     modalRef.closed
       .pipe(
@@ -102,19 +103,19 @@ export class CrimeAlertComponent implements OnInit {
   protected onResponseSuccess(response: EntityArrayResponseType): void {
     this.fillComponentAttributesFromResponseHeader(response.headers);
     const dataFromBody = this.fillComponentAttributesFromResponseBody(response.body);
-    this.crimeAlerts = dataFromBody;
+    this.emergencyStationsPages = dataFromBody;
   }
 
-  protected fillComponentAttributesFromResponseBody(data: ICrimeAlert[] | null): ICrimeAlert[] {
-    const crimeAlertsNew = this.crimeAlerts ?? [];
+  protected fillComponentAttributesFromResponseBody(data: IEmergencyStationsPage[] | null): IEmergencyStationsPage[] {
+    const emergencyStationsPagesNew = this.emergencyStationsPages ?? [];
     if (data) {
       for (const d of data) {
-        if (crimeAlertsNew.map(op => op.id).indexOf(d.id) === -1) {
-          crimeAlertsNew.push(d);
+        if (emergencyStationsPagesNew.map(op => op.id).indexOf(d.id) === -1) {
+          emergencyStationsPagesNew.push(d);
         }
       }
     }
-    return crimeAlertsNew;
+    return emergencyStationsPagesNew;
   }
 
   protected fillComponentAttributesFromResponseHeader(headers: HttpHeaders): void {
@@ -134,10 +135,9 @@ export class CrimeAlertComponent implements OnInit {
     const queryObject = {
       page: pageToLoad - 1,
       size: this.itemsPerPage,
-      eagerload: true,
       sort: this.getSortQueryParam(predicate, ascending),
     };
-    return this.crimeAlertService.query(queryObject).pipe(tap(() => (this.isLoading = false)));
+    return this.emergencyStationsPageService.query(queryObject).pipe(tap(() => (this.isLoading = false)));
   }
 
   protected handleNavigation(page = this.page, predicate?: string, ascending?: boolean): void {

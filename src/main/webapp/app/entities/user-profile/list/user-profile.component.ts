@@ -4,20 +4,20 @@ import { ActivatedRoute, Data, ParamMap, Router } from '@angular/router';
 import { combineLatest, filter, Observable, switchMap, tap } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { ICrimeAlert } from '../crime-alert.model';
+import { IUserProfile } from '../user-profile.model';
 
 import { ITEMS_PER_PAGE } from 'app/config/pagination.constants';
 import { ASC, DESC, SORT, ITEM_DELETED_EVENT, DEFAULT_SORT_DATA } from 'app/config/navigation.constants';
-import { EntityArrayResponseType, CrimeAlertService } from '../service/crime-alert.service';
-import { CrimeAlertDeleteDialogComponent } from '../delete/crime-alert-delete-dialog.component';
+import { EntityArrayResponseType, UserProfileService } from '../service/user-profile.service';
+import { UserProfileDeleteDialogComponent } from '../delete/user-profile-delete-dialog.component';
 import { ParseLinks } from 'app/core/util/parse-links.service';
 
 @Component({
-  selector: 'jhi-crime-alert',
-  templateUrl: './crime-alert.component.html',
+  selector: 'jhi-user-profile',
+  templateUrl: './user-profile.component.html',
 })
-export class CrimeAlertComponent implements OnInit {
-  crimeAlerts?: ICrimeAlert[];
+export class UserProfileComponent implements OnInit {
+  userProfiles?: IUserProfile[];
   isLoading = false;
 
   predicate = 'id';
@@ -30,7 +30,7 @@ export class CrimeAlertComponent implements OnInit {
   page = 1;
 
   constructor(
-    protected crimeAlertService: CrimeAlertService,
+    protected userProfileService: UserProfileService,
     protected activatedRoute: ActivatedRoute,
     public router: Router,
     protected parseLinks: ParseLinks,
@@ -39,7 +39,7 @@ export class CrimeAlertComponent implements OnInit {
 
   reset(): void {
     this.page = 1;
-    this.crimeAlerts = [];
+    this.userProfiles = [];
     this.load();
   }
 
@@ -48,15 +48,15 @@ export class CrimeAlertComponent implements OnInit {
     this.load();
   }
 
-  trackId = (_index: number, item: ICrimeAlert): number => this.crimeAlertService.getCrimeAlertIdentifier(item);
+  trackId = (_index: number, item: IUserProfile): number => this.userProfileService.getUserProfileIdentifier(item);
 
   ngOnInit(): void {
     this.load();
   }
 
-  delete(crimeAlert: ICrimeAlert): void {
-    const modalRef = this.modalService.open(CrimeAlertDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
-    modalRef.componentInstance.crimeAlert = crimeAlert;
+  delete(userProfile: IUserProfile): void {
+    const modalRef = this.modalService.open(UserProfileDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
+    modalRef.componentInstance.userProfile = userProfile;
     // unsubscribe not needed because closed completes on modal close
     modalRef.closed
       .pipe(
@@ -102,19 +102,19 @@ export class CrimeAlertComponent implements OnInit {
   protected onResponseSuccess(response: EntityArrayResponseType): void {
     this.fillComponentAttributesFromResponseHeader(response.headers);
     const dataFromBody = this.fillComponentAttributesFromResponseBody(response.body);
-    this.crimeAlerts = dataFromBody;
+    this.userProfiles = dataFromBody;
   }
 
-  protected fillComponentAttributesFromResponseBody(data: ICrimeAlert[] | null): ICrimeAlert[] {
-    const crimeAlertsNew = this.crimeAlerts ?? [];
+  protected fillComponentAttributesFromResponseBody(data: IUserProfile[] | null): IUserProfile[] {
+    const userProfilesNew = this.userProfiles ?? [];
     if (data) {
       for (const d of data) {
-        if (crimeAlertsNew.map(op => op.id).indexOf(d.id) === -1) {
-          crimeAlertsNew.push(d);
+        if (userProfilesNew.map(op => op.id).indexOf(d.id) === -1) {
+          userProfilesNew.push(d);
         }
       }
     }
-    return crimeAlertsNew;
+    return userProfilesNew;
   }
 
   protected fillComponentAttributesFromResponseHeader(headers: HttpHeaders): void {
@@ -134,10 +134,9 @@ export class CrimeAlertComponent implements OnInit {
     const queryObject = {
       page: pageToLoad - 1,
       size: this.itemsPerPage,
-      eagerload: true,
       sort: this.getSortQueryParam(predicate, ascending),
     };
-    return this.crimeAlertService.query(queryObject).pipe(tap(() => (this.isLoading = false)));
+    return this.userProfileService.query(queryObject).pipe(tap(() => (this.isLoading = false)));
   }
 
   protected handleNavigation(page = this.page, predicate?: string, ascending?: boolean): void {

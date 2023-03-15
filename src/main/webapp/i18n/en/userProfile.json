@@ -1,0 +1,43 @@
+{
+  "teamprojectApp": {
+    "userProfile": {
+      "home": {
+        "title": "User Profiles",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new User Profile",
+        "createOrEditLabel": "Create or edit a User Profile",
+        "notFound": "No User Profiles found"
+      },
+      "created": "A new User Profile is created with identifier {{ param }}",
+      "updated": "A User Profile is updated with identifier {{ param }}",
+      "deleted": "A User Profile is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete User Profile {{ id }}?"
+      },
+      "detail": {
+        "title": "User Profile"
+      },
+      "id": "ID",
+      "username": "Username",
+      "verified": "Verified",
+      "privateAccount": "Private Account",
+      "age": "Age",
+      "accountType": "Account Type",
+      "firstnames": "Firstnames",
+      "lastname": "Lastname",
+      "password": "Password",
+      "occupation": "Occupation",
+      "streetAddress": "Street Address",
+      "city": "City",
+      "postalCode": "Postal Code",
+      "bio": "Bio",
+      "email": "Email",
+      "phoneNumber": "Phone Number",
+      "communityPoints": "Community Points",
+      "language": "Language",
+      "gPS": "G PS",
+      "darkmode": "Darkmode",
+      "fontsize": "Fontsize"
+    }
+  }
+}

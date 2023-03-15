@@ -1,0 +1,34 @@
+
+entity UserProfile {
+
+    Username String required
+    Verified Boolean required
+    PrivateAccount Boolean required
+    Age Integer required
+    AccountType String required
+    Firstnames String required minlength(1) maxlength(20)
+    Lastname String required minlength(1) maxlength(20)
+    Password String required
+    Occupation String required minlength(3) maxlength(20)
+    StreetAddress String
+    City String
+    PostalCode String required
+    Bio String minlength(1) maxlength(150)
+    Email String required
+    PhoneNumber String required minlength(11) pattern (/^[0-9]+\d$/)
+    CommunityPoints Integer
+    Language String required
+    GPS Boolean required
+    Darkmode Boolean
+    Fontsize Integer
+
+
+}
+
+
+
+
+paginate UserProfile with infinite-scroll
+
+
+
