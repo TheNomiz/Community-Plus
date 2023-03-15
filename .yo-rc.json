@@ -57,6 +57,7 @@
     "skipUserManagement": false,
     "testFrameworks": ["cypress"],
     "websocket": false,
-    "withAdminUi": true
+    "withAdminUi": true,
+    "skipEntityGeneration": true
   }
 }

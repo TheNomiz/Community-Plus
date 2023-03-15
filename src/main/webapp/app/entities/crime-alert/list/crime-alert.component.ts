@@ -3,14 +3,17 @@ import { HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute, Data, ParamMap, Router } from '@angular/router';
 import { combineLatest, filter, Observable, switchMap, tap } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-
-import { ICrimeAlert } from '../crime-alert.model';
-
+import * as L from 'leaflet';
+import { ICrimeAlert, NewCrimeAlert } from '../crime-alert.model';
+import axios from 'axios';
+import dayjs from 'dayjs/esm';
 import { ITEMS_PER_PAGE } from 'app/config/pagination.constants';
 import { ASC, DESC, SORT, ITEM_DELETED_EVENT, DEFAULT_SORT_DATA } from 'app/config/navigation.constants';
-import { EntityArrayResponseType, CrimeAlertService } from '../service/crime-alert.service';
+import getCrimeData, { EntityArrayResponseType, CrimeAlertService } from '../service/crime-alert.service';
 import { CrimeAlertDeleteDialogComponent } from '../delete/crime-alert-delete-dialog.component';
 import { ParseLinks } from 'app/core/util/parse-links.service';
+import { AccountService } from 'app/core/auth/account.service';
+import { Map, TileLayer } from 'leaflet';
 
 @Component({
   selector: 'jhi-crime-alert',
@@ -34,7 +37,8 @@ export class CrimeAlertComponent implements OnInit {
     protected activatedRoute: ActivatedRoute,
     public router: Router,
     protected parseLinks: ParseLinks,
-    protected modalService: NgbModal
+    protected modalService: NgbModal,
+    protected accountService: AccountService
   ) {}
 
   reset(): void {
@@ -51,6 +55,10 @@ export class CrimeAlertComponent implements OnInit {
   trackId = (_index: number, item: ICrimeAlert): number => this.crimeAlertService.getCrimeAlertIdentifier(item);
 
   ngOnInit(): void {
+    const map = L.map('map').setView([51.505, -0.09], 13);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
+    }).addTo(map);
     this.load();
   }
 

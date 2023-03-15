@@ -4,6 +4,7 @@
       "home": {
         "title": "Crime Alerts",
         "refreshListLabel": "Refresh list",
+        "ListViewListLabel": "Open/Close List View",
         "createLabel": "Create a new Crime Alert",
         "createOrEditLabel": "Create or edit a Crime Alert",
         "notFound": "No Crime Alerts found"
