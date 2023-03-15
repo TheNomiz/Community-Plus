@@ -15,6 +15,7 @@ import { ParseLinks } from 'app/core/util/parse-links.service';
 @Component({
   selector: 'jhi-emergency-guide-page',
   templateUrl: './emergency-guide-page.component.html',
+  styleUrls: ['./emergency-guide-page.component.scss'],
 })
 export class EmergencyGuidePageComponent implements OnInit {
   emergencyGuidePages?: IEmergencyGuidePage[];

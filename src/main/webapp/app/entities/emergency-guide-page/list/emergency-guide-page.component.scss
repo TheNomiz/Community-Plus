@@ -1,0 +1,38 @@
+@import 'node_modules/bootstrap/scss/functions';
+@import 'node_modules/bootstrap/scss/variables';
+
+/* ==========================================================================
+Layout
+========================================================================== */
+
+.intro {
+  background-color: #c3b7b7;
+  border-radius: 5px;
+  border: none;
+  width: 70%;
+  height: 120px;
+}
+
+.text {
+  background-color: transparent;
+  text-align: center;
+}
+
+.searchHolder {
+  border: none;
+  background-color: transparent;
+  text-align: left;
+  float: left;
+  width: 50%;
+  height: 1%;
+}
+
+.searchBar {
+  border-color: black;
+  border-width: 1px;
+  border-radius: 5px;
+  background-color: transparent;
+  float: left;
+  width: 75%;
+  height: 100%;
+}
