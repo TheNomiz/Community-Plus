@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute, Data, ParamMap, Router } from '@angular/router';
-import { combineLatest, filter, Observable, switchMap, tap } from 'rxjs';
+import { combineLatest, filter, Observable, skip, switchMap, tap } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import * as L from 'leaflet';
 import { ICrimeAlert, NewCrimeAlert } from '../crime-alert.model';
@@ -31,6 +31,7 @@ export class CrimeAlertComponent implements OnInit {
     last: 0,
   };
   page = 1;
+  map!: L.Map;
 
   constructor(
     protected crimeAlertService: CrimeAlertService,
@@ -55,10 +56,6 @@ export class CrimeAlertComponent implements OnInit {
   trackId = (_index: number, item: ICrimeAlert): number => this.crimeAlertService.getCrimeAlertIdentifier(item);
 
   ngOnInit(): void {
-    const map = L.map('map').setView([51.505, -0.09], 13);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
-    }).addTo(map);
     this.load();
   }
 
@@ -83,6 +80,34 @@ export class CrimeAlertComponent implements OnInit {
       next: (res: EntityArrayResponseType) => {
         this.onResponseSuccess(res);
       },
+    });
+
+    this.map = L.map('map').setView([51.505, -0.09], 2);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
+    }).addTo(this.map);
+
+    this.crimeAlertService.query().subscribe((res: EntityArrayResponseType) => {
+      const dataFromBody = this.fillComponentAttributesFromResponseBody(res.body);
+      // eslint-disable-next-line no-console
+      // eslint-disable-next-line no-console
+
+      for (const crimeAlert of dataFromBody) {
+        let lat: number | undefined;
+        let lon: number | undefined;
+        if (crimeAlert.lat !== null && crimeAlert.lat !== undefined) {
+          lat = crimeAlert.lat;
+        } else {
+          continue;
+        }
+        if (crimeAlert.lon !== null && crimeAlert.lon !== undefined) {
+          lon = crimeAlert.lon;
+        } else {
+          continue;
+          // handle the case when latitude is null or undefined
+        }
+        L.marker([lat, lon]).addTo(this.map);
+      }
     });
   }
 
