@@ -200,8 +200,7 @@ jhipster:
     license: unlicensed
     license-url:
   security:
-    Content-Security-Policy: "default-src *; frame-src 'self' data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://storage.googleapis.com; style-src 'self' 'unsafe-inline'; img-src *; font-src 'self' data:;"
-# ===================================================================
+    Content-Security-Policy: "default-src 'self'; frame-src 'self' data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://storage.googleapis.com https://openlayers.org; style-src 'self' 'unsafe-inline' https://openlayers.org https://unpkg.com/leaflet@1.9.3/dist/leaflet.css; img-src * data: https://sampleserver1.arcgisonline.com/ArcGIS/rest/services/Specialty/ESRI_StateCityHighway_USA/MapServer/ https://tile.openstreetmap.org https://a.tile.openstreetmap.org https://b.tile.openstreetmap.org https://c.tile.openstreetmap.org ; font-src 'self' data:"
 # Application specific propertiesW
 # Add your own application properties here, see the ApplicationProperties class
 # to have type-safe configuration, like in the JHipsterProperties above
