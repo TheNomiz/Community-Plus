@@ -8,6 +8,7 @@ import { IChatRoom } from 'app/entities/chat-room/chat-room.model';
 import { IChatMessage } from 'app/entities/chat-message/chat-message.model';
 import { IEvent } from 'app/entities/event/event.model';
 import { IBusiness } from 'app/entities/business/business.model';
+import { latLng, tileLayer, Map } from 'leaflet';
 
 @Component({
   selector: 'jhi-community',
@@ -19,7 +20,18 @@ export class CommunityComponent implements OnInit {
   chatMessages: IChatMessage[] = [];
   events: IEvent[] = [];
   businesses: IBusiness[] = [];
+
   images = [944, 1011, 984].map(n => `https://picsum.photos/id/${n}/900/500`);
+
+  options = {
+    layers: [
+      tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&amp;copy; OpenStreetMap contributors',
+      }),
+    ],
+    zoom: 13,
+    center: latLng([52.45, -1.93]),
+  };
 
   constructor(
     private busservice: BusinessService,
