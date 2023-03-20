@@ -171,7 +171,7 @@ public class CrimeAlertServiceImpl implements CrimeAlertService {
             JsonPrimitive lonJson = jsonElement.getAsJsonObject().getAsJsonObject("location").getAsJsonPrimitive("longitude");
             BigDecimal lon = lonJson.getAsBigDecimal();
             CrimeAlert crimeAlert = new CrimeAlert();
-            //crimeAlert.setId(id);
+            crimeAlert.setId(id);
             crimeAlert.setTitle(title);
             crimeAlert.setDescription(description);
             crimeAlert.setDate(date);

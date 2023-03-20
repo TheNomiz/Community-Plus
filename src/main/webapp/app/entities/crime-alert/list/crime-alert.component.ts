@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { Component, OnInit } from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute, Data, ParamMap, Router } from '@angular/router';
@@ -82,32 +83,53 @@ export class CrimeAlertComponent implements OnInit {
       },
     });
 
-    this.map = L.map('map').setView([51.505, -0.09], 2);
+    this.map = L.map('map', {
+      maxBounds: L.latLngBounds(L.latLng(49.78, -13.13), L.latLng(60.89, 2.87)),
+      maxZoom: 12,
+      minZoom: 6,
+    }).setView([51.505, -0.09], 12);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
     }).addTo(this.map);
 
-    this.crimeAlertService.query().subscribe((res: EntityArrayResponseType) => {
-      const dataFromBody = this.fillComponentAttributesFromResponseBody(res.body);
-      // eslint-disable-next-line no-console
-      // eslint-disable-next-line no-console
+    this.map.on('move', () => {
+      const center = this.map.getCenter();
+      const bounds = this.map.getBounds();
+      const radius = bounds.getNorthWest().distanceTo(bounds.getSouthEast()) / 2;
 
-      for (const crimeAlert of dataFromBody) {
-        let lat: number | undefined;
-        let lon: number | undefined;
-        if (crimeAlert.lat !== null && crimeAlert.lat !== undefined) {
-          lat = crimeAlert.lat;
-        } else {
-          continue;
+      this.crimeAlertService.query({ size: 100000 }).subscribe((res: EntityArrayResponseType) => {
+        const dataFromBody = this.fillComponentAttributesFromResponseBody(res.body);
+        const filteredData = dataFromBody.filter(crimeAlert => {
+          if (crimeAlert.lat === null || crimeAlert.lat === undefined || crimeAlert.lon === null || crimeAlert.lon === undefined) {
+            return false;
+          }
+          const latlng = L.latLng(crimeAlert.lat, crimeAlert.lon);
+          return latlng.distanceTo(center) <= radius;
+        });
+
+        // Remove all markers from the map
+        this.map.eachLayer(layer => {
+          if (layer instanceof L.Marker) {
+            this.map.removeLayer(layer);
+          }
+        });
+
+        // Add markers for the filtered crime alerts
+        for (const crimeAlert of filteredData) {
+          if (crimeAlert.lat !== null && crimeAlert.lat !== undefined) {
+            //lat = crimeAlert.lat;
+          } else {
+            continue;
+          }
+          if (crimeAlert.lon !== null && crimeAlert.lon !== undefined) {
+            //lon = crimeAlert.lon;
+          } else {
+            continue;
+            // handle the case when latitude is null or undefined
+          }
+          L.marker([crimeAlert.lat, crimeAlert.lon]).addTo(this.map);
         }
-        if (crimeAlert.lon !== null && crimeAlert.lon !== undefined) {
-          lon = crimeAlert.lon;
-        } else {
-          continue;
-          // handle the case when latitude is null or undefined
-        }
-        L.marker([lat, lon]).addTo(this.map);
-      }
+      });
     });
   }
 
