@@ -1,0 +1,32 @@
+{
+  "teamprojectApp": {
+    "lostFound": {
+      "home": {
+        "title": "Lost Founds",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Lost Found",
+        "createOrEditLabel": "Create or edit a Lost Found",
+        "notFound": "No Lost Founds found"
+      },
+      "created": "A new Lost Found is created with identifier {{ param }}",
+      "updated": "A Lost Found is updated with identifier {{ param }}",
+      "deleted": "A Lost Found is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Lost Found {{ id }}?"
+      },
+      "detail": {
+        "title": "Lost Found"
+      },
+      "id": "ID",
+      "description": "Description",
+      "date": "Date",
+      "location": "Location",
+      "item": "Item",
+      "name": "Name",
+      "email": "Email",
+      "phoneNumber": "Phone Number",
+      "postedby": "Postedby",
+      "lostItem": "Lost Item"
+    }
+  }
+}

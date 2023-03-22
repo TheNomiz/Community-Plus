@@ -74,6 +74,12 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
+          <th scope="col" jhiSortBy="category">
+            <div class="d-flex">
+              <span jhiTranslate="teamprojectApp.event.category">Category</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
           <th scope="col" jhiSortBy="longitude">
             <div class="d-flex">
               <span jhiTranslate="teamprojectApp.event.longitude">Longitude</span>
@@ -83,6 +89,12 @@
           <th scope="col" jhiSortBy="address">
             <div class="d-flex">
               <span jhiTranslate="teamprojectApp.event.address">Address</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="postedby.id">
+            <div class="d-flex">
+              <span jhiTranslate="teamprojectApp.event.postedby">Postedby</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
@@ -105,8 +117,14 @@
           <td>{{ event.endDate | formatMediumDate }}</td>
           <td>{{ event.imageUrl }}</td>
           <td>{{ event.latitude }}</td>
+          <td jhiTranslate="{{ 'teamprojectApp.EventCategory.' + event.category }}">{{ event.category }}</td>
           <td>{{ event.longitude }}</td>
           <td>{{ event.address }}</td>
+          <td>
+            <div *ngIf="event.postedby">
+              <a [routerLink]="['/user-profile', event.postedby.id, 'view']">{{ event.postedby.id }}</a>
+            </div>
+          </td>
           <td class="text-end">
             <div class="btn-group">
               <button type="submit" [routerLink]="['/event', event.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">

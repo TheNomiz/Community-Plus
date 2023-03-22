@@ -16,12 +16,13 @@ describe('Business e2e test', () => {
   const username = Cypress.env('E2E_USERNAME') ?? 'user';
   const password = Cypress.env('E2E_PASSWORD') ?? 'user';
   const businessSample = {
-    name: 'Mobility virtual Cross-group',
-    description: 'South Loan help-desk',
-    category: 'Electronics Gorgeous Rupee',
-    phoneNumber: 49061,
-    latitude: 19933,
-    longitude: 28768,
+    name: 'Concrete',
+    description: 'redundant Director',
+    category: 'GroceryStore',
+    phoneNumber: 'driverXXXXX',
+    email: 'Arch68@yahoo.com',
+    latitude: 36751,
+    longitude: 83104,
   };
 
   let business;
@@ -171,17 +172,17 @@ describe('Business e2e test', () => {
 
       cy.get(`[data-cy="description"]`).type('Sports Fundamental').should('have.value', 'Sports Fundamental');
 
-      cy.get(`[data-cy="category"]`).type('compressing').should('have.value', 'compressing');
+      cy.get(`[data-cy="category"]`).select('Restaurant');
 
-      cy.get(`[data-cy="phoneNumber"]`).type('63365').should('have.value', '63365');
+      cy.get(`[data-cy="phoneNumber"]`).type('base engineer Buckinghamshire').should('have.value', 'base engineer Buckinghamshire');
 
-      cy.get(`[data-cy="email"]`).type('Raphael_Franecki@yahoo.com').should('have.value', 'Raphael_Franecki@yahoo.com');
+      cy.get(`[data-cy="email"]`).type('Zander.Walsh71@gmail.com').should('have.value', 'Zander.Walsh71@gmail.com');
 
-      cy.get(`[data-cy="websiteUrl"]`).type('Tasty copying').should('have.value', 'Tasty copying');
+      cy.get(`[data-cy="websiteUrl"]`).type('open-source array').should('have.value', 'open-source array');
 
-      cy.get(`[data-cy="latitude"]`).type('65602').should('have.value', '65602');
+      cy.get(`[data-cy="latitude"]`).type('28554').should('have.value', '28554');
 
-      cy.get(`[data-cy="longitude"]`).type('34409').should('have.value', '34409');
+      cy.get(`[data-cy="longitude"]`).type('51045').should('have.value', '51045');
 
       cy.get(entityCreateSaveButtonSelector).click();
 

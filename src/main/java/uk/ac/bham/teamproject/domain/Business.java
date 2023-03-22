@@ -8,6 +8,7 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import uk.ac.bham.teamproject.domain.enumeration.BusinessCategory;
 
 /**
  * A Business.
@@ -36,16 +37,18 @@ public class Business implements Serializable {
     private String description;
 
     @NotNull
-    @Size(max = 50)
-    @Column(name = "category", length = 50, nullable = false)
-    private String category;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "category", nullable = false)
+    private BusinessCategory category;
 
     @NotNull
+    @Size(min = 11)
     @Column(name = "phone_number", nullable = false)
-    private Integer phoneNumber;
+    private String phoneNumber;
 
+    @NotNull
     @Size(max = 254)
-    @Column(name = "email", length = 254)
+    @Column(name = "email", length = 254, nullable = false)
     private String email;
 
     @Size(max = 255)
@@ -60,15 +63,19 @@ public class Business implements Serializable {
     @Column(name = "longitude", nullable = false)
     private Double longitude;
 
+    @ManyToOne
+    @JsonIgnoreProperties(value = { "iD" }, allowSetters = true)
+    private UserProfile postedby;
+
     @ManyToMany
     @JoinTable(
-        name = "rel_business__busroom",
+        name = "rel_business__businessroom",
         joinColumns = @JoinColumn(name = "business_id"),
-        inverseJoinColumns = @JoinColumn(name = "busroom_id")
+        inverseJoinColumns = @JoinColumn(name = "businessroom_id")
     )
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "messages", "events", "businesses" }, allowSetters = true)
-    private Set<ChatRoom> busrooms = new HashSet<>();
+    @JsonIgnoreProperties(value = { "messages", "events", "businesses", "lostitems" }, allowSetters = true)
+    private Set<ChatRoom> businessrooms = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -111,29 +118,29 @@ public class Business implements Serializable {
         this.description = description;
     }
 
-    public String getCategory() {
+    public BusinessCategory getCategory() {
         return this.category;
     }
 
-    public Business category(String category) {
+    public Business category(BusinessCategory category) {
         this.setCategory(category);
         return this;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(BusinessCategory category) {
         this.category = category;
     }
 
-    public Integer getPhoneNumber() {
+    public String getPhoneNumber() {
         return this.phoneNumber;
     }
 
-    public Business phoneNumber(Integer phoneNumber) {
+    public Business phoneNumber(String phoneNumber) {
         this.setPhoneNumber(phoneNumber);
         return this;
     }
 
-    public void setPhoneNumber(Integer phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
@@ -189,27 +196,40 @@ public class Business implements Serializable {
         this.longitude = longitude;
     }
 
-    public Set<ChatRoom> getBusrooms() {
-        return this.busrooms;
+    public UserProfile getPostedby() {
+        return this.postedby;
     }
 
-    public void setBusrooms(Set<ChatRoom> chatRooms) {
-        this.busrooms = chatRooms;
+    public void setPostedby(UserProfile userProfile) {
+        this.postedby = userProfile;
     }
 
-    public Business busrooms(Set<ChatRoom> chatRooms) {
-        this.setBusrooms(chatRooms);
+    public Business postedby(UserProfile userProfile) {
+        this.setPostedby(userProfile);
         return this;
     }
 
-    public Business addBusroom(ChatRoom chatRoom) {
-        this.busrooms.add(chatRoom);
+    public Set<ChatRoom> getBusinessrooms() {
+        return this.businessrooms;
+    }
+
+    public void setBusinessrooms(Set<ChatRoom> chatRooms) {
+        this.businessrooms = chatRooms;
+    }
+
+    public Business businessrooms(Set<ChatRoom> chatRooms) {
+        this.setBusinessrooms(chatRooms);
+        return this;
+    }
+
+    public Business addBusinessroom(ChatRoom chatRoom) {
+        this.businessrooms.add(chatRoom);
         chatRoom.getBusinesses().add(this);
         return this;
     }
 
-    public Business removeBusroom(ChatRoom chatRoom) {
-        this.busrooms.remove(chatRoom);
+    public Business removeBusinessroom(ChatRoom chatRoom) {
+        this.businessrooms.remove(chatRoom);
         chatRoom.getBusinesses().remove(this);
         return this;
     }
@@ -241,7 +261,7 @@ public class Business implements Serializable {
             ", name='" + getName() + "'" +
             ", description='" + getDescription() + "'" +
             ", category='" + getCategory() + "'" +
-            ", phoneNumber=" + getPhoneNumber() +
+            ", phoneNumber='" + getPhoneNumber() + "'" +
             ", email='" + getEmail() + "'" +
             ", websiteUrl='" + getWebsiteUrl() + "'" +
             ", latitude=" + getLatitude() +

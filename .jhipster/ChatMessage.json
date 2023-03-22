@@ -23,6 +23,11 @@
   "readOnly": false,
   "relationships": [
     {
+      "otherEntityName": "userProfile",
+      "relationshipName": "postedby",
+      "relationshipType": "many-to-one"
+    },
+    {
       "otherEntityName": "chatRoom",
       "otherEntityRelationshipName": "messages",
       "relationshipName": "room",

@@ -14,7 +14,7 @@ type PartialWithRequiredKeyOf<T extends { id: unknown }> = Partial<Omit<T, 'id'>
  */
 type BusinessFormGroupInput = IBusiness | PartialWithRequiredKeyOf<NewBusiness>;
 
-type BusinessFormDefaults = Pick<NewBusiness, 'id' | 'busrooms'>;
+type BusinessFormDefaults = Pick<NewBusiness, 'id' | 'businessrooms'>;
 
 type BusinessFormGroupContent = {
   id: FormControl<IBusiness['id'] | NewBusiness['id']>;
@@ -26,7 +26,8 @@ type BusinessFormGroupContent = {
   websiteUrl: FormControl<IBusiness['websiteUrl']>;
   latitude: FormControl<IBusiness['latitude']>;
   longitude: FormControl<IBusiness['longitude']>;
-  busrooms: FormControl<IBusiness['busrooms']>;
+  postedby: FormControl<IBusiness['postedby']>;
+  businessrooms: FormControl<IBusiness['businessrooms']>;
 };
 
 export type BusinessFormGroup = FormGroup<BusinessFormGroupContent>;
@@ -53,13 +54,13 @@ export class BusinessFormService {
         validators: [Validators.required],
       }),
       category: new FormControl(businessRawValue.category, {
-        validators: [Validators.required, Validators.maxLength(50)],
-      }),
-      phoneNumber: new FormControl(businessRawValue.phoneNumber, {
         validators: [Validators.required],
       }),
+      phoneNumber: new FormControl(businessRawValue.phoneNumber, {
+        validators: [Validators.required, Validators.minLength(11)],
+      }),
       email: new FormControl(businessRawValue.email, {
-        validators: [Validators.maxLength(254)],
+        validators: [Validators.required, Validators.maxLength(254)],
       }),
       websiteUrl: new FormControl(businessRawValue.websiteUrl, {
         validators: [Validators.maxLength(255)],
@@ -70,7 +71,8 @@ export class BusinessFormService {
       longitude: new FormControl(businessRawValue.longitude, {
         validators: [Validators.required],
       }),
-      busrooms: new FormControl(businessRawValue.busrooms ?? []),
+      postedby: new FormControl(businessRawValue.postedby),
+      businessrooms: new FormControl(businessRawValue.businessrooms ?? []),
     });
   }
 
@@ -91,7 +93,7 @@ export class BusinessFormService {
   private getFormDefaults(): BusinessFormDefaults {
     return {
       id: null,
-      busrooms: [],
+      businessrooms: [],
     };
   }
 }

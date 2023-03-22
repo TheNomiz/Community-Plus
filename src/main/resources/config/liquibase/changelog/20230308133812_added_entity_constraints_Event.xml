@@ -8,15 +8,21 @@
     -->
     <changeSet id="20230308133812-2" author="jhipster">
 
+        <addForeignKeyConstraint baseColumnNames="postedby_id"
+                                 baseTableName="event"
+                                 constraintName="fk_event__postedby_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="user_profile"/>
+
         <addForeignKeyConstraint baseColumnNames="event_id"
-                                 baseTableName="rel_event__eventroom"
-                                 constraintName="fk_rel_event__eventroom__event_id"
+                                 baseTableName="rel_event__eventsroom"
+                                 constraintName="fk_rel_event__eventsroom__event_id"
                                  referencedColumnNames="id"
                                  referencedTableName="event"/>
 
-        <addForeignKeyConstraint baseColumnNames="eventroom_id"
-                                 baseTableName="rel_event__eventroom"
-                                 constraintName="fk_rel_event__eventroom__eventroom_id"
+        <addForeignKeyConstraint baseColumnNames="eventsroom_id"
+                                 baseTableName="rel_event__eventsroom"
+                                 constraintName="fk_rel_event__eventsroom__eventsroom_id"
                                  referencedColumnNames="id"
                                  referencedTableName="chat_room"/>
     </changeSet>

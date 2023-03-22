@@ -1,0 +1,69 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="lostFound">
+      <h2 data-cy="lostFoundDetailsHeading"><span jhiTranslate="teamprojectApp.lostFound.detail.title">Lost Found</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ lostFound.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="teamprojectApp.lostFound.description">Description</span></dt>
+        <dd>
+          <span>{{ lostFound.description }}</span>
+        </dd>
+        <dt><span jhiTranslate="teamprojectApp.lostFound.date">Date</span></dt>
+        <dd>
+          <span>{{ lostFound.date | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="teamprojectApp.lostFound.location">Location</span></dt>
+        <dd>
+          <span>{{ lostFound.location }}</span>
+        </dd>
+        <dt><span jhiTranslate="teamprojectApp.lostFound.item">Item</span></dt>
+        <dd>
+          <span>{{ lostFound.item }}</span>
+        </dd>
+        <dt><span jhiTranslate="teamprojectApp.lostFound.name">Name</span></dt>
+        <dd>
+          <span>{{ lostFound.name }}</span>
+        </dd>
+        <dt><span jhiTranslate="teamprojectApp.lostFound.email">Email</span></dt>
+        <dd>
+          <span>{{ lostFound.email }}</span>
+        </dd>
+        <dt><span jhiTranslate="teamprojectApp.lostFound.phoneNumber">Phone Number</span></dt>
+        <dd>
+          <span>{{ lostFound.phoneNumber }}</span>
+        </dd>
+        <dt><span jhiTranslate="teamprojectApp.lostFound.postedby">Postedby</span></dt>
+        <dd>
+          <div *ngIf="lostFound.postedby">
+            <a [routerLink]="['/user-profile', lostFound.postedby.id, 'view']">{{ lostFound.postedby.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="teamprojectApp.lostFound.lostItem">Lost Item</span></dt>
+        <dd>
+          <span *ngFor="let lostItem of lostFound.lostItems; let last = last">
+            <a [routerLink]="['/chat-room', lostItem.id, 'view']">{{ lostItem.id }}</a
+            >{{ last ? '' : ', ' }}
+          </span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/lost-found', lostFound.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

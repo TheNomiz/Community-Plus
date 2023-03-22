@@ -1,0 +1,45 @@
+{
+  "applications": "*",
+  "changelogDate": "20230322171614",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "emergency_stations",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "stationType",
+      "fieldType": "StationsCategory",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "PoliceStation,Hospital,FireStation,Pharmacy"
+    },
+    {
+      "fieldName": "wheelchairAccess",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "parking",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "latitude",
+      "fieldType": "Double",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "longitude",
+      "fieldType": "Double",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "EmergencyStations",
+  "pagination": "infinite-scroll",
+  "readOnly": false,
+  "relationships": [],
+  "service": "no"
+}

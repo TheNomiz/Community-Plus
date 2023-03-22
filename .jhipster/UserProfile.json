@@ -11,6 +11,35 @@
       "fieldValidateRules": ["required"]
     },
     {
+      "fieldName": "firstnames",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "minlength", "maxlength"],
+      "fieldValidateRulesMaxlength": "20",
+      "fieldValidateRulesMinlength": "1"
+    },
+    {
+      "fieldName": "lastname",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "minlength", "maxlength"],
+      "fieldValidateRulesMaxlength": "20",
+      "fieldValidateRulesMinlength": "1"
+    },
+    {
+      "fieldName": "password",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "email",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "language",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
       "fieldName": "verified",
       "fieldType": "Boolean",
       "fieldValidateRules": ["required"]
@@ -27,25 +56,6 @@
     },
     {
       "fieldName": "accountType",
-      "fieldType": "String",
-      "fieldValidateRules": ["required"]
-    },
-    {
-      "fieldName": "firstnames",
-      "fieldType": "String",
-      "fieldValidateRules": ["required", "minlength", "maxlength"],
-      "fieldValidateRulesMaxlength": "20",
-      "fieldValidateRulesMinlength": "1"
-    },
-    {
-      "fieldName": "lastname",
-      "fieldType": "String",
-      "fieldValidateRules": ["required", "minlength", "maxlength"],
-      "fieldValidateRulesMaxlength": "20",
-      "fieldValidateRulesMinlength": "1"
-    },
-    {
-      "fieldName": "password",
       "fieldType": "String",
       "fieldValidateRules": ["required"]
     },
@@ -77,25 +87,14 @@
       "fieldValidateRulesMinlength": "1"
     },
     {
-      "fieldName": "email",
-      "fieldType": "String",
-      "fieldValidateRules": ["required"]
-    },
-    {
       "fieldName": "phoneNumber",
       "fieldType": "String",
-      "fieldValidateRules": ["required", "minlength", "pattern"],
-      "fieldValidateRulesMinlength": "11",
-      "fieldValidateRulesPattern": "^[0-9]+\\d$"
+      "fieldValidateRules": ["required", "minlength"],
+      "fieldValidateRulesMinlength": "11"
     },
     {
       "fieldName": "communityPoints",
       "fieldType": "Integer"
-    },
-    {
-      "fieldName": "language",
-      "fieldType": "String",
-      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "gPS",
@@ -116,6 +115,14 @@
   "name": "UserProfile",
   "pagination": "infinite-scroll",
   "readOnly": false,
-  "relationships": [],
+  "relationships": [
+    {
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "iD",
+      "ownerSide": true,
+      "relationshipName": "iD",
+      "relationshipType": "one-to-one"
+    }
+  ],
   "service": "no"
 }

@@ -39,6 +39,12 @@
       "fieldValidateRules": ["required"]
     },
     {
+      "fieldName": "category",
+      "fieldType": "EventCategory",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "Sport,Conference,Workshop,Seminar,Webinar,Meetup"
+    },
+    {
       "fieldName": "longitude",
       "fieldType": "Double",
       "fieldValidateRules": ["required"]
@@ -57,10 +63,15 @@
   "readOnly": false,
   "relationships": [
     {
+      "otherEntityName": "userProfile",
+      "relationshipName": "postedby",
+      "relationshipType": "many-to-one"
+    },
+    {
       "otherEntityName": "chatRoom",
       "otherEntityRelationshipName": "events",
       "ownerSide": true,
-      "relationshipName": "eventroom",
+      "relationshipName": "eventsroom",
       "relationshipType": "many-to-many"
     }
   ],

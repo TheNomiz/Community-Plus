@@ -9,6 +9,8 @@ import { of, Subject, from } from 'rxjs';
 import { ChatMessageFormService } from './chat-message-form.service';
 import { ChatMessageService } from '../service/chat-message.service';
 import { IChatMessage } from '../chat-message.model';
+import { IUserProfile } from 'app/entities/user-profile/user-profile.model';
+import { UserProfileService } from 'app/entities/user-profile/service/user-profile.service';
 import { IChatRoom } from 'app/entities/chat-room/chat-room.model';
 import { ChatRoomService } from 'app/entities/chat-room/service/chat-room.service';
 
@@ -20,6 +22,7 @@ describe('ChatMessage Management Update Component', () => {
   let activatedRoute: ActivatedRoute;
   let chatMessageFormService: ChatMessageFormService;
   let chatMessageService: ChatMessageService;
+  let userProfileService: UserProfileService;
   let chatRoomService: ChatRoomService;
 
   beforeEach(() => {
@@ -43,12 +46,35 @@ describe('ChatMessage Management Update Component', () => {
     activatedRoute = TestBed.inject(ActivatedRoute);
     chatMessageFormService = TestBed.inject(ChatMessageFormService);
     chatMessageService = TestBed.inject(ChatMessageService);
+    userProfileService = TestBed.inject(UserProfileService);
     chatRoomService = TestBed.inject(ChatRoomService);
 
     comp = fixture.componentInstance;
   });
 
   describe('ngOnInit', () => {
+    it('Should call UserProfile query and add missing value', () => {
+      const chatMessage: IChatMessage = { id: 456 };
+      const postedby: IUserProfile = { id: 11702 };
+      chatMessage.postedby = postedby;
+
+      const userProfileCollection: IUserProfile[] = [{ id: 15501 }];
+      jest.spyOn(userProfileService, 'query').mockReturnValue(of(new HttpResponse({ body: userProfileCollection })));
+      const additionalUserProfiles = [postedby];
+      const expectedCollection: IUserProfile[] = [...additionalUserProfiles, ...userProfileCollection];
+      jest.spyOn(userProfileService, 'addUserProfileToCollectionIfMissing').mockReturnValue(expectedCollection);
+
+      activatedRoute.data = of({ chatMessage });
+      comp.ngOnInit();
+
+      expect(userProfileService.query).toHaveBeenCalled();
+      expect(userProfileService.addUserProfileToCollectionIfMissing).toHaveBeenCalledWith(
+        userProfileCollection,
+        ...additionalUserProfiles.map(expect.objectContaining)
+      );
+      expect(comp.userProfilesSharedCollection).toEqual(expectedCollection);
+    });
+
     it('Should call ChatRoom query and add missing value', () => {
       const chatMessage: IChatMessage = { id: 456 };
       const room: IChatRoom = { id: 37307 };
@@ -73,12 +99,15 @@ describe('ChatMessage Management Update Component', () => {
 
     it('Should update editForm', () => {
       const chatMessage: IChatMessage = { id: 456 };
+      const postedby: IUserProfile = { id: 36144 };
+      chatMessage.postedby = postedby;
       const room: IChatRoom = { id: 54454 };
       chatMessage.room = room;
 
       activatedRoute.data = of({ chatMessage });
       comp.ngOnInit();
 
+      expect(comp.userProfilesSharedCollection).toContain(postedby);
       expect(comp.chatRoomsSharedCollection).toContain(room);
       expect(comp.chatMessage).toEqual(chatMessage);
     });
@@ -153,6 +182,16 @@ describe('ChatMessage Management Update Component', () => {
   });
 
   describe('Compare relationships', () => {
+    describe('compareUserProfile', () => {
+      it('Should forward to userProfileService', () => {
+        const entity = { id: 123 };
+        const entity2 = { id: 456 };
+        jest.spyOn(userProfileService, 'compareUserProfile');
+        comp.compareUserProfile(entity, entity2);
+        expect(userProfileService.compareUserProfile).toHaveBeenCalledWith(entity, entity2);
+      });
+    });
+
     describe('compareChatRoom', () => {
       it('Should forward to chatRoomService', () => {
         const entity = { id: 123 };

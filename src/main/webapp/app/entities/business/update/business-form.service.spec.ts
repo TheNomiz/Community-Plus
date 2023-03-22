@@ -28,7 +28,8 @@ describe('Business Form Service', () => {
             websiteUrl: expect.any(Object),
             latitude: expect.any(Object),
             longitude: expect.any(Object),
-            busrooms: expect.any(Object),
+            postedby: expect.any(Object),
+            businessrooms: expect.any(Object),
           })
         );
       });
@@ -47,7 +48,8 @@ describe('Business Form Service', () => {
             websiteUrl: expect.any(Object),
             latitude: expect.any(Object),
             longitude: expect.any(Object),
-            busrooms: expect.any(Object),
+            postedby: expect.any(Object),
+            businessrooms: expect.any(Object),
           })
         );
       });

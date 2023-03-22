@@ -14,13 +14,14 @@ type PartialWithRequiredKeyOf<T extends { id: unknown }> = Partial<Omit<T, 'id'>
  */
 type ChatRoomFormGroupInput = IChatRoom | PartialWithRequiredKeyOf<NewChatRoom>;
 
-type ChatRoomFormDefaults = Pick<NewChatRoom, 'id' | 'events' | 'businesses'>;
+type ChatRoomFormDefaults = Pick<NewChatRoom, 'id' | 'events' | 'businesses' | 'lostitems'>;
 
 type ChatRoomFormGroupContent = {
   id: FormControl<IChatRoom['id'] | NewChatRoom['id']>;
   name: FormControl<IChatRoom['name']>;
   events: FormControl<IChatRoom['events']>;
   businesses: FormControl<IChatRoom['businesses']>;
+  lostitems: FormControl<IChatRoom['lostitems']>;
 };
 
 export type ChatRoomFormGroup = FormGroup<ChatRoomFormGroupContent>;
@@ -45,6 +46,7 @@ export class ChatRoomFormService {
       }),
       events: new FormControl(chatRoomRawValue.events ?? []),
       businesses: new FormControl(chatRoomRawValue.businesses ?? []),
+      lostitems: new FormControl(chatRoomRawValue.lostitems ?? []),
     });
   }
 
@@ -67,6 +69,7 @@ export class ChatRoomFormService {
       id: null,
       events: [],
       businesses: [],
+      lostitems: [],
     };
   }
 }

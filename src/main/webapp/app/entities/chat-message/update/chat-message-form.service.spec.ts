@@ -22,6 +22,7 @@ describe('ChatMessage Form Service', () => {
             id: expect.any(Object),
             content: expect.any(Object),
             sentDate: expect.any(Object),
+            postedby: expect.any(Object),
             room: expect.any(Object),
           })
         );
@@ -35,6 +36,7 @@ describe('ChatMessage Form Service', () => {
             id: expect.any(Object),
             content: expect.any(Object),
             sentDate: expect.any(Object),
+            postedby: expect.any(Object),
             room: expect.any(Object),
           })
         );

@@ -26,16 +26,23 @@
     },
     {
       "otherEntityName": "event",
-      "otherEntityRelationshipName": "eventroom",
+      "otherEntityRelationshipName": "eventsroom",
       "ownerSide": false,
       "relationshipName": "events",
       "relationshipType": "many-to-many"
     },
     {
       "otherEntityName": "business",
-      "otherEntityRelationshipName": "busroom",
+      "otherEntityRelationshipName": "businessroom",
       "ownerSide": false,
-      "relationshipName": "businesses",
+      "relationshipName": "business",
+      "relationshipType": "many-to-many"
+    },
+    {
+      "otherEntityName": "lostFound",
+      "otherEntityRelationshipName": "lostItem",
+      "ownerSide": false,
+      "relationshipName": "lostitems",
       "relationshipType": "many-to-many"
     }
   ],

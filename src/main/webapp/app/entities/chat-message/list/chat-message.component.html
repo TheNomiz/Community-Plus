@@ -50,6 +50,12 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
+          <th scope="col" jhiSortBy="postedby.id">
+            <div class="d-flex">
+              <span jhiTranslate="teamprojectApp.chatMessage.postedby">Postedby</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
           <th scope="col" jhiSortBy="room.id">
             <div class="d-flex">
               <span jhiTranslate="teamprojectApp.chatMessage.room">Room</span>
@@ -66,6 +72,11 @@
           </td>
           <td>{{ chatMessage.content }}</td>
           <td>{{ chatMessage.sentDate | formatMediumDate }}</td>
+          <td>
+            <div *ngIf="chatMessage.postedby">
+              <a [routerLink]="['/user-profile', chatMessage.postedby.id, 'view']">{{ chatMessage.postedby.id }}</a>
+            </div>
+          </td>
           <td>
             <div *ngIf="chatMessage.room">
               <a [routerLink]="['/chat-room', chatMessage.room.id, 'view']">{{ chatMessage.room.id }}</a>

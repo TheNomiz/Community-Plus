@@ -14,7 +14,7 @@ type PartialWithRequiredKeyOf<T extends { id: unknown }> = Partial<Omit<T, 'id'>
  */
 type EventFormGroupInput = IEvent | PartialWithRequiredKeyOf<NewEvent>;
 
-type EventFormDefaults = Pick<NewEvent, 'id' | 'eventrooms'>;
+type EventFormDefaults = Pick<NewEvent, 'id' | 'eventsrooms'>;
 
 type EventFormGroupContent = {
   id: FormControl<IEvent['id'] | NewEvent['id']>;
@@ -24,9 +24,11 @@ type EventFormGroupContent = {
   endDate: FormControl<IEvent['endDate']>;
   imageUrl: FormControl<IEvent['imageUrl']>;
   latitude: FormControl<IEvent['latitude']>;
+  category: FormControl<IEvent['category']>;
   longitude: FormControl<IEvent['longitude']>;
   address: FormControl<IEvent['address']>;
-  eventrooms: FormControl<IEvent['eventrooms']>;
+  postedby: FormControl<IEvent['postedby']>;
+  eventsrooms: FormControl<IEvent['eventsrooms']>;
 };
 
 export type EventFormGroup = FormGroup<EventFormGroupContent>;
@@ -64,13 +66,17 @@ export class EventFormService {
       latitude: new FormControl(eventRawValue.latitude, {
         validators: [Validators.required],
       }),
+      category: new FormControl(eventRawValue.category, {
+        validators: [Validators.required],
+      }),
       longitude: new FormControl(eventRawValue.longitude, {
         validators: [Validators.required],
       }),
       address: new FormControl(eventRawValue.address, {
         validators: [Validators.required, Validators.maxLength(255)],
       }),
-      eventrooms: new FormControl(eventRawValue.eventrooms ?? []),
+      postedby: new FormControl(eventRawValue.postedby),
+      eventsrooms: new FormControl(eventRawValue.eventsrooms ?? []),
     });
   }
 
@@ -91,7 +97,7 @@ export class EventFormService {
   private getFormDefaults(): EventFormDefaults {
     return {
       id: null,
-      eventrooms: [],
+      eventsrooms: [],
     };
   }
 }

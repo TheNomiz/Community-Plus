@@ -1,5 +1,7 @@
 import dayjs from 'dayjs/esm';
 
+import { EventCategory } from 'app/entities/enumerations/event-category.model';
+
 import { IEvent, NewEvent } from './event.model';
 
 export const sampleWithRequiredData: IEvent = {
@@ -9,42 +11,45 @@ export const sampleWithRequiredData: IEvent = {
   startDate: dayjs('2023-03-07'),
   endDate: dayjs('2023-03-07'),
   latitude: 38618,
-  longitude: 11383,
-  address: 'one-to-one wireless',
+  category: EventCategory['Sport'],
+  longitude: 65385,
+  address: 'teal Dollar',
 };
 
 export const sampleWithPartialData: IEvent = {
-  id: 981,
-  name: 'generating Tuna coherent',
-  description: 'virtual',
-  startDate: dayjs('2023-03-07'),
+  id: 88160,
+  name: 'Personal deposit sky',
+  description: 'paradigm transmit generation',
+  startDate: dayjs('2023-03-08'),
   endDate: dayjs('2023-03-07'),
-  imageUrl: 'withdrawal hacking auxiliary',
-  latitude: 29708,
-  longitude: 68491,
-  address: 'mint Locks',
+  latitude: 79048,
+  category: EventCategory['Sport'],
+  longitude: 69469,
+  address: 'Iraqi',
 };
 
 export const sampleWithFullData: IEvent = {
-  id: 74806,
-  name: 'Court Hill payment',
-  description: 'Avon Throughway Exclusive',
+  id: 17194,
+  name: 'Locks input',
+  description: 'indexing',
   startDate: dayjs('2023-03-07'),
   endDate: dayjs('2023-03-07'),
-  imageUrl: 'indexing Strategist',
-  latitude: 34866,
-  longitude: 3033,
-  address: 'Tuna Intelligent Republic)',
+  imageUrl: 'Tasty Throughway',
+  latitude: 25052,
+  category: EventCategory['Conference'],
+  longitude: 34210,
+  address: 'indexing Fords Planner',
 };
 
 export const sampleWithNewData: NewEvent = {
-  name: 'Home Legacy Avon',
-  description: 'Suriname Granite tangible',
-  startDate: dayjs('2023-03-07'),
-  endDate: dayjs('2023-03-08'),
-  latitude: 45372,
-  longitude: 77606,
-  address: 'teal Response FTP',
+  name: 'panel',
+  description: 'Intelligent',
+  startDate: dayjs('2023-03-08'),
+  endDate: dayjs('2023-03-07'),
+  latitude: 79629,
+  category: EventCategory['Webinar'],
+  longitude: 2668,
+  address: 'Tunisia',
   id: null,
 };
 

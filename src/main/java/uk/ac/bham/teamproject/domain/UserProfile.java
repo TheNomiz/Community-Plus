@@ -28,6 +28,28 @@ public class UserProfile implements Serializable {
     private String username;
 
     @NotNull
+    @Size(min = 1, max = 20)
+    @Column(name = "firstnames", length = 20, nullable = false)
+    private String firstnames;
+
+    @NotNull
+    @Size(min = 1, max = 20)
+    @Column(name = "lastname", length = 20, nullable = false)
+    private String lastname;
+
+    @NotNull
+    @Column(name = "password", nullable = false)
+    private String password;
+
+    @NotNull
+    @Column(name = "email", nullable = false)
+    private String email;
+
+    @NotNull
+    @Column(name = "language", nullable = false)
+    private String language;
+
+    @NotNull
     @Column(name = "verified", nullable = false)
     private Boolean verified;
 
@@ -42,20 +64,6 @@ public class UserProfile implements Serializable {
     @NotNull
     @Column(name = "account_type", nullable = false)
     private String accountType;
-
-    @NotNull
-    @Size(min = 1, max = 20)
-    @Column(name = "firstnames", length = 20, nullable = false)
-    private String firstnames;
-
-    @NotNull
-    @Size(min = 1, max = 20)
-    @Column(name = "lastname", length = 20, nullable = false)
-    private String lastname;
-
-    @NotNull
-    @Column(name = "password", nullable = false)
-    private String password;
 
     @NotNull
     @Size(min = 3, max = 20)
@@ -77,21 +85,12 @@ public class UserProfile implements Serializable {
     private String bio;
 
     @NotNull
-    @Column(name = "email", nullable = false)
-    private String email;
-
-    @NotNull
     @Size(min = 11)
-    @Pattern(regexp = "^[0-9]+\\d$")
     @Column(name = "phone_number", nullable = false)
     private String phoneNumber;
 
     @Column(name = "community_points")
     private Integer communityPoints;
-
-    @NotNull
-    @Column(name = "language", nullable = false)
-    private String language;
 
     @NotNull
     @Column(name = "g_ps", nullable = false)
@@ -102,6 +101,10 @@ public class UserProfile implements Serializable {
 
     @Column(name = "fontsize")
     private Integer fontsize;
+
+    @OneToOne
+    @JoinColumn(unique = true)
+    private User iD;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -129,6 +132,71 @@ public class UserProfile implements Serializable {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getFirstnames() {
+        return this.firstnames;
+    }
+
+    public UserProfile firstnames(String firstnames) {
+        this.setFirstnames(firstnames);
+        return this;
+    }
+
+    public void setFirstnames(String firstnames) {
+        this.firstnames = firstnames;
+    }
+
+    public String getLastname() {
+        return this.lastname;
+    }
+
+    public UserProfile lastname(String lastname) {
+        this.setLastname(lastname);
+        return this;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public String getPassword() {
+        return this.password;
+    }
+
+    public UserProfile password(String password) {
+        this.setPassword(password);
+        return this;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getEmail() {
+        return this.email;
+    }
+
+    public UserProfile email(String email) {
+        this.setEmail(email);
+        return this;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getLanguage() {
+        return this.language;
+    }
+
+    public UserProfile language(String language) {
+        this.setLanguage(language);
+        return this;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
     }
 
     public Boolean getVerified() {
@@ -181,45 +249,6 @@ public class UserProfile implements Serializable {
 
     public void setAccountType(String accountType) {
         this.accountType = accountType;
-    }
-
-    public String getFirstnames() {
-        return this.firstnames;
-    }
-
-    public UserProfile firstnames(String firstnames) {
-        this.setFirstnames(firstnames);
-        return this;
-    }
-
-    public void setFirstnames(String firstnames) {
-        this.firstnames = firstnames;
-    }
-
-    public String getLastname() {
-        return this.lastname;
-    }
-
-    public UserProfile lastname(String lastname) {
-        this.setLastname(lastname);
-        return this;
-    }
-
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
-    }
-
-    public String getPassword() {
-        return this.password;
-    }
-
-    public UserProfile password(String password) {
-        this.setPassword(password);
-        return this;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getOccupation() {
@@ -287,19 +316,6 @@ public class UserProfile implements Serializable {
         this.bio = bio;
     }
 
-    public String getEmail() {
-        return this.email;
-    }
-
-    public UserProfile email(String email) {
-        this.setEmail(email);
-        return this;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getPhoneNumber() {
         return this.phoneNumber;
     }
@@ -324,19 +340,6 @@ public class UserProfile implements Serializable {
 
     public void setCommunityPoints(Integer communityPoints) {
         this.communityPoints = communityPoints;
-    }
-
-    public String getLanguage() {
-        return this.language;
-    }
-
-    public UserProfile language(String language) {
-        this.setLanguage(language);
-        return this;
-    }
-
-    public void setLanguage(String language) {
-        this.language = language;
     }
 
     public Boolean getgPS() {
@@ -378,6 +381,19 @@ public class UserProfile implements Serializable {
         this.fontsize = fontsize;
     }
 
+    public User getID() {
+        return this.iD;
+    }
+
+    public void setID(User user) {
+        this.iD = user;
+    }
+
+    public UserProfile iD(User user) {
+        this.setID(user);
+        return this;
+    }
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
@@ -403,22 +419,22 @@ public class UserProfile implements Serializable {
         return "UserProfile{" +
             "id=" + getId() +
             ", username='" + getUsername() + "'" +
+            ", firstnames='" + getFirstnames() + "'" +
+            ", lastname='" + getLastname() + "'" +
+            ", password='" + getPassword() + "'" +
+            ", email='" + getEmail() + "'" +
+            ", language='" + getLanguage() + "'" +
             ", verified='" + getVerified() + "'" +
             ", privateAccount='" + getPrivateAccount() + "'" +
             ", age=" + getAge() +
             ", accountType='" + getAccountType() + "'" +
-            ", firstnames='" + getFirstnames() + "'" +
-            ", lastname='" + getLastname() + "'" +
-            ", password='" + getPassword() + "'" +
             ", occupation='" + getOccupation() + "'" +
             ", streetAddress='" + getStreetAddress() + "'" +
             ", city='" + getCity() + "'" +
             ", postalCode='" + getPostalCode() + "'" +
             ", bio='" + getBio() + "'" +
-            ", email='" + getEmail() + "'" +
             ", phoneNumber='" + getPhoneNumber() + "'" +
             ", communityPoints=" + getCommunityPoints() +
-            ", language='" + getLanguage() + "'" +
             ", gPS='" + getgPS() + "'" +
             ", darkmode='" + getDarkmode() + "'" +
             ", fontsize=" + getFontsize() +

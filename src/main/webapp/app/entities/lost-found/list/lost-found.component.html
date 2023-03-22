@@ -1,0 +1,146 @@
+<div>
+  <h2 id="page-heading" data-cy="LostFoundHeading">
+    <span jhiTranslate="teamprojectApp.lostFound.home.title">Lost Founds</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="teamprojectApp.lostFound.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-lost-found"
+        [routerLink]="['/lost-found/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="teamprojectApp.lostFound.home.createLabel"> Create a new Lost Found </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="lostFounds?.length === 0">
+    <span jhiTranslate="teamprojectApp.lostFound.home.notFound">No Lost Founds found</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="lostFounds && lostFounds.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span jhiTranslate="global.field.id">ID</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="description">
+            <div class="d-flex">
+              <span jhiTranslate="teamprojectApp.lostFound.description">Description</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="date">
+            <div class="d-flex">
+              <span jhiTranslate="teamprojectApp.lostFound.date">Date</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="location">
+            <div class="d-flex">
+              <span jhiTranslate="teamprojectApp.lostFound.location">Location</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="item">
+            <div class="d-flex">
+              <span jhiTranslate="teamprojectApp.lostFound.item">Item</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="name">
+            <div class="d-flex">
+              <span jhiTranslate="teamprojectApp.lostFound.name">Name</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="email">
+            <div class="d-flex">
+              <span jhiTranslate="teamprojectApp.lostFound.email">Email</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="phoneNumber">
+            <div class="d-flex">
+              <span jhiTranslate="teamprojectApp.lostFound.phoneNumber">Phone Number</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="postedby.id">
+            <div class="d-flex">
+              <span jhiTranslate="teamprojectApp.lostFound.postedby">Postedby</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody
+        infinite-scroll
+        (scrolled)="loadPage(page + 1)"
+        [infiniteScrollDisabled]="page - 1 >= links['last']"
+        [infiniteScrollDistance]="0"
+      >
+        <tr *ngFor="let lostFound of lostFounds; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/lost-found', lostFound.id, 'view']">{{ lostFound.id }}</a>
+          </td>
+          <td>{{ lostFound.description }}</td>
+          <td>{{ lostFound.date | formatMediumDate }}</td>
+          <td>{{ lostFound.location }}</td>
+          <td>{{ lostFound.item }}</td>
+          <td>{{ lostFound.name }}</td>
+          <td>{{ lostFound.email }}</td>
+          <td>{{ lostFound.phoneNumber }}</td>
+          <td>
+            <div *ngIf="lostFound.postedby">
+              <a [routerLink]="['/user-profile', lostFound.postedby.id, 'view']">{{ lostFound.postedby.id }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/lost-found', lostFound.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/lost-found', lostFound.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(lostFound)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

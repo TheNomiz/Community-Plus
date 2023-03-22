@@ -20,6 +20,9 @@
             <column name="sent_date" type="date">
                 <constraints nullable="false" />
             </column>
+            <column name="postedby_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
             <column name="room_id" type="bigint">
                 <constraints nullable="true" />
             </column>

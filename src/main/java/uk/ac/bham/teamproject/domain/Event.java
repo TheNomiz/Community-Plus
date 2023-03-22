@@ -9,6 +9,7 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import uk.ac.bham.teamproject.domain.enumeration.EventCategory;
 
 /**
  * A Event.
@@ -53,6 +54,11 @@ public class Event implements Serializable {
     private Double latitude;
 
     @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(name = "category", nullable = false)
+    private EventCategory category;
+
+    @NotNull
     @Column(name = "longitude", nullable = false)
     private Double longitude;
 
@@ -61,15 +67,19 @@ public class Event implements Serializable {
     @Column(name = "address", length = 255, nullable = false)
     private String address;
 
+    @ManyToOne
+    @JsonIgnoreProperties(value = { "iD" }, allowSetters = true)
+    private UserProfile postedby;
+
     @ManyToMany
     @JoinTable(
-        name = "rel_event__eventroom",
+        name = "rel_event__eventsroom",
         joinColumns = @JoinColumn(name = "event_id"),
-        inverseJoinColumns = @JoinColumn(name = "eventroom_id")
+        inverseJoinColumns = @JoinColumn(name = "eventsroom_id")
     )
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "messages", "events", "businesses" }, allowSetters = true)
-    private Set<ChatRoom> eventrooms = new HashSet<>();
+    @JsonIgnoreProperties(value = { "messages", "events", "businesses", "lostitems" }, allowSetters = true)
+    private Set<ChatRoom> eventsrooms = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -164,6 +174,19 @@ public class Event implements Serializable {
         this.latitude = latitude;
     }
 
+    public EventCategory getCategory() {
+        return this.category;
+    }
+
+    public Event category(EventCategory category) {
+        this.setCategory(category);
+        return this;
+    }
+
+    public void setCategory(EventCategory category) {
+        this.category = category;
+    }
+
     public Double getLongitude() {
         return this.longitude;
     }
@@ -190,27 +213,40 @@ public class Event implements Serializable {
         this.address = address;
     }
 
-    public Set<ChatRoom> getEventrooms() {
-        return this.eventrooms;
+    public UserProfile getPostedby() {
+        return this.postedby;
     }
 
-    public void setEventrooms(Set<ChatRoom> chatRooms) {
-        this.eventrooms = chatRooms;
+    public void setPostedby(UserProfile userProfile) {
+        this.postedby = userProfile;
     }
 
-    public Event eventrooms(Set<ChatRoom> chatRooms) {
-        this.setEventrooms(chatRooms);
+    public Event postedby(UserProfile userProfile) {
+        this.setPostedby(userProfile);
         return this;
     }
 
-    public Event addEventroom(ChatRoom chatRoom) {
-        this.eventrooms.add(chatRoom);
+    public Set<ChatRoom> getEventsrooms() {
+        return this.eventsrooms;
+    }
+
+    public void setEventsrooms(Set<ChatRoom> chatRooms) {
+        this.eventsrooms = chatRooms;
+    }
+
+    public Event eventsrooms(Set<ChatRoom> chatRooms) {
+        this.setEventsrooms(chatRooms);
+        return this;
+    }
+
+    public Event addEventsroom(ChatRoom chatRoom) {
+        this.eventsrooms.add(chatRoom);
         chatRoom.getEvents().add(this);
         return this;
     }
 
-    public Event removeEventroom(ChatRoom chatRoom) {
-        this.eventrooms.remove(chatRoom);
+    public Event removeEventsroom(ChatRoom chatRoom) {
+        this.eventsrooms.remove(chatRoom);
         chatRoom.getEvents().remove(this);
         return this;
     }
@@ -245,6 +281,7 @@ public class Event implements Serializable {
             ", endDate='" + getEndDate() + "'" +
             ", imageUrl='" + getImageUrl() + "'" +
             ", latitude=" + getLatitude() +
+            ", category='" + getCategory() + "'" +
             ", longitude=" + getLongitude() +
             ", address='" + getAddress() + "'" +
             "}";

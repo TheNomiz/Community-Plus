@@ -1,0 +1,29 @@
+{
+  "teamprojectApp": {
+    "emergencyStations": {
+      "home": {
+        "title": "Emergency Stations",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Emergency Stations",
+        "createOrEditLabel": "Create or edit a Emergency Stations",
+        "notFound": "No Emergency Stations found"
+      },
+      "created": "A new Emergency Stations is created with identifier {{ param }}",
+      "updated": "A Emergency Stations is updated with identifier {{ param }}",
+      "deleted": "A Emergency Stations is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Emergency Stations {{ id }}?"
+      },
+      "detail": {
+        "title": "Emergency Stations"
+      },
+      "id": "ID",
+      "name": "Name",
+      "stationType": "Station Type",
+      "wheelchairAccess": "Wheelchair Access",
+      "parking": "Parking",
+      "latitude": "Latitude",
+      "longitude": "Longitude"
+    }
+  }
+}

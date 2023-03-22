@@ -62,6 +62,13 @@ public class CacheConfiguration {
             createCache(cm, uk.ac.bham.teamproject.domain.EmergencyStationsPage.class.getName());
             createCache(cm, uk.ac.bham.teamproject.domain.LostFoundPage.class.getName());
             createCache(cm, uk.ac.bham.teamproject.domain.UserProfile.class.getName());
+            createCache(cm, uk.ac.bham.teamproject.domain.Business.class.getName() + ".businessrooms");
+            createCache(cm, uk.ac.bham.teamproject.domain.Event.class.getName() + ".eventsrooms");
+            createCache(cm, uk.ac.bham.teamproject.domain.ChatRoom.class.getName() + ".lostitems");
+            createCache(cm, uk.ac.bham.teamproject.domain.EmergencyGuide.class.getName());
+            createCache(cm, uk.ac.bham.teamproject.domain.EmergencyStations.class.getName());
+            createCache(cm, uk.ac.bham.teamproject.domain.LostFound.class.getName());
+            createCache(cm, uk.ac.bham.teamproject.domain.LostFound.class.getName() + ".lostItems");
             // jhipster-needle-ehcache-add-entry
         };
     }

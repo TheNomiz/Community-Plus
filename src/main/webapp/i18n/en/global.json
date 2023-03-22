@@ -17,6 +17,9 @@
         "lostFoundPage": "Lost Found Page",
         "emergencyStationsPage": "Emergency Stations Page",
         "userProfile": "User Profile",
+        "emergencyGuide": "Emergency Guide",
+        "emergencyStations": "Emergency Stations",
+        "lostFound": "Lost Found",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {

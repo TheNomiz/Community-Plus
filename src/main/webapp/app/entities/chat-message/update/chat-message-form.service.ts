@@ -20,6 +20,7 @@ type ChatMessageFormGroupContent = {
   id: FormControl<IChatMessage['id'] | NewChatMessage['id']>;
   content: FormControl<IChatMessage['content']>;
   sentDate: FormControl<IChatMessage['sentDate']>;
+  postedby: FormControl<IChatMessage['postedby']>;
   room: FormControl<IChatMessage['room']>;
 };
 
@@ -46,6 +47,7 @@ export class ChatMessageFormService {
       sentDate: new FormControl(chatMessageRawValue.sentDate, {
         validators: [Validators.required],
       }),
+      postedby: new FormControl(chatMessageRawValue.postedby),
       room: new FormControl(chatMessageRawValue.room),
     });
   }

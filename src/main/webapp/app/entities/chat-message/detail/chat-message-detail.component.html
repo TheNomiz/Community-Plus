@@ -22,6 +22,12 @@
         <dd>
           <span>{{ chatMessage.sentDate | formatMediumDate }}</span>
         </dd>
+        <dt><span jhiTranslate="teamprojectApp.chatMessage.postedby">Postedby</span></dt>
+        <dd>
+          <div *ngIf="chatMessage.postedby">
+            <a [routerLink]="['/user-profile', chatMessage.postedby.id, 'view']">{{ chatMessage.postedby.id }}</a>
+          </div>
+        </dd>
         <dt><span jhiTranslate="teamprojectApp.chatMessage.room">Room</span></dt>
         <dd>
           <div *ngIf="chatMessage.room">

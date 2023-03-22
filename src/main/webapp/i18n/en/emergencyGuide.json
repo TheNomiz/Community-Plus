@@ -1,0 +1,25 @@
+{
+  "teamprojectApp": {
+    "emergencyGuide": {
+      "home": {
+        "title": "Emergency Guides",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Emergency Guide",
+        "createOrEditLabel": "Create or edit a Emergency Guide",
+        "notFound": "No Emergency Guides found"
+      },
+      "created": "A new Emergency Guide is created with identifier {{ param }}",
+      "updated": "A Emergency Guide is updated with identifier {{ param }}",
+      "deleted": "A Emergency Guide is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Emergency Guide {{ id }}?"
+      },
+      "detail": {
+        "title": "Emergency Guide"
+      },
+      "id": "ID",
+      "emergencyType": "Emergency Type",
+      "panicButton": "Panic Button"
+    }
+  }
+}

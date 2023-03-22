@@ -134,6 +134,21 @@ public class UserProfileResource {
                 if (userProfile.getUsername() != null) {
                     existingUserProfile.setUsername(userProfile.getUsername());
                 }
+                if (userProfile.getFirstnames() != null) {
+                    existingUserProfile.setFirstnames(userProfile.getFirstnames());
+                }
+                if (userProfile.getLastname() != null) {
+                    existingUserProfile.setLastname(userProfile.getLastname());
+                }
+                if (userProfile.getPassword() != null) {
+                    existingUserProfile.setPassword(userProfile.getPassword());
+                }
+                if (userProfile.getEmail() != null) {
+                    existingUserProfile.setEmail(userProfile.getEmail());
+                }
+                if (userProfile.getLanguage() != null) {
+                    existingUserProfile.setLanguage(userProfile.getLanguage());
+                }
                 if (userProfile.getVerified() != null) {
                     existingUserProfile.setVerified(userProfile.getVerified());
                 }
@@ -145,15 +160,6 @@ public class UserProfileResource {
                 }
                 if (userProfile.getAccountType() != null) {
                     existingUserProfile.setAccountType(userProfile.getAccountType());
-                }
-                if (userProfile.getFirstnames() != null) {
-                    existingUserProfile.setFirstnames(userProfile.getFirstnames());
-                }
-                if (userProfile.getLastname() != null) {
-                    existingUserProfile.setLastname(userProfile.getLastname());
-                }
-                if (userProfile.getPassword() != null) {
-                    existingUserProfile.setPassword(userProfile.getPassword());
                 }
                 if (userProfile.getOccupation() != null) {
                     existingUserProfile.setOccupation(userProfile.getOccupation());
@@ -170,17 +176,11 @@ public class UserProfileResource {
                 if (userProfile.getBio() != null) {
                     existingUserProfile.setBio(userProfile.getBio());
                 }
-                if (userProfile.getEmail() != null) {
-                    existingUserProfile.setEmail(userProfile.getEmail());
-                }
                 if (userProfile.getPhoneNumber() != null) {
                     existingUserProfile.setPhoneNumber(userProfile.getPhoneNumber());
                 }
                 if (userProfile.getCommunityPoints() != null) {
                     existingUserProfile.setCommunityPoints(userProfile.getCommunityPoints());
-                }
-                if (userProfile.getLanguage() != null) {
-                    existingUserProfile.setLanguage(userProfile.getLanguage());
                 }
                 if (userProfile.getgPS() != null) {
                     existingUserProfile.setgPS(userProfile.getgPS());

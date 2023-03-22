@@ -27,6 +27,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import uk.ac.bham.teamproject.IntegrationTest;
 import uk.ac.bham.teamproject.domain.Business;
+import uk.ac.bham.teamproject.domain.enumeration.BusinessCategory;
 import uk.ac.bham.teamproject.repository.BusinessRepository;
 
 /**
@@ -44,11 +45,11 @@ class BusinessResourceIT {
     private static final String DEFAULT_DESCRIPTION = "AAAAAAAAAA";
     private static final String UPDATED_DESCRIPTION = "BBBBBBBBBB";
 
-    private static final String DEFAULT_CATEGORY = "AAAAAAAAAA";
-    private static final String UPDATED_CATEGORY = "BBBBBBBBBB";
+    private static final BusinessCategory DEFAULT_CATEGORY = BusinessCategory.Restaurant;
+    private static final BusinessCategory UPDATED_CATEGORY = BusinessCategory.Cafe;
 
-    private static final Integer DEFAULT_PHONE_NUMBER = 1;
-    private static final Integer UPDATED_PHONE_NUMBER = 2;
+    private static final String DEFAULT_PHONE_NUMBER = "AAAAAAAAAAA";
+    private static final String UPDATED_PHONE_NUMBER = "BBBBBBBBBBB";
 
     private static final String DEFAULT_EMAIL = "AAAAAAAAAA";
     private static final String UPDATED_EMAIL = "BBBBBBBBBB";
@@ -236,6 +237,23 @@ class BusinessResourceIT {
 
     @Test
     @Transactional
+    void checkEmailIsRequired() throws Exception {
+        int databaseSizeBeforeTest = businessRepository.findAll().size();
+        // set the field null
+        business.setEmail(null);
+
+        // Create the Business, which fails.
+
+        restBusinessMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(business)))
+            .andExpect(status().isBadRequest());
+
+        List<Business> businessList = businessRepository.findAll();
+        assertThat(businessList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     void checkLatitudeIsRequired() throws Exception {
         int databaseSizeBeforeTest = businessRepository.findAll().size();
         // set the field null
@@ -282,7 +300,7 @@ class BusinessResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(business.getId().intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
-            .andExpect(jsonPath("$.[*].category").value(hasItem(DEFAULT_CATEGORY)))
+            .andExpect(jsonPath("$.[*].category").value(hasItem(DEFAULT_CATEGORY.toString())))
             .andExpect(jsonPath("$.[*].phoneNumber").value(hasItem(DEFAULT_PHONE_NUMBER)))
             .andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL)))
             .andExpect(jsonPath("$.[*].websiteUrl").value(hasItem(DEFAULT_WEBSITE_URL)))
@@ -321,7 +339,7 @@ class BusinessResourceIT {
             .andExpect(jsonPath("$.id").value(business.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION))
-            .andExpect(jsonPath("$.category").value(DEFAULT_CATEGORY))
+            .andExpect(jsonPath("$.category").value(DEFAULT_CATEGORY.toString()))
             .andExpect(jsonPath("$.phoneNumber").value(DEFAULT_PHONE_NUMBER))
             .andExpect(jsonPath("$.email").value(DEFAULT_EMAIL))
             .andExpect(jsonPath("$.websiteUrl").value(DEFAULT_WEBSITE_URL))

@@ -7,6 +7,8 @@ import { finalize, map } from 'rxjs/operators';
 import { ChatMessageFormService, ChatMessageFormGroup } from './chat-message-form.service';
 import { IChatMessage } from '../chat-message.model';
 import { ChatMessageService } from '../service/chat-message.service';
+import { IUserProfile } from 'app/entities/user-profile/user-profile.model';
+import { UserProfileService } from 'app/entities/user-profile/service/user-profile.service';
 import { IChatRoom } from 'app/entities/chat-room/chat-room.model';
 import { ChatRoomService } from 'app/entities/chat-room/service/chat-room.service';
 
@@ -18,6 +20,7 @@ export class ChatMessageUpdateComponent implements OnInit {
   isSaving = false;
   chatMessage: IChatMessage | null = null;
 
+  userProfilesSharedCollection: IUserProfile[] = [];
   chatRoomsSharedCollection: IChatRoom[] = [];
 
   editForm: ChatMessageFormGroup = this.chatMessageFormService.createChatMessageFormGroup();
@@ -25,9 +28,12 @@ export class ChatMessageUpdateComponent implements OnInit {
   constructor(
     protected chatMessageService: ChatMessageService,
     protected chatMessageFormService: ChatMessageFormService,
+    protected userProfileService: UserProfileService,
     protected chatRoomService: ChatRoomService,
     protected activatedRoute: ActivatedRoute
   ) {}
+
+  compareUserProfile = (o1: IUserProfile | null, o2: IUserProfile | null): boolean => this.userProfileService.compareUserProfile(o1, o2);
 
   compareChatRoom = (o1: IChatRoom | null, o2: IChatRoom | null): boolean => this.chatRoomService.compareChatRoom(o1, o2);
 
@@ -79,6 +85,10 @@ export class ChatMessageUpdateComponent implements OnInit {
     this.chatMessage = chatMessage;
     this.chatMessageFormService.resetForm(this.editForm, chatMessage);
 
+    this.userProfilesSharedCollection = this.userProfileService.addUserProfileToCollectionIfMissing<IUserProfile>(
+      this.userProfilesSharedCollection,
+      chatMessage.postedby
+    );
     this.chatRoomsSharedCollection = this.chatRoomService.addChatRoomToCollectionIfMissing<IChatRoom>(
       this.chatRoomsSharedCollection,
       chatMessage.room
@@ -86,6 +96,16 @@ export class ChatMessageUpdateComponent implements OnInit {
   }
 
   protected loadRelationshipsOptions(): void {
+    this.userProfileService
+      .query()
+      .pipe(map((res: HttpResponse<IUserProfile[]>) => res.body ?? []))
+      .pipe(
+        map((userProfiles: IUserProfile[]) =>
+          this.userProfileService.addUserProfileToCollectionIfMissing<IUserProfile>(userProfiles, this.chatMessage?.postedby)
+        )
+      )
+      .subscribe((userProfiles: IUserProfile[]) => (this.userProfilesSharedCollection = userProfiles));
+
     this.chatRoomService
       .query()
       .pipe(map((res: HttpResponse<IChatRoom[]>) => res.body ?? []))

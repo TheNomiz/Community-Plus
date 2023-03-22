@@ -38,6 +38,10 @@
         <dd>
           <span>{{ event.latitude }}</span>
         </dd>
+        <dt><span jhiTranslate="teamprojectApp.event.category">Category</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'teamprojectApp.EventCategory.' + event.category }}">{{ event.category }}</span>
+        </dd>
         <dt><span jhiTranslate="teamprojectApp.event.longitude">Longitude</span></dt>
         <dd>
           <span>{{ event.longitude }}</span>
@@ -46,10 +50,16 @@
         <dd>
           <span>{{ event.address }}</span>
         </dd>
-        <dt><span jhiTranslate="teamprojectApp.event.eventroom">Eventroom</span></dt>
+        <dt><span jhiTranslate="teamprojectApp.event.postedby">Postedby</span></dt>
         <dd>
-          <span *ngFor="let eventroom of event.eventrooms; let last = last">
-            <a [routerLink]="['/chat-room', eventroom.id, 'view']">{{ eventroom.id }}</a
+          <div *ngIf="event.postedby">
+            <a [routerLink]="['/user-profile', event.postedby.id, 'view']">{{ event.postedby.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="teamprojectApp.event.eventsroom">Eventsroom</span></dt>
+        <dd>
+          <span *ngFor="let eventsroom of event.eventsrooms; let last = last">
+            <a [routerLink]="['/chat-room', eventsroom.id, 'view']">{{ eventsroom.id }}</a
             >{{ last ? '' : ', ' }}
           </span>
         </dd>

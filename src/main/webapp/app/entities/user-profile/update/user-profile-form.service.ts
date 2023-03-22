@@ -19,25 +19,26 @@ type UserProfileFormDefaults = Pick<NewUserProfile, 'id' | 'verified' | 'private
 type UserProfileFormGroupContent = {
   id: FormControl<IUserProfile['id'] | NewUserProfile['id']>;
   username: FormControl<IUserProfile['username']>;
+  firstnames: FormControl<IUserProfile['firstnames']>;
+  lastname: FormControl<IUserProfile['lastname']>;
+  password: FormControl<IUserProfile['password']>;
+  email: FormControl<IUserProfile['email']>;
+  language: FormControl<IUserProfile['language']>;
   verified: FormControl<IUserProfile['verified']>;
   privateAccount: FormControl<IUserProfile['privateAccount']>;
   age: FormControl<IUserProfile['age']>;
   accountType: FormControl<IUserProfile['accountType']>;
-  firstnames: FormControl<IUserProfile['firstnames']>;
-  lastname: FormControl<IUserProfile['lastname']>;
-  password: FormControl<IUserProfile['password']>;
   occupation: FormControl<IUserProfile['occupation']>;
   streetAddress: FormControl<IUserProfile['streetAddress']>;
   city: FormControl<IUserProfile['city']>;
   postalCode: FormControl<IUserProfile['postalCode']>;
   bio: FormControl<IUserProfile['bio']>;
-  email: FormControl<IUserProfile['email']>;
   phoneNumber: FormControl<IUserProfile['phoneNumber']>;
   communityPoints: FormControl<IUserProfile['communityPoints']>;
-  language: FormControl<IUserProfile['language']>;
   gPS: FormControl<IUserProfile['gPS']>;
   darkmode: FormControl<IUserProfile['darkmode']>;
   fontsize: FormControl<IUserProfile['fontsize']>;
+  iD: FormControl<IUserProfile['iD']>;
 };
 
 export type UserProfileFormGroup = FormGroup<UserProfileFormGroupContent>;
@@ -60,6 +61,21 @@ export class UserProfileFormService {
       username: new FormControl(userProfileRawValue.username, {
         validators: [Validators.required],
       }),
+      firstnames: new FormControl(userProfileRawValue.firstnames, {
+        validators: [Validators.required, Validators.minLength(1), Validators.maxLength(20)],
+      }),
+      lastname: new FormControl(userProfileRawValue.lastname, {
+        validators: [Validators.required, Validators.minLength(1), Validators.maxLength(20)],
+      }),
+      password: new FormControl(userProfileRawValue.password, {
+        validators: [Validators.required],
+      }),
+      email: new FormControl(userProfileRawValue.email, {
+        validators: [Validators.required],
+      }),
+      language: new FormControl(userProfileRawValue.language, {
+        validators: [Validators.required],
+      }),
       verified: new FormControl(userProfileRawValue.verified, {
         validators: [Validators.required],
       }),
@@ -70,15 +86,6 @@ export class UserProfileFormService {
         validators: [Validators.required],
       }),
       accountType: new FormControl(userProfileRawValue.accountType, {
-        validators: [Validators.required],
-      }),
-      firstnames: new FormControl(userProfileRawValue.firstnames, {
-        validators: [Validators.required, Validators.minLength(1), Validators.maxLength(20)],
-      }),
-      lastname: new FormControl(userProfileRawValue.lastname, {
-        validators: [Validators.required, Validators.minLength(1), Validators.maxLength(20)],
-      }),
-      password: new FormControl(userProfileRawValue.password, {
         validators: [Validators.required],
       }),
       occupation: new FormControl(userProfileRawValue.occupation, {
@@ -92,21 +99,16 @@ export class UserProfileFormService {
       bio: new FormControl(userProfileRawValue.bio, {
         validators: [Validators.minLength(1), Validators.maxLength(150)],
       }),
-      email: new FormControl(userProfileRawValue.email, {
-        validators: [Validators.required],
-      }),
       phoneNumber: new FormControl(userProfileRawValue.phoneNumber, {
-        validators: [Validators.required, Validators.minLength(11), Validators.pattern('^[0-9]+\\d$')],
+        validators: [Validators.required, Validators.minLength(11)],
       }),
       communityPoints: new FormControl(userProfileRawValue.communityPoints),
-      language: new FormControl(userProfileRawValue.language, {
-        validators: [Validators.required],
-      }),
       gPS: new FormControl(userProfileRawValue.gPS, {
         validators: [Validators.required],
       }),
       darkmode: new FormControl(userProfileRawValue.darkmode),
       fontsize: new FormControl(userProfileRawValue.fontsize),
+      iD: new FormControl(userProfileRawValue.iD),
     });
   }
 
