@@ -24,7 +24,7 @@
         </dd>
         <dt><span jhiTranslate="teamprojectApp.business.category">Category</span></dt>
         <dd>
-          <span>{{ business.category }}</span>
+          <span jhiTranslate="{{ 'teamprojectApp.BusinessCategory.' + business.category }}">{{ business.category }}</span>
         </dd>
         <dt><span jhiTranslate="teamprojectApp.business.phoneNumber">Phone Number</span></dt>
         <dd>
@@ -46,10 +46,16 @@
         <dd>
           <span>{{ business.longitude }}</span>
         </dd>
-        <dt><span jhiTranslate="teamprojectApp.business.busroom">Busroom</span></dt>
+        <dt><span jhiTranslate="teamprojectApp.business.postedby">Postedby</span></dt>
         <dd>
-          <span *ngFor="let busroom of business.busrooms; let last = last">
-            <a [routerLink]="['/chat-room', busroom.id, 'view']">{{ busroom.id }}</a
+          <div *ngIf="business.postedby">
+            <a [routerLink]="['/user-profile', business.postedby.id, 'view']">{{ business.postedby.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="teamprojectApp.business.businessroom">Businessroom</span></dt>
+        <dd>
+          <span *ngFor="let businessroom of business.businessrooms; let last = last">
+            <a [routerLink]="['/chat-room', businessroom.id, 'view']">{{ businessroom.id }}</a
             >{{ last ? '' : ', ' }}
           </span>
         </dd>

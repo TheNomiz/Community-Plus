@@ -19,25 +19,26 @@
       },
       "id": "ID",
       "username": "Username",
+      "firstnames": "Firstnames",
+      "lastname": "Lastname",
+      "password": "Password",
+      "email": "Email",
+      "language": "Language",
       "verified": "Verified",
       "privateAccount": "Private Account",
       "age": "Age",
       "accountType": "Account Type",
-      "firstnames": "Firstnames",
-      "lastname": "Lastname",
-      "password": "Password",
       "occupation": "Occupation",
       "streetAddress": "Street Address",
       "city": "City",
       "postalCode": "Postal Code",
       "bio": "Bio",
-      "email": "Email",
       "phoneNumber": "Phone Number",
       "communityPoints": "Community Points",
-      "language": "Language",
       "gPS": "G PS",
       "darkmode": "Darkmode",
-      "fontsize": "Fontsize"
+      "fontsize": "Fontsize",
+      "iD": "I D"
     }
   }
 }

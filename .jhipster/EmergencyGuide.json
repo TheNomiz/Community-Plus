@@ -1,0 +1,26 @@
+{
+  "applications": "*",
+  "changelogDate": "20230322171613",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "emergency_guide",
+  "fields": [
+    {
+      "fieldName": "emergencyType",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "panicButton",
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "EmergencyGuide",
+  "pagination": "infinite-scroll",
+  "readOnly": false,
+  "relationships": [],
+  "service": "no"
+}

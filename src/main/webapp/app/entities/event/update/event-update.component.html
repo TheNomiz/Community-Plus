@@ -149,6 +149,25 @@
         </div>
 
         <div class="row mb-3">
+          <label class="form-label" jhiTranslate="teamprojectApp.event.category" for="field_category">Category</label>
+          <select class="form-control" name="category" formControlName="category" id="field_category" data-cy="category">
+            <option [ngValue]="null">{{ 'teamprojectApp.EventCategory.null' | translate }}</option>
+            <option *ngFor="let eventCategory of eventCategoryValues" [value]="eventCategory">
+              {{ 'teamprojectApp.EventCategory.' + eventCategory | translate }}
+            </option>
+          </select>
+          <div *ngIf="editForm.get('category')!.invalid && (editForm.get('category')!.dirty || editForm.get('category')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('category')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
           <label class="form-label" jhiTranslate="teamprojectApp.event.longitude" for="field_longitude">Longitude</label>
           <input type="number" class="form-control" name="longitude" id="field_longitude" data-cy="longitude" formControlName="longitude" />
           <div *ngIf="editForm.get('longitude')!.invalid && (editForm.get('longitude')!.dirty || editForm.get('longitude')!.touched)">
@@ -192,14 +211,31 @@
         </div>
 
         <div class="row mb-3">
-          <label jhiTranslate="teamprojectApp.event.eventroom" for="field_eventrooms">Eventroom</label>
+          <label class="form-label" jhiTranslate="teamprojectApp.event.postedby" for="field_postedby">Postedby</label>
           <select
             class="form-control"
-            id="field_eventrooms"
-            data-cy="eventroom"
+            id="field_postedby"
+            data-cy="postedby"
+            name="postedby"
+            formControlName="postedby"
+            [compareWith]="compareUserProfile"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="userProfileOption" *ngFor="let userProfileOption of userProfilesSharedCollection">
+              {{ userProfileOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label jhiTranslate="teamprojectApp.event.eventsroom" for="field_eventsrooms">Eventsroom</label>
+          <select
+            class="form-control"
+            id="field_eventsrooms"
+            data-cy="eventsroom"
             multiple
-            name="eventrooms"
-            formControlName="eventrooms"
+            name="eventsrooms"
+            formControlName="eventsrooms"
             [compareWith]="compareChatRoom"
           >
             <option [ngValue]="chatRoomOption" *ngFor="let chatRoomOption of chatRoomsSharedCollection">{{ chatRoomOption.id }}</option>

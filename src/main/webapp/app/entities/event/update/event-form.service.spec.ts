@@ -26,9 +26,11 @@ describe('Event Form Service', () => {
             endDate: expect.any(Object),
             imageUrl: expect.any(Object),
             latitude: expect.any(Object),
+            category: expect.any(Object),
             longitude: expect.any(Object),
             address: expect.any(Object),
-            eventrooms: expect.any(Object),
+            postedby: expect.any(Object),
+            eventsrooms: expect.any(Object),
           })
         );
       });
@@ -45,9 +47,11 @@ describe('Event Form Service', () => {
             endDate: expect.any(Object),
             imageUrl: expect.any(Object),
             latitude: expect.any(Object),
+            category: expect.any(Object),
             longitude: expect.any(Object),
             address: expect.any(Object),
-            eventrooms: expect.any(Object),
+            postedby: expect.any(Object),
+            eventsrooms: expect.any(Object),
           })
         );
       });

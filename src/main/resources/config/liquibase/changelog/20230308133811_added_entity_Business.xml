@@ -20,14 +20,14 @@
             <column name="description" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
-            <column name="category" type="varchar(50)">
+            <column name="category" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
-            <column name="phone_number" type="integer">
+            <column name="phone_number" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
             <column name="email" type="varchar(254)">
-                <constraints nullable="true" />
+                <constraints nullable="false" />
             </column>
             <column name="website_url" type="varchar(255)">
                 <constraints nullable="true" />
@@ -38,14 +38,17 @@
             <column name="longitude" type="double">
                 <constraints nullable="false" />
             </column>
+            <column name="postedby_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
     </changeSet>
 
     <changeSet id="20230308133811-1-relations" author="jhipster">
 
-        <createTable tableName="rel_business__busroom">
-            <column name="busroom_id" type="bigint">
+        <createTable tableName="rel_business__businessroom">
+            <column name="businessroom_id" type="bigint">
                 <constraints nullable="false"/>
             </column>
             <column name="business_id" type="bigint">
@@ -53,7 +56,7 @@
             </column>
         </createTable>
 
-        <addPrimaryKey columnNames="business_id, busroom_id" tableName="rel_business__busroom"/>
+        <addPrimaryKey columnNames="business_id, businessroom_id" tableName="rel_business__businessroom"/>
     </changeSet>
 
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
@@ -76,7 +79,7 @@
             <column name="name" type="string"/>
             <column name="description" type="string"/>
             <column name="category" type="string"/>
-            <column name="phone_number" type="numeric"/>
+            <column name="phone_number" type="string"/>
             <column name="email" type="string"/>
             <column name="website_url" type="string"/>
             <column name="latitude" type="numeric"/>

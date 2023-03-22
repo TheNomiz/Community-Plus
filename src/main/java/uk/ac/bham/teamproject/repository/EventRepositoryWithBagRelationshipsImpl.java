@@ -22,7 +22,7 @@ public class EventRepositoryWithBagRelationshipsImpl implements EventRepositoryW
 
     @Override
     public Optional<Event> fetchBagRelationships(Optional<Event> event) {
-        return event.map(this::fetchEventrooms);
+        return event.map(this::fetchEventsrooms);
     }
 
     @Override
@@ -32,22 +32,22 @@ public class EventRepositoryWithBagRelationshipsImpl implements EventRepositoryW
 
     @Override
     public List<Event> fetchBagRelationships(List<Event> events) {
-        return Optional.of(events).map(this::fetchEventrooms).orElse(Collections.emptyList());
+        return Optional.of(events).map(this::fetchEventsrooms).orElse(Collections.emptyList());
     }
 
-    Event fetchEventrooms(Event result) {
+    Event fetchEventsrooms(Event result) {
         return entityManager
-            .createQuery("select event from Event event left join fetch event.eventrooms where event is :event", Event.class)
+            .createQuery("select event from Event event left join fetch event.eventsrooms where event is :event", Event.class)
             .setParameter("event", result)
             .setHint(QueryHints.PASS_DISTINCT_THROUGH, false)
             .getSingleResult();
     }
 
-    List<Event> fetchEventrooms(List<Event> events) {
+    List<Event> fetchEventsrooms(List<Event> events) {
         HashMap<Object, Integer> order = new HashMap<>();
         IntStream.range(0, events.size()).forEach(index -> order.put(events.get(index).getId(), index));
         List<Event> result = entityManager
-            .createQuery("select distinct event from Event event left join fetch event.eventrooms where event in :events", Event.class)
+            .createQuery("select distinct event from Event event left join fetch event.eventsrooms where event in :events", Event.class)
             .setParameter("events", events)
             .setHint(QueryHints.PASS_DISTINCT_THROUGH, false)
             .getResultList();

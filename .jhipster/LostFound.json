@@ -1,0 +1,65 @@
+{
+  "applications": "*",
+  "changelogDate": "20230322171615",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "lost_found",
+  "fields": [
+    {
+      "fieldName": "description",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "date",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "location",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "item",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "email",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "phoneNumber",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "minlength"],
+      "fieldValidateRulesMinlength": "11"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "LostFound",
+  "pagination": "infinite-scroll",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "userProfile",
+      "relationshipName": "postedby",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "chatRoom",
+      "otherEntityRelationshipName": "lostitems",
+      "ownerSide": true,
+      "relationshipName": "lostItem",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "service": "no"
+}

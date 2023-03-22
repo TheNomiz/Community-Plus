@@ -9,6 +9,8 @@ import { of, Subject, from } from 'rxjs';
 import { BusinessFormService } from './business-form.service';
 import { BusinessService } from '../service/business.service';
 import { IBusiness } from '../business.model';
+import { IUserProfile } from 'app/entities/user-profile/user-profile.model';
+import { UserProfileService } from 'app/entities/user-profile/service/user-profile.service';
 import { IChatRoom } from 'app/entities/chat-room/chat-room.model';
 import { ChatRoomService } from 'app/entities/chat-room/service/chat-room.service';
 
@@ -20,6 +22,7 @@ describe('Business Management Update Component', () => {
   let activatedRoute: ActivatedRoute;
   let businessFormService: BusinessFormService;
   let businessService: BusinessService;
+  let userProfileService: UserProfileService;
   let chatRoomService: ChatRoomService;
 
   beforeEach(() => {
@@ -43,20 +46,43 @@ describe('Business Management Update Component', () => {
     activatedRoute = TestBed.inject(ActivatedRoute);
     businessFormService = TestBed.inject(BusinessFormService);
     businessService = TestBed.inject(BusinessService);
+    userProfileService = TestBed.inject(UserProfileService);
     chatRoomService = TestBed.inject(ChatRoomService);
 
     comp = fixture.componentInstance;
   });
 
   describe('ngOnInit', () => {
+    it('Should call UserProfile query and add missing value', () => {
+      const business: IBusiness = { id: 456 };
+      const postedby: IUserProfile = { id: 68412 };
+      business.postedby = postedby;
+
+      const userProfileCollection: IUserProfile[] = [{ id: 35010 }];
+      jest.spyOn(userProfileService, 'query').mockReturnValue(of(new HttpResponse({ body: userProfileCollection })));
+      const additionalUserProfiles = [postedby];
+      const expectedCollection: IUserProfile[] = [...additionalUserProfiles, ...userProfileCollection];
+      jest.spyOn(userProfileService, 'addUserProfileToCollectionIfMissing').mockReturnValue(expectedCollection);
+
+      activatedRoute.data = of({ business });
+      comp.ngOnInit();
+
+      expect(userProfileService.query).toHaveBeenCalled();
+      expect(userProfileService.addUserProfileToCollectionIfMissing).toHaveBeenCalledWith(
+        userProfileCollection,
+        ...additionalUserProfiles.map(expect.objectContaining)
+      );
+      expect(comp.userProfilesSharedCollection).toEqual(expectedCollection);
+    });
+
     it('Should call ChatRoom query and add missing value', () => {
       const business: IBusiness = { id: 456 };
-      const busrooms: IChatRoom[] = [{ id: 61243 }];
-      business.busrooms = busrooms;
+      const businessrooms: IChatRoom[] = [{ id: 61243 }];
+      business.businessrooms = businessrooms;
 
       const chatRoomCollection: IChatRoom[] = [{ id: 31503 }];
       jest.spyOn(chatRoomService, 'query').mockReturnValue(of(new HttpResponse({ body: chatRoomCollection })));
-      const additionalChatRooms = [...busrooms];
+      const additionalChatRooms = [...businessrooms];
       const expectedCollection: IChatRoom[] = [...additionalChatRooms, ...chatRoomCollection];
       jest.spyOn(chatRoomService, 'addChatRoomToCollectionIfMissing').mockReturnValue(expectedCollection);
 
@@ -73,13 +99,16 @@ describe('Business Management Update Component', () => {
 
     it('Should update editForm', () => {
       const business: IBusiness = { id: 456 };
-      const busroom: IChatRoom = { id: 19850 };
-      business.busrooms = [busroom];
+      const postedby: IUserProfile = { id: 82048 };
+      business.postedby = postedby;
+      const businessroom: IChatRoom = { id: 19850 };
+      business.businessrooms = [businessroom];
 
       activatedRoute.data = of({ business });
       comp.ngOnInit();
 
-      expect(comp.chatRoomsSharedCollection).toContain(busroom);
+      expect(comp.userProfilesSharedCollection).toContain(postedby);
+      expect(comp.chatRoomsSharedCollection).toContain(businessroom);
       expect(comp.business).toEqual(business);
     });
   });
@@ -153,6 +182,16 @@ describe('Business Management Update Component', () => {
   });
 
   describe('Compare relationships', () => {
+    describe('compareUserProfile', () => {
+      it('Should forward to userProfileService', () => {
+        const entity = { id: 123 };
+        const entity2 = { id: 456 };
+        jest.spyOn(userProfileService, 'compareUserProfile');
+        comp.compareUserProfile(entity, entity2);
+        expect(userProfileService.compareUserProfile).toHaveBeenCalledWith(entity, entity2);
+      });
+    });
+
     describe('compareChatRoom', () => {
       it('Should forward to chatRoomService', () => {
         const entity = { id: 123 };

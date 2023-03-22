@@ -9,6 +9,8 @@ import { of, Subject, from } from 'rxjs';
 import { EventFormService } from './event-form.service';
 import { EventService } from '../service/event.service';
 import { IEvent } from '../event.model';
+import { IUserProfile } from 'app/entities/user-profile/user-profile.model';
+import { UserProfileService } from 'app/entities/user-profile/service/user-profile.service';
 import { IChatRoom } from 'app/entities/chat-room/chat-room.model';
 import { ChatRoomService } from 'app/entities/chat-room/service/chat-room.service';
 
@@ -20,6 +22,7 @@ describe('Event Management Update Component', () => {
   let activatedRoute: ActivatedRoute;
   let eventFormService: EventFormService;
   let eventService: EventService;
+  let userProfileService: UserProfileService;
   let chatRoomService: ChatRoomService;
 
   beforeEach(() => {
@@ -43,20 +46,43 @@ describe('Event Management Update Component', () => {
     activatedRoute = TestBed.inject(ActivatedRoute);
     eventFormService = TestBed.inject(EventFormService);
     eventService = TestBed.inject(EventService);
+    userProfileService = TestBed.inject(UserProfileService);
     chatRoomService = TestBed.inject(ChatRoomService);
 
     comp = fixture.componentInstance;
   });
 
   describe('ngOnInit', () => {
+    it('Should call UserProfile query and add missing value', () => {
+      const event: IEvent = { id: 456 };
+      const postedby: IUserProfile = { id: 24421 };
+      event.postedby = postedby;
+
+      const userProfileCollection: IUserProfile[] = [{ id: 14460 }];
+      jest.spyOn(userProfileService, 'query').mockReturnValue(of(new HttpResponse({ body: userProfileCollection })));
+      const additionalUserProfiles = [postedby];
+      const expectedCollection: IUserProfile[] = [...additionalUserProfiles, ...userProfileCollection];
+      jest.spyOn(userProfileService, 'addUserProfileToCollectionIfMissing').mockReturnValue(expectedCollection);
+
+      activatedRoute.data = of({ event });
+      comp.ngOnInit();
+
+      expect(userProfileService.query).toHaveBeenCalled();
+      expect(userProfileService.addUserProfileToCollectionIfMissing).toHaveBeenCalledWith(
+        userProfileCollection,
+        ...additionalUserProfiles.map(expect.objectContaining)
+      );
+      expect(comp.userProfilesSharedCollection).toEqual(expectedCollection);
+    });
+
     it('Should call ChatRoom query and add missing value', () => {
       const event: IEvent = { id: 456 };
-      const eventrooms: IChatRoom[] = [{ id: 73364 }];
-      event.eventrooms = eventrooms;
+      const eventsrooms: IChatRoom[] = [{ id: 73364 }];
+      event.eventsrooms = eventsrooms;
 
       const chatRoomCollection: IChatRoom[] = [{ id: 16541 }];
       jest.spyOn(chatRoomService, 'query').mockReturnValue(of(new HttpResponse({ body: chatRoomCollection })));
-      const additionalChatRooms = [...eventrooms];
+      const additionalChatRooms = [...eventsrooms];
       const expectedCollection: IChatRoom[] = [...additionalChatRooms, ...chatRoomCollection];
       jest.spyOn(chatRoomService, 'addChatRoomToCollectionIfMissing').mockReturnValue(expectedCollection);
 
@@ -73,13 +99,16 @@ describe('Event Management Update Component', () => {
 
     it('Should update editForm', () => {
       const event: IEvent = { id: 456 };
-      const eventroom: IChatRoom = { id: 30746 };
-      event.eventrooms = [eventroom];
+      const postedby: IUserProfile = { id: 39283 };
+      event.postedby = postedby;
+      const eventsroom: IChatRoom = { id: 30746 };
+      event.eventsrooms = [eventsroom];
 
       activatedRoute.data = of({ event });
       comp.ngOnInit();
 
-      expect(comp.chatRoomsSharedCollection).toContain(eventroom);
+      expect(comp.userProfilesSharedCollection).toContain(postedby);
+      expect(comp.chatRoomsSharedCollection).toContain(eventsroom);
       expect(comp.event).toEqual(event);
     });
   });
@@ -153,6 +182,16 @@ describe('Event Management Update Component', () => {
   });
 
   describe('Compare relationships', () => {
+    describe('compareUserProfile', () => {
+      it('Should forward to userProfileService', () => {
+        const entity = { id: 123 };
+        const entity2 = { id: 456 };
+        jest.spyOn(userProfileService, 'compareUserProfile');
+        comp.compareUserProfile(entity, entity2);
+        expect(userProfileService.compareUserProfile).toHaveBeenCalledWith(entity, entity2);
+      });
+    });
+
     describe('compareChatRoom', () => {
       it('Should forward to chatRoomService', () => {
         const entity = { id: 123 };

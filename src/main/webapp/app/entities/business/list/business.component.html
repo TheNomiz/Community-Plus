@@ -86,6 +86,12 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
+          <th scope="col" jhiSortBy="postedby.id">
+            <div class="d-flex">
+              <span jhiTranslate="teamprojectApp.business.postedby">Postedby</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -101,12 +107,17 @@
           </td>
           <td>{{ business.name }}</td>
           <td>{{ business.description }}</td>
-          <td>{{ business.category }}</td>
+          <td jhiTranslate="{{ 'teamprojectApp.BusinessCategory.' + business.category }}">{{ business.category }}</td>
           <td>{{ business.phoneNumber }}</td>
           <td>{{ business.email }}</td>
           <td>{{ business.websiteUrl }}</td>
           <td>{{ business.latitude }}</td>
           <td>{{ business.longitude }}</td>
+          <td>
+            <div *ngIf="business.postedby">
+              <a [routerLink]="['/user-profile', business.postedby.id, 'view']">{{ business.postedby.id }}</a>
+            </div>
+          </td>
           <td class="text-end">
             <div class="btn-group">
               <button

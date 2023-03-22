@@ -34,7 +34,11 @@ public class ChatMessage implements Serializable {
     private LocalDate sentDate;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "messages", "events", "businesses" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "iD" }, allowSetters = true)
+    private UserProfile postedby;
+
+    @ManyToOne
+    @JsonIgnoreProperties(value = { "messages", "events", "businesses", "lostitems" }, allowSetters = true)
     private ChatRoom room;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -76,6 +80,19 @@ public class ChatMessage implements Serializable {
 
     public void setSentDate(LocalDate sentDate) {
         this.sentDate = sentDate;
+    }
+
+    public UserProfile getPostedby() {
+        return this.postedby;
+    }
+
+    public void setPostedby(UserProfile userProfile) {
+        this.postedby = userProfile;
+    }
+
+    public ChatMessage postedby(UserProfile userProfile) {
+        this.setPostedby(userProfile);
+        return this;
     }
 
     public ChatRoom getRoom() {

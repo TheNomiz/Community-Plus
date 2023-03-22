@@ -21,7 +21,8 @@
       "name": "Name",
       "messages": "Messages",
       "events": "Events",
-      "businesses": "Businesses"
+      "business": "Business",
+      "lostitems": "Lostitems"
     }
   }
 }

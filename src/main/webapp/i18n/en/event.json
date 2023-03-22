@@ -24,9 +24,11 @@
       "endDate": "End Date",
       "imageUrl": "Image Url",
       "latitude": "Latitude",
+      "category": "Category",
       "longitude": "Longitude",
       "address": "Address",
-      "eventroom": "Eventroom"
+      "postedby": "Postedby",
+      "eventsroom": "Eventsroom"
     }
   }
 }

@@ -2,11 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { finalize } from 'rxjs/operators';
+import { finalize, map } from 'rxjs/operators';
 
 import { UserProfileFormService, UserProfileFormGroup } from './user-profile-form.service';
 import { IUserProfile } from '../user-profile.model';
 import { UserProfileService } from '../service/user-profile.service';
+import { IUser } from 'app/entities/user/user.model';
+import { UserService } from 'app/entities/user/user.service';
 
 @Component({
   selector: 'jhi-user-profile-update',
@@ -16,13 +18,18 @@ export class UserProfileUpdateComponent implements OnInit {
   isSaving = false;
   userProfile: IUserProfile | null = null;
 
+  usersSharedCollection: IUser[] = [];
+
   editForm: UserProfileFormGroup = this.userProfileFormService.createUserProfileFormGroup();
 
   constructor(
     protected userProfileService: UserProfileService,
     protected userProfileFormService: UserProfileFormService,
+    protected userService: UserService,
     protected activatedRoute: ActivatedRoute
   ) {}
+
+  compareUser = (o1: IUser | null, o2: IUser | null): boolean => this.userService.compareUser(o1, o2);
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ userProfile }) => {
@@ -30,6 +37,8 @@ export class UserProfileUpdateComponent implements OnInit {
       if (userProfile) {
         this.updateForm(userProfile);
       }
+
+      this.loadRelationshipsOptions();
     });
   }
 
@@ -69,5 +78,15 @@ export class UserProfileUpdateComponent implements OnInit {
   protected updateForm(userProfile: IUserProfile): void {
     this.userProfile = userProfile;
     this.userProfileFormService.resetForm(this.editForm, userProfile);
+
+    this.usersSharedCollection = this.userService.addUserToCollectionIfMissing<IUser>(this.usersSharedCollection, userProfile.iD);
+  }
+
+  protected loadRelationshipsOptions(): void {
+    this.userService
+      .query()
+      .pipe(map((res: HttpResponse<IUser[]>) => res.body ?? []))
+      .pipe(map((users: IUser[]) => this.userService.addUserToCollectionIfMissing<IUser>(users, this.userProfile?.iD)))
+      .subscribe((users: IUser[]) => (this.usersSharedCollection = users));
   }
 }

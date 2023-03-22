@@ -8,15 +8,21 @@
     -->
     <changeSet id="20230308133811-2" author="jhipster">
 
+        <addForeignKeyConstraint baseColumnNames="postedby_id"
+                                 baseTableName="business"
+                                 constraintName="fk_business__postedby_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="user_profile"/>
+
         <addForeignKeyConstraint baseColumnNames="business_id"
-                                 baseTableName="rel_business__busroom"
-                                 constraintName="fk_rel_business__busroom__business_id"
+                                 baseTableName="rel_business__businessroom"
+                                 constraintName="fk_rel_business__businessroom__business_id"
                                  referencedColumnNames="id"
                                  referencedTableName="business"/>
 
-        <addForeignKeyConstraint baseColumnNames="busroom_id"
-                                 baseTableName="rel_business__busroom"
-                                 constraintName="fk_rel_business__busroom__busroom_id"
+        <addForeignKeyConstraint baseColumnNames="businessroom_id"
+                                 baseTableName="rel_business__businessroom"
+                                 constraintName="fk_rel_business__businessroom__businessroom_id"
                                  referencedColumnNames="id"
                                  referencedTableName="chat_room"/>
     </changeSet>

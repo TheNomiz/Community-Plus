@@ -26,7 +26,8 @@
       "websiteUrl": "Website Url",
       "latitude": "Latitude",
       "longitude": "Longitude",
-      "busroom": "Busroom"
+      "postedby": "Postedby",
+      "businessroom": "Businessroom"
     }
   }
 }

@@ -16,13 +16,14 @@ describe('Event e2e test', () => {
   const username = Cypress.env('E2E_USERNAME') ?? 'user';
   const password = Cypress.env('E2E_PASSWORD') ?? 'user';
   const eventSample = {
-    name: 'haptic Customer',
-    description: 'Metrics',
+    name: 'Saint Loan',
+    description: 'Customer',
     startDate: '2023-03-08',
-    endDate: '2023-03-08',
-    latitude: 75989,
-    longitude: 94669,
-    address: 'navigate model',
+    endDate: '2023-03-07',
+    latitude: 99166,
+    category: 'Sport',
+    longitude: 20933,
+    address: 'parse navigate',
   };
 
   let event;
@@ -180,9 +181,11 @@ describe('Event e2e test', () => {
 
       cy.get(`[data-cy="latitude"]`).type('76580').should('have.value', '76580');
 
-      cy.get(`[data-cy="longitude"]`).type('84964').should('have.value', '84964');
+      cy.get(`[data-cy="category"]`).select('Meetup');
 
-      cy.get(`[data-cy="address"]`).type('Steel Saint').should('have.value', 'Steel Saint');
+      cy.get(`[data-cy="longitude"]`).type('52145').should('have.value', '52145');
+
+      cy.get(`[data-cy="address"]`).type('Small').should('have.value', 'Small');
 
       cy.get(entityCreateSaveButtonSelector).click();
 

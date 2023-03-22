@@ -10,6 +10,9 @@ import { UserProfileFormService } from './user-profile-form.service';
 import { UserProfileService } from '../service/user-profile.service';
 import { IUserProfile } from '../user-profile.model';
 
+import { IUser } from 'app/entities/user/user.model';
+import { UserService } from 'app/entities/user/user.service';
+
 import { UserProfileUpdateComponent } from './user-profile-update.component';
 
 describe('UserProfile Management Update Component', () => {
@@ -18,6 +21,7 @@ describe('UserProfile Management Update Component', () => {
   let activatedRoute: ActivatedRoute;
   let userProfileFormService: UserProfileFormService;
   let userProfileService: UserProfileService;
+  let userService: UserService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -40,17 +44,43 @@ describe('UserProfile Management Update Component', () => {
     activatedRoute = TestBed.inject(ActivatedRoute);
     userProfileFormService = TestBed.inject(UserProfileFormService);
     userProfileService = TestBed.inject(UserProfileService);
+    userService = TestBed.inject(UserService);
 
     comp = fixture.componentInstance;
   });
 
   describe('ngOnInit', () => {
-    it('Should update editForm', () => {
+    it('Should call User query and add missing value', () => {
       const userProfile: IUserProfile = { id: 456 };
+      const iD: IUser = { id: 28285 };
+      userProfile.iD = iD;
+
+      const userCollection: IUser[] = [{ id: 78135 }];
+      jest.spyOn(userService, 'query').mockReturnValue(of(new HttpResponse({ body: userCollection })));
+      const additionalUsers = [iD];
+      const expectedCollection: IUser[] = [...additionalUsers, ...userCollection];
+      jest.spyOn(userService, 'addUserToCollectionIfMissing').mockReturnValue(expectedCollection);
 
       activatedRoute.data = of({ userProfile });
       comp.ngOnInit();
 
+      expect(userService.query).toHaveBeenCalled();
+      expect(userService.addUserToCollectionIfMissing).toHaveBeenCalledWith(
+        userCollection,
+        ...additionalUsers.map(expect.objectContaining)
+      );
+      expect(comp.usersSharedCollection).toEqual(expectedCollection);
+    });
+
+    it('Should update editForm', () => {
+      const userProfile: IUserProfile = { id: 456 };
+      const iD: IUser = { id: 26285 };
+      userProfile.iD = iD;
+
+      activatedRoute.data = of({ userProfile });
+      comp.ngOnInit();
+
+      expect(comp.usersSharedCollection).toContain(iD);
       expect(comp.userProfile).toEqual(userProfile);
     });
   });
@@ -120,6 +150,18 @@ describe('UserProfile Management Update Component', () => {
       expect(userProfileService.update).toHaveBeenCalled();
       expect(comp.isSaving).toEqual(false);
       expect(comp.previousState).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('Compare relationships', () => {
+    describe('compareUser', () => {
+      it('Should forward to userService', () => {
+        const entity = { id: 123 };
+        const entity2 = { id: 456 };
+        jest.spyOn(userService, 'compareUser');
+        comp.compareUser(entity, entity2);
+        expect(userService.compareUser).toHaveBeenCalledWith(entity, entity2);
+      });
     });
   });
 });

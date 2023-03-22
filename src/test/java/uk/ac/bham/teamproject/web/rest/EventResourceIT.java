@@ -29,6 +29,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import uk.ac.bham.teamproject.IntegrationTest;
 import uk.ac.bham.teamproject.domain.Event;
+import uk.ac.bham.teamproject.domain.enumeration.EventCategory;
 import uk.ac.bham.teamproject.repository.EventRepository;
 
 /**
@@ -57,6 +58,9 @@ class EventResourceIT {
 
     private static final Double DEFAULT_LATITUDE = 1D;
     private static final Double UPDATED_LATITUDE = 2D;
+
+    private static final EventCategory DEFAULT_CATEGORY = EventCategory.Sport;
+    private static final EventCategory UPDATED_CATEGORY = EventCategory.Conference;
 
     private static final Double DEFAULT_LONGITUDE = 1D;
     private static final Double UPDATED_LONGITUDE = 2D;
@@ -98,6 +102,7 @@ class EventResourceIT {
             .endDate(DEFAULT_END_DATE)
             .imageUrl(DEFAULT_IMAGE_URL)
             .latitude(DEFAULT_LATITUDE)
+            .category(DEFAULT_CATEGORY)
             .longitude(DEFAULT_LONGITUDE)
             .address(DEFAULT_ADDRESS);
         return event;
@@ -117,6 +122,7 @@ class EventResourceIT {
             .endDate(UPDATED_END_DATE)
             .imageUrl(UPDATED_IMAGE_URL)
             .latitude(UPDATED_LATITUDE)
+            .category(UPDATED_CATEGORY)
             .longitude(UPDATED_LONGITUDE)
             .address(UPDATED_ADDRESS);
         return event;
@@ -146,6 +152,7 @@ class EventResourceIT {
         assertThat(testEvent.getEndDate()).isEqualTo(DEFAULT_END_DATE);
         assertThat(testEvent.getImageUrl()).isEqualTo(DEFAULT_IMAGE_URL);
         assertThat(testEvent.getLatitude()).isEqualTo(DEFAULT_LATITUDE);
+        assertThat(testEvent.getCategory()).isEqualTo(DEFAULT_CATEGORY);
         assertThat(testEvent.getLongitude()).isEqualTo(DEFAULT_LONGITUDE);
         assertThat(testEvent.getAddress()).isEqualTo(DEFAULT_ADDRESS);
     }
@@ -255,6 +262,23 @@ class EventResourceIT {
 
     @Test
     @Transactional
+    void checkCategoryIsRequired() throws Exception {
+        int databaseSizeBeforeTest = eventRepository.findAll().size();
+        // set the field null
+        event.setCategory(null);
+
+        // Create the Event, which fails.
+
+        restEventMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(event)))
+            .andExpect(status().isBadRequest());
+
+        List<Event> eventList = eventRepository.findAll();
+        assertThat(eventList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     void checkLongitudeIsRequired() throws Exception {
         int databaseSizeBeforeTest = eventRepository.findAll().size();
         // set the field null
@@ -305,6 +329,7 @@ class EventResourceIT {
             .andExpect(jsonPath("$.[*].endDate").value(hasItem(DEFAULT_END_DATE.toString())))
             .andExpect(jsonPath("$.[*].imageUrl").value(hasItem(DEFAULT_IMAGE_URL)))
             .andExpect(jsonPath("$.[*].latitude").value(hasItem(DEFAULT_LATITUDE.doubleValue())))
+            .andExpect(jsonPath("$.[*].category").value(hasItem(DEFAULT_CATEGORY.toString())))
             .andExpect(jsonPath("$.[*].longitude").value(hasItem(DEFAULT_LONGITUDE.doubleValue())))
             .andExpect(jsonPath("$.[*].address").value(hasItem(DEFAULT_ADDRESS)));
     }
@@ -344,6 +369,7 @@ class EventResourceIT {
             .andExpect(jsonPath("$.endDate").value(DEFAULT_END_DATE.toString()))
             .andExpect(jsonPath("$.imageUrl").value(DEFAULT_IMAGE_URL))
             .andExpect(jsonPath("$.latitude").value(DEFAULT_LATITUDE.doubleValue()))
+            .andExpect(jsonPath("$.category").value(DEFAULT_CATEGORY.toString()))
             .andExpect(jsonPath("$.longitude").value(DEFAULT_LONGITUDE.doubleValue()))
             .andExpect(jsonPath("$.address").value(DEFAULT_ADDRESS));
     }
@@ -374,6 +400,7 @@ class EventResourceIT {
             .endDate(UPDATED_END_DATE)
             .imageUrl(UPDATED_IMAGE_URL)
             .latitude(UPDATED_LATITUDE)
+            .category(UPDATED_CATEGORY)
             .longitude(UPDATED_LONGITUDE)
             .address(UPDATED_ADDRESS);
 
@@ -395,6 +422,7 @@ class EventResourceIT {
         assertThat(testEvent.getEndDate()).isEqualTo(UPDATED_END_DATE);
         assertThat(testEvent.getImageUrl()).isEqualTo(UPDATED_IMAGE_URL);
         assertThat(testEvent.getLatitude()).isEqualTo(UPDATED_LATITUDE);
+        assertThat(testEvent.getCategory()).isEqualTo(UPDATED_CATEGORY);
         assertThat(testEvent.getLongitude()).isEqualTo(UPDATED_LONGITUDE);
         assertThat(testEvent.getAddress()).isEqualTo(UPDATED_ADDRESS);
     }
@@ -467,7 +495,7 @@ class EventResourceIT {
         Event partialUpdatedEvent = new Event();
         partialUpdatedEvent.setId(event.getId());
 
-        partialUpdatedEvent.description(UPDATED_DESCRIPTION).address(UPDATED_ADDRESS);
+        partialUpdatedEvent.description(UPDATED_DESCRIPTION).longitude(UPDATED_LONGITUDE);
 
         restEventMockMvc
             .perform(
@@ -487,8 +515,9 @@ class EventResourceIT {
         assertThat(testEvent.getEndDate()).isEqualTo(DEFAULT_END_DATE);
         assertThat(testEvent.getImageUrl()).isEqualTo(DEFAULT_IMAGE_URL);
         assertThat(testEvent.getLatitude()).isEqualTo(DEFAULT_LATITUDE);
-        assertThat(testEvent.getLongitude()).isEqualTo(DEFAULT_LONGITUDE);
-        assertThat(testEvent.getAddress()).isEqualTo(UPDATED_ADDRESS);
+        assertThat(testEvent.getCategory()).isEqualTo(DEFAULT_CATEGORY);
+        assertThat(testEvent.getLongitude()).isEqualTo(UPDATED_LONGITUDE);
+        assertThat(testEvent.getAddress()).isEqualTo(DEFAULT_ADDRESS);
     }
 
     @Test
@@ -510,6 +539,7 @@ class EventResourceIT {
             .endDate(UPDATED_END_DATE)
             .imageUrl(UPDATED_IMAGE_URL)
             .latitude(UPDATED_LATITUDE)
+            .category(UPDATED_CATEGORY)
             .longitude(UPDATED_LONGITUDE)
             .address(UPDATED_ADDRESS);
 
@@ -531,6 +561,7 @@ class EventResourceIT {
         assertThat(testEvent.getEndDate()).isEqualTo(UPDATED_END_DATE);
         assertThat(testEvent.getImageUrl()).isEqualTo(UPDATED_IMAGE_URL);
         assertThat(testEvent.getLatitude()).isEqualTo(UPDATED_LATITUDE);
+        assertThat(testEvent.getCategory()).isEqualTo(UPDATED_CATEGORY);
         assertThat(testEvent.getLongitude()).isEqualTo(UPDATED_LONGITUDE);
         assertThat(testEvent.getAddress()).isEqualTo(UPDATED_ADDRESS);
     }

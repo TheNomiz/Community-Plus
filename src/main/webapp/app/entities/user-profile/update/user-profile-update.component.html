@@ -32,81 +32,6 @@
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" jhiTranslate="teamprojectApp.userProfile.verified" for="field_verified">Verified</label>
-          <input type="checkbox" class="form-check" name="verified" id="field_verified" data-cy="verified" formControlName="verified" />
-          <div *ngIf="editForm.get('verified')!.invalid && (editForm.get('verified')!.dirty || editForm.get('verified')!.touched)">
-            <small
-              class="form-text text-danger"
-              *ngIf="editForm.get('verified')?.errors?.required"
-              jhiTranslate="entity.validation.required"
-            >
-              This field is required.
-            </small>
-          </div>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="teamprojectApp.userProfile.privateAccount" for="field_privateAccount"
-            >Private Account</label
-          >
-          <input
-            type="checkbox"
-            class="form-check"
-            name="privateAccount"
-            id="field_privateAccount"
-            data-cy="privateAccount"
-            formControlName="privateAccount"
-          />
-          <div
-            *ngIf="
-              editForm.get('privateAccount')!.invalid && (editForm.get('privateAccount')!.dirty || editForm.get('privateAccount')!.touched)
-            "
-          >
-            <small
-              class="form-text text-danger"
-              *ngIf="editForm.get('privateAccount')?.errors?.required"
-              jhiTranslate="entity.validation.required"
-            >
-              This field is required.
-            </small>
-          </div>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="teamprojectApp.userProfile.age" for="field_age">Age</label>
-          <input type="number" class="form-control" name="age" id="field_age" data-cy="age" formControlName="age" />
-          <div *ngIf="editForm.get('age')!.invalid && (editForm.get('age')!.dirty || editForm.get('age')!.touched)">
-            <small class="form-text text-danger" *ngIf="editForm.get('age')?.errors?.required" jhiTranslate="entity.validation.required">
-              This field is required.
-            </small>
-            <small class="form-text text-danger" [hidden]="!editForm.get('age')?.errors?.number" jhiTranslate="entity.validation.number">
-              This field should be a number.
-            </small>
-          </div>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="teamprojectApp.userProfile.accountType" for="field_accountType">Account Type</label>
-          <input
-            type="text"
-            class="form-control"
-            name="accountType"
-            id="field_accountType"
-            data-cy="accountType"
-            formControlName="accountType"
-          />
-          <div *ngIf="editForm.get('accountType')!.invalid && (editForm.get('accountType')!.dirty || editForm.get('accountType')!.touched)">
-            <small
-              class="form-text text-danger"
-              *ngIf="editForm.get('accountType')?.errors?.required"
-              jhiTranslate="entity.validation.required"
-            >
-              This field is required.
-            </small>
-          </div>
-        </div>
-
-        <div class="row mb-3">
           <label class="form-label" jhiTranslate="teamprojectApp.userProfile.firstnames" for="field_firstnames">Firstnames</label>
           <input
             type="text"
@@ -180,6 +105,105 @@
             <small
               class="form-text text-danger"
               *ngIf="editForm.get('password')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="teamprojectApp.userProfile.email" for="field_email">Email</label>
+          <input type="text" class="form-control" name="email" id="field_email" data-cy="email" formControlName="email" />
+          <div *ngIf="editForm.get('email')!.invalid && (editForm.get('email')!.dirty || editForm.get('email')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('email')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="teamprojectApp.userProfile.language" for="field_language">Language</label>
+          <input type="text" class="form-control" name="language" id="field_language" data-cy="language" formControlName="language" />
+          <div *ngIf="editForm.get('language')!.invalid && (editForm.get('language')!.dirty || editForm.get('language')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('language')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="teamprojectApp.userProfile.verified" for="field_verified">Verified</label>
+          <input type="checkbox" class="form-check" name="verified" id="field_verified" data-cy="verified" formControlName="verified" />
+          <div *ngIf="editForm.get('verified')!.invalid && (editForm.get('verified')!.dirty || editForm.get('verified')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('verified')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="teamprojectApp.userProfile.privateAccount" for="field_privateAccount"
+            >Private Account</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="privateAccount"
+            id="field_privateAccount"
+            data-cy="privateAccount"
+            formControlName="privateAccount"
+          />
+          <div
+            *ngIf="
+              editForm.get('privateAccount')!.invalid && (editForm.get('privateAccount')!.dirty || editForm.get('privateAccount')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('privateAccount')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="teamprojectApp.userProfile.age" for="field_age">Age</label>
+          <input type="number" class="form-control" name="age" id="field_age" data-cy="age" formControlName="age" />
+          <div *ngIf="editForm.get('age')!.invalid && (editForm.get('age')!.dirty || editForm.get('age')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('age')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+            <small class="form-text text-danger" [hidden]="!editForm.get('age')?.errors?.number" jhiTranslate="entity.validation.number">
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="teamprojectApp.userProfile.accountType" for="field_accountType">Account Type</label>
+          <input
+            type="text"
+            class="form-control"
+            name="accountType"
+            id="field_accountType"
+            data-cy="accountType"
+            formControlName="accountType"
+          />
+          <div *ngIf="editForm.get('accountType')!.invalid && (editForm.get('accountType')!.dirty || editForm.get('accountType')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('accountType')?.errors?.required"
               jhiTranslate="entity.validation.required"
             >
               This field is required.
@@ -286,16 +310,6 @@
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" jhiTranslate="teamprojectApp.userProfile.email" for="field_email">Email</label>
-          <input type="text" class="form-control" name="email" id="field_email" data-cy="email" formControlName="email" />
-          <div *ngIf="editForm.get('email')!.invalid && (editForm.get('email')!.dirty || editForm.get('email')!.touched)">
-            <small class="form-text text-danger" *ngIf="editForm.get('email')?.errors?.required" jhiTranslate="entity.validation.required">
-              This field is required.
-            </small>
-          </div>
-        </div>
-
-        <div class="row mb-3">
           <label class="form-label" jhiTranslate="teamprojectApp.userProfile.phoneNumber" for="field_phoneNumber">Phone Number</label>
           <input
             type="text"
@@ -321,14 +335,6 @@
             >
               This field is required to be at least 11 characters.
             </small>
-            <small
-              class="form-text text-danger"
-              *ngIf="editForm.get('phoneNumber')?.errors?.pattern"
-              jhiTranslate="entity.validation.pattern"
-              [translateValues]="{ pattern: 'Phone Number' }"
-            >
-              This field should follow pattern for Phone Number.
-            </small>
           </div>
         </div>
 
@@ -344,20 +350,6 @@
             data-cy="communityPoints"
             formControlName="communityPoints"
           />
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="teamprojectApp.userProfile.language" for="field_language">Language</label>
-          <input type="text" class="form-control" name="language" id="field_language" data-cy="language" formControlName="language" />
-          <div *ngIf="editForm.get('language')!.invalid && (editForm.get('language')!.dirty || editForm.get('language')!.touched)">
-            <small
-              class="form-text text-danger"
-              *ngIf="editForm.get('language')?.errors?.required"
-              jhiTranslate="entity.validation.required"
-            >
-              This field is required.
-            </small>
-          </div>
         </div>
 
         <div class="row mb-3">
@@ -378,6 +370,14 @@
         <div class="row mb-3">
           <label class="form-label" jhiTranslate="teamprojectApp.userProfile.fontsize" for="field_fontsize">Fontsize</label>
           <input type="number" class="form-control" name="fontsize" id="field_fontsize" data-cy="fontsize" formControlName="fontsize" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="teamprojectApp.userProfile.iD" for="field_iD">I D</label>
+          <select class="form-control" id="field_iD" data-cy="iD" name="iD" formControlName="iD" [compareWith]="compareUser">
+            <option [ngValue]="null"></option>
+            <option [ngValue]="userOption" *ngFor="let userOption of usersSharedCollection">{{ userOption.id }}</option>
+          </select>
         </div>
       </div>
 

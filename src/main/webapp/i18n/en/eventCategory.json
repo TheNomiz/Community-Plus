@@ -1,0 +1,13 @@
+{
+  "teamprojectApp": {
+    "EventCategory": {
+      "null": "",
+      "Sport": "Sport",
+      "Conference": "Conference",
+      "Workshop": "Workshop",
+      "Seminar": "Seminar",
+      "Webinar": "Webinar",
+      "Meetup": "Meetup"
+    }
+  }
+}

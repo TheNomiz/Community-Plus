@@ -23,6 +23,7 @@ describe('ChatRoom Form Service', () => {
             name: expect.any(Object),
             events: expect.any(Object),
             businesses: expect.any(Object),
+            lostitems: expect.any(Object),
           })
         );
       });
@@ -36,6 +37,7 @@ describe('ChatRoom Form Service', () => {
             name: expect.any(Object),
             events: expect.any(Object),
             businesses: expect.any(Object),
+            lostitems: expect.any(Object),
           })
         );
       });

@@ -147,6 +147,9 @@ public class EventResource {
                 if (event.getLatitude() != null) {
                     existingEvent.setLatitude(event.getLatitude());
                 }
+                if (event.getCategory() != null) {
+                    existingEvent.setCategory(event.getCategory());
+                }
                 if (event.getLongitude() != null) {
                     existingEvent.setLongitude(event.getLongitude());
                 }

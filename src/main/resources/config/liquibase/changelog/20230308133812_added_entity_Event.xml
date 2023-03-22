@@ -32,11 +32,17 @@
             <column name="latitude" type="double">
                 <constraints nullable="false" />
             </column>
+            <column name="category" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
             <column name="longitude" type="double">
                 <constraints nullable="false" />
             </column>
             <column name="address" type="varchar(255)">
                 <constraints nullable="false" />
+            </column>
+            <column name="postedby_id" type="bigint">
+                <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
@@ -44,8 +50,8 @@
 
     <changeSet id="20230308133812-1-relations" author="jhipster">
 
-        <createTable tableName="rel_event__eventroom">
-            <column name="eventroom_id" type="bigint">
+        <createTable tableName="rel_event__eventsroom">
+            <column name="eventsroom_id" type="bigint">
                 <constraints nullable="false"/>
             </column>
             <column name="event_id" type="bigint">
@@ -53,7 +59,7 @@
             </column>
         </createTable>
 
-        <addPrimaryKey columnNames="event_id, eventroom_id" tableName="rel_event__eventroom"/>
+        <addPrimaryKey columnNames="event_id, eventsroom_id" tableName="rel_event__eventsroom"/>
     </changeSet>
 
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
@@ -79,6 +85,7 @@
             <column name="end_date" type="date"/>
             <column name="image_url" type="string"/>
             <column name="latitude" type="numeric"/>
+            <column name="category" type="string"/>
             <column name="longitude" type="numeric"/>
             <column name="address" type="string"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->

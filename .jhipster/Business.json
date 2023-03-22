@@ -19,19 +19,20 @@
     },
     {
       "fieldName": "category",
-      "fieldType": "String",
-      "fieldValidateRules": ["required", "maxlength"],
-      "fieldValidateRulesMaxlength": "50"
+      "fieldType": "BusinessCategory",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "Restaurant,Cafe,GroceryStore,RetailStore,ServiceProvider,Other"
     },
     {
       "fieldName": "phoneNumber",
-      "fieldType": "Integer",
-      "fieldValidateRules": ["required"]
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "minlength"],
+      "fieldValidateRulesMinlength": "11"
     },
     {
       "fieldName": "email",
       "fieldType": "String",
-      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRules": ["required", "maxlength"],
       "fieldValidateRulesMaxlength": "254"
     },
     {
@@ -58,10 +59,15 @@
   "readOnly": false,
   "relationships": [
     {
+      "otherEntityName": "userProfile",
+      "relationshipName": "postedby",
+      "relationshipType": "many-to-one"
+    },
+    {
       "otherEntityName": "chatRoom",
-      "otherEntityRelationshipName": "businesses",
+      "otherEntityRelationshipName": "business",
       "ownerSide": true,
-      "relationshipName": "busroom",
+      "relationshipName": "businessroom",
       "relationshipType": "many-to-many"
     }
   ],

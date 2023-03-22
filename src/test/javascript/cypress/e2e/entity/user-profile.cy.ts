@@ -16,19 +16,20 @@ describe('UserProfile e2e test', () => {
   const username = Cypress.env('E2E_USERNAME') ?? 'user';
   const password = Cypress.env('E2E_PASSWORD') ?? 'user';
   const userProfileSample = {
-    username: 'invoice invoice cyan',
-    verified: false,
-    privateAccount: false,
-    age: 99757,
-    accountType: 'action-items Loan',
-    firstnames: 'Handcrafted Riel',
-    lastname: 'services',
-    password: 'concept',
-    occupation: 'extensible content',
-    postalCode: 'Fresh XSS compress',
-    email: 'Deshawn86@yahoo.com',
-    language: 'Brand target users',
-    gPS: true,
+    username: 'AGP compressing',
+    firstnames: 'bypass Analyst inter',
+    lastname: 'Kenya UAE Clothing',
+    password: 'global Savings',
+    email: 'Judge_Kunde@gmail.com',
+    language: 'content Program EXE',
+    verified: true,
+    privateAccount: true,
+    age: 63718,
+    accountType: 'Multi-layered Re-engineered IB',
+    occupation: 'static channels Bran',
+    postalCode: 'Cambridgeshire connect',
+    phoneNumber: 'Kids Global',
+    gPS: false,
   };
 
   let userProfile;
@@ -176,37 +177,39 @@ describe('UserProfile e2e test', () => {
     it('should create an instance of UserProfile', () => {
       cy.get(`[data-cy="username"]`).type('SAS').should('have.value', 'SAS');
 
+      cy.get(`[data-cy="firstnames"]`).type('grey Fish circuit').should('have.value', 'grey Fish circuit');
+
+      cy.get(`[data-cy="lastname"]`).type('Cotton').should('have.value', 'Cotton');
+
+      cy.get(`[data-cy="password"]`).type('green circuit').should('have.value', 'green circuit');
+
+      cy.get(`[data-cy="email"]`).type('Liliana_Hermiston@hotmail.com').should('have.value', 'Liliana_Hermiston@hotmail.com');
+
+      cy.get(`[data-cy="language"]`).type('XML Palau interface').should('have.value', 'XML Palau interface');
+
       cy.get(`[data-cy="verified"]`).should('not.be.checked');
       cy.get(`[data-cy="verified"]`).click().should('be.checked');
 
       cy.get(`[data-cy="privateAccount"]`).should('not.be.checked');
       cy.get(`[data-cy="privateAccount"]`).click().should('be.checked');
 
-      cy.get(`[data-cy="age"]`).type('37773').should('have.value', '37773');
+      cy.get(`[data-cy="age"]`).type('27881').should('have.value', '27881');
 
-      cy.get(`[data-cy="accountType"]`).type('Fish').should('have.value', 'Fish');
+      cy.get(`[data-cy="accountType"]`).type('SAS Greenland overriding').should('have.value', 'SAS Greenland overriding');
 
-      cy.get(`[data-cy="firstnames"]`).type('AGP Cotton Savings').should('have.value', 'AGP Cotton Savings');
+      cy.get(`[data-cy="occupation"]`).type('incubate invoice').should('have.value', 'incubate invoice');
 
-      cy.get(`[data-cy="lastname"]`).type('circuit pixel Cambri').should('have.value', 'circuit pixel Cambri');
+      cy.get(`[data-cy="streetAddress"]`).type('Unbranded bandwidth Checking').should('have.value', 'Unbranded bandwidth Checking');
 
-      cy.get(`[data-cy="password"]`).type('Bedfordshire Peso channels').should('have.value', 'Bedfordshire Peso channels');
+      cy.get(`[data-cy="city"]`).type('Port Haven').should('have.value', 'Port Haven');
 
-      cy.get(`[data-cy="occupation"]`).type('responsive').should('have.value', 'responsive');
+      cy.get(`[data-cy="postalCode"]`).type('Hat Awesome').should('have.value', 'Hat Awesome');
 
-      cy.get(`[data-cy="streetAddress"]`).type('mesh stable turquoise').should('have.value', 'mesh stable turquoise');
+      cy.get(`[data-cy="bio"]`).type('SMTP').should('have.value', 'SMTP');
 
-      cy.get(`[data-cy="city"]`).type('Keelyfurt').should('have.value', 'Keelyfurt');
+      cy.get(`[data-cy="phoneNumber"]`).type('Garden Granite').should('have.value', 'Garden Granite');
 
-      cy.get(`[data-cy="postalCode"]`).type('Data Paradigm Small').should('have.value', 'Data Paradigm Small');
-
-      cy.get(`[data-cy="bio"]`).type('global').should('have.value', 'global');
-
-      cy.get(`[data-cy="email"]`).type('Ludie.Davis@yahoo.com').should('have.value', 'Ludie.Davis@yahoo.com');
-
-      cy.get(`[data-cy="communityPoints"]`).type('1702').should('have.value', '1702');
-
-      cy.get(`[data-cy="language"]`).type('Tugrik Garden Granite').should('have.value', 'Tugrik Garden Granite');
+      cy.get(`[data-cy="communityPoints"]`).type('6250').should('have.value', '6250');
 
       cy.get(`[data-cy="gPS"]`).should('not.be.checked');
       cy.get(`[data-cy="gPS"]`).click().should('be.checked');
@@ -214,7 +217,7 @@ describe('UserProfile e2e test', () => {
       cy.get(`[data-cy="darkmode"]`).should('not.be.checked');
       cy.get(`[data-cy="darkmode"]`).click().should('be.checked');
 
-      cy.get(`[data-cy="fontsize"]`).type('1757').should('have.value', '1757');
+      cy.get(`[data-cy="fontsize"]`).type('70523').should('have.value', '70523');
 
       cy.get(entityCreateSaveButtonSelector).click();
 

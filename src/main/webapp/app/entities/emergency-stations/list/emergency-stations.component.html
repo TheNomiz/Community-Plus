@@ -1,0 +1,130 @@
+<div>
+  <h2 id="page-heading" data-cy="EmergencyStationsHeading">
+    <span jhiTranslate="teamprojectApp.emergencyStations.home.title">Emergency Stations</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="teamprojectApp.emergencyStations.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-emergency-stations"
+        [routerLink]="['/emergency-stations/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="teamprojectApp.emergencyStations.home.createLabel"> Create a new Emergency Stations </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="emergencyStations?.length === 0">
+    <span jhiTranslate="teamprojectApp.emergencyStations.home.notFound">No Emergency Stations found</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="emergencyStations && emergencyStations.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span jhiTranslate="global.field.id">ID</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="name">
+            <div class="d-flex">
+              <span jhiTranslate="teamprojectApp.emergencyStations.name">Name</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="stationType">
+            <div class="d-flex">
+              <span jhiTranslate="teamprojectApp.emergencyStations.stationType">Station Type</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="wheelchairAccess">
+            <div class="d-flex">
+              <span jhiTranslate="teamprojectApp.emergencyStations.wheelchairAccess">Wheelchair Access</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="parking">
+            <div class="d-flex">
+              <span jhiTranslate="teamprojectApp.emergencyStations.parking">Parking</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="latitude">
+            <div class="d-flex">
+              <span jhiTranslate="teamprojectApp.emergencyStations.latitude">Latitude</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="longitude">
+            <div class="d-flex">
+              <span jhiTranslate="teamprojectApp.emergencyStations.longitude">Longitude</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody
+        infinite-scroll
+        (scrolled)="loadPage(page + 1)"
+        [infiniteScrollDisabled]="page - 1 >= links['last']"
+        [infiniteScrollDistance]="0"
+      >
+        <tr *ngFor="let emergencyStations of emergencyStations; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/emergency-stations', emergencyStations.id, 'view']">{{ emergencyStations.id }}</a>
+          </td>
+          <td>{{ emergencyStations.name }}</td>
+          <td jhiTranslate="{{ 'teamprojectApp.StationsCategory.' + emergencyStations.stationType }}">
+            {{ emergencyStations.stationType }}
+          </td>
+          <td>{{ emergencyStations.wheelchairAccess }}</td>
+          <td>{{ emergencyStations.parking }}</td>
+          <td>{{ emergencyStations.latitude }}</td>
+          <td>{{ emergencyStations.longitude }}</td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/emergency-stations', emergencyStations.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/emergency-stations', emergencyStations.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(emergencyStations)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

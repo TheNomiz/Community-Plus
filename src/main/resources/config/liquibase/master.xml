@@ -26,11 +26,16 @@
     <include file="config/liquibase/changelog/20230309153629_added_entity_EmergencyStationsPage.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20230309153630_added_entity_LostFoundPage.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20230315131746_added_entity_UserProfile.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230322171613_added_entity_EmergencyGuide.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230322171614_added_entity_EmergencyStations.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230322171615_added_entity_LostFound.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <include file="config/liquibase/changelog/20230225141949_added_entity_constraints_CrimeAlert.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20230308133811_added_entity_constraints_Business.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20230308133812_added_entity_constraints_Event.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20230308133814_added_entity_constraints_ChatMessage.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230315131746_added_entity_constraints_UserProfile.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230322171615_added_entity_constraints_LostFound.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
     <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->
 </databaseChangeLog>

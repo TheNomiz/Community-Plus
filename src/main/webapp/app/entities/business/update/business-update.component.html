@@ -62,7 +62,12 @@
 
         <div class="row mb-3">
           <label class="form-label" jhiTranslate="teamprojectApp.business.category" for="field_category">Category</label>
-          <input type="text" class="form-control" name="category" id="field_category" data-cy="category" formControlName="category" />
+          <select class="form-control" name="category" formControlName="category" id="field_category" data-cy="category">
+            <option [ngValue]="null">{{ 'teamprojectApp.BusinessCategory.null' | translate }}</option>
+            <option *ngFor="let businessCategory of businessCategoryValues" [value]="businessCategory">
+              {{ 'teamprojectApp.BusinessCategory.' + businessCategory | translate }}
+            </option>
+          </select>
           <div *ngIf="editForm.get('category')!.invalid && (editForm.get('category')!.dirty || editForm.get('category')!.touched)">
             <small
               class="form-text text-danger"
@@ -71,21 +76,13 @@
             >
               This field is required.
             </small>
-            <small
-              class="form-text text-danger"
-              *ngIf="editForm.get('category')?.errors?.maxlength"
-              jhiTranslate="entity.validation.maxlength"
-              [translateValues]="{ max: 50 }"
-            >
-              This field cannot be longer than 50 characters.
-            </small>
           </div>
         </div>
 
         <div class="row mb-3">
           <label class="form-label" jhiTranslate="teamprojectApp.business.phoneNumber" for="field_phoneNumber">Phone Number</label>
           <input
-            type="number"
+            type="text"
             class="form-control"
             name="phoneNumber"
             id="field_phoneNumber"
@@ -102,10 +99,11 @@
             </small>
             <small
               class="form-text text-danger"
-              [hidden]="!editForm.get('phoneNumber')?.errors?.number"
-              jhiTranslate="entity.validation.number"
+              *ngIf="editForm.get('phoneNumber')?.errors?.minlength"
+              jhiTranslate="entity.validation.minlength"
+              [translateValues]="{ min: 11 }"
             >
-              This field should be a number.
+              This field is required to be at least 11 characters.
             </small>
           </div>
         </div>
@@ -114,6 +112,9 @@
           <label class="form-label" jhiTranslate="teamprojectApp.business.email" for="field_email">Email</label>
           <input type="text" class="form-control" name="email" id="field_email" data-cy="email" formControlName="email" />
           <div *ngIf="editForm.get('email')!.invalid && (editForm.get('email')!.dirty || editForm.get('email')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('email')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
             <small
               class="form-text text-danger"
               *ngIf="editForm.get('email')?.errors?.maxlength"
@@ -190,14 +191,31 @@
         </div>
 
         <div class="row mb-3">
-          <label jhiTranslate="teamprojectApp.business.busroom" for="field_busrooms">Busroom</label>
+          <label class="form-label" jhiTranslate="teamprojectApp.business.postedby" for="field_postedby">Postedby</label>
           <select
             class="form-control"
-            id="field_busrooms"
-            data-cy="busroom"
+            id="field_postedby"
+            data-cy="postedby"
+            name="postedby"
+            formControlName="postedby"
+            [compareWith]="compareUserProfile"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="userProfileOption" *ngFor="let userProfileOption of userProfilesSharedCollection">
+              {{ userProfileOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label jhiTranslate="teamprojectApp.business.businessroom" for="field_businessrooms">Businessroom</label>
+          <select
+            class="form-control"
+            id="field_businessrooms"
+            data-cy="businessroom"
             multiple
-            name="busrooms"
-            formControlName="busrooms"
+            name="businessrooms"
+            formControlName="businessrooms"
             [compareWith]="compareChatRoom"
           >
             <option [ngValue]="chatRoomOption" *ngFor="let chatRoomOption of chatRoomsSharedCollection">{{ chatRoomOption.id }}</option>

@@ -1,11 +1,3 @@
-<link
-  rel="stylesheet"
-  href="/node_modules/leaflet/dist/leaflet.css"
-  integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
-  crossorigin=""
-/>
-<script src="/node_modules/leaflet/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
-<div id="map" style="height: 400px"></div>
 <div>
   <h2 id="page-heading" data-cy="CrimeAlertHeading">
     <span jhiTranslate="teamprojectApp.crimeAlert.home.title">Crime Alerts</span>
@@ -14,10 +6,6 @@
       <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
         <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
         <span jhiTranslate="teamprojectApp.crimeAlert.home.refreshListLabel">Refresh list</span>
-      </button>
-      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
-        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
-        <span jhiTranslate="teamprojectApp.crimeAlert.home.ListViewListLabel">Open/Close list view</span>
       </button>
 
       <button
@@ -80,6 +68,12 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
+          <th scope="col" jhiSortBy="crimeID">
+            <div class="d-flex">
+              <span jhiTranslate="teamprojectApp.crimeAlert.crimeID">Crime ID</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
           <th scope="col" jhiSortBy="postedby.login">
             <div class="d-flex">
               <span jhiTranslate="teamprojectApp.crimeAlert.postedby">Postedby</span>
@@ -104,6 +98,7 @@
           <td>{{ crimeAlert.lat }}</td>
           <td>{{ crimeAlert.lon }}</td>
           <td>{{ crimeAlert.date | formatMediumDatetime }}</td>
+          <td>{{ crimeAlert.crimeID }}</td>
           <td>
             {{ crimeAlert.postedby?.login }}
           </td>
@@ -124,19 +119,12 @@
                 [routerLink]="['/crime-alert', crimeAlert.id, 'edit']"
                 class="btn btn-primary btn-sm"
                 data-cy="entityEditButton"
-                *ngIf="accountService.hasAnyAuthority(['ROLE_ADMIN'])"
               >
                 <fa-icon icon="pencil-alt"></fa-icon>
                 <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
               </button>
 
-              <button
-                type="submit"
-                (click)="delete(crimeAlert)"
-                class="btn btn-danger btn-sm"
-                data-cy="entityDeleteButton"
-                *ngIf="accountService.hasAnyAuthority(['ROLE_ADMIN'])"
-              >
+              <button type="submit" (click)="delete(crimeAlert)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
                 <fa-icon icon="times"></fa-icon>
                 <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
               </button>

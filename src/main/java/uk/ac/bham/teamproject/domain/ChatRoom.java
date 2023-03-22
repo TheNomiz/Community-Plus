@@ -33,18 +33,23 @@ public class ChatRoom implements Serializable {
 
     @OneToMany(mappedBy = "room")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "room" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "postedby", "room" }, allowSetters = true)
     private Set<ChatMessage> messages = new HashSet<>();
 
-    @ManyToMany(mappedBy = "eventrooms")
+    @ManyToMany(mappedBy = "eventsrooms")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "eventrooms" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "postedby", "eventsrooms" }, allowSetters = true)
     private Set<Event> events = new HashSet<>();
 
-    @ManyToMany(mappedBy = "busrooms")
+    @ManyToMany(mappedBy = "businessrooms")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "busrooms" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "postedby", "businessrooms" }, allowSetters = true)
     private Set<Business> businesses = new HashSet<>();
+
+    @ManyToMany(mappedBy = "lostItems")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "postedby", "lostItems" }, allowSetters = true)
+    private Set<LostFound> lostitems = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -111,10 +116,10 @@ public class ChatRoom implements Serializable {
 
     public void setEvents(Set<Event> events) {
         if (this.events != null) {
-            this.events.forEach(i -> i.removeEventroom(this));
+            this.events.forEach(i -> i.removeEventsroom(this));
         }
         if (events != null) {
-            events.forEach(i -> i.addEventroom(this));
+            events.forEach(i -> i.addEventsroom(this));
         }
         this.events = events;
     }
@@ -126,13 +131,13 @@ public class ChatRoom implements Serializable {
 
     public ChatRoom addEvents(Event event) {
         this.events.add(event);
-        event.getEventrooms().add(this);
+        event.getEventsrooms().add(this);
         return this;
     }
 
     public ChatRoom removeEvents(Event event) {
         this.events.remove(event);
-        event.getEventrooms().remove(this);
+        event.getEventsrooms().remove(this);
         return this;
     }
 
@@ -142,10 +147,10 @@ public class ChatRoom implements Serializable {
 
     public void setBusinesses(Set<Business> businesses) {
         if (this.businesses != null) {
-            this.businesses.forEach(i -> i.removeBusroom(this));
+            this.businesses.forEach(i -> i.removeBusinessroom(this));
         }
         if (businesses != null) {
-            businesses.forEach(i -> i.addBusroom(this));
+            businesses.forEach(i -> i.addBusinessroom(this));
         }
         this.businesses = businesses;
     }
@@ -155,15 +160,46 @@ public class ChatRoom implements Serializable {
         return this;
     }
 
-    public ChatRoom addBusinesses(Business business) {
+    public ChatRoom addBusiness(Business business) {
         this.businesses.add(business);
-        business.getBusrooms().add(this);
+        business.getBusinessrooms().add(this);
         return this;
     }
 
-    public ChatRoom removeBusinesses(Business business) {
+    public ChatRoom removeBusiness(Business business) {
         this.businesses.remove(business);
-        business.getBusrooms().remove(this);
+        business.getBusinessrooms().remove(this);
+        return this;
+    }
+
+    public Set<LostFound> getLostitems() {
+        return this.lostitems;
+    }
+
+    public void setLostitems(Set<LostFound> lostFounds) {
+        if (this.lostitems != null) {
+            this.lostitems.forEach(i -> i.removeLostItem(this));
+        }
+        if (lostFounds != null) {
+            lostFounds.forEach(i -> i.addLostItem(this));
+        }
+        this.lostitems = lostFounds;
+    }
+
+    public ChatRoom lostitems(Set<LostFound> lostFounds) {
+        this.setLostitems(lostFounds);
+        return this;
+    }
+
+    public ChatRoom addLostitems(LostFound lostFound) {
+        this.lostitems.add(lostFound);
+        lostFound.getLostItems().add(this);
+        return this;
+    }
+
+    public ChatRoom removeLostitems(LostFound lostFound) {
+        this.lostitems.remove(lostFound);
+        lostFound.getLostItems().remove(this);
         return this;
     }
 

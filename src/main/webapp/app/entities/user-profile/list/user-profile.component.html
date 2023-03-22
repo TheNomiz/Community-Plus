@@ -44,6 +44,36 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
+          <th scope="col" jhiSortBy="firstnames">
+            <div class="d-flex">
+              <span jhiTranslate="teamprojectApp.userProfile.firstnames">Firstnames</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="lastname">
+            <div class="d-flex">
+              <span jhiTranslate="teamprojectApp.userProfile.lastname">Lastname</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="password">
+            <div class="d-flex">
+              <span jhiTranslate="teamprojectApp.userProfile.password">Password</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="email">
+            <div class="d-flex">
+              <span jhiTranslate="teamprojectApp.userProfile.email">Email</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="language">
+            <div class="d-flex">
+              <span jhiTranslate="teamprojectApp.userProfile.language">Language</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
           <th scope="col" jhiSortBy="verified">
             <div class="d-flex">
               <span jhiTranslate="teamprojectApp.userProfile.verified">Verified</span>
@@ -65,24 +95,6 @@
           <th scope="col" jhiSortBy="accountType">
             <div class="d-flex">
               <span jhiTranslate="teamprojectApp.userProfile.accountType">Account Type</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="firstnames">
-            <div class="d-flex">
-              <span jhiTranslate="teamprojectApp.userProfile.firstnames">Firstnames</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="lastname">
-            <div class="d-flex">
-              <span jhiTranslate="teamprojectApp.userProfile.lastname">Lastname</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="password">
-            <div class="d-flex">
-              <span jhiTranslate="teamprojectApp.userProfile.password">Password</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
@@ -116,12 +128,6 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" jhiSortBy="email">
-            <div class="d-flex">
-              <span jhiTranslate="teamprojectApp.userProfile.email">Email</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
           <th scope="col" jhiSortBy="phoneNumber">
             <div class="d-flex">
               <span jhiTranslate="teamprojectApp.userProfile.phoneNumber">Phone Number</span>
@@ -131,12 +137,6 @@
           <th scope="col" jhiSortBy="communityPoints">
             <div class="d-flex">
               <span jhiTranslate="teamprojectApp.userProfile.communityPoints">Community Points</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="language">
-            <div class="d-flex">
-              <span jhiTranslate="teamprojectApp.userProfile.language">Language</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
@@ -158,6 +158,12 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
+          <th scope="col" jhiSortBy="iD.id">
+            <div class="d-flex">
+              <span jhiTranslate="teamprojectApp.userProfile.iD">I D</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -172,25 +178,28 @@
             <a [routerLink]="['/user-profile', userProfile.id, 'view']">{{ userProfile.id }}</a>
           </td>
           <td>{{ userProfile.username }}</td>
+          <td>{{ userProfile.firstnames }}</td>
+          <td>{{ userProfile.lastname }}</td>
+          <td>{{ userProfile.password }}</td>
+          <td>{{ userProfile.email }}</td>
+          <td>{{ userProfile.language }}</td>
           <td>{{ userProfile.verified }}</td>
           <td>{{ userProfile.privateAccount }}</td>
           <td>{{ userProfile.age }}</td>
           <td>{{ userProfile.accountType }}</td>
-          <td>{{ userProfile.firstnames }}</td>
-          <td>{{ userProfile.lastname }}</td>
-          <td>{{ userProfile.password }}</td>
           <td>{{ userProfile.occupation }}</td>
           <td>{{ userProfile.streetAddress }}</td>
           <td>{{ userProfile.city }}</td>
           <td>{{ userProfile.postalCode }}</td>
           <td>{{ userProfile.bio }}</td>
-          <td>{{ userProfile.email }}</td>
           <td>{{ userProfile.phoneNumber }}</td>
           <td>{{ userProfile.communityPoints }}</td>
-          <td>{{ userProfile.language }}</td>
           <td>{{ userProfile.gPS }}</td>
           <td>{{ userProfile.darkmode }}</td>
           <td>{{ userProfile.fontsize }}</td>
+          <td>
+            {{ userProfile.iD?.id }}
+          </td>
           <td class="text-end">
             <div class="btn-group">
               <button

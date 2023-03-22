@@ -22,7 +22,7 @@ public class BusinessRepositoryWithBagRelationshipsImpl implements BusinessRepos
 
     @Override
     public Optional<Business> fetchBagRelationships(Optional<Business> business) {
-        return business.map(this::fetchBusrooms);
+        return business.map(this::fetchBusinessrooms);
     }
 
     @Override
@@ -32,13 +32,13 @@ public class BusinessRepositoryWithBagRelationshipsImpl implements BusinessRepos
 
     @Override
     public List<Business> fetchBagRelationships(List<Business> businesses) {
-        return Optional.of(businesses).map(this::fetchBusrooms).orElse(Collections.emptyList());
+        return Optional.of(businesses).map(this::fetchBusinessrooms).orElse(Collections.emptyList());
     }
 
-    Business fetchBusrooms(Business result) {
+    Business fetchBusinessrooms(Business result) {
         return entityManager
             .createQuery(
-                "select business from Business business left join fetch business.busrooms where business is :business",
+                "select business from Business business left join fetch business.businessrooms where business is :business",
                 Business.class
             )
             .setParameter("business", result)
@@ -46,12 +46,12 @@ public class BusinessRepositoryWithBagRelationshipsImpl implements BusinessRepos
             .getSingleResult();
     }
 
-    List<Business> fetchBusrooms(List<Business> businesses) {
+    List<Business> fetchBusinessrooms(List<Business> businesses) {
         HashMap<Object, Integer> order = new HashMap<>();
         IntStream.range(0, businesses.size()).forEach(index -> order.put(businesses.get(index).getId(), index));
         List<Business> result = entityManager
             .createQuery(
-                "select distinct business from Business business left join fetch business.busrooms where business in :businesses",
+                "select distinct business from Business business left join fetch business.businessrooms where business in :businesses",
                 Business.class
             )
             .setParameter("businesses", businesses)
