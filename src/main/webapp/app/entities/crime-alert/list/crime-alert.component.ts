@@ -1,16 +1,21 @@
+
+/* eslint-disable no-console */
 import { Component, OnInit } from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute, Data, ParamMap, Router } from '@angular/router';
-import { combineLatest, filter, Observable, switchMap, tap } from 'rxjs';
+import { combineLatest, filter, Observable, skip, switchMap, tap } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-
-import { ICrimeAlert } from '../crime-alert.model';
-
+import * as L from 'leaflet';
+import { ICrimeAlert, NewCrimeAlert } from '../crime-alert.model';
+import axios from 'axios';
+import dayjs from 'dayjs/esm';
 import { ITEMS_PER_PAGE } from 'app/config/pagination.constants';
 import { ASC, DESC, SORT, ITEM_DELETED_EVENT, DEFAULT_SORT_DATA } from 'app/config/navigation.constants';
-import { EntityArrayResponseType, CrimeAlertService } from '../service/crime-alert.service';
+import getCrimeData, { EntityArrayResponseType, CrimeAlertService } from '../service/crime-alert.service';
 import { CrimeAlertDeleteDialogComponent } from '../delete/crime-alert-delete-dialog.component';
 import { ParseLinks } from 'app/core/util/parse-links.service';
+import { AccountService } from 'app/core/auth/account.service';
+import { Map, TileLayer } from 'leaflet';
 
 @Component({
   selector: 'jhi-crime-alert',
@@ -28,13 +33,15 @@ export class CrimeAlertComponent implements OnInit {
     last: 0,
   };
   page = 1;
+  map!: L.Map;
 
   constructor(
     protected crimeAlertService: CrimeAlertService,
     protected activatedRoute: ActivatedRoute,
     public router: Router,
     protected parseLinks: ParseLinks,
-    protected modalService: NgbModal
+    protected modalService: NgbModal,
+    protected accountService: AccountService
   ) {}
 
   reset(): void {
@@ -75,6 +82,55 @@ export class CrimeAlertComponent implements OnInit {
       next: (res: EntityArrayResponseType) => {
         this.onResponseSuccess(res);
       },
+    });
+
+    this.map = L.map('map', {
+      maxBounds: L.latLngBounds(L.latLng(49.78, -13.13), L.latLng(60.89, 2.87)),
+      maxZoom: 12,
+      minZoom: 6,
+    }).setView([51.505, -0.09], 12);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
+    }).addTo(this.map);
+
+    this.map.on('move', () => {
+      const center = this.map.getCenter();
+      const bounds = this.map.getBounds();
+      const radius = bounds.getNorthWest().distanceTo(bounds.getSouthEast()) / 2;
+
+      this.crimeAlertService.query({ size: 100000 }).subscribe((res: EntityArrayResponseType) => {
+        const dataFromBody = this.fillComponentAttributesFromResponseBody(res.body);
+        const filteredData = dataFromBody.filter(crimeAlert => {
+          if (crimeAlert.lat === null || crimeAlert.lat === undefined || crimeAlert.lon === null || crimeAlert.lon === undefined) {
+            return false;
+          }
+          const latlng = L.latLng(crimeAlert.lat, crimeAlert.lon);
+          return latlng.distanceTo(center) <= radius;
+        });
+
+        // Remove all markers from the map
+        this.map.eachLayer(layer => {
+          if (layer instanceof L.Marker) {
+            this.map.removeLayer(layer);
+          }
+        });
+
+        // Add markers for the filtered crime alerts
+        for (const crimeAlert of filteredData) {
+          if (crimeAlert.lat !== null && crimeAlert.lat !== undefined) {
+            //lat = crimeAlert.lat;
+          } else {
+            continue;
+          }
+          if (crimeAlert.lon !== null && crimeAlert.lon !== undefined) {
+            //lon = crimeAlert.lon;
+          } else {
+            continue;
+            // handle the case when latitude is null or undefined
+          }
+          L.marker([crimeAlert.lat, crimeAlert.lon]).addTo(this.map);
+        }
+      });
     });
   }
 
