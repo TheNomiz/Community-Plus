@@ -78,7 +78,7 @@ entity ChatMessage {
   sentDate LocalDate required
 }
 relationship OneToOne {
-	UserProfile{ID} to User{ID}
+	UserProfile{userID} to User{user}
 }
 relationship OneToMany {
   ChatRoom{messages} to ChatMessage{room}

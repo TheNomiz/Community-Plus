@@ -11,6 +11,20 @@ import { IEvent } from 'app/entities/event/event.model';
 import { IBusiness } from 'app/entities/business/business.model';
 import * as L from 'leaflet';
 import day from 'dayjs';
+import { EventCategory } from '../enumerations/event-category.model';
+
+const iconUrl = '../../../content/images/Location_Marker.png';
+const shadowUrl = '../../../content/images/Location_Marker_Shadow.png';
+const iconDefault = L.icon({
+  iconUrl,
+  shadowUrl,
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  tooltipAnchor: [16, -28],
+  shadowSize: [41, 41],
+});
+L.Marker.prototype.options.icon = iconDefault;
 
 @Component({
   selector: 'jhi-community',
@@ -22,8 +36,6 @@ export class CommunityComponent implements OnInit {
   chatMessages: IChatMessage[] = [];
   events: IEvent[] = [];
   businesses: IBusiness[] = [];
-
-  images = [944, 1011, 984].map(n => `https://picsum.photos/id/${n}/900/500`);
 
   constructor(
     private busservice: BusinessService,
@@ -94,6 +106,28 @@ export class CommunityComponent implements OnInit {
   getUpcomingEvents() {
     const now = day();
     const oneWeekFromNow = now.add(1, 'week');
-    return this.events.filter(event => day(event.startDate).isAfter(now) && day(event.startDate).isBefore(oneWeekFromNow));
+    const upcomingEvents = this.events.filter(event => day(event.startDate).isAfter(now) && day(event.startDate).isBefore(oneWeekFromNow));
+    console.log(upcomingEvents);
+    return upcomingEvents;
+  }
+
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+  getImage(event: IEvent) {
+    switch (event.category) {
+      case EventCategory.Conference:
+        return 'assets/conference.png';
+      case EventCategory.Meetup:
+        return 'assets/meeting.png';
+      case EventCategory.Seminar:
+        return 'assets/seminar.png';
+      case EventCategory.Sport:
+        return 'assets/sport.png';
+      case EventCategory.Webinar:
+        return 'assets/webinar.png';
+      case EventCategory.Workshop:
+        return 'assets/workshop.png';
+      default:
+        return 'assets/defaultevent.png';
+    }
   }
 }

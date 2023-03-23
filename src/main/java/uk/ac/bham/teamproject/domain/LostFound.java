@@ -57,7 +57,7 @@ public class LostFound implements Serializable {
     private String phoneNumber;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "iD" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "userID" }, allowSetters = true)
     private UserProfile postedby;
 
     @ManyToMany

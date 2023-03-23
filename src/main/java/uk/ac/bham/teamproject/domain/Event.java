@@ -68,7 +68,7 @@ public class Event implements Serializable {
     private String address;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "iD" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "userID" }, allowSetters = true)
     private UserProfile postedby;
 
     @ManyToMany

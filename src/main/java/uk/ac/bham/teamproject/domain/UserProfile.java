@@ -104,7 +104,7 @@ public class UserProfile implements Serializable {
 
     @OneToOne
     @JoinColumn(unique = true)
-    private User iD;
+    private User userID;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -381,16 +381,16 @@ public class UserProfile implements Serializable {
         this.fontsize = fontsize;
     }
 
-    public User getID() {
-        return this.iD;
+    public User getUserID() {
+        return this.userID;
     }
 
-    public void setID(User user) {
-        this.iD = user;
+    public void setUserID(User user) {
+        this.userID = user;
     }
 
-    public UserProfile iD(User user) {
-        this.setID(user);
+    public UserProfile userID(User user) {
+        this.setUserID(user);
         return this;
     }
 

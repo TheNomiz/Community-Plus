@@ -373,8 +373,15 @@
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" jhiTranslate="teamprojectApp.userProfile.iD" for="field_iD">I D</label>
-          <select class="form-control" id="field_iD" data-cy="iD" name="iD" formControlName="iD" [compareWith]="compareUser">
+          <label class="form-label" jhiTranslate="teamprojectApp.userProfile.userID" for="field_userID">User ID</label>
+          <select
+            class="form-control"
+            id="field_userID"
+            data-cy="userID"
+            name="userID"
+            formControlName="userID"
+            [compareWith]="compareUser"
+          >
             <option [ngValue]="null"></option>
             <option [ngValue]="userOption" *ngFor="let userOption of usersSharedCollection">{{ userOption.id }}</option>
           </select>

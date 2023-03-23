@@ -20,7 +20,7 @@
         "build": {
           "builder": "@angular-builders/custom-webpack:browser",
           "options": {
-            "allowedCommonJsDependencies": ["leaflet"],
+            "allowedCommonJsDependencies": ["leaflet", "dayjs"],
             "customWebpackConfig": {
               "path": "./webpack/webpack.custom.js"
             },
@@ -34,7 +34,7 @@
               {
                 "glob": "**/*",
                 "input": "./node_modules/leaflet/dist/images",
-                "output": "leaflet/"
+                "output": "./assets"
               },
               "src/main/webapp/content",
               "src/main/webapp/favicon.ico",

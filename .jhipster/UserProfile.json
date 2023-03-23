@@ -118,9 +118,9 @@
   "relationships": [
     {
       "otherEntityName": "user",
-      "otherEntityRelationshipName": "iD",
+      "otherEntityRelationshipName": "user",
       "ownerSide": true,
-      "relationshipName": "iD",
+      "relationshipName": "userID",
       "relationshipType": "one-to-one"
     }
   ],
