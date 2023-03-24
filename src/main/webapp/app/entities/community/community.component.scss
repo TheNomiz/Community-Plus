@@ -5,7 +5,27 @@
   border: 2px solid black;
   height: 100%;
 }
+.carousel-caption {
+  color: red;
+  text-shadow: 2px 2px 2px black;
+  font-weight: bold;
+}
 
-carousel-caption p {
-  color: black;
+.row {
+  margin: auto;
+}
+
+ngb-carousel {
+  display: block;
+  margin: auto;
+  padding: 20px;
+}
+
+img {
+  display: block;
+  margin: auto;
+}
+
+h3 {
+  font-weight: bolder;
 }

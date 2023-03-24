@@ -1,20 +1,19 @@
 <div class="container-fluid">
+  <h1>Community Page</h1>
   <div class="row">
-    <div class="col-md-8">
-      <ngb-carousel>
-        <ng-template ngbSlide *ngFor="let event of getUpcomingEvents()">
-          <img [src]="getImage(event)" alt="Event image" />
-          <!--getImage(event)-->
-          <div class="carousel-caption">
-            <h3>{{ event.name }}</h3>
-            <p>Description: {{ event.description }}</p>
-            <p>Address: {{ event.address }}</p>
-            <p>Starts on: {{ event.startDate }}</p>
-            <p>Ends on: {{ event.endDate }}</p>
-          </div>
-        </ng-template>
-      </ngb-carousel>
-    </div>
+    <h2>Upcoming Local Events for this week</h2>
+    <ngb-carousel [interval]="5000">
+      <ng-template ngbSlide *ngFor="let event of getUpcomingEvents()">
+        <img [src]="getImage(event)" alt="Event image" />
+        <div class="carousel-caption">
+          <h3>{{ event.name }}</h3>
+          <p>Description: {{ event.description }}</p>
+          <p>Address: {{ event.address }}</p>
+          <p>Starts on: {{ event.startDate }}</p>
+          <p>Ends on: {{ event.endDate }}</p>
+        </div>
+      </ng-template>
+    </ngb-carousel>
   </div>
   <div class="row">
     <div class="col-md-4">
@@ -22,7 +21,7 @@
         <h3>Chat Room</h3>
         <div class="messages">
           <div *ngFor="let message of chatMessages">
-            {{ message }}
+            <p>{{ message.sentDate }}: {{ message.content }}</p>
           </div>
         </div>
         <!--  
@@ -35,6 +34,7 @@
     </div>
   </div>
   <div class="row">
+    <h2>Map of local businesses and events</h2>
     <div class="map-frame">
       <div id="map" style="height: 400px"></div>
     </div>

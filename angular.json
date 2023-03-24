@@ -20,7 +20,7 @@
         "build": {
           "builder": "@angular-builders/custom-webpack:browser",
           "options": {
-            "allowedCommonJsDependencies": ["leaflet", "dayjs"],
+            "allowedCommonJsDependencies": ["leaflet", "dayjs", "leaflet.markercluster"],
             "customWebpackConfig": {
               "path": "./webpack/webpack.custom.js"
             },

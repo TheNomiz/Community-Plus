@@ -74,9 +74,24 @@ export class CommunityComponent implements OnInit {
 
     tiles.addTo(map);
 
+    this.businesses.forEach(business => {
+      if (business.latitude && business.longitude && business.name && business.description && business.category && business.phoneNumber) {
+        const marker = L.marker([business.latitude, business.longitude]).addTo(map);
+        marker.bindPopup(`<b>${business.name}</b><br>${business.description}</br><br>${business.phoneNumber}</br><br>${business.category}`);
+      }
+    });
+
+    // add events to markers
+    this.events.forEach(event => {
+      if (event.latitude && event.longitude && event.name && event.description && event.startDate && event.endDate && event.address) {
+        const marker = L.marker([event.latitude, event.longitude]).addTo(map);
+        marker.bindPopup(
+          `<b>${event.name}</b><br>${event.description}</br><br>${event.address}</br><br>${event.startDate}</br><br>${event.endDate}`
+        );
+      }
+    });
     // Call the createMarkers function to add markers to the map for business and events
     this.createMarkers(map);
-
     // call events carousel
     this.getUpcomingEvents();
   }
@@ -107,7 +122,6 @@ export class CommunityComponent implements OnInit {
     const now = day();
     const oneWeekFromNow = now.add(1, 'week');
     const upcomingEvents = this.events.filter(event => day(event.startDate).isAfter(now) && day(event.startDate).isBefore(oneWeekFromNow));
-    console.log(upcomingEvents);
     return upcomingEvents;
   }
 
@@ -115,19 +129,19 @@ export class CommunityComponent implements OnInit {
   getImage(event: IEvent) {
     switch (event.category) {
       case EventCategory.Conference:
-        return 'assets/conference.png';
+        return '../../../content/images/conference.png';
       case EventCategory.Meetup:
-        return 'assets/meeting.png';
+        return '../../../content/images/meeting.png';
       case EventCategory.Seminar:
-        return 'assets/seminar.png';
+        return '../../../content/images/seminar.png';
       case EventCategory.Sport:
-        return 'assets/sport.png';
+        return '../../../content/images/sport.png';
       case EventCategory.Webinar:
-        return 'assets/webinar.png';
+        return '../../../content/images/webinar.png';
       case EventCategory.Workshop:
-        return 'assets/workshop.png';
+        return '../../../content/images/workshop.png';
       default:
-        return 'assets/defaultevent.png';
+        return '../../../content/images/defaultevent.png';
     }
   }
 }
