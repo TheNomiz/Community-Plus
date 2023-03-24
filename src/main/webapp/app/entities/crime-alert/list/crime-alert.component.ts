@@ -89,7 +89,7 @@ export class CrimeAlertComponent implements OnInit {
 
     this.map = L.map('map', {
       maxBounds: L.latLngBounds(L.latLng(49.78, -13.13), L.latLng(60.89, 2.87)),
-      maxZoom: 12,
+      maxZoom: 20,
       minZoom: 6,
     }).setView([51.505, -0.09], 3);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -100,18 +100,21 @@ export class CrimeAlertComponent implements OnInit {
       spiderfyDistanceMultiplier: 2,
       iconCreateFunction(cluster) {
         const childCount = cluster.getChildCount();
-        let c = ' marker-cluster-';
+        const c = ' marker-cluster-';
+        let size = '';
         if (childCount < 10) {
-          c += 'small';
+          size = 'small';
         } else if (childCount < 100) {
-          c += 'medium';
+          size = 'medium';
         } else {
-          c += 'large';
+          size = 'large';
         }
-        return new L.DivIcon({
-          html: '<div><span>' + childCount.toString() + '</span></div>',
-          className: 'marker-cluster' + c,
-          iconSize: new L.Point(40, 40),
+        return L.divIcon({
+          iconUrl: '../../../content/images/Location_Marker.png',
+          shadowUrl: '../../../content/images/Location_Marker_Shadow.png',
+          html: '<div><span>' + childCount + '</span></div>',
+          className: 'marker-cluster' + c + size,
+          iconSize: L.point(40, 40),
         });
       },
     });
@@ -124,7 +127,6 @@ export class CrimeAlertComponent implements OnInit {
 
       this.crimeAlertService.query({ size: 10000000 }).subscribe((res: EntityArrayResponseType) => {
         const dataFromBody = this.fillComponentAttributesFromResponseBody(res.body);
-        console.error(dataFromBody.length);
         const filteredData = dataFromBody.filter(crimeAlert => {
           if (crimeAlert.lat === null || crimeAlert.lat === undefined || crimeAlert.lon === null || crimeAlert.lon === undefined) {
             return false;
@@ -139,6 +141,7 @@ export class CrimeAlertComponent implements OnInit {
             this.map.removeLayer(layer);
           }
         });
+        markerClusterGroup.clearLayers();
 
         // Add markers for the filtered crime alerts
         for (const crimeAlert of filteredData) {
