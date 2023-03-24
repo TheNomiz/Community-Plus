@@ -34,7 +34,7 @@ public class ChatMessage implements Serializable {
     private LocalDate sentDate;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "iD" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "userID" }, allowSetters = true)
     private UserProfile postedby;
 
     @ManyToOne

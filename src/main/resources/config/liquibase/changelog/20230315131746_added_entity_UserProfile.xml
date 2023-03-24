@@ -74,8 +74,8 @@
             <column name="fontsize" type="integer">
                 <constraints nullable="true" />
             </column>
-            <column name="id_id" type="bigint">
-                <constraints nullable="true" unique="true" uniqueConstraintName="ux_user_profile__id_id" />
+            <column name="userid_id" type="bigint">
+                <constraints nullable="true" unique="true" uniqueConstraintName="ux_user_profile__userid_id" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>

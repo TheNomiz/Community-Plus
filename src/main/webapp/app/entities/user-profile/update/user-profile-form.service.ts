@@ -38,7 +38,7 @@ type UserProfileFormGroupContent = {
   gPS: FormControl<IUserProfile['gPS']>;
   darkmode: FormControl<IUserProfile['darkmode']>;
   fontsize: FormControl<IUserProfile['fontsize']>;
-  iD: FormControl<IUserProfile['iD']>;
+  userID: FormControl<IUserProfile['userID']>;
 };
 
 export type UserProfileFormGroup = FormGroup<UserProfileFormGroupContent>;
@@ -108,7 +108,7 @@ export class UserProfileFormService {
       }),
       darkmode: new FormControl(userProfileRawValue.darkmode),
       fontsize: new FormControl(userProfileRawValue.fontsize),
-      iD: new FormControl(userProfileRawValue.iD),
+      userID: new FormControl(userProfileRawValue.userID),
     });
   }
 

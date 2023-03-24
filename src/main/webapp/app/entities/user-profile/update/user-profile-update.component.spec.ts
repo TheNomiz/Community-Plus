@@ -52,12 +52,12 @@ describe('UserProfile Management Update Component', () => {
   describe('ngOnInit', () => {
     it('Should call User query and add missing value', () => {
       const userProfile: IUserProfile = { id: 456 };
-      const iD: IUser = { id: 28285 };
-      userProfile.iD = iD;
+      const userID: IUser = { id: 28285 };
+      userProfile.userID = userID;
 
       const userCollection: IUser[] = [{ id: 78135 }];
       jest.spyOn(userService, 'query').mockReturnValue(of(new HttpResponse({ body: userCollection })));
-      const additionalUsers = [iD];
+      const additionalUsers = [userID];
       const expectedCollection: IUser[] = [...additionalUsers, ...userCollection];
       jest.spyOn(userService, 'addUserToCollectionIfMissing').mockReturnValue(expectedCollection);
 
@@ -74,13 +74,13 @@ describe('UserProfile Management Update Component', () => {
 
     it('Should update editForm', () => {
       const userProfile: IUserProfile = { id: 456 };
-      const iD: IUser = { id: 26285 };
-      userProfile.iD = iD;
+      const userID: IUser = { id: 26285 };
+      userProfile.userID = userID;
 
       activatedRoute.data = of({ userProfile });
       comp.ngOnInit();
 
-      expect(comp.usersSharedCollection).toContain(iD);
+      expect(comp.usersSharedCollection).toContain(userID);
       expect(comp.userProfile).toEqual(userProfile);
     });
   });

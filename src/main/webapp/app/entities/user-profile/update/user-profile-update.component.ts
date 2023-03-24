@@ -79,14 +79,14 @@ export class UserProfileUpdateComponent implements OnInit {
     this.userProfile = userProfile;
     this.userProfileFormService.resetForm(this.editForm, userProfile);
 
-    this.usersSharedCollection = this.userService.addUserToCollectionIfMissing<IUser>(this.usersSharedCollection, userProfile.iD);
+    this.usersSharedCollection = this.userService.addUserToCollectionIfMissing<IUser>(this.usersSharedCollection, userProfile.userID);
   }
 
   protected loadRelationshipsOptions(): void {
     this.userService
       .query()
       .pipe(map((res: HttpResponse<IUser[]>) => res.body ?? []))
-      .pipe(map((users: IUser[]) => this.userService.addUserToCollectionIfMissing<IUser>(users, this.userProfile?.iD)))
+      .pipe(map((users: IUser[]) => this.userService.addUserToCollectionIfMissing<IUser>(users, this.userProfile?.userID)))
       .subscribe((users: IUser[]) => (this.usersSharedCollection = users));
   }
 }

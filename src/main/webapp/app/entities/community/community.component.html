@@ -3,7 +3,8 @@
     <div class="col-md-8">
       <ngb-carousel>
         <ng-template ngbSlide *ngFor="let event of getUpcomingEvents()">
-          <img [src]="event.imageUrl" alt="Event image" />
+          <img [src]="getImage(event)" alt="Event image" />
+          <!--getImage(event)-->
           <div class="carousel-caption">
             <h3>{{ event.name }}</h3>
             <p>Description: {{ event.description }}</p>

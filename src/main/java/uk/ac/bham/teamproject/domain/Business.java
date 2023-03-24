@@ -64,7 +64,7 @@ public class Business implements Serializable {
     private Double longitude;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "iD" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "userID" }, allowSetters = true)
     private UserProfile postedby;
 
     @ManyToMany

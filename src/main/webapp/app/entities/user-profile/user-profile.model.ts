@@ -22,7 +22,7 @@ export interface IUserProfile {
   gPS?: boolean | null;
   darkmode?: boolean | null;
   fontsize?: number | null;
-  iD?: Pick<IUser, 'id'> | null;
+  userID?: Pick<IUser, 'id'> | null;
 }
 
 export type NewUserProfile = Omit<IUserProfile, 'id'> & { id: null };
