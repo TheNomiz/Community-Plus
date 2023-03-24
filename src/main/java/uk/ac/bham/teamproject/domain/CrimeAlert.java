@@ -36,11 +36,11 @@ public class CrimeAlert implements Serializable {
     private String description;
 
     @NotNull
-    @Column(name = "lat", precision = 21, scale = 2, nullable = false)
+    @Column(name = "lat", precision = 21, scale = 5, nullable = false)
     private BigDecimal lat;
 
     @NotNull
-    @Column(name = "lon", precision = 21, scale = 2, nullable = false)
+    @Column(name = "lon", precision = 21, scale = 5, nullable = false)
     private BigDecimal lon;
 
     @NotNull

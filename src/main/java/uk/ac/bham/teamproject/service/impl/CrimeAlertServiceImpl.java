@@ -112,6 +112,7 @@ public class CrimeAlertServiceImpl implements CrimeAlertService {
         List<CrimeAlert> crimeAlerts = new ArrayList<>();
 
         crimeAlerts.addAll(fetchCrimeAlerts("51.192,0.974:51.166,0.406:51.312,0.189:51.491,0.382:51.534,0.826:51.192,0.974"));
+
         crimeAlerts.addAll(
             fetchCrimeAlerts(
                 "51.507,-0.129:51.514,-0.155:51.508,-0.180:51.494,-0.186:51.487,-0.171:51.485,-0.146:51.485,-0.133:51.493,-0.128:51.507,-0.129"
@@ -122,6 +123,7 @@ public class CrimeAlertServiceImpl implements CrimeAlertService {
                 "51.448,-0.232:51.459,-0.309:51.457,-0.340:51.439,-0.366:51.416,-0.367:51.401,-0.341:51.397,-0.301:51.406,-0.257:51.448,-0.232"
             )
         );
+        /*
         crimeAlerts.addAll(fetchCrimeAlerts("51.526,-2.536:51.548,-2.677:51.388,-2.654:51.388,-2.529:51.526,-2.536"));
         crimeAlerts.addAll(fetchCrimeAlerts("50.863,-1.385:50.950,-1.521:50.925,-1.151:50.814,-1.064:50.793,-1.233:50.863,-1.385"));
         crimeAlerts.addAll(
@@ -141,9 +143,11 @@ public class CrimeAlertServiceImpl implements CrimeAlertService {
         crimeAlerts.addAll(fetchCrimeAlerts("53.802,-1.518:53.853,-1.610:53.788,-1.704:53.749,-1.604:53.802,-1.518"));
         crimeAlerts.addAll(fetchCrimeAlerts("53.345,-1.428:53.405,-1.484:53.365,-1.543:53.308,-1.488:53.345,-1.428"));
         crimeAlerts.addAll(fetchCrimeAlerts("53.773,-0.261:53.822,-0.362:53.736,-0.406:53.711,-0.315:53.773,-0.261"));
+        */
         // save new entries to the database
         for (CrimeAlert crimeAlert : crimeAlerts) {
             //Optional<CrimeAlert> entity = crimeAlertRepository.findByCrimeID(crimeAlert.getCrimeID());
+
             crimeAlertRepository.save(crimeAlert);
         }
     }
@@ -167,9 +171,10 @@ public class CrimeAlertServiceImpl implements CrimeAlertService {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM");
             Instant date = YearMonth.parse(dateString, formatter).atDay(1).atStartOfDay().toInstant(ZoneOffset.UTC);
             JsonPrimitive latJson = jsonElement.getAsJsonObject().getAsJsonObject("location").getAsJsonPrimitive("latitude");
-            BigDecimal lat = latJson.getAsBigDecimal();
+
+            BigDecimal lat = new BigDecimal(latJson.getAsString());
             JsonPrimitive lonJson = jsonElement.getAsJsonObject().getAsJsonObject("location").getAsJsonPrimitive("longitude");
-            BigDecimal lon = lonJson.getAsBigDecimal();
+            BigDecimal lon = new BigDecimal(lonJson.getAsString());
             CrimeAlert crimeAlert = new CrimeAlert();
             crimeAlert.setId(id);
             crimeAlert.setTitle(title);
@@ -178,6 +183,7 @@ public class CrimeAlertServiceImpl implements CrimeAlertService {
             crimeAlert.setLat(lat);
             crimeAlert.setLon(lon);
             crimeAlert.setCrimeID(id);
+
             Optional<User> optionalUser = userRepository.findById(1L);
             User user = optionalUser.orElseThrow(() -> new RuntimeException("User not found"));
 
