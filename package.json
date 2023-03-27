@@ -116,6 +116,7 @@
     "sockjs": "^0.3.24",
     "sockjs-client": "^1.5.1",
     "stompjs": "^2.3.3",
+    "supercluster": "^7.1.5",
     "tslib": "2.4.0",
     "zone.js": "0.11.6"
   },
@@ -131,6 +132,7 @@
     "@types/leaflet": "^1.9.3",
     "@types/leaflet.markercluster": "^1.5.1",
     "@types/node": "16.11.56",
+    "@types/supercluster": "^7.1.0",
     "@typescript-eslint/eslint-plugin": "5.36.1",
     "@typescript-eslint/parser": "5.36.1",
     "browser-sync": "^2.27.11",

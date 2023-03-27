@@ -21,6 +21,10 @@ logging:
     uk.ac.bham.teamproject: DEBUG
 
 spring:
+  data:
+    web:
+      pageable:
+        max-page-size: 100000
   devtools:
     restart:
       enabled: true

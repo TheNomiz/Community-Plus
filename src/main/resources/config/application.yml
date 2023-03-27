@@ -17,6 +17,10 @@
 ---
 # Conditionally disable springdoc on missing api-docs profile
 spring:
+  data:
+    web:
+      pageable:
+        max-page-size: 100000
   config:
     activate:
       on-profile: '!api-docs'

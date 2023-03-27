@@ -64,6 +64,18 @@ export class CrimeAlertService {
       .pipe(map(res => this.convertResponseArrayFromServer(res)));
   }
 
+  querypag(params?: any): Observable<EntityArrayResponseType> {
+    const options = createRequestOption(params);
+
+    // Add pagination parameters to the query string
+    if (params.page !== undefined && params.size !== undefined) {
+      options.set('page', params.page.toString());
+      options.set('size', params.size.toString());
+    }
+
+    return this.http.get<ICrimeAlert[]>(this.resourceUrl, { params: options, observe: 'response' });
+  }
+
   delete(id: number): Observable<HttpResponse<{}>> {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }

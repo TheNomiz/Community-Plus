@@ -120,37 +120,24 @@ export class CrimeAlertComponent implements OnInit {
     });
     this.map.addLayer(markerClusterGroup);
 
-    this.map.on('move', () => {
-      const center = this.map.getCenter();
-      const bounds = this.map.getBounds();
-      const radius = bounds.getNorthWest().distanceTo(bounds.getSouthEast()) / 2;
+    this.crimeAlertService.query({ size: 200000 }).subscribe((res: EntityArrayResponseType) => {
+      const filteredData = this.fillComponentAttributesFromResponseBody(res.body);
 
-      this.crimeAlertService.query({ size: 10000000 }).subscribe((res: EntityArrayResponseType) => {
-        const dataFromBody = this.fillComponentAttributesFromResponseBody(res.body);
-        const filteredData = dataFromBody.filter(crimeAlert => {
-          if (crimeAlert.lat === null || crimeAlert.lat === undefined || crimeAlert.lon === null || crimeAlert.lon === undefined) {
-            return false;
-          }
-          const latlng = L.latLng(crimeAlert.lat, crimeAlert.lon);
-          return latlng.distanceTo(center) <= radius;
-        });
-
-        // Remove all markers from the map
-        this.map.eachLayer(layer => {
-          if (layer instanceof L.Marker) {
-            this.map.removeLayer(layer);
-          }
-        });
-        markerClusterGroup.clearLayers();
-
-        // Add markers for the filtered crime alerts
-        for (const crimeAlert of filteredData) {
-          if (crimeAlert.lat !== null && crimeAlert.lat !== undefined && crimeAlert.lon !== null && crimeAlert.lon !== undefined) {
-            const marker = L.marker([crimeAlert.lat, crimeAlert.lon]);
-            markerClusterGroup.addLayer(marker);
-          }
+      // Remove all markers from the map
+      this.map.eachLayer(layer => {
+        if (layer instanceof L.Marker) {
+          this.map.removeLayer(layer);
         }
       });
+      markerClusterGroup.clearLayers();
+
+      // Add markers for the filtered crime alerts
+      for (const crimeAlert of filteredData) {
+        if (crimeAlert.lat !== null && crimeAlert.lat !== undefined && crimeAlert.lon !== null && crimeAlert.lon !== undefined) {
+          const marker = L.marker([crimeAlert.lat, crimeAlert.lon]);
+          markerClusterGroup.addLayer(marker);
+        }
+      }
     });
   }
 

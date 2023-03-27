@@ -14,6 +14,10 @@
 # ===================================================================
 
 spring:
+  data:
+    web:
+      pageable:
+        max-page-size: 100000
   application:
     name: teamproject
   # Replace by 'prod, faker' to add the faker context and have sample data loaded in production
