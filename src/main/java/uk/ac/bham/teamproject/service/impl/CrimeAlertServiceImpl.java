@@ -128,22 +128,24 @@ public class CrimeAlertServiceImpl implements CrimeAlertService {
         crimeAlerts.addAll(
             fetchCrimeAlerts("50.685,-1.843:50.747,-1.991:50.734,-2.178:50.667,-2.203:50.599,-2.038:50.585,-1.867:50.685,-1.843")
         );
-        /*
+
         crimeAlerts.addAll(
             fetchCrimeAlerts(
                 "53.447,-2.326:53.491,-2.263:53.513,-2.320:53.513,-2.368:53.495,-2.391:53.475,-2.384:53.463,-2.364:53.447,-2.326"
             )
         );
+
         crimeAlerts.addAll(fetchCrimeAlerts("53.406,-2.979:53.430,-2.997:53.410,-3.049:53.358"));
         crimeAlerts.addAll(fetchCrimeAlerts("52.634,-2.109:52.646,-2.413:52.453,-2.480:52.431,-2.185"));
         crimeAlerts.addAll(fetchCrimeAlerts("52.035,0.806:52.189,0.098:52.535,0.163:52.604,1.297:52.316,1.604:52.035,0.806"));
+
         crimeAlerts.addAll(fetchCrimeAlerts("52.454,-1.818:52.487,-1.911:52.449,-1.955:52.408,-1.925:52.412,-1.832:52.454,-1.818"));
         crimeAlerts.addAll(fetchCrimeAlerts("52.635,-1.129:52.638,-1.209:52.589,-1.217:52.585,-1.123:52.635,-1.129"));
         crimeAlerts.addAll(fetchCrimeAlerts("52.939,-1.168:52.947,-1.203:52.907,-1.206:52.905,-1.177:52.919,-1.152:52.939,-1.168"));
+
         crimeAlerts.addAll(fetchCrimeAlerts("53.802,-1.518:53.853,-1.610:53.788,-1.704:53.749,-1.604:53.802,-1.518"));
         crimeAlerts.addAll(fetchCrimeAlerts("53.345,-1.428:53.405,-1.484:53.365,-1.543:53.308,-1.488:53.345,-1.428"));
         crimeAlerts.addAll(fetchCrimeAlerts("53.773,-0.261:53.822,-0.362:53.736,-0.406:53.711,-0.315:53.773,-0.261"));
-*/
         // save new entries to the database
         for (CrimeAlert crimeAlert : crimeAlerts) {
             //Optional<CrimeAlert> entity = crimeAlertRepository.findByCrimeID(crimeAlert.getCrimeID());

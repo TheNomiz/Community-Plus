@@ -1,12 +1,14 @@
+/* eslint-disable @typescript-eslint/no-namespace */
 /* eslint-disable @typescript-eslint/no-shadow */
 
 /* eslint-disable no-console */
 import { Component, OnInit } from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute, Data, ParamMap, Router } from '@angular/router';
-import { combineLatest, filter, Observable, skip, switchMap, tap } from 'rxjs';
+import { combineLatest, filter, Observable, of, skip, switchMap, tap } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import * as L from 'leaflet';
+import supercluster, { AnyProps, PointFeature } from 'supercluster';
 import 'leaflet.markercluster';
 import { ICrimeAlert, NewCrimeAlert } from '../crime-alert.model';
 import axios from 'axios';
@@ -18,7 +20,11 @@ import { CrimeAlertDeleteDialogComponent } from '../delete/crime-alert-delete-di
 import { ParseLinks } from 'app/core/util/parse-links.service';
 import { AccountService } from 'app/core/auth/account.service';
 import { Map, TileLayer } from 'leaflet';
-import { data } from 'cypress/types/jquery';
+import { data, error } from 'cypress/types/jquery';
+import Supercluster from 'supercluster';
+import * as geojson from 'geojson';
+
+import bbox from '@turf/bbox';
 
 @Component({
   selector: 'jhi-crime-alert',
@@ -91,36 +97,22 @@ export class CrimeAlertComponent implements OnInit {
       maxBounds: L.latLngBounds(L.latLng(49.78, -13.13), L.latLng(60.89, 2.87)),
       maxZoom: 20,
       minZoom: 6,
-    }).setView([51.505, -0.09], 3);
+    }).setView([51.4, 0.3], 9);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
     }).addTo(this.map);
-    const markerClusterGroup = L.markerClusterGroup({
-      showCoverageOnHover: false,
-      spiderfyDistanceMultiplier: 2,
-      iconCreateFunction(cluster) {
-        const childCount = cluster.getChildCount();
-        const c = ' marker-cluster-';
-        let size = '';
-        if (childCount < 10) {
-          size = 'small';
-        } else if (childCount < 100) {
-          size = 'medium';
-        } else {
-          size = 'large';
-        }
-        return L.divIcon({
-          iconUrl: '../../../content/images/Location_Marker.png',
-          shadowUrl: '../../../content/images/Location_Marker_Shadow.png',
-          html: '<div><span>' + childCount + '</span></div>',
-          className: 'marker-cluster' + c + size,
-          iconSize: L.point(40, 40),
-        });
-      },
-    });
-    this.map.addLayer(markerClusterGroup);
 
-    this.crimeAlertService.query({ size: 200000 }).subscribe((res: EntityArrayResponseType) => {
+    function createClusterIcon(cluster: any): L.Icon {
+      const childCount = cluster.properties.point_count;
+      const size = childCount < 10 ? 'small' : childCount < 100 ? 'medium' : 'large';
+      return L.icon({
+        iconUrl: '../../../content/images/Location_Marker.png',
+        iconSize: [40, 40],
+        iconAnchor: [20, 20],
+      });
+    }
+
+    this.crimeAlertService.query({ size: 10000 }).subscribe((res: EntityArrayResponseType) => {
       const filteredData = this.fillComponentAttributesFromResponseBody(res.body);
 
       // Remove all markers from the map
@@ -129,18 +121,57 @@ export class CrimeAlertComponent implements OnInit {
           this.map.removeLayer(layer);
         }
       });
-      markerClusterGroup.clearLayers();
+      const pointFeatures: PointFeature<ICrimeAlert>[] = filteredData
+        .filter(alert => alert.lat && alert.lon) // filter out alerts with undefined or null coordinates
+        .map(alert => ({
+          type: 'Feature',
+          geometry: {
+            type: 'Point',
+            coordinates: [alert.lon!, alert.lat!], // convert coordinates to valid Position array
+          },
+          properties: alert,
+        }));
+
+      /*filteredData.forEach(marker => {
+        if (marker.lat && marker.lon){
+        L.marker([marker.lat, marker.lon]).addTo(this.map);
+        }
+      })
+      */
+
+      const index = new Supercluster({
+        radius: 50,
+        maxZoom: 18,
+        minZoom: 0,
+        extent: 512,
+        nodeSize: 64,
+      });
 
       // Add markers for the filtered crime alerts
-      for (const crimeAlert of filteredData) {
-        if (crimeAlert.lat !== null && crimeAlert.lat !== undefined && crimeAlert.lon !== null && crimeAlert.lon !== undefined) {
-          const marker = L.marker([crimeAlert.lat, crimeAlert.lon]);
-          markerClusterGroup.addLayer(marker);
+
+      index.load(pointFeatures);
+      const clusters = index.getClusters([-180, -90, 180, 90], 9);
+
+      // Loop through the clusters and add markers to the map
+      clusters.forEach(cluster => {
+        if (cluster.properties.cluster) {
+          // This is a cluster
+          const marker = L.marker([cluster.geometry.coordinates[1], cluster.geometry.coordinates[0]], {
+            icon: createClusterIcon(cluster),
+          }).bindPopup(`There are ${cluster.properties.point_count} markers in this cluster.`);
+
+          marker.addTo(this.map);
+        } else {
+          // This is a single marker
+          const marker = L.marker([cluster.geometry.coordinates[1], cluster.geometry.coordinates[0]]).bindPopup('This is a single marker.');
+
+          marker.addTo(this.map);
         }
-      }
+      });
+
+      // Loop through the clusters and add markers to the map
     });
   }
-
   navigateToWithComponentValues(): void {
     this.handleNavigation(this.page, this.predicate, this.ascending);
   }
