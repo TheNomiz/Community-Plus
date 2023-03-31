@@ -1,11 +1,11 @@
-id;title;description;lat;lon;date;crime_id;postedby_id
-1;override Front-line;Missouri program upward-trending;68769;48298;2023-02-25T10:54:24;21602;1
-2;Granite panel;THX viralXXXXXXXXXXX;8930;56413;2023-02-25T00:48:34;70805;2
-3;Innovative;quantify capacitorXX;78123;53922;2023-02-24T16:14:45;80455;2
-4;installation;payment Senior redundant;75825;55416;2023-02-24T17:31:38;45167;1
-5;purple matrix deposit;Slovakia Intelligent;74896;87236;2023-02-25T08:58:38;33682;1
-6;Metrics Computers extensible;AccountabilityXXXXXX;82266;72342;2023-02-25T12:19:16;35521;1
-7;Tools Card Cheese;Fresh JSON cross-platform;43221;17615;2023-02-25T06:06:16;36744;2
-8;neutral Ergonomic Tugrik;North indexing Metal;4089;39891;2023-02-24T23:07:08;91193;1
-9;RAM bottom-line Intelligent;turn-key Rupee Books;20428;18240;2023-02-25T10:04:56;93927;1
-10;Global;Vision-oriented Global program;11311;54864;2023-02-24T16:25:27;69600;2
+id;title;description;lat;lon;date;crime_id;crime_type;postedby_id
+1;override Front-line;Missouri program upward-trending;68769;48298;2023-02-25T10:54:24;21602;POSSESSIONOFWEAPONS;1
+2;sky;panel user-centricXX;3819;33867;2023-02-25T05:49:19;99390;ANTISOCIALBEHAVIOUR;2
+3;Oklahoma Innovative;quantify capacitorXX;78123;53922;2023-02-24T16:14:45;80455;BICYCLETHEFT;2
+4;Avon;Berkshire SoftXXXXXX;75825;55416;2023-02-24T17:31:38;45167;SHOPLIFTING;1
+5;Towels;Metal seamless back-end;21410;51931;2023-02-24T22:07:47;711;THEFTFROMTHEPERSON;1
+6;Fundamental Metrics Computers;invoice Accountability;82266;72342;2023-02-25T12:19:16;35521;SHOPLIFTING;1
+7;synthesize;Account Jewelery upX;91144;41232;2023-02-24T19:20:44;34007;VEHICLECRIME;2
+8;Pants Future;Ergonomic TugrikXXXX;96432;56496;2023-02-24T22:26:40;18896;VEHICLECRIME;1
+9;analyzer Syrian;expediteXXXXXXXXXXXX;95587;87284;2023-02-25T11:47:22;26515;CRIMINALDAMAGEARSON;1
+10;primary;navigate International auxiliary;70296;20428;2023-02-25T09:57:08;17699;OTHERCRIME;2

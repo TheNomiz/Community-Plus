@@ -24,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 import uk.ac.bham.teamproject.domain.CrimeAlert;
 import uk.ac.bham.teamproject.domain.User;
+import uk.ac.bham.teamproject.domain.enumeration.CrimeTypes;
 import uk.ac.bham.teamproject.repository.CrimeAlertRepository;
 import uk.ac.bham.teamproject.repository.UserRepository;
 import uk.ac.bham.teamproject.service.CrimeAlertService;
@@ -185,6 +186,7 @@ public class CrimeAlertServiceImpl implements CrimeAlertService {
             crimeAlert.setLat(lat);
             crimeAlert.setLon(lon);
             crimeAlert.setCrimeID(id);
+            crimeAlert.setCrimeType(CrimeTypes.ALLCRIME);
 
             Optional<User> optionalUser = userRepository.findById(1L);
             User user = optionalUser.orElseThrow(() -> new RuntimeException("User not found"));

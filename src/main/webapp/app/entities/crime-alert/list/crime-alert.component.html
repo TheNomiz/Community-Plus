@@ -1,3 +1,4 @@
+<script src="https://unpkg.com/supercluster@7.1.2/dist/supercluster.min.js"></script>
 <div id="map" style="height: 400px"></div>
 <div>
   <h2 id="page-heading" data-cy="CrimeAlertHeading">
@@ -73,6 +74,18 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
+          <th scope="col" jhiSortBy="crimeID">
+            <div class="d-flex">
+              <span jhiTranslate="teamprojectApp.crimeAlert.crimeID">Crime ID</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="typeOfCrime">
+            <div class="d-flex">
+              <span jhiTranslate="teamprojectApp.crimeAlert.typeOfCrime">Type Of Crime</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
           <th scope="col" jhiSortBy="postedby.login">
             <div class="d-flex">
               <span jhiTranslate="teamprojectApp.crimeAlert.postedby">Postedby</span>
@@ -97,6 +110,8 @@
           <td>{{ crimeAlert.lat }}</td>
           <td>{{ crimeAlert.lon }}</td>
           <td>{{ crimeAlert.date | formatMediumDatetime }}</td>
+          <td>{{ crimeAlert.crimeID }}</td>
+          <td jhiTranslate="{{ 'teamprojectApp.CrimeTypes.' + crimeAlert.crimeType }}">{{ crimeAlert.crimeType }}</td>
           <td>
             {{ crimeAlert.postedby?.login }}
           </td>

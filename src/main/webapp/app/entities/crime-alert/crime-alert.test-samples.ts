@@ -1,5 +1,7 @@
 import dayjs from 'dayjs/esm';
 
+import { CrimeTypes } from 'app/entities/enumerations/crime-types.model';
+
 import { ICrimeAlert, NewCrimeAlert } from './crime-alert.model';
 
 export const sampleWithRequiredData: ICrimeAlert = {
@@ -10,26 +12,29 @@ export const sampleWithRequiredData: ICrimeAlert = {
   lon: 3240,
   date: dayjs('2023-02-25T12:22'),
   crimeID: 39501,
+  crimeType: CrimeTypes['PUBLICORDER'],
 };
 
 export const sampleWithPartialData: ICrimeAlert = {
-  id: 54771,
-  title: 'Concrete Industrial',
-  description: 'Brunei IntelligentXX',
-  lat: 33855,
-  lon: 39785,
-  date: dayjs('2023-02-25T04:22'),
-  crimeID: 43939,
+  id: 66094,
+  title: 'plum',
+  description: 'generating Small Function-based',
+  lat: 39785,
+  lon: 41494,
+  date: dayjs('2023-02-25T03:47'),
+  crimeID: 65432,
+  crimeType: CrimeTypes['DRUGS'],
 };
 
 export const sampleWithFullData: ICrimeAlert = {
-  id: 65432,
-  title: 'Indian Malagasy',
-  description: 'Gardens Programmable',
-  lat: 38832,
-  lon: 6559,
-  date: dayjs('2023-02-25T01:16'),
-  crimeID: 91172,
+  id: 55009,
+  title: 'Public-key',
+  description: 'withdrawal compressX',
+  lat: 49899,
+  lon: 38832,
+  date: dayjs('2023-02-25T12:45'),
+  crimeID: 54398,
+  crimeType: CrimeTypes['VIOLENCEANDSEXUALOFFENCES'],
 };
 
 export const sampleWithNewData: NewCrimeAlert = {
@@ -39,6 +44,7 @@ export const sampleWithNewData: NewCrimeAlert = {
   lon: 71773,
   date: dayjs('2023-02-24T20:30'),
   crimeID: 73173,
+  crimeType: CrimeTypes['ROBBERY'],
   id: null,
 };
 

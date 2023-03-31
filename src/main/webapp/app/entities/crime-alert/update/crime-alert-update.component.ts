@@ -9,6 +9,7 @@ import { ICrimeAlert } from '../crime-alert.model';
 import { CrimeAlertService } from '../service/crime-alert.service';
 import { IUser } from 'app/entities/user/user.model';
 import { UserService } from 'app/entities/user/user.service';
+import { CrimeTypes } from 'app/entities/enumerations/crime-types.model';
 
 @Component({
   selector: 'jhi-crime-alert-update',
@@ -17,6 +18,7 @@ import { UserService } from 'app/entities/user/user.service';
 export class CrimeAlertUpdateComponent implements OnInit {
   isSaving = false;
   crimeAlert: ICrimeAlert | null = null;
+  crimeTypesValues = Object.keys(CrimeTypes);
 
   usersSharedCollection: IUser[] = [];
 

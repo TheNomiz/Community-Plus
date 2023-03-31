@@ -25,6 +25,7 @@
       "lon": "Lon",
       "date": "Date",
       "crimeID": "Crime ID",
+      "crimeType": "Crime Type",
       "postedby": "Postedby"
     }
   }

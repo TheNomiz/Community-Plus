@@ -38,6 +38,10 @@
         <dd>
           <span>{{ crimeAlert.crimeID }}</span>
         </dd>
+        <dt><span jhiTranslate="teamprojectApp.crimeAlert.crimeType">Crime Type</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'teamprojectApp.CrimeTypes.' + crimeAlert.crimeType }}">{{ crimeAlert.crimeType }}</span>
+        </dd>
         <dt><span jhiTranslate="teamprojectApp.crimeAlert.postedby">Postedby</span></dt>
         <dd>
           <span>{{ crimeAlert.postedby?.login }}</span>

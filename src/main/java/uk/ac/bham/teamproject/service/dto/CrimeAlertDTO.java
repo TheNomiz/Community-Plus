@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.Objects;
 import javax.validation.constraints.*;
+import uk.ac.bham.teamproject.domain.enumeration.CrimeTypes;
 
 /**
  * A DTO for the {@link uk.ac.bham.teamproject.domain.CrimeAlert} entity.
@@ -33,6 +34,9 @@ public class CrimeAlertDTO implements Serializable {
 
     @NotNull
     private Long crimeID;
+
+    @NotNull
+    private CrimeTypes crimeType;
 
     private UserDTO postedby;
 
@@ -92,6 +96,14 @@ public class CrimeAlertDTO implements Serializable {
         this.crimeID = crimeID;
     }
 
+    public CrimeTypes getCrimeType() {
+        return crimeType;
+    }
+
+    public void setCrimeType(CrimeTypes crimeType) {
+        this.crimeType = crimeType;
+    }
+
     public UserDTO getPostedby() {
         return postedby;
     }
@@ -132,6 +144,7 @@ public class CrimeAlertDTO implements Serializable {
             ", lon=" + getLon() +
             ", date='" + getDate() + "'" +
             ", crimeID=" + getCrimeID() +
+            ", crimeType='" + getCrimeType() + "'" +
             ", postedby=" + getPostedby() +
             "}";
     }

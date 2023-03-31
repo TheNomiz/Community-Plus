@@ -15,7 +15,7 @@ describe('CrimeAlert e2e test', () => {
   const crimeAlertPageUrlPattern = new RegExp('/crime-alert(\\?.*)?$');
   const username = Cypress.env('E2E_USERNAME') ?? 'user';
   const password = Cypress.env('E2E_PASSWORD') ?? 'user';
-  // const crimeAlertSample = {"title":"interface","description":"backing oliveXXXXXXX","lat":23324,"lon":51529,"date":"2023-02-25T05:09:27.896Z","crimeID":47086};
+  // const crimeAlertSample = {"title":"content backing olive","description":"BerkshireXXXXXXXXXXX","lat":25126,"lon":30426,"date":"2023-02-25T05:53:34.256Z","crimeID":66800,"crimeType":"VEHICLECRIME"};
 
   let crimeAlert;
   // let user;
@@ -224,6 +224,8 @@ describe('CrimeAlert e2e test', () => {
       cy.get(`[data-cy="date"]`).type('2023-02-25T10:55').blur().should('have.value', '2023-02-25T10:55');
 
       cy.get(`[data-cy="crimeID"]`).type('61529').should('have.value', '61529');
+
+      cy.get(`[data-cy="crimeType"]`).select('CRIMINALDAMAGEARSON');
 
       cy.get(`[data-cy="postedby"]`).select(1);
 

@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import uk.ac.bham.teamproject.domain.enumeration.CrimeTypes;
 
 /**
  * A CrimeAlert.
@@ -50,6 +51,11 @@ public class CrimeAlert implements Serializable {
     @NotNull
     @Column(name = "crime_id", nullable = false, unique = true)
     private Long crimeID;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(name = "crime_type", nullable = false)
+    private CrimeTypes crimeType;
 
     @ManyToOne(optional = false)
     @NotNull
@@ -148,6 +154,19 @@ public class CrimeAlert implements Serializable {
         this.crimeID = crimeID;
     }
 
+    public CrimeTypes getCrimeType() {
+        return this.crimeType;
+    }
+
+    public CrimeAlert crimeType(CrimeTypes crimeType) {
+        this.setCrimeType(crimeType);
+        return this;
+    }
+
+    public void setCrimeType(CrimeTypes crimeType) {
+        this.crimeType = crimeType;
+    }
+
     public User getPostedby() {
         return this.postedby;
     }
@@ -191,6 +210,7 @@ public class CrimeAlert implements Serializable {
             ", lon=" + getLon() +
             ", date='" + getDate() + "'" +
             ", crimeID=" + getCrimeID() +
+            ", crimeType='" + getCrimeType() + "'" +
             "}";
     }
 }

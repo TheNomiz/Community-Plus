@@ -34,6 +34,12 @@
       "fieldName": "crimeID",
       "fieldType": "Long",
       "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "crimeType",
+      "fieldType": "CrimeTypes",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "ALLCRIME,ANTISOCIALBEHAVIOUR,BICYCLETHEFT,BURGLARY,CRIMINALDAMAGEARSON,DRUGS,OTHERTHEFT,POSSESSIONOFWEAPONS,PUBLICORDER,ROBBERY,SHOPLIFTING,THEFTFROMTHEPERSON,VEHICLECRIME,VIOLENCEANDSEXUALOFFENCES,OTHERCRIME"
     }
   ],
   "jpaMetamodelFiltering": true,

@@ -147,6 +147,25 @@
         </div>
 
         <div class="row mb-3">
+          <label class="form-label" jhiTranslate="teamprojectApp.crimeAlert.crimeType" for="field_crimeType">Crime Type</label>
+          <select class="form-control" name="crimeType" formControlName="crimeType" id="field_crimeType" data-cy="crimeType">
+            <option [ngValue]="null">{{ 'teamprojectApp.CrimeTypes.null' | translate }}</option>
+            <option *ngFor="let crimeTypes of crimeTypesValues" [value]="crimeTypes">
+              {{ 'teamprojectApp.CrimeTypes.' + crimeTypes | translate }}
+            </option>
+          </select>
+          <div *ngIf="editForm.get('crimeType')!.invalid && (editForm.get('crimeType')!.dirty || editForm.get('crimeType')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('crimeType')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
           <label class="form-label" jhiTranslate="teamprojectApp.crimeAlert.postedby" for="field_postedby">Postedby</label>
           <select
             class="form-control"

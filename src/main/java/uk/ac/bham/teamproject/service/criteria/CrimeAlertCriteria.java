@@ -5,6 +5,7 @@ import java.util.Objects;
 import org.springdoc.api.annotations.ParameterObject;
 import tech.jhipster.service.Criteria;
 import tech.jhipster.service.filter.*;
+import uk.ac.bham.teamproject.domain.enumeration.CrimeTypes;
 
 /**
  * Criteria class for the {@link uk.ac.bham.teamproject.domain.CrimeAlert} entity. This class is used
@@ -18,6 +19,23 @@ import tech.jhipster.service.filter.*;
 @ParameterObject
 @SuppressWarnings("common-java:DuplicatedBlocks")
 public class CrimeAlertCriteria implements Serializable, Criteria {
+
+    /**
+     * Class for filtering CrimeTypes
+     */
+    public static class CrimeTypesFilter extends Filter<CrimeTypes> {
+
+        public CrimeTypesFilter() {}
+
+        public CrimeTypesFilter(CrimeTypesFilter filter) {
+            super(filter);
+        }
+
+        @Override
+        public CrimeTypesFilter copy() {
+            return new CrimeTypesFilter(this);
+        }
+    }
 
     private static final long serialVersionUID = 1L;
 
@@ -35,6 +53,8 @@ public class CrimeAlertCriteria implements Serializable, Criteria {
 
     private LongFilter crimeID;
 
+    private CrimeTypesFilter crimeType;
+
     private LongFilter postedbyId;
 
     private Boolean distinct;
@@ -49,6 +69,7 @@ public class CrimeAlertCriteria implements Serializable, Criteria {
         this.lon = other.lon == null ? null : other.lon.copy();
         this.date = other.date == null ? null : other.date.copy();
         this.crimeID = other.crimeID == null ? null : other.crimeID.copy();
+        this.crimeType = other.crimeType == null ? null : other.crimeType.copy();
         this.postedbyId = other.postedbyId == null ? null : other.postedbyId.copy();
         this.distinct = other.distinct;
     }
@@ -163,6 +184,21 @@ public class CrimeAlertCriteria implements Serializable, Criteria {
         this.crimeID = crimeID;
     }
 
+    public CrimeTypesFilter getCrimeType() {
+        return crimeType;
+    }
+
+    public CrimeTypesFilter crimeType() {
+        if (crimeType == null) {
+            crimeType = new CrimeTypesFilter();
+        }
+        return crimeType;
+    }
+
+    public void setCrimeType(CrimeTypesFilter crimeType) {
+        this.crimeType = crimeType;
+    }
+
     public LongFilter getPostedbyId() {
         return postedbyId;
     }
@@ -203,6 +239,7 @@ public class CrimeAlertCriteria implements Serializable, Criteria {
             Objects.equals(lon, that.lon) &&
             Objects.equals(date, that.date) &&
             Objects.equals(crimeID, that.crimeID) &&
+            Objects.equals(crimeType, that.crimeType) &&
             Objects.equals(postedbyId, that.postedbyId) &&
             Objects.equals(distinct, that.distinct)
         );
@@ -210,7 +247,7 @@ public class CrimeAlertCriteria implements Serializable, Criteria {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, description, lat, lon, date, crimeID, postedbyId, distinct);
+        return Objects.hash(id, title, description, lat, lon, date, crimeID, crimeType, postedbyId, distinct);
     }
 
     // prettier-ignore
@@ -224,6 +261,7 @@ public class CrimeAlertCriteria implements Serializable, Criteria {
             (lon != null ? "lon=" + lon + ", " : "") +
             (date != null ? "date=" + date + ", " : "") +
             (crimeID != null ? "crimeID=" + crimeID + ", " : "") +
+            (crimeType != null ? "crimeType=" + crimeType + ", " : "") +
             (postedbyId != null ? "postedbyId=" + postedbyId + ", " : "") +
             (distinct != null ? "distinct=" + distinct + ", " : "") +
             "}";
