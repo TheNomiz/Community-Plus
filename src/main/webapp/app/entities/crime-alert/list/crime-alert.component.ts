@@ -96,8 +96,8 @@ export class CrimeAlertComponent implements OnInit {
     const childCount = cluster.properties.point_count;
     const size = childCount < 10 ? 'small' : childCount < 100 ? 'medium' : 'large';
     return L.icon({
-      iconUrl: '../../../content/images/Location_Marker.png',
-      iconSize: [40, 40],
+      iconUrl: `'../../../content/images/${size}-cluster-icon.png`,
+      iconSize: [25, 40],
       iconAnchor: [20, 20],
     });
   }
