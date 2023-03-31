@@ -43,6 +43,13 @@ export class CrimeAlertComponent implements OnInit {
   };
   page = 1;
   map!: L.Map;
+  index = new Supercluster({
+    radius: 50,
+    maxZoom: 18,
+    minZoom: 0,
+    extent: 512,
+    nodeSize: 64,
+  });
 
   constructor(
     protected crimeAlertService: CrimeAlertService,
@@ -85,6 +92,46 @@ export class CrimeAlertComponent implements OnInit {
         },
       });
   }
+  createClusterIcon(cluster: any): L.Icon {
+    const childCount = cluster.properties.point_count;
+    const size = childCount < 10 ? 'small' : childCount < 100 ? 'medium' : 'large';
+    return L.icon({
+      iconUrl: '../../../content/images/Location_Marker.png',
+      iconSize: [40, 40],
+      iconAnchor: [20, 20],
+    });
+  }
+  updateClusters(): void {
+    const zoomLevel = this.map.getZoom();
+    const bounds = this.map.getBounds();
+    const nw = bounds.getNorthWest();
+    const se = bounds.getSouthEast();
+    const clusters = this.index.getClusters([nw.lng, se.lat, se.lng, nw.lat], zoomLevel);
+
+    // Remove all markers from the map
+    this.map.eachLayer(layer => {
+      if (layer instanceof L.Marker) {
+        this.map.removeLayer(layer);
+      }
+    });
+
+    // Loop through the clusters and add markers to the map
+    clusters.forEach(cluster => {
+      if (cluster.properties.cluster) {
+        // This is a cluster
+        const marker = L.marker([cluster.geometry.coordinates[1], cluster.geometry.coordinates[0]], {
+          icon: this.createClusterIcon(cluster),
+        }).bindPopup(`There are ${cluster.properties.point_count} markers in this cluster.`);
+
+        marker.addTo(this.map);
+      } else {
+        // This is a single marker
+        const marker = L.marker([cluster.geometry.coordinates[1], cluster.geometry.coordinates[0]]).bindPopup('This is a single marker.');
+
+        marker.addTo(this.map);
+      }
+    });
+  }
 
   load(): void {
     this.loadFromBackendWithRouteInformations().subscribe({
@@ -102,25 +149,8 @@ export class CrimeAlertComponent implements OnInit {
       attribution: '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
     }).addTo(this.map);
 
-    function createClusterIcon(cluster: any): L.Icon {
-      const childCount = cluster.properties.point_count;
-      const size = childCount < 10 ? 'small' : childCount < 100 ? 'medium' : 'large';
-      return L.icon({
-        iconUrl: '../../../content/images/Location_Marker.png',
-        iconSize: [40, 40],
-        iconAnchor: [20, 20],
-      });
-    }
-
     this.crimeAlertService.query({ size: 10000 }).subscribe((res: EntityArrayResponseType) => {
       const filteredData = this.fillComponentAttributesFromResponseBody(res.body);
-
-      // Remove all markers from the map
-      this.map.eachLayer(layer => {
-        if (layer instanceof L.Marker) {
-          this.map.removeLayer(layer);
-        }
-      });
       const pointFeatures: PointFeature<ICrimeAlert>[] = filteredData
         .filter(alert => alert.lat && alert.lon) // filter out alerts with undefined or null coordinates
         .map(alert => ({
@@ -132,45 +162,23 @@ export class CrimeAlertComponent implements OnInit {
           properties: alert,
         }));
 
-      /*filteredData.forEach(marker => {
-        if (marker.lat && marker.lon){
-        L.marker([marker.lat, marker.lon]).addTo(this.map);
-        }
-      })
-      */
-
-      const index = new Supercluster({
-        radius: 50,
-        maxZoom: 18,
-        minZoom: 0,
-        extent: 512,
-        nodeSize: 64,
-      });
-
       // Add markers for the filtered crime alerts
 
-      index.load(pointFeatures);
-      const clusters = index.getClusters([-180, -90, 180, 90], 9);
+      this.index.load(pointFeatures);
 
-      // Loop through the clusters and add markers to the map
-      clusters.forEach(cluster => {
-        if (cluster.properties.cluster) {
-          // This is a cluster
-          const marker = L.marker([cluster.geometry.coordinates[1], cluster.geometry.coordinates[0]], {
-            icon: createClusterIcon(cluster),
-          }).bindPopup(`There are ${cluster.properties.point_count} markers in this cluster.`);
+      this.updateClusters();
 
-          marker.addTo(this.map);
-        } else {
-          // This is a single marker
-          const marker = L.marker([cluster.geometry.coordinates[1], cluster.geometry.coordinates[0]]).bindPopup('This is a single marker.');
+      this.map.on('zoomend', () => {
+        this.updateClusters();
+      });
 
-          marker.addTo(this.map);
-        }
+      this.map.on('moveend', () => {
+        this.updateClusters();
       });
 
       // Loop through the clusters and add markers to the map
     });
+    // Remove all markers from the map
   }
   navigateToWithComponentValues(): void {
     this.handleNavigation(this.page, this.predicate, this.ascending);
