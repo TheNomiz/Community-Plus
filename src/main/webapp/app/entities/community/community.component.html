@@ -16,20 +16,23 @@
     </ngb-carousel>
   </div>
   <div class="row">
+    <h2>Chat Rooms</h2>
     <div class="col-md-4">
+      <ul>
+        <li *ngFor="let room of chatRooms">
+          <a (click)="joinRoom(room)">{{ room.name }}</a>
+        </li>
+      </ul>
+    </div>
+    <div class="col-md-4">
+      <div *ngIf="currentRoom">
+        <h2>You are currently in the "{{ currentRoom }}" room.</h2>
+      </div>
       <div class="chatroom">
-        <h3>Chat Room</h3>
         <div class="messages">
-          <div *ngFor="let message of chatMessages">
-            <p>{{ message.sentDate }}: {{ message.content }}</p>
-          </div>
+          <li *ngFor="let message of chatMessages">{{ message.sentDate }}: {{ message.content }}</li>
         </div>
-        <!--  
-            <form (submit)="sendMessage()">
-              <input type="text" [(ngModel)]="newMessage" placeholder="Type your message here...">
-              <button type="submit">Send</button>
-            </form>
-          -->
+        <input type="text" #messageInput (keyup.enter)="sendMessage(messageInput.value)" />
       </div>
     </div>
   </div>

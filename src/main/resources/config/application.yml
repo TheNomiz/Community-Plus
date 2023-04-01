@@ -24,6 +24,7 @@ spring:
   config:
     activate:
       on-profile: '!api-docs'
+
 springdoc:
   api-docs:
     enabled: false
@@ -95,6 +96,11 @@ management:
             enabled: true
 
 spring:
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
   application:
     name: teamproject
   profiles:
@@ -214,3 +220,4 @@ jhipster:
 # ===================================================================
 
 # application:
+
