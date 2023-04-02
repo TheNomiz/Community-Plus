@@ -40,6 +40,9 @@ export class CommunityComponent implements OnInit {
   events: IEvent[] = [];
   businesses: IBusiness[] = [];
 
+  // map items
+  map!: L.Map;
+
   // chatroom items
   private readonly topic = '/topic/';
   private stompSubscription: any;
@@ -85,7 +88,7 @@ export class CommunityComponent implements OnInit {
     });
 
     // Initialize your Leaflet map
-    const map = L.map('map').setView([52.45, -1.93], 13);
+    this.map = L.map('map').setView([52.45, -1.93], 13);
 
     const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 18,
@@ -93,47 +96,33 @@ export class CommunityComponent implements OnInit {
       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     });
 
-    tiles.addTo(map);
+    tiles.addTo(this.map);
 
-    this.businesses.forEach(business => {
-      if (business.latitude && business.longitude && business.name && business.description && business.category && business.phoneNumber) {
-        const marker = L.marker([business.latitude, business.longitude]).addTo(map);
-        marker.bindPopup(`<b>${business.name}</b><br>${business.description}</br><br>${business.phoneNumber}</br><br>${business.category}`);
-      }
-    });
-
-    // add events to markers
-    this.events.forEach(event => {
-      if (event.latitude && event.longitude && event.name && event.description && event.startDate && event.endDate && event.address) {
-        const marker = L.marker([event.latitude, event.longitude]).addTo(map);
-        marker.bindPopup(
-          `<b>${event.name}</b><br>${event.description}</br><br>${event.address}</br><br>${event.startDate}</br><br>${event.endDate}`
-        );
-      }
-    });
     // Call the createMarkers function to add markers to the map for business and events
-    this.createMarkers(map);
+    this.createMarkers();
     // call events carousel
     this.getUpcomingEvents();
   }
 
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-  createMarkers(map: L.Map) {
+  createMarkers() {
     // add business to markers
     this.businesses.forEach(business => {
       if (business.latitude && business.longitude && business.name && business.description && business.category && business.phoneNumber) {
-        const marker = L.marker([business.latitude, business.longitude]).addTo(map);
-        marker.bindPopup(`<b>${business.name}</b><br>${business.description}</br><br>${business.phoneNumber}</br><br>${business.category}`);
+        const marker = L.marker([business.latitude, business.longitude]).bindPopup(
+          `<b>${business.name}</b><br>${business.description}</br><br>${business.phoneNumber}</br><br>${business.category}`
+        );
+        marker.addTo(this.map);
       }
     });
 
     // add events to markers
     this.events.forEach(event => {
       if (event.latitude && event.longitude && event.name && event.description && event.startDate && event.endDate && event.address) {
-        const marker = L.marker([event.latitude, event.longitude]).addTo(map);
-        marker.bindPopup(
+        const marker = L.marker([event.latitude, event.longitude]).bindPopup(
           `<b>${event.name}</b><br>${event.description}</br><br>${event.address}</br><br>${event.startDate}</br><br>${event.endDate}`
         );
+        marker.addTo(this.map);
       }
     });
   }
