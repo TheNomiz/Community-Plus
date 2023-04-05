@@ -25,6 +25,7 @@ import Supercluster from 'supercluster';
 import * as geojson from 'geojson';
 
 import bbox from '@turf/bbox';
+import { CrimeTypes } from 'app/entities/enumerations/crime-types.model';
 
 @Component({
   selector: 'jhi-crime-alert',
@@ -101,6 +102,7 @@ export class CrimeAlertComponent implements OnInit {
       iconAnchor: [20, 20],
     });
   }
+
   updateClusters(): void {
     const zoomLevel = this.map.getZoom();
     const bounds = this.map.getBounds();
@@ -126,7 +128,50 @@ export class CrimeAlertComponent implements OnInit {
         marker.addTo(this.map);
       } else {
         // This is a single marker
-        const marker = L.marker([cluster.geometry.coordinates[1], cluster.geometry.coordinates[0]]).bindPopup('This is a single marker.');
+
+        let url = '';
+
+        if (cluster.properties.crimeType === CrimeTypes.ANTISOCIALBEHAVIOUR) {
+          url = `'../../../content/images/antisocial.png`;
+        } else if ((cluster.properties.crimeType as CrimeTypes) === CrimeTypes.CRIMINALDAMAGEARSON) {
+          url = `'../../../content/images/arson.png`;
+        } else if ((cluster.properties.crimeType as CrimeTypes) === CrimeTypes.BICYCLETHEFT) {
+          url = `'../../../content/images/bicycle.png`;
+        } else if ((cluster.properties.crimeType as CrimeTypes) === CrimeTypes.BURGLARY) {
+          url = `'../../../content/images/burglary.png`;
+        } else if ((cluster.properties.crimeType as CrimeTypes) === CrimeTypes.DRUGS) {
+          url = `'../../../content/images/other.png`;
+        } else if ((cluster.properties.crimeType as CrimeTypes) === CrimeTypes.OTHERCRIME) {
+          url = `'../../../content/images/arson.png`;
+        } else if ((cluster.properties.crimeType as CrimeTypes) === CrimeTypes.THEFTFROMTHEPERSON) {
+          url = `'../../../content/images/pickpocket.png`;
+        } else if ((cluster.properties.crimeType as CrimeTypes) === CrimeTypes.PUBLICORDER) {
+          url = `'../../../content/images/publicorder.png`;
+        } else if ((cluster.properties.crimeType as CrimeTypes) === CrimeTypes.ROBBERY) {
+          url = `'../../../content/images/robbery.png`;
+        } else if ((cluster.properties.crimeType as CrimeTypes) === CrimeTypes.SHOPLIFTING) {
+          url = `'../../../content/images/shoplifting.png`;
+        } else if ((cluster.properties.crimeType as CrimeTypes) === CrimeTypes.VEHICLECRIME) {
+          url = `'../../../content/images/weapons.png`;
+        } else if ((cluster.properties.crimeType as CrimeTypes) === CrimeTypes.POSSESSIONOFWEAPONS) {
+          url = `'../../../content/images/arson.png`;
+        } else if ((cluster.properties.crimeType as CrimeTypes) === CrimeTypes.VIOLENCEANDSEXUALOFFENCES) {
+          url = `'../../../content/images/assault.png`;
+        } else if ((cluster.properties.crimeType as CrimeTypes) === CrimeTypes.OTHERTHEFT) {
+          url = `'../../../content/images/theft.png`;
+        } else {
+          url = `'../../../content/images/allcrimes.png`;
+        }
+
+        console.error(cluster.properties.crimeType);
+
+        const marker = L.marker([cluster.geometry.coordinates[1], cluster.geometry.coordinates[0]], {
+          icon: L.icon({
+            iconUrl: url,
+            iconSize: [20, 20],
+            iconAnchor: [10, 10],
+          }),
+        }).bindPopup('This is a single marker.');
 
         marker.addTo(this.map);
       }
@@ -134,11 +179,13 @@ export class CrimeAlertComponent implements OnInit {
   }
 
   load(): void {
+    /*
     this.loadFromBackendWithRouteInformations().subscribe({
       next: (res: EntityArrayResponseType) => {
         this.onResponseSuccess(res);
       },
     });
+    */
 
     this.map = L.map('map', {
       maxBounds: L.latLngBounds(L.latLng(49.78, -13.13), L.latLng(60.89, 2.87)),
@@ -149,7 +196,7 @@ export class CrimeAlertComponent implements OnInit {
       attribution: '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
     }).addTo(this.map);
 
-    this.crimeAlertService.query({ size: 10000 }).subscribe((res: EntityArrayResponseType) => {
+    this.crimeAlertService.query({ size: 100000 }).subscribe((res: EntityArrayResponseType) => {
       const filteredData = this.fillComponentAttributesFromResponseBody(res.body);
       const pointFeatures: PointFeature<ICrimeAlert>[] = filteredData
         .filter(alert => alert.lat && alert.lon) // filter out alerts with undefined or null coordinates
@@ -160,6 +207,7 @@ export class CrimeAlertComponent implements OnInit {
             coordinates: [alert.lon!, alert.lat!], // convert coordinates to valid Position array
           },
           properties: alert,
+          CrimeTypes: alert.crimeType,
         }));
 
       // Add markers for the filtered crime alerts

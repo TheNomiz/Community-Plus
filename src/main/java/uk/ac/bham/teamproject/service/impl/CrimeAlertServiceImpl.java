@@ -186,7 +186,23 @@ public class CrimeAlertServiceImpl implements CrimeAlertService {
             crimeAlert.setLat(lat);
             crimeAlert.setLon(lon);
             crimeAlert.setCrimeID(id);
-            crimeAlert.setCrimeType(CrimeTypes.ALLCRIME);
+            CrimeTypes t;
+            if (title.equals("all-crime")) t = CrimeTypes.ALLCRIME; else if (title.equals("anti-social-behaviour")) t =
+                CrimeTypes.ANTISOCIALBEHAVIOUR; else if (title.equals("bicycle-theft")) t = CrimeTypes.BICYCLETHEFT; else if (
+                title.equals("burglary")
+            ) t = CrimeTypes.BURGLARY; else if (title.equals("criminal-damage-arson")) t = CrimeTypes.CRIMINALDAMAGEARSON; else if (
+                title.equals("drugs")
+            ) t = CrimeTypes.DRUGS; else if (title.equals("other-theft")) t = CrimeTypes.OTHERTHEFT; else if (
+                title.equals("possession-of-weapons")
+            ) t = CrimeTypes.POSSESSIONOFWEAPONS; else if (title.equals("public-order")) t = CrimeTypes.PUBLICORDER; else if (
+                title.equals("robbery")
+            ) t = CrimeTypes.ROBBERY; else if (title.equals("shoplifting")) t = CrimeTypes.SHOPLIFTING; else if (
+                title.equals("theft-from-the-person")
+            ) t = CrimeTypes.THEFTFROMTHEPERSON; else if (title.equals("vehicle-crime")) t = CrimeTypes.VEHICLECRIME; else if (
+                title.equals("violent-crime")
+            ) t = CrimeTypes.VIOLENCEANDSEXUALOFFENCES; else if (title.equals("anti-social-behaviour")) t =
+                CrimeTypes.ANTISOCIALBEHAVIOUR; else t = CrimeTypes.OTHERCRIME;
+            crimeAlert.setCrimeType(t);
 
             Optional<User> optionalUser = userRepository.findById(1L);
             User user = optionalUser.orElseThrow(() -> new RuntimeException("User not found"));
