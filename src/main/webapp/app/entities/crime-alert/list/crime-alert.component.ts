@@ -47,7 +47,7 @@ export class CrimeAlertComponent implements OnInit {
   index = new Supercluster({
     radius: 50,
     maxZoom: 18,
-    minZoom: 0,
+    minZoom: 6,
     extent: 512,
     nodeSize: 64,
   });
@@ -93,14 +93,16 @@ export class CrimeAlertComponent implements OnInit {
         },
       });
   }
-  createClusterIcon(cluster: any): L.Icon {
+  createClusterIcon(cluster: any): L.DivIcon {
     const childCount = cluster.properties.point_count;
     const size = childCount < 10 ? 'small' : childCount < 100 ? 'medium' : 'large';
-    return L.icon({
-      iconUrl: `'../../../content/images/${size}-cluster-icon.png`,
-      iconSize: [25, 40],
-      iconAnchor: [20, 20],
+    const icon = L.divIcon({
+      html: `<div style="position:relative; width:36.6px; height:55px;"><img style="width: 36.6px; height: 55px;" src="'../../../content/images/${size}-cluster-icon.png"/><span style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%);color: white; font-weight: bold;font-size: 0.8em;">${childCount}</span></div>`,
+      className: `marker-cluster marker-cluster-${size}`,
+      iconSize: L.point(36.6, 55),
+      iconAnchor: [18.3, 55],
     });
+    return icon;
   }
 
   updateClusters(): void {
@@ -108,7 +110,13 @@ export class CrimeAlertComponent implements OnInit {
     const bounds = this.map.getBounds();
     const nw = bounds.getNorthWest();
     const se = bounds.getSouthEast();
-    const clusters = this.index.getClusters([nw.lng, se.lat, se.lng, nw.lat], zoomLevel);
+    let clusters;
+
+    if (zoomLevel === 18) {
+      clusters = this.index.getClusters([nw.lng, se.lat, se.lng, nw.lat], zoomLevel + 1);
+    } else {
+      clusters = this.index.getClusters([nw.lng, se.lat, se.lng, nw.lat], zoomLevel);
+    }
 
     // Remove all markers from the map
     this.map.eachLayer(layer => {
@@ -123,7 +131,7 @@ export class CrimeAlertComponent implements OnInit {
         // This is a cluster
         const marker = L.marker([cluster.geometry.coordinates[1], cluster.geometry.coordinates[0]], {
           icon: this.createClusterIcon(cluster),
-        }).bindPopup(`There are ${cluster.properties.point_count} markers in this cluster.`);
+        }).bindPopup(`There are ${cluster.properties.point_count} crimes in this area.`);
 
         marker.addTo(this.map);
       } else {
@@ -189,7 +197,7 @@ export class CrimeAlertComponent implements OnInit {
 
     this.map = L.map('map', {
       maxBounds: L.latLngBounds(L.latLng(49.78, -13.13), L.latLng(60.89, 2.87)),
-      maxZoom: 20,
+      maxZoom: 18,
       minZoom: 6,
     }).setView([51.4, 0.3], 9);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
