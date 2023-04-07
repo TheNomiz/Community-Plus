@@ -128,10 +128,20 @@ export class CrimeAlertComponent implements OnInit {
     // Loop through the clusters and add markers to the map
     clusters.forEach(cluster => {
       if (cluster.properties.cluster) {
+        const popup = L.popup();
+        popup.setContent(`
+        <div>
+          <p>There are ${cluster.properties.point_count} crimes in this area.</p>
+          <button id="button-hi">Zoom in</button>
+          <button id="button-yo">View details</button>
+          <button id="button-whatups">Show radius</button>
+        </div>
+      `);
+
         // This is a cluster
         const marker = L.marker([cluster.geometry.coordinates[1], cluster.geometry.coordinates[0]], {
           icon: this.createClusterIcon(cluster),
-        }).bindPopup(`There are ${cluster.properties.point_count} crimes in this area.`);
+        }).bindPopup(popup);
 
         marker.addTo(this.map);
       } else {
@@ -171,7 +181,18 @@ export class CrimeAlertComponent implements OnInit {
           url = `'../../../content/images/allcrimes.png`;
         }
 
-        console.error(cluster.properties.crimeType);
+        const popup = L.popup();
+        popup.setContent(`
+        <div>
+          <p> <span style="font-weight: bold;">Title:</span> ${cluster.properties.title}</p>
+          <p><span style="font-weight: bold;">Description:</span> ${cluster.properties.description}</p>
+          <p><span style="font-weight: bold;">Crime Type:</span> ${cluster.properties.crimeType}</p>
+          <p><span style="font-weight: bold;">Date:</span> ${cluster.properties.date}</p>
+          <p><span style="font-weight: bold;">Posted by:</span> ${cluster.properties.postedby}</p>
+          <button id="button-hi">Discussion</button>
+          <button id="button-yo" onclick="window.location.href='https://communityplus.live/${cluster.properties.id}/view';">Open Report</button>
+        </div>
+      `);
 
         const marker = L.marker([cluster.geometry.coordinates[1], cluster.geometry.coordinates[0]], {
           icon: L.icon({
@@ -179,7 +200,7 @@ export class CrimeAlertComponent implements OnInit {
             iconSize: [20, 20],
             iconAnchor: [10, 10],
           }),
-        }).bindPopup('This is a single marker.');
+        }).bindPopup(popup);
 
         marker.addTo(this.map);
       }
@@ -215,7 +236,7 @@ export class CrimeAlertComponent implements OnInit {
             coordinates: [alert.lon!, alert.lat!], // convert coordinates to valid Position array
           },
           properties: alert,
-          CrimeTypes: alert.crimeType,
+          CrimeTypes: alert.postedby,
         }));
 
       // Add markers for the filtered crime alerts

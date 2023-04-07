@@ -14,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
@@ -86,6 +87,7 @@ public class CrimeAlertResource {
      * or with status {@code 500 (Internal Server Error)} if the crimeAlertDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
+    @Secured("ROLE_ADMIN")
     @PutMapping("/crime-alerts/{id}")
     public ResponseEntity<CrimeAlertDTO> updateCrimeAlert(
         @PathVariable(value = "id", required = false) final Long id,
@@ -195,6 +197,7 @@ public class CrimeAlertResource {
      * @param id the id of the crimeAlertDTO to delete.
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
+    @Secured("ROLE_ADMIN")
     @DeleteMapping("/crime-alerts/{id}")
     public ResponseEntity<Void> deleteCrimeAlert(@PathVariable Long id) {
         log.debug("REST request to delete CrimeAlert : {}", id);
