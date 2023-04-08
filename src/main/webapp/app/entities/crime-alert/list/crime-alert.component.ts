@@ -117,7 +117,6 @@ export class CrimeAlertComponent implements OnInit {
     } else {
       clusters = this.index.getClusters([nw.lng, se.lat, se.lng, nw.lat], zoomLevel);
     }
-
     // Remove all markers from the map
     this.map.eachLayer(layer => {
       if (layer instanceof L.Marker) {
@@ -129,19 +128,55 @@ export class CrimeAlertComponent implements OnInit {
     clusters.forEach(cluster => {
       if (cluster.properties.cluster) {
         const popup = L.popup();
+        const div = document.createElement('div');
+        div.innerHTML = `
+        <div>
+          <p>There are ${cluster.properties.point_count} crimes in this area.</p>
+
+        </div>
+        `;
+
+        /*
+                  <button id="button-hi" onClick={() => { console.log("Button pressed")}}>Zoom in</button>
+          <button id="button-yo">View details</button>
+          <button id="button-whatups">Show radius</button>
+        */
+        const zoom = document.createElement('button');
+        zoom.innerHTML = 'Zoom In';
+        zoom.onclick = () => {
+          this.map.flyTo([cluster.geometry.coordinates[1], cluster.geometry.coordinates[0]], zoomLevel + 1);
+        };
+        div.appendChild(zoom);
+
+        const details = document.createElement('button');
+        details.innerHTML = 'More details';
+        details.onclick = () => {
+          this.map.flyTo([cluster.geometry.coordinates[1], cluster.geometry.coordinates[0]], zoomLevel + 1);
+        };
+        div.appendChild(details);
+
+        const radius = document.createElement('button');
+        radius.innerHTML = 'Zoom In';
+        radius.onclick = () => {
+          this.map.flyTo([cluster.geometry.coordinates[1], cluster.geometry.coordinates[0]], zoomLevel + 1);
+        };
+        div.appendChild(radius);
+
+        /*
         popup.setContent(`
         <div>
           <p>There are ${cluster.properties.point_count} crimes in this area.</p>
-          <button id="button-hi">Zoom in</button>
+          <button id="button-hi" onClick={() => { console.log("Button pressed")}}>Zoom in</button>
           <button id="button-yo">View details</button>
           <button id="button-whatups">Show radius</button>
         </div>
       `);
+      */
 
         // This is a cluster
         const marker = L.marker([cluster.geometry.coordinates[1], cluster.geometry.coordinates[0]], {
           icon: this.createClusterIcon(cluster),
-        }).bindPopup(popup);
+        }).bindPopup(div);
 
         marker.addTo(this.map);
       } else {
@@ -190,7 +225,7 @@ export class CrimeAlertComponent implements OnInit {
           <p><span style="font-weight: bold;">Date:</span> ${cluster.properties.date}</p>
           <p><span style="font-weight: bold;">Posted by:</span> ${cluster.properties.postedby}</p>
           <button id="button-hi">Discussion</button>
-          <button id="button-yo" onclick="window.location.href='https://communityplus.live/${cluster.properties.id}/view';">Open Report</button>
+          <button id="button-yo" onclick="window.location.href='https://communityplus.live/crime-alert/${cluster.properties.id}/view';">Open Report</button>
         </div>
       `);
 
@@ -206,6 +241,7 @@ export class CrimeAlertComponent implements OnInit {
       }
     });
   }
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 
   load(): void {
     /*
