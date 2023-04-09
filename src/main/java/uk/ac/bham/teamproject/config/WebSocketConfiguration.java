@@ -12,12 +12,21 @@ public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer 
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
-        config.enableSimpleBroker("/topic");
+        //config.enableSimpleBroker("/topic");
+        //config.setApplicationDestinationPrefixes("/app");
+        config
+            .enableStompBrokerRelay("/topic")
+            .setRelayHost("127.0.0.1")
+            .setRelayPort(61613)
+            .setClientLogin("guest")
+            .setClientPasscode("guest")
+            .setSystemLogin("guest")
+            .setSystemPasscode("guest");
         config.setApplicationDestinationPrefixes("/app");
     }
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/websocket-chat").withSockJS();
+        registry.addEndpoint("/ws").withSockJS();
     }
 }

@@ -210,7 +210,7 @@ jhipster:
     license: unlicensed
     license-url:
   security:
-    content-security-policy: "default-src 'self'; connect-src 'self' data: https://tile.openstreetmap.org https://a.tile.openstreetmap.org https://b.tile.openstreetmap.org https://c.tile.openstreetmap.org https://unpkg.com/leaflet@1.9.3/dist/leaflet.css; frame-src 'self' data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://storage.googleapis.com https://openlayers.org https://unpkg.com/leaflet@1.9.3/dist/leaflet.css; style-src 'self' 'unsafe-inline' https://openlayers.org https://unpkg.com/leaflet@1.9.3/dist/leaflet.css; img-src 'self' data: https://picsum.photos https://tile.openstreetmap.org data: https://a.tile.openstreetmap.org https://b.tile.openstreetmap.org https://c.tile.openstreetmap.org  data:; font-src 'self' data:"
+    content-security-policy: "default-src 'self'; connect-src * data: https://tile.openstreetmap.org https://a.tile.openstreetmap.org https://b.tile.openstreetmap.org https://c.tile.openstreetmap.org https://unpkg.com/leaflet@1.9.3/dist/leaflet.css; frame-src 'self' data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://storage.googleapis.com https://openlayers.org https://unpkg.com/leaflet@1.9.3/dist/leaflet.css; style-src 'self' 'unsafe-inline' https://openlayers.org https://unpkg.com/leaflet@1.9.3/dist/leaflet.css; img-src 'self' data: https://picsum.photos https://tile.openstreetmap.org data: https://a.tile.openstreetmap.org https://b.tile.openstreetmap.org https://c.tile.openstreetmap.org  data:; font-src 'self' data:"
 # Application specific propertiesW
 # Add your own application properties here, see the ApplicationProperties class
 # to have type-safe configuration, like in the JHipsterProperties above

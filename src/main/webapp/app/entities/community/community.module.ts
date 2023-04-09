@@ -6,12 +6,20 @@ import { CommunityComponent } from './community.component';
 import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgIf } from '@angular/common';
 import { StompService, StompConfig } from '@stomp/ng2-stompjs';
-import { MatCardModule } from '@angular/material/card';
-import { MatListModule } from '@angular/material/list';
+import { RxStompService } from './rxstomp.service';
+import { rxStompServiceFactory } from './rxstomp-service-factory';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [CommunityComponent],
-  imports: [CommonModule, CommunityRoutingModule, NgbCarouselModule, NgIf, MatCardModule, MatListModule],
-  providers: [StompService, StompConfig],
+  imports: [CommonModule, CommunityRoutingModule, NgbCarouselModule, NgIf, FormsModule],
+  providers: [
+    StompService,
+    StompConfig,
+    {
+      provide: RxStompService,
+      useFactory: rxStompServiceFactory,
+    },
+  ],
 })
 export class CommunityModule {}

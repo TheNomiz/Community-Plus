@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 import { Component, OnInit } from '@angular/core';
@@ -11,9 +12,11 @@ import { IChatMessage } from 'app/entities/chat-message/chat-message.model';
 import { IEvent } from 'app/entities/event/event.model';
 import { IBusiness } from 'app/entities/business/business.model';
 import * as L from 'leaflet';
-import day from 'dayjs';
+import day from 'dayjs/esm';
 import { EventCategory } from '../enumerations/event-category.model';
-import { StompService } from '@stomp/ng2-stompjs';
+import { Message } from '@stomp/stompjs';
+import { RxStompService } from './rxstomp.service';
+import { Subscription } from 'rxjs';
 
 const iconUrl = '../../../content/images/Location_Marker.png';
 const shadowUrl = '../../../content/images/Location_Marker_Shadow.png';
@@ -40,27 +43,40 @@ export class CommunityComponent implements OnInit {
   events: IEvent[] = [];
   businesses: IBusiness[] = [];
 
+  roomMessages: IChatMessage[] = [];
+
   // map items
   map!: L.Map;
 
-  // chatroom items
-  private readonly topic = '/topic/';
-  private stompSubscription: any;
-  // eslint-disable-next-line @typescript-eslint/no-inferrable-types
-  private roomId: number = 0;
+  // eslint-disable-next-line @typescript-eslint/no-inferrable-types, @typescript-eslint/member-ordering
+  roomId: number = 0;
   // eslint-disable-next-line @typescript-eslint/member-ordering
   currentRoom!: string | null | undefined;
+  // eslint-disable-next-line @typescript-eslint/no-inferrable-types
+  message: string = '';
+
+  // chatroom items
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore, to suppress warning related to being undefined
+  private topicSubscription: Subscription;
 
   constructor(
     private busservice: BusinessService,
     private chatroomservice: ChatRoomService,
     private messageservice: ChatMessageService,
     private eventservice: EventService,
-    private stompService: StompService
+    private rxStompService: RxStompService
   ) {}
 
   ngOnInit(): void {
-    // get all the data from the database to add to the map
+    // subscribe to chatroom
+    this.topicSubscription = this.rxStompService.watch('/topic/' + this.roomId).subscribe((message: Message) => {
+      const chatMessage: IChatMessage = JSON.parse(message.body);
+      this.chatMessages.push(chatMessage);
+      this.roomMessages.push(chatMessage);
+    });
+
+    // get all the data from the database
     this.chatroomservice.query().subscribe((res: HttpResponse<IChatRoom[]>) => {
       this.chatRooms = res.body ?? [];
     });
@@ -77,15 +93,8 @@ export class CommunityComponent implements OnInit {
       this.events = res.body ?? [];
     });
 
-    // subscribe to the chatroom
     // Get the chat room ID from the selected chat room
     this.roomId = this.getSelectedChatRoomId();
-
-    // Subscribe to the WebSocket topic for this chat room
-    this.stompSubscription = this.stompService.subscribe(this.topic + this.roomId).subscribe((message: any) => {
-      const chatMessage = JSON.parse(message.body);
-      this.chatMessages.push(chatMessage);
-    });
 
     // Initialize your Leaflet map
     this.map = L.map('map').setView([52.45, -1.93], 13);
@@ -155,30 +164,48 @@ export class CommunityComponent implements OnInit {
     }
   }
 
-  ngOnDestroy(): void {
-    // Unsubscribe from the WebSocket topic when the component is destroyed
-    this.stompSubscription.unsubscribe();
-  }
-
   getSelectedChatRoomId(): number {
     return this.roomId;
   }
-  sendMessage(content: string): void {
-    const sentDate = day();
+
+  onSendMessage() {
     const chatMessage: IChatMessage = {
-      content,
-      sentDate: null,
-      room: { id: this.roomId },
+      id: this.chatMessages.length + 1,
+      content: this.message,
+      sentDate: day(),
       postedby: null,
-      id: 0,
+      room: { id: this.roomId },
     };
-    // Send the chat message over RabbitMQ
-    this.stompService.publish(this.topic + this.roomId, JSON.stringify(chatMessage));
+    this.rxStompService.publish({ destination: `/topic/${this.roomId}`, body: JSON.stringify(chatMessage) });
+    // clear the message
+    this.message = '';
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   joinRoom(room: IChatRoom) {
+    // unsubscribe from the current chatroom
+    this.topicSubscription.unsubscribe();
+
+    // change the current chatroom
     this.roomId = room.id;
     this.currentRoom = room.name;
+
+    // get all the messages for the new chatroom
+    this.chatroomservice.query().subscribe((res: HttpResponse<IChatRoom[]>) => {
+      this.chatRooms = res.body ?? [];
+    });
+
+    const roomId = this.roomId;
+    this.roomMessages = this.chatMessages.filter(message => message.room?.id === roomId);
+
+    // subscribe to the new chatroom
+    this.topicSubscription = this.rxStompService.watch('/topic/' + this.roomId).subscribe((message: Message) => {
+      const chatMessage: IChatMessage = JSON.parse(message.body);
+      this.chatMessages.push(chatMessage);
+      this.roomMessages.push(chatMessage);
+    });
+  }
+
+  ngOnDestroy() {
+    this.topicSubscription.unsubscribe();
   }
 }

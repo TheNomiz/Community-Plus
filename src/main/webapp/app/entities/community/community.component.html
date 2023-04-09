@@ -1,3 +1,16 @@
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+  integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+  crossorigin=""
+/>
+<!-- Make sure you put this AFTER Leaflet's CSS -->
+<script
+  src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+  integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+  crossorigin=""
+></script>
+
 <div class="container-fluid">
   <h1>Community Page</h1>
   <div class="row">
@@ -30,9 +43,10 @@
       </div>
       <div class="chatroom">
         <div class="messages">
-          <li *ngFor="let message of chatMessages">{{ message.sentDate }}: {{ message.content }}</li>
+          <li *ngFor="let message of roomMessages">{{ message.sentDate }}: {{ message.content }}</li>
         </div>
-        <input type="text" #messageInput (keyup.enter)="sendMessage(messageInput.value)" />
+        <input type="text" [(ngModel)]="message" placeholder="Type your message here" />
+        <button (click)="onSendMessage()">Send</button>
       </div>
     </div>
   </div>
