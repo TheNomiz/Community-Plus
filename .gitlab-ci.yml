@@ -34,7 +34,6 @@ maven-compile:
     paths:
       - target/classes/
       - target/generated-sources/
-    max_size: 1 GB
     expire_in: 1 day
 
 maven-package:
