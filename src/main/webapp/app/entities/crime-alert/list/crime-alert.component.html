@@ -33,7 +33,14 @@
   <div class="alert alert-warning" id="no-result" *ngIf="crimeAlerts?.length === 0">
     <span jhiTranslate="teamprojectApp.crimeAlert.home.notFound">No Crime Alerts found</span>
   </div>
-
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-footer">
+        <button class="modal-close waves-effect waves-green btn-flat">Close</button>
+      </div>
+      <ul id="crimes-list"></ul>
+    </div>
+  </div>
   <div class="table-responsive table-entities" id="entities" *ngIf="crimeAlerts && crimeAlerts.length > 0">
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>

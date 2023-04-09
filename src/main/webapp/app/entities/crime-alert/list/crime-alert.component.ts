@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-namespace */
 /* eslint-disable @typescript-eslint/no-shadow */
+// eslint-disable-next-line spaced-comment
+/// <reference types="bootstrap" />
 
 /* eslint-disable no-console */
 import { Component, OnInit } from '@angular/core';
@@ -42,6 +44,7 @@ export class CrimeAlertComponent implements OnInit {
   links: { [key: string]: number } = {
     last: 0,
   };
+
   page = 1;
   map!: L.Map;
   index = new Supercluster({
@@ -149,17 +152,63 @@ export class CrimeAlertComponent implements OnInit {
         div.appendChild(zoom);
 
         const details = document.createElement('button');
-        details.innerHTML = 'More details';
+        details.innerHTML = 'More Details';
+        const modal = document.getElementById('modal');
+        const crimesList = document.getElementById('crimes-list');
+
         details.onclick = () => {
-          this.map.flyTo([cluster.geometry.coordinates[1], cluster.geometry.coordinates[0]], zoomLevel + 1);
+          if (crimesList != null && modal != null) {
+            crimesList.innerHTML = '';
+
+            const crimes = this.index.getLeaves(cluster.id as number, Infinity);
+
+            for (let i = 0; i < crimes.length; i++) {
+              const crime = crimes[i];
+              const listItem = document.createElement('li');
+              listItem.textContent = `Crime ${i + 1}: ${crime.properties.title}`;
+              crimesList.appendChild(listItem);
+            }
+
+            modal.style.display = 'block';
+          }
         };
+        if (modal != null) {
+          const modalClose = modal.querySelector('.modal-close');
+          if (modalClose != null) {
+            modalClose.addEventListener('click', () => {
+              modal.style.display = 'none';
+            });
+
+            modal.addEventListener('click', event => {
+              if (event.target === modal) {
+                modal.style.display = 'none';
+              }
+            });
+          }
+        }
         div.appendChild(details);
 
         const radius = document.createElement('button');
-        radius.innerHTML = 'Zoom In';
+        radius.innerHTML = 'See Radius';
         radius.onclick = () => {
-          this.map.flyTo([cluster.geometry.coordinates[1], cluster.geometry.coordinates[0]], zoomLevel + 1);
+          const child = this.index.getChildren(cluster.id as number);
+
+          // Calculate the size of a pixel in meters at the given latitude and zoom level
+          const metersPerPixel = (156543.03392 * Math.cos((cluster.geometry.coordinates[1] * Math.PI) / 180)) / Math.pow(2, zoomLevel);
+
+          // Convert the distance in pixels to meters
+          const distanceInMeters = 50 * metersPerPixel;
+
+          const circleOptions = {
+            color: 'red',
+            fillColor: '#f03',
+            fillOpacity: 0.5,
+            radius: distanceInMeters,
+          };
+
+          const circle = L.circle([cluster.geometry.coordinates[1], cluster.geometry.coordinates[0]], circleOptions).addTo(this.map);
         };
+
         div.appendChild(radius);
 
         /*
@@ -282,6 +331,13 @@ export class CrimeAlertComponent implements OnInit {
       this.updateClusters();
 
       this.map.on('zoomend', () => {
+        this.map.eachLayer(layer => {
+          // Check if the layer is a circle
+          if (layer instanceof L.Circle) {
+            // Remove the circle from the map
+            this.map.removeLayer(layer);
+          }
+        });
         this.updateClusters();
       });
 
