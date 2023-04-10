@@ -5,7 +5,7 @@ import { CommunityRoutingModule } from './community-routing.module';
 import { CommunityComponent } from './community.component';
 import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgIf } from '@angular/common';
-import { StompService, StompConfig } from '@stomp/ng2-stompjs';
+// import { StompService, StompConfig } from '@stomp/ng2-stompjs';
 import { RxStompService } from './rxstomp.service';
 import { rxStompServiceFactory } from './rxstomp-service-factory';
 import { FormsModule } from '@angular/forms';
@@ -14,8 +14,6 @@ import { FormsModule } from '@angular/forms';
   declarations: [CommunityComponent],
   imports: [CommonModule, CommunityRoutingModule, NgbCarouselModule, NgIf, FormsModule],
   providers: [
-    StompService,
-    StompConfig,
     {
       provide: RxStompService,
       useFactory: rxStompServiceFactory,
