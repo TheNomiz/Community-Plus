@@ -302,11 +302,13 @@ export class CrimeAlertComponent implements OnInit {
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 
   load(): void {
+    /*
     this.loadFromBackendWithRouteInformations().subscribe({
       next: (res: EntityArrayResponseType) => {
         this.onResponseSuccess(res);
       },
     });
+    */
 
     this.map = L.map('map', {
       maxBounds: L.latLngBounds(L.latLng(49.78, -13.13), L.latLng(60.89, 2.87)),
@@ -317,7 +319,7 @@ export class CrimeAlertComponent implements OnInit {
       attribution: '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
     }).addTo(this.map);
 
-    this.crimeAlertService.query({ size: 100 }).subscribe((res: EntityArrayResponseType) => {
+    this.crimeAlertService.query({ size: 100000 }).subscribe((res: EntityArrayResponseType) => {
       const filteredData = this.fillComponentAttributesFromResponseBody(res.body);
       const pointFeatures: PointFeature<ICrimeAlert>[] = filteredData
         .filter(alert => alert.lat && alert.lon) // filter out alerts with undefined or null coordinates
