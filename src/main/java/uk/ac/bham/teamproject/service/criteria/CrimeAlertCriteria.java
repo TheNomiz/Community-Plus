@@ -57,6 +57,8 @@ public class CrimeAlertCriteria implements Serializable, Criteria {
 
     private LongFilter postedbyId;
 
+    private LongFilter commentsId;
+
     private Boolean distinct;
 
     public CrimeAlertCriteria() {}
@@ -71,6 +73,7 @@ public class CrimeAlertCriteria implements Serializable, Criteria {
         this.crimeID = other.crimeID == null ? null : other.crimeID.copy();
         this.crimeType = other.crimeType == null ? null : other.crimeType.copy();
         this.postedbyId = other.postedbyId == null ? null : other.postedbyId.copy();
+        this.commentsId = other.commentsId == null ? null : other.commentsId.copy();
         this.distinct = other.distinct;
     }
 
@@ -214,6 +217,21 @@ public class CrimeAlertCriteria implements Serializable, Criteria {
         this.postedbyId = postedbyId;
     }
 
+    public LongFilter getCommentsId() {
+        return commentsId;
+    }
+
+    public LongFilter commentsId() {
+        if (commentsId == null) {
+            commentsId = new LongFilter();
+        }
+        return commentsId;
+    }
+
+    public void setCommentsId(LongFilter commentsId) {
+        this.commentsId = commentsId;
+    }
+
     public Boolean getDistinct() {
         return distinct;
     }
@@ -241,13 +259,14 @@ public class CrimeAlertCriteria implements Serializable, Criteria {
             Objects.equals(crimeID, that.crimeID) &&
             Objects.equals(crimeType, that.crimeType) &&
             Objects.equals(postedbyId, that.postedbyId) &&
+            Objects.equals(commentsId, that.commentsId) &&
             Objects.equals(distinct, that.distinct)
         );
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, description, lat, lon, date, crimeID, crimeType, postedbyId, distinct);
+        return Objects.hash(id, title, description, lat, lon, date, crimeID, crimeType, postedbyId, commentsId, distinct);
     }
 
     // prettier-ignore
@@ -263,6 +282,7 @@ public class CrimeAlertCriteria implements Serializable, Criteria {
             (crimeID != null ? "crimeID=" + crimeID + ", " : "") +
             (crimeType != null ? "crimeType=" + crimeType + ", " : "") +
             (postedbyId != null ? "postedbyId=" + postedbyId + ", " : "") +
+            (commentsId != null ? "commentsId=" + commentsId + ", " : "") +
             (distinct != null ? "distinct=" + distinct + ", " : "") +
             "}";
     }

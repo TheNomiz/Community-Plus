@@ -51,6 +51,11 @@ describe('CrimeAlert e2e test', () => {
       body: [user],
     });
 
+    cy.intercept('GET', '/api/comments', {
+      statusCode: 200,
+      body: [],
+    });
+
   });
    */
 

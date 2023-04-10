@@ -1,6 +1,7 @@
 import dayjs from 'dayjs/esm';
 import { IUser } from 'app/entities/user/user.model';
 import { CrimeTypes } from 'app/entities/enumerations/crime-types.model';
+import { IComment } from '../comment/comment.model';
 
 export interface ICrimeAlert {
   id: number;

@@ -39,7 +39,7 @@ public class Comment implements Serializable {
 
     @ManyToOne(optional = false)
     @NotNull
-    @JsonIgnoreProperties(value = { "postedby" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "postedby", "comments" }, allowSetters = true)
     private CrimeAlert crime;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

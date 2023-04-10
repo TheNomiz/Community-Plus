@@ -77,7 +77,7 @@
             formControlName="crime"
             [compareWith]="compareCrimeAlert"
           >
-            <option *ngIf="!editForm.get('crime')!.value" [ngValue]="null" selected></option>
+            <option *ngIf="editForm.get(['crime'])!.value == null" [ngValue]="null" selected></option>
             <option [ngValue]="crimeAlertOption" *ngFor="let crimeAlertOption of crimeAlertsSharedCollection">
               {{ crimeAlertOption.id }}
             </option>

@@ -70,6 +70,12 @@
       "relationshipName": "postedby",
       "relationshipType": "many-to-one",
       "relationshipValidateRules": ["required"]
+    },
+    {
+      "otherEntityName": "comment",
+      "otherEntityRelationshipName": "crime",
+      "relationshipName": "comments",
+      "relationshipType": "one-to-many"
     }
   ],
   "service": "serviceImpl"

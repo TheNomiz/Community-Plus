@@ -31,6 +31,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Base64Utils;
 import uk.ac.bham.teamproject.IntegrationTest;
+import uk.ac.bham.teamproject.domain.Comment;
 import uk.ac.bham.teamproject.domain.CrimeAlert;
 import uk.ac.bham.teamproject.domain.User;
 import uk.ac.bham.teamproject.domain.enumeration.CrimeTypes;
@@ -942,6 +943,29 @@ class CrimeAlertResourceIT {
 
         // Get all the crimeAlertList where postedby equals to (postedbyId + 1)
         defaultCrimeAlertShouldNotBeFound("postedbyId.equals=" + (postedbyId + 1));
+    }
+
+    @Test
+    @Transactional
+    void getAllCrimeAlertsByCommentsIsEqualToSomething() throws Exception {
+        Comment comments;
+        if (TestUtil.findAll(em, Comment.class).isEmpty()) {
+            crimeAlertRepository.saveAndFlush(crimeAlert);
+            comments = CommentResourceIT.createEntity(em);
+        } else {
+            comments = TestUtil.findAll(em, Comment.class).get(0);
+        }
+        em.persist(comments);
+        em.flush();
+        crimeAlert.addComments(comments);
+        crimeAlertRepository.saveAndFlush(crimeAlert);
+        Long commentsId = comments.getId();
+
+        // Get all the crimeAlertList where comments equals to commentsId
+        defaultCrimeAlertShouldBeFound("commentsId.equals=" + commentsId);
+
+        // Get all the crimeAlertList where comments equals to (commentsId + 1)
+        defaultCrimeAlertShouldNotBeFound("commentsId.equals=" + (commentsId + 1));
     }
 
     /**

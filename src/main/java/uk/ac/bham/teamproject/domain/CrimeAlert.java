@@ -1,8 +1,11 @@
 package uk.ac.bham.teamproject.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
@@ -81,6 +84,11 @@ public class CrimeAlert implements Serializable {
     @ManyToOne(optional = false)
     @NotNull
     private User postedby;
+
+    @OneToMany(mappedBy = "crime")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "user", "crime" }, allowSetters = true)
+    private Set<Comment> comments = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -276,6 +284,37 @@ public class CrimeAlert implements Serializable {
 
     public CrimeAlert postedby(User user) {
         this.setPostedby(user);
+        return this;
+    }
+
+    public Set<Comment> getComments() {
+        return this.comments;
+    }
+
+    public void setComments(Set<Comment> comments) {
+        if (this.comments != null) {
+            this.comments.forEach(i -> i.setCrime(null));
+        }
+        if (comments != null) {
+            comments.forEach(i -> i.setCrime(this));
+        }
+        this.comments = comments;
+    }
+
+    public CrimeAlert comments(Set<Comment> comments) {
+        this.setComments(comments);
+        return this;
+    }
+
+    public CrimeAlert addComments(Comment comment) {
+        this.comments.add(comment);
+        comment.setCrime(this);
+        return this;
+    }
+
+    public CrimeAlert removeComments(Comment comment) {
+        this.comments.remove(comment);
+        comment.setCrime(null);
         return this;
     }
 

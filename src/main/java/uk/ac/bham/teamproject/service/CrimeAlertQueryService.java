@@ -117,6 +117,15 @@ public class CrimeAlertQueryService extends QueryService<CrimeAlert> {
                         buildSpecification(criteria.getPostedbyId(), root -> root.join(CrimeAlert_.postedby, JoinType.LEFT).get(User_.id))
                     );
             }
+            if (criteria.getCommentsId() != null) {
+                specification =
+                    specification.and(
+                        buildSpecification(
+                            criteria.getCommentsId(),
+                            root -> root.join(CrimeAlert_.comments, JoinType.LEFT).get(Comment_.id)
+                        )
+                    );
+            }
         }
         return specification;
     }
