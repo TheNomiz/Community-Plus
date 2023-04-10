@@ -69,6 +69,7 @@ public class CacheConfiguration {
             createCache(cm, uk.ac.bham.teamproject.domain.EmergencyStations.class.getName());
             createCache(cm, uk.ac.bham.teamproject.domain.LostFound.class.getName());
             createCache(cm, uk.ac.bham.teamproject.domain.LostFound.class.getName() + ".lostItems");
+            createCache(cm, uk.ac.bham.teamproject.domain.Comment.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }

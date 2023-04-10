@@ -72,6 +72,11 @@ import { RouterModule } from '@angular/router';
         data: { pageTitle: 'teamprojectApp.lostFound.home.title' },
         loadChildren: () => import('./lost-found/lost-found.module').then(m => m.LostFoundModule),
       },
+      {
+        path: 'comment',
+        data: { pageTitle: 'teamprojectApp.comment.home.title' },
+        loadChildren: () => import('./comment/comment.module').then(m => m.CommentModule),
+      },
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ]),
   ],
