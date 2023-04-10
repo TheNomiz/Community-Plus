@@ -57,6 +57,27 @@ public class CrimeAlert implements Serializable {
     @Column(name = "crime_type", nullable = false)
     private CrimeTypes crimeType;
 
+    @Lob
+    @Column(name = "crime_photo_1")
+    private byte[] crimePhoto1;
+
+    @Column(name = "crime_photo_1_content_type")
+    private String crimePhoto1ContentType;
+
+    @Lob
+    @Column(name = "crime_photo_2")
+    private byte[] crimePhoto2;
+
+    @Column(name = "crime_photo_2_content_type")
+    private String crimePhoto2ContentType;
+
+    @Lob
+    @Column(name = "crime_photo_3")
+    private byte[] crimePhoto3;
+
+    @Column(name = "crime_photo_3_content_type")
+    private String crimePhoto3ContentType;
+
     @ManyToOne(optional = false)
     @NotNull
     private User postedby;
@@ -167,6 +188,84 @@ public class CrimeAlert implements Serializable {
         this.crimeType = crimeType;
     }
 
+    public byte[] getCrimePhoto1() {
+        return this.crimePhoto1;
+    }
+
+    public CrimeAlert crimePhoto1(byte[] crimePhoto1) {
+        this.setCrimePhoto1(crimePhoto1);
+        return this;
+    }
+
+    public void setCrimePhoto1(byte[] crimePhoto1) {
+        this.crimePhoto1 = crimePhoto1;
+    }
+
+    public String getCrimePhoto1ContentType() {
+        return this.crimePhoto1ContentType;
+    }
+
+    public CrimeAlert crimePhoto1ContentType(String crimePhoto1ContentType) {
+        this.crimePhoto1ContentType = crimePhoto1ContentType;
+        return this;
+    }
+
+    public void setCrimePhoto1ContentType(String crimePhoto1ContentType) {
+        this.crimePhoto1ContentType = crimePhoto1ContentType;
+    }
+
+    public byte[] getCrimePhoto2() {
+        return this.crimePhoto2;
+    }
+
+    public CrimeAlert crimePhoto2(byte[] crimePhoto2) {
+        this.setCrimePhoto2(crimePhoto2);
+        return this;
+    }
+
+    public void setCrimePhoto2(byte[] crimePhoto2) {
+        this.crimePhoto2 = crimePhoto2;
+    }
+
+    public String getCrimePhoto2ContentType() {
+        return this.crimePhoto2ContentType;
+    }
+
+    public CrimeAlert crimePhoto2ContentType(String crimePhoto2ContentType) {
+        this.crimePhoto2ContentType = crimePhoto2ContentType;
+        return this;
+    }
+
+    public void setCrimePhoto2ContentType(String crimePhoto2ContentType) {
+        this.crimePhoto2ContentType = crimePhoto2ContentType;
+    }
+
+    public byte[] getCrimePhoto3() {
+        return this.crimePhoto3;
+    }
+
+    public CrimeAlert crimePhoto3(byte[] crimePhoto3) {
+        this.setCrimePhoto3(crimePhoto3);
+        return this;
+    }
+
+    public void setCrimePhoto3(byte[] crimePhoto3) {
+        this.crimePhoto3 = crimePhoto3;
+    }
+
+    public String getCrimePhoto3ContentType() {
+        return this.crimePhoto3ContentType;
+    }
+
+    public CrimeAlert crimePhoto3ContentType(String crimePhoto3ContentType) {
+        this.crimePhoto3ContentType = crimePhoto3ContentType;
+        return this;
+    }
+
+    public void setCrimePhoto3ContentType(String crimePhoto3ContentType) {
+        this.crimePhoto3ContentType = crimePhoto3ContentType;
+    }
+
     public User getPostedby() {
         return this.postedby;
     }
@@ -211,6 +310,12 @@ public class CrimeAlert implements Serializable {
             ", date='" + getDate() + "'" +
             ", crimeID=" + getCrimeID() +
             ", crimeType='" + getCrimeType() + "'" +
+            ", crimePhoto1='" + getCrimePhoto1() + "'" +
+            ", crimePhoto1ContentType='" + getCrimePhoto1ContentType() + "'" +
+            ", crimePhoto2='" + getCrimePhoto2() + "'" +
+            ", crimePhoto2ContentType='" + getCrimePhoto2ContentType() + "'" +
+            ", crimePhoto3='" + getCrimePhoto3() + "'" +
+            ", crimePhoto3ContentType='" + getCrimePhoto3ContentType() + "'" +
             "}";
     }
 }

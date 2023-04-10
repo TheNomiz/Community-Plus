@@ -93,6 +93,24 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
+          <th scope="col" jhiSortBy="crimePhoto1">
+            <div class="d-flex">
+              <span jhiTranslate="teamprojectApp.crimeAlert.crimePhoto1">Crime Photo 1</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="crimePhoto2">
+            <div class="d-flex">
+              <span jhiTranslate="teamprojectApp.crimeAlert.crimePhoto2">Crime Photo 2</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="crimePhoto3">
+            <div class="d-flex">
+              <span jhiTranslate="teamprojectApp.crimeAlert.crimePhoto3">Crime Photo 3</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
           <th scope="col" jhiSortBy="postedby.login">
             <div class="d-flex">
               <span jhiTranslate="teamprojectApp.crimeAlert.postedby">Postedby</span>
@@ -119,6 +137,36 @@
           <td>{{ crimeAlert.date | formatMediumDatetime }}</td>
           <td>{{ crimeAlert.crimeID }}</td>
           <td jhiTranslate="{{ 'teamprojectApp.CrimeTypes.' + crimeAlert.crimeType }}">{{ crimeAlert.crimeType }}</td>
+          <td>
+            <a *ngIf="crimeAlert.crimePhoto1" (click)="openFile(crimeAlert.crimePhoto1, crimeAlert.crimePhoto1ContentType)">
+              <img
+                [src]="'data:' + crimeAlert.crimePhoto1ContentType + ';base64,' + crimeAlert.crimePhoto1"
+                style="max-height: 30px"
+                alt="crimeAlert image"
+              />
+            </a>
+            <span *ngIf="crimeAlert.crimePhoto1">{{ crimeAlert.crimePhoto1ContentType }}, {{ byteSize(crimeAlert.crimePhoto1) }}</span>
+          </td>
+          <td>
+            <a *ngIf="crimeAlert.crimePhoto2" (click)="openFile(crimeAlert.crimePhoto2, crimeAlert.crimePhoto2ContentType)">
+              <img
+                [src]="'data:' + crimeAlert.crimePhoto2ContentType + ';base64,' + crimeAlert.crimePhoto2"
+                style="max-height: 30px"
+                alt="crimeAlert image"
+              />
+            </a>
+            <span *ngIf="crimeAlert.crimePhoto2">{{ crimeAlert.crimePhoto2ContentType }}, {{ byteSize(crimeAlert.crimePhoto2) }}</span>
+          </td>
+          <td>
+            <a *ngIf="crimeAlert.crimePhoto3" (click)="openFile(crimeAlert.crimePhoto3, crimeAlert.crimePhoto3ContentType)">
+              <img
+                [src]="'data:' + crimeAlert.crimePhoto3ContentType + ';base64,' + crimeAlert.crimePhoto3"
+                style="max-height: 30px"
+                alt="crimeAlert image"
+              />
+            </a>
+            <span *ngIf="crimeAlert.crimePhoto3">{{ crimeAlert.crimePhoto3ContentType }}, {{ byteSize(crimeAlert.crimePhoto3) }}</span>
+          </td>
           <td>
             {{ crimeAlert.postedby?.login }}
           </td>

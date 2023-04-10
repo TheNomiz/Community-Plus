@@ -42,6 +42,45 @@
         <dd>
           <span jhiTranslate="{{ 'teamprojectApp.CrimeTypes.' + crimeAlert.crimeType }}">{{ crimeAlert.crimeType }}</span>
         </dd>
+        <dt><span jhiTranslate="teamprojectApp.crimeAlert.crimePhoto1">Crime Photo 1</span></dt>
+        <dd>
+          <div *ngIf="crimeAlert.crimePhoto1">
+            <a (click)="openFile(crimeAlert.crimePhoto1, crimeAlert.crimePhoto1ContentType)">
+              <img
+                [src]="'data:' + crimeAlert.crimePhoto1ContentType + ';base64,' + crimeAlert.crimePhoto1"
+                style="max-width: 100%"
+                alt="crimeAlert image"
+              />
+            </a>
+            {{ crimeAlert.crimePhoto1ContentType }}, {{ byteSize(crimeAlert.crimePhoto1) }}
+          </div>
+        </dd>
+        <dt><span jhiTranslate="teamprojectApp.crimeAlert.crimePhoto2">Crime Photo 2</span></dt>
+        <dd>
+          <div *ngIf="crimeAlert.crimePhoto2">
+            <a (click)="openFile(crimeAlert.crimePhoto2, crimeAlert.crimePhoto2ContentType)">
+              <img
+                [src]="'data:' + crimeAlert.crimePhoto2ContentType + ';base64,' + crimeAlert.crimePhoto2"
+                style="max-width: 100%"
+                alt="crimeAlert image"
+              />
+            </a>
+            {{ crimeAlert.crimePhoto2ContentType }}, {{ byteSize(crimeAlert.crimePhoto2) }}
+          </div>
+        </dd>
+        <dt><span jhiTranslate="teamprojectApp.crimeAlert.crimePhoto3">Crime Photo 3</span></dt>
+        <dd>
+          <div *ngIf="crimeAlert.crimePhoto3">
+            <a (click)="openFile(crimeAlert.crimePhoto3, crimeAlert.crimePhoto3ContentType)">
+              <img
+                [src]="'data:' + crimeAlert.crimePhoto3ContentType + ';base64,' + crimeAlert.crimePhoto3"
+                style="max-width: 100%"
+                alt="crimeAlert image"
+              />
+            </a>
+            {{ crimeAlert.crimePhoto3ContentType }}, {{ byteSize(crimeAlert.crimePhoto3) }}
+          </div>
+        </dd>
         <dt><span jhiTranslate="teamprojectApp.crimeAlert.postedby">Postedby</span></dt>
         <dd>
           <span>{{ crimeAlert.postedby?.login }}</span>

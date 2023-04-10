@@ -40,6 +40,21 @@
       "fieldType": "CrimeTypes",
       "fieldValidateRules": ["required"],
       "fieldValues": "ALLCRIME,ANTISOCIALBEHAVIOUR,BICYCLETHEFT,BURGLARY,CRIMINALDAMAGEARSON,DRUGS,OTHERTHEFT,POSSESSIONOFWEAPONS,PUBLICORDER,ROBBERY,SHOPLIFTING,THEFTFROMTHEPERSON,VEHICLECRIME,VIOLENCEANDSEXUALOFFENCES,OTHERCRIME"
+    },
+    {
+      "fieldName": "crimePhoto1",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "image"
+    },
+    {
+      "fieldName": "crimePhoto2",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "image"
+    },
+    {
+      "fieldName": "crimePhoto3",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "image"
     }
   ],
   "jpaMetamodelFiltering": true,

@@ -11,6 +11,12 @@ export interface ICrimeAlert {
   date?: dayjs.Dayjs | null;
   crimeID?: number | null;
   crimeType?: CrimeTypes | null;
+  crimePhoto1?: string | null;
+  crimePhoto1ContentType?: string | null;
+  crimePhoto2?: string | null;
+  crimePhoto2ContentType?: string | null;
+  crimePhoto3?: string | null;
+  crimePhoto3ContentType?: string | null;
   postedby?: Pick<IUser, 'id' | 'login'> | null;
 }
 

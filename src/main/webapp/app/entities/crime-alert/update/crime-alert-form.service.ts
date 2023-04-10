@@ -38,6 +38,12 @@ type CrimeAlertFormGroupContent = {
   date: FormControl<CrimeAlertFormRawValue['date']>;
   crimeID: FormControl<CrimeAlertFormRawValue['crimeID']>;
   crimeType: FormControl<CrimeAlertFormRawValue['crimeType']>;
+  crimePhoto1: FormControl<CrimeAlertFormRawValue['crimePhoto1']>;
+  crimePhoto1ContentType: FormControl<CrimeAlertFormRawValue['crimePhoto1ContentType']>;
+  crimePhoto2: FormControl<CrimeAlertFormRawValue['crimePhoto2']>;
+  crimePhoto2ContentType: FormControl<CrimeAlertFormRawValue['crimePhoto2ContentType']>;
+  crimePhoto3: FormControl<CrimeAlertFormRawValue['crimePhoto3']>;
+  crimePhoto3ContentType: FormControl<CrimeAlertFormRawValue['crimePhoto3ContentType']>;
   postedby: FormControl<CrimeAlertFormRawValue['postedby']>;
 };
 
@@ -79,6 +85,12 @@ export class CrimeAlertFormService {
       crimeType: new FormControl(crimeAlertRawValue.crimeType, {
         validators: [Validators.required],
       }),
+      crimePhoto1: new FormControl(crimeAlertRawValue.crimePhoto1),
+      crimePhoto1ContentType: new FormControl(crimeAlertRawValue.crimePhoto1ContentType),
+      crimePhoto2: new FormControl(crimeAlertRawValue.crimePhoto2),
+      crimePhoto2ContentType: new FormControl(crimeAlertRawValue.crimePhoto2ContentType),
+      crimePhoto3: new FormControl(crimeAlertRawValue.crimePhoto3),
+      crimePhoto3ContentType: new FormControl(crimeAlertRawValue.crimePhoto3ContentType),
       postedby: new FormControl(crimeAlertRawValue.postedby, {
         validators: [Validators.required],
       }),

@@ -29,6 +29,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Base64Utils;
 import uk.ac.bham.teamproject.IntegrationTest;
 import uk.ac.bham.teamproject.domain.CrimeAlert;
 import uk.ac.bham.teamproject.domain.User;
@@ -72,6 +73,21 @@ class CrimeAlertResourceIT {
     private static final CrimeTypes DEFAULT_CRIME_TYPE = CrimeTypes.ALLCRIME;
     private static final CrimeTypes UPDATED_CRIME_TYPE = CrimeTypes.ANTISOCIALBEHAVIOUR;
 
+    private static final byte[] DEFAULT_CRIME_PHOTO_1 = TestUtil.createByteArray(1, "0");
+    private static final byte[] UPDATED_CRIME_PHOTO_1 = TestUtil.createByteArray(1, "1");
+    private static final String DEFAULT_CRIME_PHOTO_1_CONTENT_TYPE = "image/jpg";
+    private static final String UPDATED_CRIME_PHOTO_1_CONTENT_TYPE = "image/png";
+
+    private static final byte[] DEFAULT_CRIME_PHOTO_2 = TestUtil.createByteArray(1, "0");
+    private static final byte[] UPDATED_CRIME_PHOTO_2 = TestUtil.createByteArray(1, "1");
+    private static final String DEFAULT_CRIME_PHOTO_2_CONTENT_TYPE = "image/jpg";
+    private static final String UPDATED_CRIME_PHOTO_2_CONTENT_TYPE = "image/png";
+
+    private static final byte[] DEFAULT_CRIME_PHOTO_3 = TestUtil.createByteArray(1, "0");
+    private static final byte[] UPDATED_CRIME_PHOTO_3 = TestUtil.createByteArray(1, "1");
+    private static final String DEFAULT_CRIME_PHOTO_3_CONTENT_TYPE = "image/jpg";
+    private static final String UPDATED_CRIME_PHOTO_3_CONTENT_TYPE = "image/png";
+
     private static final String ENTITY_API_URL = "/api/crime-alerts";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -112,7 +128,13 @@ class CrimeAlertResourceIT {
             .lon(DEFAULT_LON)
             .date(DEFAULT_DATE)
             .crimeID(DEFAULT_CRIME_ID)
-            .crimeType(DEFAULT_CRIME_TYPE);
+            .crimeType(DEFAULT_CRIME_TYPE)
+            .crimePhoto1(DEFAULT_CRIME_PHOTO_1)
+            .crimePhoto1ContentType(DEFAULT_CRIME_PHOTO_1_CONTENT_TYPE)
+            .crimePhoto2(DEFAULT_CRIME_PHOTO_2)
+            .crimePhoto2ContentType(DEFAULT_CRIME_PHOTO_2_CONTENT_TYPE)
+            .crimePhoto3(DEFAULT_CRIME_PHOTO_3)
+            .crimePhoto3ContentType(DEFAULT_CRIME_PHOTO_3_CONTENT_TYPE);
         // Add required entity
         User user = UserResourceIT.createEntity(em);
         em.persist(user);
@@ -135,7 +157,13 @@ class CrimeAlertResourceIT {
             .lon(UPDATED_LON)
             .date(UPDATED_DATE)
             .crimeID(UPDATED_CRIME_ID)
-            .crimeType(UPDATED_CRIME_TYPE);
+            .crimeType(UPDATED_CRIME_TYPE)
+            .crimePhoto1(UPDATED_CRIME_PHOTO_1)
+            .crimePhoto1ContentType(UPDATED_CRIME_PHOTO_1_CONTENT_TYPE)
+            .crimePhoto2(UPDATED_CRIME_PHOTO_2)
+            .crimePhoto2ContentType(UPDATED_CRIME_PHOTO_2_CONTENT_TYPE)
+            .crimePhoto3(UPDATED_CRIME_PHOTO_3)
+            .crimePhoto3ContentType(UPDATED_CRIME_PHOTO_3_CONTENT_TYPE);
         // Add required entity
         User user = UserResourceIT.createEntity(em);
         em.persist(user);
@@ -170,6 +198,12 @@ class CrimeAlertResourceIT {
         assertThat(testCrimeAlert.getDate()).isEqualTo(DEFAULT_DATE);
         assertThat(testCrimeAlert.getCrimeID()).isEqualTo(DEFAULT_CRIME_ID);
         assertThat(testCrimeAlert.getCrimeType()).isEqualTo(DEFAULT_CRIME_TYPE);
+        assertThat(testCrimeAlert.getCrimePhoto1()).isEqualTo(DEFAULT_CRIME_PHOTO_1);
+        assertThat(testCrimeAlert.getCrimePhoto1ContentType()).isEqualTo(DEFAULT_CRIME_PHOTO_1_CONTENT_TYPE);
+        assertThat(testCrimeAlert.getCrimePhoto2()).isEqualTo(DEFAULT_CRIME_PHOTO_2);
+        assertThat(testCrimeAlert.getCrimePhoto2ContentType()).isEqualTo(DEFAULT_CRIME_PHOTO_2_CONTENT_TYPE);
+        assertThat(testCrimeAlert.getCrimePhoto3()).isEqualTo(DEFAULT_CRIME_PHOTO_3);
+        assertThat(testCrimeAlert.getCrimePhoto3ContentType()).isEqualTo(DEFAULT_CRIME_PHOTO_3_CONTENT_TYPE);
     }
 
     @Test
@@ -335,7 +369,13 @@ class CrimeAlertResourceIT {
             .andExpect(jsonPath("$.[*].lon").value(hasItem(sameNumber(DEFAULT_LON))))
             .andExpect(jsonPath("$.[*].date").value(hasItem(DEFAULT_DATE.toString())))
             .andExpect(jsonPath("$.[*].crimeID").value(hasItem(DEFAULT_CRIME_ID.intValue())))
-            .andExpect(jsonPath("$.[*].crimeType").value(hasItem(DEFAULT_CRIME_TYPE.toString())));
+            .andExpect(jsonPath("$.[*].crimeType").value(hasItem(DEFAULT_CRIME_TYPE.toString())))
+            .andExpect(jsonPath("$.[*].crimePhoto1ContentType").value(hasItem(DEFAULT_CRIME_PHOTO_1_CONTENT_TYPE)))
+            .andExpect(jsonPath("$.[*].crimePhoto1").value(hasItem(Base64Utils.encodeToString(DEFAULT_CRIME_PHOTO_1))))
+            .andExpect(jsonPath("$.[*].crimePhoto2ContentType").value(hasItem(DEFAULT_CRIME_PHOTO_2_CONTENT_TYPE)))
+            .andExpect(jsonPath("$.[*].crimePhoto2").value(hasItem(Base64Utils.encodeToString(DEFAULT_CRIME_PHOTO_2))))
+            .andExpect(jsonPath("$.[*].crimePhoto3ContentType").value(hasItem(DEFAULT_CRIME_PHOTO_3_CONTENT_TYPE)))
+            .andExpect(jsonPath("$.[*].crimePhoto3").value(hasItem(Base64Utils.encodeToString(DEFAULT_CRIME_PHOTO_3))));
     }
 
     @SuppressWarnings({ "unchecked" })
@@ -373,7 +413,13 @@ class CrimeAlertResourceIT {
             .andExpect(jsonPath("$.lon").value(sameNumber(DEFAULT_LON)))
             .andExpect(jsonPath("$.date").value(DEFAULT_DATE.toString()))
             .andExpect(jsonPath("$.crimeID").value(DEFAULT_CRIME_ID.intValue()))
-            .andExpect(jsonPath("$.crimeType").value(DEFAULT_CRIME_TYPE.toString()));
+            .andExpect(jsonPath("$.crimeType").value(DEFAULT_CRIME_TYPE.toString()))
+            .andExpect(jsonPath("$.crimePhoto1ContentType").value(DEFAULT_CRIME_PHOTO_1_CONTENT_TYPE))
+            .andExpect(jsonPath("$.crimePhoto1").value(Base64Utils.encodeToString(DEFAULT_CRIME_PHOTO_1)))
+            .andExpect(jsonPath("$.crimePhoto2ContentType").value(DEFAULT_CRIME_PHOTO_2_CONTENT_TYPE))
+            .andExpect(jsonPath("$.crimePhoto2").value(Base64Utils.encodeToString(DEFAULT_CRIME_PHOTO_2)))
+            .andExpect(jsonPath("$.crimePhoto3ContentType").value(DEFAULT_CRIME_PHOTO_3_CONTENT_TYPE))
+            .andExpect(jsonPath("$.crimePhoto3").value(Base64Utils.encodeToString(DEFAULT_CRIME_PHOTO_3)));
     }
 
     @Test
@@ -913,7 +959,13 @@ class CrimeAlertResourceIT {
             .andExpect(jsonPath("$.[*].lon").value(hasItem(sameNumber(DEFAULT_LON))))
             .andExpect(jsonPath("$.[*].date").value(hasItem(DEFAULT_DATE.toString())))
             .andExpect(jsonPath("$.[*].crimeID").value(hasItem(DEFAULT_CRIME_ID.intValue())))
-            .andExpect(jsonPath("$.[*].crimeType").value(hasItem(DEFAULT_CRIME_TYPE.toString())));
+            .andExpect(jsonPath("$.[*].crimeType").value(hasItem(DEFAULT_CRIME_TYPE.toString())))
+            .andExpect(jsonPath("$.[*].crimePhoto1ContentType").value(hasItem(DEFAULT_CRIME_PHOTO_1_CONTENT_TYPE)))
+            .andExpect(jsonPath("$.[*].crimePhoto1").value(hasItem(Base64Utils.encodeToString(DEFAULT_CRIME_PHOTO_1))))
+            .andExpect(jsonPath("$.[*].crimePhoto2ContentType").value(hasItem(DEFAULT_CRIME_PHOTO_2_CONTENT_TYPE)))
+            .andExpect(jsonPath("$.[*].crimePhoto2").value(hasItem(Base64Utils.encodeToString(DEFAULT_CRIME_PHOTO_2))))
+            .andExpect(jsonPath("$.[*].crimePhoto3ContentType").value(hasItem(DEFAULT_CRIME_PHOTO_3_CONTENT_TYPE)))
+            .andExpect(jsonPath("$.[*].crimePhoto3").value(hasItem(Base64Utils.encodeToString(DEFAULT_CRIME_PHOTO_3))));
 
         // Check, that the count call also returns 1
         restCrimeAlertMockMvc
@@ -968,7 +1020,13 @@ class CrimeAlertResourceIT {
             .lon(UPDATED_LON)
             .date(UPDATED_DATE)
             .crimeID(UPDATED_CRIME_ID)
-            .crimeType(UPDATED_CRIME_TYPE);
+            .crimeType(UPDATED_CRIME_TYPE)
+            .crimePhoto1(UPDATED_CRIME_PHOTO_1)
+            .crimePhoto1ContentType(UPDATED_CRIME_PHOTO_1_CONTENT_TYPE)
+            .crimePhoto2(UPDATED_CRIME_PHOTO_2)
+            .crimePhoto2ContentType(UPDATED_CRIME_PHOTO_2_CONTENT_TYPE)
+            .crimePhoto3(UPDATED_CRIME_PHOTO_3)
+            .crimePhoto3ContentType(UPDATED_CRIME_PHOTO_3_CONTENT_TYPE);
         CrimeAlertDTO crimeAlertDTO = crimeAlertMapper.toDto(updatedCrimeAlert);
 
         restCrimeAlertMockMvc
@@ -990,6 +1048,12 @@ class CrimeAlertResourceIT {
         assertThat(testCrimeAlert.getDate()).isEqualTo(UPDATED_DATE);
         assertThat(testCrimeAlert.getCrimeID()).isEqualTo(UPDATED_CRIME_ID);
         assertThat(testCrimeAlert.getCrimeType()).isEqualTo(UPDATED_CRIME_TYPE);
+        assertThat(testCrimeAlert.getCrimePhoto1()).isEqualTo(UPDATED_CRIME_PHOTO_1);
+        assertThat(testCrimeAlert.getCrimePhoto1ContentType()).isEqualTo(UPDATED_CRIME_PHOTO_1_CONTENT_TYPE);
+        assertThat(testCrimeAlert.getCrimePhoto2()).isEqualTo(UPDATED_CRIME_PHOTO_2);
+        assertThat(testCrimeAlert.getCrimePhoto2ContentType()).isEqualTo(UPDATED_CRIME_PHOTO_2_CONTENT_TYPE);
+        assertThat(testCrimeAlert.getCrimePhoto3()).isEqualTo(UPDATED_CRIME_PHOTO_3);
+        assertThat(testCrimeAlert.getCrimePhoto3ContentType()).isEqualTo(UPDATED_CRIME_PHOTO_3_CONTENT_TYPE);
     }
 
     @Test
@@ -1074,7 +1138,11 @@ class CrimeAlertResourceIT {
             .lat(UPDATED_LAT)
             .lon(UPDATED_LON)
             .crimeID(UPDATED_CRIME_ID)
-            .crimeType(UPDATED_CRIME_TYPE);
+            .crimeType(UPDATED_CRIME_TYPE)
+            .crimePhoto2(UPDATED_CRIME_PHOTO_2)
+            .crimePhoto2ContentType(UPDATED_CRIME_PHOTO_2_CONTENT_TYPE)
+            .crimePhoto3(UPDATED_CRIME_PHOTO_3)
+            .crimePhoto3ContentType(UPDATED_CRIME_PHOTO_3_CONTENT_TYPE);
 
         restCrimeAlertMockMvc
             .perform(
@@ -1095,6 +1163,12 @@ class CrimeAlertResourceIT {
         assertThat(testCrimeAlert.getDate()).isEqualTo(DEFAULT_DATE);
         assertThat(testCrimeAlert.getCrimeID()).isEqualTo(UPDATED_CRIME_ID);
         assertThat(testCrimeAlert.getCrimeType()).isEqualTo(UPDATED_CRIME_TYPE);
+        assertThat(testCrimeAlert.getCrimePhoto1()).isEqualTo(DEFAULT_CRIME_PHOTO_1);
+        assertThat(testCrimeAlert.getCrimePhoto1ContentType()).isEqualTo(DEFAULT_CRIME_PHOTO_1_CONTENT_TYPE);
+        assertThat(testCrimeAlert.getCrimePhoto2()).isEqualTo(UPDATED_CRIME_PHOTO_2);
+        assertThat(testCrimeAlert.getCrimePhoto2ContentType()).isEqualTo(UPDATED_CRIME_PHOTO_2_CONTENT_TYPE);
+        assertThat(testCrimeAlert.getCrimePhoto3()).isEqualTo(UPDATED_CRIME_PHOTO_3);
+        assertThat(testCrimeAlert.getCrimePhoto3ContentType()).isEqualTo(UPDATED_CRIME_PHOTO_3_CONTENT_TYPE);
     }
 
     @Test
@@ -1116,7 +1190,13 @@ class CrimeAlertResourceIT {
             .lon(UPDATED_LON)
             .date(UPDATED_DATE)
             .crimeID(UPDATED_CRIME_ID)
-            .crimeType(UPDATED_CRIME_TYPE);
+            .crimeType(UPDATED_CRIME_TYPE)
+            .crimePhoto1(UPDATED_CRIME_PHOTO_1)
+            .crimePhoto1ContentType(UPDATED_CRIME_PHOTO_1_CONTENT_TYPE)
+            .crimePhoto2(UPDATED_CRIME_PHOTO_2)
+            .crimePhoto2ContentType(UPDATED_CRIME_PHOTO_2_CONTENT_TYPE)
+            .crimePhoto3(UPDATED_CRIME_PHOTO_3)
+            .crimePhoto3ContentType(UPDATED_CRIME_PHOTO_3_CONTENT_TYPE);
 
         restCrimeAlertMockMvc
             .perform(
@@ -1137,6 +1217,12 @@ class CrimeAlertResourceIT {
         assertThat(testCrimeAlert.getDate()).isEqualTo(UPDATED_DATE);
         assertThat(testCrimeAlert.getCrimeID()).isEqualTo(UPDATED_CRIME_ID);
         assertThat(testCrimeAlert.getCrimeType()).isEqualTo(UPDATED_CRIME_TYPE);
+        assertThat(testCrimeAlert.getCrimePhoto1()).isEqualTo(UPDATED_CRIME_PHOTO_1);
+        assertThat(testCrimeAlert.getCrimePhoto1ContentType()).isEqualTo(UPDATED_CRIME_PHOTO_1_CONTENT_TYPE);
+        assertThat(testCrimeAlert.getCrimePhoto2()).isEqualTo(UPDATED_CRIME_PHOTO_2);
+        assertThat(testCrimeAlert.getCrimePhoto2ContentType()).isEqualTo(UPDATED_CRIME_PHOTO_2_CONTENT_TYPE);
+        assertThat(testCrimeAlert.getCrimePhoto3()).isEqualTo(UPDATED_CRIME_PHOTO_3);
+        assertThat(testCrimeAlert.getCrimePhoto3ContentType()).isEqualTo(UPDATED_CRIME_PHOTO_3_CONTENT_TYPE);
     }
 
     @Test

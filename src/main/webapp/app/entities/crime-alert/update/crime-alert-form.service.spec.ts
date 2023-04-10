@@ -27,6 +27,9 @@ describe('CrimeAlert Form Service', () => {
             date: expect.any(Object),
             crimeID: expect.any(Object),
             crimeType: expect.any(Object),
+            crimePhoto1: expect.any(Object),
+            crimePhoto2: expect.any(Object),
+            crimePhoto3: expect.any(Object),
             postedby: expect.any(Object),
           })
         );
@@ -45,6 +48,9 @@ describe('CrimeAlert Form Service', () => {
             date: expect.any(Object),
             crimeID: expect.any(Object),
             crimeType: expect.any(Object),
+            crimePhoto1: expect.any(Object),
+            crimePhoto2: expect.any(Object),
+            crimePhoto3: expect.any(Object),
             postedby: expect.any(Object),
           })
         );

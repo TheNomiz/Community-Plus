@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.Objects;
+import javax.persistence.Lob;
 import javax.validation.constraints.*;
 import uk.ac.bham.teamproject.domain.enumeration.CrimeTypes;
 
@@ -38,6 +39,20 @@ public class CrimeAlertDTO implements Serializable {
     @NotNull
     private CrimeTypes crimeType;
 
+    @Lob
+    private byte[] crimePhoto1;
+
+    private String crimePhoto1ContentType;
+
+    @Lob
+    private byte[] crimePhoto2;
+
+    private String crimePhoto2ContentType;
+
+    @Lob
+    private byte[] crimePhoto3;
+
+    private String crimePhoto3ContentType;
     private UserDTO postedby;
 
     public Long getId() {
@@ -104,6 +119,54 @@ public class CrimeAlertDTO implements Serializable {
         this.crimeType = crimeType;
     }
 
+    public byte[] getCrimePhoto1() {
+        return crimePhoto1;
+    }
+
+    public void setCrimePhoto1(byte[] crimePhoto1) {
+        this.crimePhoto1 = crimePhoto1;
+    }
+
+    public String getCrimePhoto1ContentType() {
+        return crimePhoto1ContentType;
+    }
+
+    public void setCrimePhoto1ContentType(String crimePhoto1ContentType) {
+        this.crimePhoto1ContentType = crimePhoto1ContentType;
+    }
+
+    public byte[] getCrimePhoto2() {
+        return crimePhoto2;
+    }
+
+    public void setCrimePhoto2(byte[] crimePhoto2) {
+        this.crimePhoto2 = crimePhoto2;
+    }
+
+    public String getCrimePhoto2ContentType() {
+        return crimePhoto2ContentType;
+    }
+
+    public void setCrimePhoto2ContentType(String crimePhoto2ContentType) {
+        this.crimePhoto2ContentType = crimePhoto2ContentType;
+    }
+
+    public byte[] getCrimePhoto3() {
+        return crimePhoto3;
+    }
+
+    public void setCrimePhoto3(byte[] crimePhoto3) {
+        this.crimePhoto3 = crimePhoto3;
+    }
+
+    public String getCrimePhoto3ContentType() {
+        return crimePhoto3ContentType;
+    }
+
+    public void setCrimePhoto3ContentType(String crimePhoto3ContentType) {
+        this.crimePhoto3ContentType = crimePhoto3ContentType;
+    }
+
     public UserDTO getPostedby() {
         return postedby;
     }
@@ -145,6 +208,9 @@ public class CrimeAlertDTO implements Serializable {
             ", date='" + getDate() + "'" +
             ", crimeID=" + getCrimeID() +
             ", crimeType='" + getCrimeType() + "'" +
+            ", crimePhoto1='" + getCrimePhoto1() + "'" +
+            ", crimePhoto2='" + getCrimePhoto2() + "'" +
+            ", crimePhoto3='" + getCrimePhoto3() + "'" +
             ", postedby=" + getPostedby() +
             "}";
     }

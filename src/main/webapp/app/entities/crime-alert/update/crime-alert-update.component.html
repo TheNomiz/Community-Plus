@@ -166,6 +166,147 @@
         </div>
 
         <div class="row mb-3">
+          <label class="form-label" jhiTranslate="teamprojectApp.crimeAlert.crimePhoto1" for="field_crimePhoto1">Crime Photo 1</label>
+          <div>
+            <img
+              [src]="'data:' + editForm.get('crimePhoto1ContentType')!.value + ';base64,' + editForm.get('crimePhoto1')!.value"
+              style="max-height: 100px"
+              *ngIf="editForm.get('crimePhoto1')!.value"
+              alt="crimeAlert image"
+            />
+            <div *ngIf="editForm.get('crimePhoto1')!.value" class="form-text text-danger clearfix">
+              <span class="pull-start"
+                >{{ editForm.get('crimePhoto1ContentType')!.value }}, {{ byteSize(editForm.get('crimePhoto1')!.value!) }}</span
+              >
+              <button
+                type="button"
+                (click)="clearInputImage('crimePhoto1', 'crimePhoto1ContentType', 'file_crimePhoto1')"
+                class="btn btn-secondary btn-xs pull-end"
+              >
+                <fa-icon icon="times"></fa-icon>
+              </button>
+            </div>
+            <input
+              type="file"
+              id="file_crimePhoto1"
+              data-cy="crimePhoto1"
+              (change)="setFileData($event, 'crimePhoto1', true)"
+              accept="image/*"
+              jhiTranslate="entity.action.addimage"
+            />
+          </div>
+          <input
+            type="hidden"
+            class="form-control"
+            name="crimePhoto1"
+            id="field_crimePhoto1"
+            data-cy="crimePhoto1"
+            formControlName="crimePhoto1"
+          />
+          <input
+            type="hidden"
+            class="form-control"
+            name="crimePhoto1ContentType"
+            id="field_crimePhoto1ContentType"
+            formControlName="crimePhoto1ContentType"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="teamprojectApp.crimeAlert.crimePhoto2" for="field_crimePhoto2">Crime Photo 2</label>
+          <div>
+            <img
+              [src]="'data:' + editForm.get('crimePhoto2ContentType')!.value + ';base64,' + editForm.get('crimePhoto2')!.value"
+              style="max-height: 100px"
+              *ngIf="editForm.get('crimePhoto2')!.value"
+              alt="crimeAlert image"
+            />
+            <div *ngIf="editForm.get('crimePhoto2')!.value" class="form-text text-danger clearfix">
+              <span class="pull-start"
+                >{{ editForm.get('crimePhoto2ContentType')!.value }}, {{ byteSize(editForm.get('crimePhoto2')!.value!) }}</span
+              >
+              <button
+                type="button"
+                (click)="clearInputImage('crimePhoto2', 'crimePhoto2ContentType', 'file_crimePhoto2')"
+                class="btn btn-secondary btn-xs pull-end"
+              >
+                <fa-icon icon="times"></fa-icon>
+              </button>
+            </div>
+            <input
+              type="file"
+              id="file_crimePhoto2"
+              data-cy="crimePhoto2"
+              (change)="setFileData($event, 'crimePhoto2', true)"
+              accept="image/*"
+              jhiTranslate="entity.action.addimage"
+            />
+          </div>
+          <input
+            type="hidden"
+            class="form-control"
+            name="crimePhoto2"
+            id="field_crimePhoto2"
+            data-cy="crimePhoto2"
+            formControlName="crimePhoto2"
+          />
+          <input
+            type="hidden"
+            class="form-control"
+            name="crimePhoto2ContentType"
+            id="field_crimePhoto2ContentType"
+            formControlName="crimePhoto2ContentType"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="teamprojectApp.crimeAlert.crimePhoto3" for="field_crimePhoto3">Crime Photo 3</label>
+          <div>
+            <img
+              [src]="'data:' + editForm.get('crimePhoto3ContentType')!.value + ';base64,' + editForm.get('crimePhoto3')!.value"
+              style="max-height: 100px"
+              *ngIf="editForm.get('crimePhoto3')!.value"
+              alt="crimeAlert image"
+            />
+            <div *ngIf="editForm.get('crimePhoto3')!.value" class="form-text text-danger clearfix">
+              <span class="pull-start"
+                >{{ editForm.get('crimePhoto3ContentType')!.value }}, {{ byteSize(editForm.get('crimePhoto3')!.value!) }}</span
+              >
+              <button
+                type="button"
+                (click)="clearInputImage('crimePhoto3', 'crimePhoto3ContentType', 'file_crimePhoto3')"
+                class="btn btn-secondary btn-xs pull-end"
+              >
+                <fa-icon icon="times"></fa-icon>
+              </button>
+            </div>
+            <input
+              type="file"
+              id="file_crimePhoto3"
+              data-cy="crimePhoto3"
+              (change)="setFileData($event, 'crimePhoto3', true)"
+              accept="image/*"
+              jhiTranslate="entity.action.addimage"
+            />
+          </div>
+          <input
+            type="hidden"
+            class="form-control"
+            name="crimePhoto3"
+            id="field_crimePhoto3"
+            data-cy="crimePhoto3"
+            formControlName="crimePhoto3"
+          />
+          <input
+            type="hidden"
+            class="form-control"
+            name="crimePhoto3ContentType"
+            id="field_crimePhoto3ContentType"
+            formControlName="crimePhoto3ContentType"
+          />
+        </div>
+
+        <div class="row mb-3">
           <label class="form-label" jhiTranslate="teamprojectApp.crimeAlert.postedby" for="field_postedby">Postedby</label>
           <select
             class="form-control"

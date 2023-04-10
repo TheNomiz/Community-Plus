@@ -1,11 +1,1 @@
-id;title;description;lat;lon;date;crime_id;crime_type;postedby_id
-1;override Front-line;Missouri program upward-trending;68769;48298;2023-02-25T10:54:24;21602;POSSESSIONOFWEAPONS;1
-2;sky;panel user-centricXX;3819;33867;2023-02-25T05:49:19;99390;ANTISOCIALBEHAVIOUR;2
-3;Oklahoma Innovative;quantify capacitorXX;78123;53922;2023-02-24T16:14:45;80455;BICYCLETHEFT;2
-4;Avon;Berkshire SoftXXXXXX;75825;55416;2023-02-24T17:31:38;45167;SHOPLIFTING;1
-5;Towels;Metal seamless back-end;21410;51931;2023-02-24T22:07:47;711;THEFTFROMTHEPERSON;1
-6;Fundamental Metrics Computers;invoice Accountability;82266;72342;2023-02-25T12:19:16;35521;SHOPLIFTING;1
-7;synthesize;Account Jewelery upX;91144;41232;2023-02-24T19:20:44;34007;VEHICLECRIME;2
-8;Pants Future;Ergonomic TugrikXXXX;96432;56496;2023-02-24T22:26:40;18896;VEHICLECRIME;1
-9;analyzer Syrian;expediteXXXXXXXXXXXX;95587;87284;2023-02-25T11:47:22;26515;CRIMINALDAMAGEARSON;1
-10;primary;navigate International auxiliary;70296;20428;2023-02-25T09:57:08;17699;OTHERCRIME;2
+id;title;description;lat;lon;date;crime_id;crime_type;crime_photo_1;crime_photo_1_content_type;crime_photo_2;crime_photo_2_content_type;crime_photo_3;crime_photo_3_content_type;postedby_id

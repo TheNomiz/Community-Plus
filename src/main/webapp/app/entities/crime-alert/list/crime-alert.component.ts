@@ -28,6 +28,7 @@ import * as geojson from 'geojson';
 
 import bbox from '@turf/bbox';
 import { CrimeTypes } from 'app/entities/enumerations/crime-types.model';
+import { DataUtils } from 'app/core/util/data-util.service';
 
 @Component({
   selector: 'jhi-crime-alert',
@@ -61,7 +62,8 @@ export class CrimeAlertComponent implements OnInit {
     public router: Router,
     protected parseLinks: ParseLinks,
     protected modalService: NgbModal,
-    protected accountService: AccountService
+    protected accountService: AccountService,
+    protected dataUtils: DataUtils
   ) {}
 
   reset(): void {
@@ -79,6 +81,13 @@ export class CrimeAlertComponent implements OnInit {
 
   ngOnInit(): void {
     this.load();
+  }
+  byteSize(base64String: string): string {
+    return this.dataUtils.byteSize(base64String);
+  }
+
+  openFile(base64String: string, contentType: string | null | undefined): void {
+    return this.dataUtils.openFile(base64String, contentType);
   }
 
   delete(crimeAlert: ICrimeAlert): void {
@@ -293,13 +302,11 @@ export class CrimeAlertComponent implements OnInit {
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 
   load(): void {
-    /*
     this.loadFromBackendWithRouteInformations().subscribe({
       next: (res: EntityArrayResponseType) => {
         this.onResponseSuccess(res);
       },
     });
-    */
 
     this.map = L.map('map', {
       maxBounds: L.latLngBounds(L.latLng(49.78, -13.13), L.latLng(60.89, 2.87)),
@@ -310,7 +317,7 @@ export class CrimeAlertComponent implements OnInit {
       attribution: '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
     }).addTo(this.map);
 
-    this.crimeAlertService.query({ size: 100000 }).subscribe((res: EntityArrayResponseType) => {
+    this.crimeAlertService.query({ size: 100 }).subscribe((res: EntityArrayResponseType) => {
       const filteredData = this.fillComponentAttributesFromResponseBody(res.body);
       const pointFeatures: PointFeature<ICrimeAlert>[] = filteredData
         .filter(alert => alert.lat && alert.lon) // filter out alerts with undefined or null coordinates

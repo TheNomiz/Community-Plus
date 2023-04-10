@@ -227,8 +227,16 @@ describe('CrimeAlert e2e test', () => {
 
       cy.get(`[data-cy="crimeType"]`).select('CRIMINALDAMAGEARSON');
 
+      cy.setFieldImageAsBytesOfEntity('crimePhoto1', 'integration-test.png', 'image/png');
+
+      cy.setFieldImageAsBytesOfEntity('crimePhoto2', 'integration-test.png', 'image/png');
+
+      cy.setFieldImageAsBytesOfEntity('crimePhoto3', 'integration-test.png', 'image/png');
+
       cy.get(`[data-cy="postedby"]`).select(1);
 
+      // since cypress clicks submit too fast before the blob fields are validated
+      cy.wait(200); // eslint-disable-line cypress/no-unnecessary-waiting
       cy.get(entityCreateSaveButtonSelector).click();
 
       cy.wait('@postEntityRequest').then(({ response }) => {
