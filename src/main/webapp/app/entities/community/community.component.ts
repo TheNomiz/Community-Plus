@@ -70,11 +70,14 @@ export class CommunityComponent implements OnInit {
 
   ngOnInit(): void {
     // subscribe to chatroom
+    /*
     this.topicSubscription = this.rxStompService.watch('/topic/' + this.roomId).subscribe((message: Message) => {
       const chatMessage: IChatMessage = JSON.parse(message.body);
       this.chatMessages.push(chatMessage);
       this.roomMessages.push(chatMessage);
+      
     });
+    */
 
     // get all the data from the database
     this.chatroomservice.query().subscribe((res: HttpResponse<IChatRoom[]>) => {
