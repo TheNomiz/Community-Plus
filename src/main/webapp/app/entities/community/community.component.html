@@ -31,16 +31,18 @@
   <div class="row">
     <h2>Chat Rooms</h2>
     <div class="col-md-4">
-      <ul>
-        <li *ngFor="let room of chatRooms">
-          <a (click)="joinRoom(room)">{{ room.name }}</a>
-        </li>
-      </ul>
+      <div class="rooms">
+        <ul>
+          <div *ngIf="currentRoom">
+            <h4>You are currently in the "{{ currentRoom }}" room.</h4>
+          </div>
+          <li *ngFor="let room of chatRooms">
+            <a (click)="joinRoom(room)">{{ room.name }}</a>
+          </li>
+        </ul>
+      </div>
     </div>
     <div class="col-md-4">
-      <div *ngIf="currentRoom">
-        <h2>You are currently in the "{{ currentRoom }}" room.</h2>
-      </div>
       <div class="chatroom">
         <div class="messages">
           <li *ngFor="let message of roomMessages">{{ message.sentDate }}: {{ message.content }}</li>
