@@ -31,6 +31,7 @@ maven-compile:
   script:
     - ./mvnw -ntp compile -P-webapp -Dmaven.repo.local=$MAVEN_USER_HOME
   artifacts:
+    max_size: 500M
     paths:
       - target/classes/
       - target/generated-sources/
@@ -43,6 +44,7 @@ maven-package:
     - du -hs target/classes
     - du -hs target/*.jar
   artifacts:
+    max_size: 500M
     paths:
       - target/*.jar
       - target/classes
@@ -53,6 +55,8 @@ publish-docker:
   services:
     - docker:dind
   variables:
+    GIT_HTTP_MAX_REQUEST_BUFFER_SIZE: '524288000'
+    NGINX_MAX_UPLOAD: '500m'
     CI_JOB_ARTIFACTS_MAX_SIZE: '500M'
     DOCKER_HOST: 'tcp://docker:2375'
     DOCKER_DRIVER: overlay2
