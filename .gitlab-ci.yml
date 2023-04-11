@@ -43,7 +43,6 @@ maven-package:
     - du -hs target/classes
     - du -hs target/*.jar
   artifacts:
-    max_size: 500M
     paths:
       - target/*.jar
       - target/classes
