@@ -31,7 +31,6 @@ maven-compile:
   script:
     - ./mvnw -ntp compile -P-webapp -Dmaven.repo.local=$MAVEN_USER_HOME
   artifacts:
-    max_size: 500M
     paths:
       - target/classes/
       - target/generated-sources/
