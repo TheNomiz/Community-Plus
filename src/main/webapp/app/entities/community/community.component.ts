@@ -70,13 +70,13 @@ export class CommunityComponent implements OnInit {
 
   ngOnInit(): void {
     // subscribe to chatroom
-
+    /*
     this.topicSubscription = this.rxStompService.watch('/topic/' + this.roomId).subscribe((message: Message) => {
       const chatMessage: IChatMessage = JSON.parse(message.body);
       this.chatMessages.push(chatMessage);
       this.roomMessages.push(chatMessage);
     });
-
+*/
     // get all the data from the database
     this.chatroomservice.query().subscribe((res: HttpResponse<IChatRoom[]>) => {
       this.chatRooms = res.body ?? [];
@@ -84,6 +84,27 @@ export class CommunityComponent implements OnInit {
 
     this.busservice.query().subscribe((res: HttpResponse<IBusiness[]>) => {
       this.businesses = res.body ?? [];
+
+      // add markers to map
+      this.businesses.forEach(business => {
+        if (
+          business.latitude &&
+          business.longitude &&
+          business.name &&
+          business.description &&
+          business.category &&
+          business.phoneNumber &&
+          business.latitude >= -90 &&
+          business.latitude <= 90 &&
+          business.longitude >= -180 &&
+          business.longitude <= 180
+        ) {
+          const marker = L.marker([business.latitude, business.longitude]).bindPopup(
+            `<b>${business.name}</b><br>${business.description}</br><br>${business.phoneNumber}</br><br>${business.category}`
+          );
+          marker.addTo(this.map);
+        }
+      });
     });
 
     this.messageservice.query().subscribe((res: HttpResponse<IChatMessage[]>) => {
@@ -92,6 +113,28 @@ export class CommunityComponent implements OnInit {
 
     this.eventservice.query().subscribe((res: HttpResponse<IEvent[]>) => {
       this.events = res.body ?? [];
+
+      // add events to markers
+      this.events.forEach(event => {
+        if (
+          event.latitude &&
+          event.longitude &&
+          event.name &&
+          event.description &&
+          event.startDate &&
+          event.endDate &&
+          event.address &&
+          event.latitude >= -90 &&
+          event.latitude <= 90 &&
+          event.longitude >= -180 &&
+          event.longitude <= 180
+        ) {
+          const marker = L.marker([event.latitude, event.longitude]).bindPopup(
+            `<b>${event.name}</b><br>${event.description}</br><br>${event.address}</br><br>${event.startDate}</br><br>${event.endDate}`
+          );
+          marker.addTo(this.map);
+        }
+      });
     });
 
     // Get the chat room ID from the selected chat room
@@ -105,36 +148,10 @@ export class CommunityComponent implements OnInit {
       minZoom: 3,
       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     });
-
     tiles.addTo(this.map);
 
-    // Call the createMarkers function to add markers to the map for business and events
-    this.createMarkers();
     // call events carousel
     this.getUpcomingEvents();
-  }
-
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-  createMarkers() {
-    // add business to markers
-    this.businesses.forEach(business => {
-      if (business.latitude && business.longitude && business.name && business.description && business.category && business.phoneNumber) {
-        const marker = L.marker([business.latitude, business.longitude]).bindPopup(
-          `<b>${business.name}</b><br>${business.description}</br><br>${business.phoneNumber}</br><br>${business.category}`
-        );
-        marker.addTo(this.map);
-      }
-    });
-
-    // add events to markers
-    this.events.forEach(event => {
-      if (event.latitude && event.longitude && event.name && event.description && event.startDate && event.endDate && event.address) {
-        const marker = L.marker([event.latitude, event.longitude]).bindPopup(
-          `<b>${event.name}</b><br>${event.description}</br><br>${event.address}</br><br>${event.startDate}</br><br>${event.endDate}`
-        );
-        marker.addTo(this.map);
-      }
-    });
   }
 
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
