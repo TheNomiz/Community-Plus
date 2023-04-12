@@ -1,30 +1,25 @@
 <script src="https://unpkg.com/supercluster@7.1.2/dist/supercluster.min.js"></script>
 <div>
-  <h2 id="page-heading" data-cy="CrimeAlertHeading">
+  <h2 id="page-heading" style="text-align: center" data-cy="CrimeAlertHeading">
     <span jhiTranslate="teamprojectApp.crimeAlert.home.title">Crime Alerts</span>
-
-    <div class="d-flex justify-content-end">
-      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+  </h2>
+  <div class="d-flex justify-content-end">
+    <div class="button-container">
+      <button class="left-button" (click)="load()" [disabled]="isLoading">
         <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
         <span jhiTranslate="teamprojectApp.crimeAlert.home.refreshListLabel">Refresh list</span>
       </button>
-      <button class="btn btn-info me-2" (click)="toggleView(!isListView)" [disabled]="isLoading">
-        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+      <button class="inner-button" (click)="toggleView(!isListView)">
+        <fa-icon [icon]="isListView ? 'map' : 'list'"></fa-icon>
         <span>{{ isListView ? 'View as Map' : 'View as List' }}</span>
       </button>
 
-      <button
-        id="jh-create-entity"
-        data-cy="entityCreateButton"
-        class="btn btn-primary jh-create-entity create-crime-alert"
-        [routerLink]="['/crime-alert/new']"
-      >
+      <button id="jh-create-entity" data-cy="entityCreateButton" class="right-button" [routerLink]="['/crime-alert/new']">
         <fa-icon icon="plus"></fa-icon>
         <span jhiTranslate="teamprojectApp.crimeAlert.home.createLabel"> Create a new Crime Alert </span>
       </button>
     </div>
-  </h2>
-
+  </div>
   <jhi-alert-error></jhi-alert-error>
 
   <jhi-alert></jhi-alert>
@@ -227,7 +222,7 @@
     <div *ngIf="!isLoading">
       <div class="col-md-12" *ngIf="!isListView">
         <!-- Map view markup goes here -->
-        <div *ngIf="!isListView" #mapContainer id="map" style="height: 400px; width: 100%"></div>
+        <div *ngIf="!isListView" id="map" style="height: 600px; width: 100%; border-radius: 0 0 25px 25px; border: 0.15em"></div>
       </div>
     </div>
   </div>
