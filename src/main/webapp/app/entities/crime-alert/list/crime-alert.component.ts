@@ -4,13 +4,13 @@
 /// <reference types="bootstrap" />
 
 /* eslint-disable no-console */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute, Data, ParamMap, Router } from '@angular/router';
 import { combineLatest, filter, Observable, of, skip, switchMap, tap } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import * as L from 'leaflet';
-import supercluster, { AnyProps, PointFeature } from 'supercluster';
+import supercluster, { AnyProps, ClusterFeature, PointFeature } from 'supercluster';
 import 'leaflet.markercluster';
 import { ICrimeAlert, NewCrimeAlert } from '../crime-alert.model';
 import axios from 'axios';
@@ -25,6 +25,7 @@ import { Map, TileLayer } from 'leaflet';
 import { data, error } from 'cypress/types/jquery';
 import Supercluster from 'supercluster';
 import * as geojson from 'geojson';
+import distance from '@turf/distance';
 
 import bbox from '@turf/bbox';
 import { CrimeTypes } from 'app/entities/enumerations/crime-types.model';
@@ -35,6 +36,10 @@ import { DataUtils } from 'app/core/util/data-util.service';
   templateUrl: './crime-alert.component.html',
 })
 export class CrimeAlertComponent implements OnInit {
+  mapInitialized = false;
+
+  isListView = false;
+
   crimeAlerts?: ICrimeAlert[];
   isLoading = false;
 
@@ -66,6 +71,11 @@ export class CrimeAlertComponent implements OnInit {
     protected dataUtils: DataUtils
   ) {}
 
+  toggleView(isMapView: boolean): void {
+    localStorage.setItem('isMapView', JSON.stringify(isMapView));
+    window.location.reload();
+  }
+
   reset(): void {
     this.page = 1;
     this.crimeAlerts = [];
@@ -80,8 +90,40 @@ export class CrimeAlertComponent implements OnInit {
   trackId = (_index: number, item: ICrimeAlert): number => this.crimeAlertService.getCrimeAlertIdentifier(item);
 
   ngOnInit(): void {
+    const isMapView = JSON.parse(localStorage.getItem('isMapView') ?? 'true');
+    console.error(isMapView);
+    console.error(this.isListView);
+    this.isListView = isMapView;
     this.load();
   }
+
+  initializeMapView(): void {
+    if (!this.mapInitialized) {
+      this.initializeMap();
+      this.mapInitialized = true;
+    }
+    setTimeout(() => {
+      this.map.invalidateSize();
+    }, 100);
+  }
+
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      this.initializeMap();
+    }, 0);
+  }
+
+  initializeMap(): void {
+    this.map = L.map('map', {
+      maxBounds: L.latLngBounds(L.latLng(49.78, -13.13), L.latLng(60.89, 2.87)),
+      maxZoom: 18,
+      minZoom: 6,
+    }).setView([51.4, 0.3], 9);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
+    }).addTo(this.map);
+  }
+
   byteSize(base64String: string): string {
     return this.dataUtils.byteSize(base64String);
   }
@@ -104,6 +146,13 @@ export class CrimeAlertComponent implements OnInit {
           this.onResponseSuccess(res);
         },
       });
+  }
+  loadlist(): void {
+    this.loadFromBackendWithRouteInformations().subscribe({
+      next: (res: EntityArrayResponseType) => {
+        this.onResponseSuccess(res);
+      },
+    });
   }
   createClusterIcon(cluster: any): L.DivIcon {
     const childCount = cluster.properties.point_count;
@@ -200,22 +249,38 @@ export class CrimeAlertComponent implements OnInit {
         const radius = document.createElement('button');
         radius.innerHTML = 'See Radius';
         radius.onclick = () => {
-          const child = this.index.getChildren(cluster.id as number);
+          const clusterCenter = [cluster.geometry.coordinates[1], cluster.geometry.coordinates[0]];
+          const points = this.index.getChildren(cluster.properties.cluster_id);
+          let maxDistance = 0;
+          let furthestPoint;
+
+          points.forEach(point => {
+            const pointCoordinates = [point.geometry.coordinates[1], point.geometry.coordinates[0]];
+            const distanceToCluster = distance(clusterCenter, pointCoordinates, { units: 'meters' });
+
+            if (distanceToCluster > maxDistance) {
+              maxDistance = distanceToCluster;
+              furthestPoint = pointCoordinates;
+            }
+          });
+
+          //const child = this.index.getChildren(cluster.id as number);
 
           // Calculate the size of a pixel in meters at the given latitude and zoom level
-          const metersPerPixel = (156543.03392 * Math.cos((cluster.geometry.coordinates[1] * Math.PI) / 180)) / Math.pow(2, zoomLevel);
+          //const metersPerPixel = (156543.03392 * Math.cos((cluster.geometry.coordinates[1] * Math.PI) / 180)) / Math.pow(2, zoomLevel);
 
           // Convert the distance in pixels to meters
-          const distanceInMeters = 50 * metersPerPixel;
+          //const distanceInMeters = 50 * metersPerPixel;
 
           const circleOptions = {
             color: 'red',
             fillColor: '#f03',
             fillOpacity: 0.5,
-            radius: distanceInMeters,
+            radius: maxDistance,
           };
 
           const circle = L.circle([cluster.geometry.coordinates[1], cluster.geometry.coordinates[0]], circleOptions).addTo(this.map);
+          radius.disabled = true;
         };
 
         div.appendChild(radius);
@@ -302,58 +367,56 @@ export class CrimeAlertComponent implements OnInit {
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 
   load(): void {
-    this.loadFromBackendWithRouteInformations().subscribe({
-      next: (res: EntityArrayResponseType) => {
-        this.onResponseSuccess(res);
-      },
-    });
+    //this.isLoading = true;
+    if (!this.isListView) {
+      this.crimeAlertService.query({ size: 100000 }).subscribe((res: EntityArrayResponseType) => {
+        const filteredData = this.fillComponentAttributesFromResponseBody(res.body);
+        const pointFeatures: PointFeature<ICrimeAlert>[] = filteredData
+          .filter(alert => alert.lat && alert.lon) // filter out alerts with undefined or null coordinates
+          .map(alert => ({
+            type: 'Feature',
+            geometry: {
+              type: 'Point',
+              coordinates: [alert.lon!, alert.lat!], // convert coordinates to valid Position array
+            },
+            properties: alert,
+            CrimeTypes: alert.postedby,
+          }));
 
-    this.map = L.map('map', {
-      maxBounds: L.latLngBounds(L.latLng(49.78, -13.13), L.latLng(60.89, 2.87)),
-      maxZoom: 18,
-      minZoom: 6,
-    }).setView([51.4, 0.3], 9);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
-    }).addTo(this.map);
+        // Add markers for the filtered crime alerts
 
-    this.crimeAlertService.query({ size: 100 }).subscribe((res: EntityArrayResponseType) => {
-      const filteredData = this.fillComponentAttributesFromResponseBody(res.body);
-      const pointFeatures: PointFeature<ICrimeAlert>[] = filteredData
-        .filter(alert => alert.lat && alert.lon) // filter out alerts with undefined or null coordinates
-        .map(alert => ({
-          type: 'Feature',
-          geometry: {
-            type: 'Point',
-            coordinates: [alert.lon!, alert.lat!], // convert coordinates to valid Position array
-          },
-          properties: alert,
-          CrimeTypes: alert.postedby,
-        }));
+        this.index.load(pointFeatures);
 
-      // Add markers for the filtered crime alerts
+        this.updateClusters();
 
-      this.index.load(pointFeatures);
-
-      this.updateClusters();
-
-      this.map.on('zoomend', () => {
-        this.map.eachLayer(layer => {
-          // Check if the layer is a circle
-          if (layer instanceof L.Circle) {
-            // Remove the circle from the map
-            this.map.removeLayer(layer);
-          }
+        this.map.on('zoomend', () => {
+          this.map.eachLayer(layer => {
+            // Check if the layer is a circle
+            if (layer instanceof L.Circle) {
+              // Remove the circle from the map
+              this.map.removeLayer(layer);
+            }
+          });
+          this.updateClusters();
         });
-        this.updateClusters();
-      });
+        //this.isLoading = false;
 
-      this.map.on('moveend', () => {
-        this.updateClusters();
-      });
+        this.map.on('moveend', () => {
+          this.updateClusters();
+        });
 
-      // Loop through the clusters and add markers to the map
-    });
+        // Loop through the clusters and add markers to the map
+        //console.error(this.isLoading);
+      });
+    } else {
+      //this.isLoading=false;
+      this.loadFromBackendWithRouteInformations().subscribe({
+        next: (res: EntityArrayResponseType) => {
+          this.onResponseSuccess(res);
+        },
+      });
+      //console.error(this.isLoading);
+    }
     // Remove all markers from the map
   }
   navigateToWithComponentValues(): void {

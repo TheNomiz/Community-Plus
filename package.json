@@ -106,6 +106,7 @@
     "@popperjs/core": "2.11.6",
     "@stomp/rx-stomp": "^2.0.0",
     "@turf/bbox": "^6.5.0",
+    "@turf/turf": "^6.5.0",
     "bootstrap": "5.2.0",
     "dayjs": "1.11.5",
     "geojs": "^1.10.13",
