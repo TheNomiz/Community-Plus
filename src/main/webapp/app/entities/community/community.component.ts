@@ -55,6 +55,9 @@ export class CommunityComponent implements OnInit {
   // eslint-disable-next-line @typescript-eslint/no-inferrable-types
   message: string = '';
 
+  // eslint-disable-next-line @typescript-eslint/no-inferrable-types
+  subscribed: boolean = false;
+
   // chatroom items
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore, to suppress warning related to being undefined
@@ -201,7 +204,9 @@ export class CommunityComponent implements OnInit {
 
   joinRoom(room: IChatRoom) {
     // unsubscribe from the current chatroom
-    this.topicSubscription.unsubscribe();
+    if (this.subscribed === true) {
+      this.topicSubscription.unsubscribe();
+    }
 
     // change the current chatroom
     this.roomId = room.id;
@@ -221,6 +226,7 @@ export class CommunityComponent implements OnInit {
       this.chatMessages.push(chatMessage);
       this.roomMessages.push(chatMessage);
     });
+    this.subscribed = true;
   }
 
   ngOnDestroy() {

@@ -16,12 +16,12 @@ public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer 
         //config.setApplicationDestinationPrefixes("/app");
         config
             .enableStompBrokerRelay("/topic")
-            .setRelayHost("127.0.0.1")
+            .setRelayHost("178.62.10.25")
             .setRelayPort(61613)
-            .setClientLogin("guest")
-            .setClientPasscode("guest")
-            .setSystemLogin("guest")
-            .setSystemPasscode("guest");
+            .setClientLogin("user")
+            .setClientPasscode("user")
+            .setSystemLogin("admin")
+            .setSystemPasscode("oL3Cy*kLpQKoH6");
         config.setApplicationDestinationPrefixes("/app");
     }
 
