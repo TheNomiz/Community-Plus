@@ -42,10 +42,10 @@ maven-package:
     - ./mvnw -ntp verify -Pprod -DskipTests -Dmaven.repo.local=$MAVEN_USER_HOME
     - du -hs target/classes
     - du -hs target/*.jar
-    - tar -czf target/artifacts.tar.gz target/*.jar target/classes
   artifacts:
     paths:
-      - target/artifacts.tar.gz
+      - target/*.jar
+      - target/classes
     expire_in: 1 day
 
 publish-docker:
