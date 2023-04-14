@@ -26,12 +26,14 @@ import { data, error } from 'cypress/types/jquery';
 import Supercluster from 'supercluster';
 import * as geojson from 'geojson';
 import distance from '@turf/distance';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 import bbox from '@turf/bbox';
 import { CrimeTypes } from 'app/entities/enumerations/crime-types.model';
 import { DataUtils } from 'app/core/util/data-util.service';
 import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { fas } from '@fortawesome/free-solid-svg-icons';
+
 @Component({
   selector: 'jhi-crime-alert',
   templateUrl: './crime-alert.component.html',
@@ -85,10 +87,82 @@ export class CrimeAlertComponent implements OnInit {
     this.crimeAlerts = [];
     this.load();
   }
+  getCrimeTypeDisplay(crimeType: CrimeTypes | null | undefined): string {
+    switch (crimeType) {
+      case CrimeTypes.ALLCRIME:
+        return 'All crime';
+      case CrimeTypes.ANTISOCIALBEHAVIOUR:
+        return 'Anti-social behaviour';
+      case CrimeTypes.BICYCLETHEFT:
+        return 'Bicycle theft';
+      case CrimeTypes.BURGLARY:
+        return 'Burglary';
+      case CrimeTypes.CRIMINALDAMAGEARSON:
+        return 'Criminal damage and arson';
+      case CrimeTypes.DRUGS:
+        return 'Drugs';
+      case CrimeTypes.OTHERTHEFT:
+        return 'Other theft';
+      case CrimeTypes.POSSESSIONOFWEAPONS:
+        return 'Possession of weapons';
+      case CrimeTypes.PUBLICORDER:
+        return 'Public order';
+      case CrimeTypes.ROBBERY:
+        return 'Robbery';
+      case CrimeTypes.SHOPLIFTING:
+        return 'Shoplifting';
+      case CrimeTypes.THEFTFROMTHEPERSON:
+        return 'Theft from the person';
+      case CrimeTypes.VEHICLECRIME:
+        return 'Vehicle crime';
+      case CrimeTypes.VIOLENCEANDSEXUALOFFENCES:
+        return 'Violence and sexual offences';
+      case CrimeTypes.OTHERCRIME:
+        return 'Other crime';
+      default:
+        return '';
+    }
+  }
 
   loadPage(page: number): void {
     this.page = page;
     this.load();
+  }
+  getCrimeTypeClass(crimeType: CrimeTypes | null | undefined): string {
+    switch (crimeType) {
+      case CrimeTypes.ALLCRIME:
+        return 'all-crime';
+      case CrimeTypes.ANTISOCIALBEHAVIOUR:
+        return 'anti-social-behaviour';
+      case CrimeTypes.BICYCLETHEFT:
+        return 'bicycle-theft';
+      case CrimeTypes.BURGLARY:
+        return 'burglary';
+      case CrimeTypes.CRIMINALDAMAGEARSON:
+        return 'criminal-damage-arson';
+      case CrimeTypes.DRUGS:
+        return 'drugs';
+      case CrimeTypes.OTHERTHEFT:
+        return 'other-theft';
+      case CrimeTypes.POSSESSIONOFWEAPONS:
+        return 'possession-of-weapons';
+      case CrimeTypes.PUBLICORDER:
+        return 'public-order';
+      case CrimeTypes.ROBBERY:
+        return 'robbery';
+      case CrimeTypes.SHOPLIFTING:
+        return 'shoplifting';
+      case CrimeTypes.THEFTFROMTHEPERSON:
+        return 'theft-from-the-person';
+      case CrimeTypes.VEHICLECRIME:
+        return 'vehicle-crime';
+      case CrimeTypes.VIOLENCEANDSEXUALOFFENCES:
+        return 'violence-and-sexual-offences';
+      case CrimeTypes.OTHERCRIME:
+        return 'other-crime';
+      default:
+        return '';
+    }
   }
 
   trackId = (_index: number, item: ICrimeAlert): number => this.crimeAlertService.getCrimeAlertIdentifier(item);
@@ -371,8 +445,8 @@ export class CrimeAlertComponent implements OnInit {
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 
   load(): void {
-    //this.isLoading = true;
     if (!this.isListView) {
+      this.isLoading = true;
       this.crimeAlertService.query({ size: 100000 }).subscribe((res: EntityArrayResponseType) => {
         const filteredData = this.fillComponentAttributesFromResponseBody(res.body);
         const pointFeatures: PointFeature<ICrimeAlert>[] = filteredData
@@ -403,7 +477,7 @@ export class CrimeAlertComponent implements OnInit {
           });
           this.updateClusters();
         });
-        //this.isLoading = false;
+        this.isLoading = false;
 
         this.map.on('moveend', () => {
           this.updateClusters();
