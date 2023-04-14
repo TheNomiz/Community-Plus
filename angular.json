@@ -45,7 +45,8 @@
               "src/main/webapp/content/scss/vendor.scss",
               "src/main/webapp/content/scss/global.scss",
               "node_modules/leaflet/dist/leaflet.css",
-              "src/main/webapp/app/entities/crime-alert/list/styles.css"
+              "src/main/webapp/app/entities/crime-alert/list/styles.css",
+              "node_modules/@fortawesome/fontawesome-free/css/all.min.css"
             ],
             "scripts": ["node_modules/leaflet/dist/leaflet.js"]
           },

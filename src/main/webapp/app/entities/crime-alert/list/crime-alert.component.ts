@@ -30,7 +30,8 @@ import distance from '@turf/distance';
 import bbox from '@turf/bbox';
 import { CrimeTypes } from 'app/entities/enumerations/crime-types.model';
 import { DataUtils } from 'app/core/util/data-util.service';
-
+import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
+import { fas } from '@fortawesome/free-solid-svg-icons';
 @Component({
   selector: 'jhi-crime-alert',
   templateUrl: './crime-alert.component.html',
@@ -68,8 +69,11 @@ export class CrimeAlertComponent implements OnInit {
     protected parseLinks: ParseLinks,
     protected modalService: NgbModal,
     protected accountService: AccountService,
-    protected dataUtils: DataUtils
-  ) {}
+    protected dataUtils: DataUtils,
+    private library: FaIconLibrary
+  ) {
+    library.addIconPacks(fas);
+  }
 
   toggleView(isMapView: boolean): void {
     localStorage.setItem('isMapView', JSON.stringify(isMapView));
