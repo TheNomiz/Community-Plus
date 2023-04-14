@@ -21,34 +21,6 @@
     </div>
   </div>
   <jhi-alert-error></jhi-alert-error>
-  <form (ngSubmit)="applyFilters()" #filterForm="ngForm">
-    <div class="row">
-      <div class="col-md-3">
-        <label for="startDate">Start Date</label>
-        <input type="date" id="startDate" name="startDate" [(ngModel)]="startDate" class="form-control" />
-      </div>
-      <div class="col-md-3">
-        <label for="endDate">End Date</label>
-        <input type="date" id="endDate" name="endDate" [(ngModel)]="endDate" class="form-control" />
-      </div>
-      <div class="col-md-3">
-        <label for="crimeType">Crime Type</label>
-        <select id="crimeType" name="crimeType" [(ngModel)]="selectedCrimeType" class="form-control">
-          <option [ngValue]="null">All</option>
-          <option *ngFor="let crimeTypeDisplay of crimeTypeDisplays" [ngValue]="crimeTypeDisplay.url">{{ crimeTypeDisplay.name }}</option>
-        </select>
-      </div>
-      <div class="col-md-3">
-        <label for="postedBy">Posted By</label>
-        <input type="text" id="postedBy" name="postedBy" [(ngModel)]="postedBy" class="form-control" />
-      </div>
-    </div>
-    <div class="row mt-3">
-      <div class="col-md-12 d-flex justify-content-end">
-        <button type="submit" class="btn btn-primary">Apply Filters</button>
-      </div>
-    </div>
-  </form>
 
   <jhi-alert></jhi-alert>
 
