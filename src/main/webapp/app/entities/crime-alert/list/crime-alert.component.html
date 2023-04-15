@@ -21,6 +21,36 @@
     </div>
   </div>
   <jhi-alert-error></jhi-alert-error>
+  <!-- Add this above the <jhi-alert-error> element -->
+  <div style="padding-bottom: 0.15em">
+    <button class="btn btn-primary" style="width: 100%" (click)="showFilters = !showFilters">Filter Options</button>
+  </div>
+  <div *ngIf="showFilters">
+    <div class="row mb-3" style="width: 100%">
+      <div class="col-md-3">
+        <label for="dateFilter">Filter by Date:</label>
+        <input type="date" class="form-control" id="dateFilter" [(ngModel)]="filterDate" (ngModelChange)="load()" />
+      </div>
+      <div class="col-md-3">
+        <label for="crimeTypeFilter">Filter by Crime Type:</label>
+        <select class="form-control" id="crimeTypeFilter" [(ngModel)]="filterCrimeType" (ngModelChange)="load()">
+          <option [ngValue]="null">All Crime Types</option>
+          <option *ngFor="let crimeType of crimeTypes" [ngValue]="crimeType">{{ getCrimeTypeDisplay(crimeType) }}</option>
+        </select>
+      </div>
+      <div class="col-md-3">
+        <label for="userFilter">Filter by User:</label>
+        <input
+          type="text"
+          class="form-control"
+          id="userFilter"
+          [(ngModel)]="filterUser"
+          (ngModelChange)="load()"
+          placeholder="User's name"
+        />
+      </div>
+    </div>
+  </div>
 
   <jhi-alert></jhi-alert>
 

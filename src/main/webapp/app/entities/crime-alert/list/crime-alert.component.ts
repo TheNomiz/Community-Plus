@@ -41,6 +41,8 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
 export class CrimeAlertComponent implements OnInit {
   mapInitialized = false;
 
+  showFilters = false;
+
   isListView = false;
 
   crimeAlerts?: ICrimeAlert[];
@@ -53,6 +55,11 @@ export class CrimeAlertComponent implements OnInit {
   links: { [key: string]: number } = {
     last: 0,
   };
+
+  filterDate: string | null = null;
+  filterCrimeType: CrimeTypes | null = null;
+  filterUser: string | null = null;
+  crimeTypes = Object.values(CrimeTypes);
 
   page = 1;
   map!: L.Map;
