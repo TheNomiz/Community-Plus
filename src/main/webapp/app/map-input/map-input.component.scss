@@ -1,0 +1,17 @@
+.map-container {
+  position: relative;
+}
+
+#map2 {
+  height: 300px;
+  width: 100%;
+}
+
+input.form-control {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50%;
+  z-index: 1000;
+}

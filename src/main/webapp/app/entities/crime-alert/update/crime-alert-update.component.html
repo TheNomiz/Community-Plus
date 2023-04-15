@@ -104,45 +104,9 @@
               </div>
 
               <div class="row mb-3">
-                <label class="form-label" jhiTranslate="teamprojectApp.crimeAlert.lat" for="field_lat">Lat</label>
-                <input type="number" class="form-control" name="lat" id="field_lat" data-cy="lat" formControlName="lat" />
-                <div *ngIf="editForm.get('lat')!.invalid && (editForm.get('lat')!.dirty || editForm.get('lat')!.touched)">
-                  <small
-                    class="form-text text-danger"
-                    *ngIf="editForm.get('lat')?.errors?.required"
-                    jhiTranslate="entity.validation.required"
-                  >
-                    This field is required.
-                  </small>
-                  <small
-                    class="form-text text-danger"
-                    [hidden]="!editForm.get('lat')?.errors?.number"
-                    jhiTranslate="entity.validation.number"
-                  >
-                    This field should be a number.
-                  </small>
-                </div>
-              </div>
+                <label class="form-label">Location</label>
 
-              <div class="row mb-3">
-                <label class="form-label" jhiTranslate="teamprojectApp.crimeAlert.lon" for="field_lon">Lon</label>
-                <input type="number" class="form-control" name="lon" id="field_lon" data-cy="lon" formControlName="lon" />
-                <div *ngIf="editForm.get('lon')!.invalid && (editForm.get('lon')!.dirty || editForm.get('lon')!.touched)">
-                  <small
-                    class="form-text text-danger"
-                    *ngIf="editForm.get('lon')?.errors?.required"
-                    jhiTranslate="entity.validation.required"
-                  >
-                    This field is required.
-                  </small>
-                  <small
-                    class="form-text text-danger"
-                    [hidden]="!editForm.get('lon')?.errors?.number"
-                    jhiTranslate="entity.validation.number"
-                  >
-                    This field should be a number.
-                  </small>
-                </div>
+                <app-map-input (coordinatesChanged)="onCoordinatesChanged($event)"></app-map-input>
               </div>
 
               <div class="row mb-3">

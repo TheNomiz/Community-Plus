@@ -38,6 +38,42 @@ export class CrimeAlertUpdateComponent implements OnInit {
   ) {}
 
   compareUser = (o1: IUser | null, o2: IUser | null): boolean => this.userService.compareUser(o1, o2);
+  getCrimeTypeDisplay(crimeType: CrimeTypes | null | undefined): string {
+    switch (crimeType) {
+      case CrimeTypes.ALLCRIME:
+        return 'All crime';
+      case CrimeTypes.ANTISOCIALBEHAVIOUR:
+        return 'Anti-social behaviour';
+      case CrimeTypes.BICYCLETHEFT:
+        return 'Bicycle theft';
+      case CrimeTypes.BURGLARY:
+        return 'Burglary';
+      case CrimeTypes.CRIMINALDAMAGEARSON:
+        return 'Criminal damage and arson';
+      case CrimeTypes.DRUGS:
+        return 'Drugs';
+      case CrimeTypes.OTHERTHEFT:
+        return 'Other theft';
+      case CrimeTypes.POSSESSIONOFWEAPONS:
+        return 'Possession of weapons';
+      case CrimeTypes.PUBLICORDER:
+        return 'Public order';
+      case CrimeTypes.ROBBERY:
+        return 'Robbery';
+      case CrimeTypes.SHOPLIFTING:
+        return 'Shoplifting';
+      case CrimeTypes.THEFTFROMTHEPERSON:
+        return 'Theft from the person';
+      case CrimeTypes.VEHICLECRIME:
+        return 'Vehicle crime';
+      case CrimeTypes.VIOLENCEANDSEXUALOFFENCES:
+        return 'Violence and sexual offences';
+      case CrimeTypes.OTHERCRIME:
+        return 'Other crime';
+      default:
+        return '';
+    }
+  }
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ crimeAlert }) => {
@@ -47,6 +83,12 @@ export class CrimeAlertUpdateComponent implements OnInit {
       }
 
       this.loadRelationshipsOptions();
+    });
+  }
+  onCoordinatesChanged(coords: { lat: number; lon: number }): void {
+    this.editForm.patchValue({
+      lat: coords.lat,
+      lon: coords.lon,
     });
   }
 
