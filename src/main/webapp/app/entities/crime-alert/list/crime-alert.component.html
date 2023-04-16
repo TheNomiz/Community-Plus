@@ -59,12 +59,17 @@
   </div>
   <div id="modal" class="modal">
     <div class="modal-content">
-      <div class="modal-footer">
-        <button class="modal-close waves-effect waves-green btn-flat">Close</button>
+      <span class="modal-close">&times;</span>
+      <div class="modal-body">
+        <div class="left-section">
+          <h2>Crimes Summary</h2>
+          <ul id="crimes-list"></ul>
+        </div>
+        <div class="right-section" id="image-container"></div>
       </div>
-      <ul id="crimes-list"></ul>
     </div>
   </div>
+
   <div class="row">
     <div class="col-md-12" *ngIf="isListView">
       <div class="table-responsive table-entities" id="entities" *ngIf="isListView && crimeAlerts && crimeAlerts.length > 0">

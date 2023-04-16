@@ -1,25 +1,18 @@
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 1000;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgba(0, 0, 0, 0.5);
+.summary {
+  font-family: Arial, sans-serif;
+  width: 300px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.modal-content {
-  background-color: #fefefe;
-  margin: 15% auto;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%;
+.summary p {
+  margin: 0 0 5px;
 }
 
-.modal-close {
-  float: right;
+.summary-title {
+  font-weight: bold;
 }
 
 .button-container {
@@ -116,4 +109,73 @@
 
 .other-crime {
   color: #ffc107;
+}
+
+.centered-list {
+  list-style-type: none; /* Removes bullets */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centers the list items horizontally */
+  padding: 0; /* Removes default padding */
+}
+
+.centered-list li {
+  width: 100%;
+  text-align: center; /* Centers the text in each list item */
+}
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 10000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+.modal-close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.modal-close:hover,
+.modal-close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.left-section,
+.right-section {
+  width: 45%;
+}
+
+.right-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.summary-image {
+  max-width: 100%;
+  height: auto;
+}
+.modal-body {
+  display: flex;
+  justify-content: space-between;
+}
+.selected {
+  border: 2px solid #000; /* adjust border width and color as needed */
 }

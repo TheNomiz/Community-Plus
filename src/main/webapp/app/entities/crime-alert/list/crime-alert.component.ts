@@ -308,8 +308,38 @@ export class CrimeAlertComponent implements OnInit {
             for (let i = 0; i < crimes.length; i++) {
               const crime = crimes[i];
               const listItem = document.createElement('li');
-              listItem.textContent = `Crime ${i + 1}: ${crime.properties.title}`;
+
+              const summary = `
+              <div class="summary">
+                <p> <span class="summary-title">Title:</span> ${crime.properties.title}</p>
+                <p><span class="summary-title">Crime Type:</span> ${this.getCrimeTypeDisplay(crime.properties.crimeType)}</p>
+                <p><span class="summary-title">Date:</span> ${crime.properties.date}</p>
+              </div>
+            `;
+              let selectedListItem: HTMLLIElement | null = null; // Keep track of the selected list item
+
+              listItem.innerHTML = summary;
+              listItem.addEventListener('click', () => {
+                console.log('List item clicked!'); // Add this line
+                const imageContainer = document.getElementById('image-container');
+                if (imageContainer) {
+                  imageContainer.innerHTML = '';
+                  const img = document.createElement('img');
+                  img.src = `data:${crime.properties.crimePhoto1ContentType};base64,${crime.properties.crimePhoto1}`;
+                  img.classList.add('summary-image');
+                  imageContainer.appendChild(img);
+                }
+                if (selectedListItem) {
+                  selectedListItem.classList.remove('selected');
+                }
+                listItem.classList.add('selected');
+                selectedListItem = listItem;
+              });
+
               crimesList.appendChild(listItem);
+              if (i === 0) {
+                listItem.click();
+              }
             }
 
             modal.style.display = 'block';
@@ -465,7 +495,7 @@ export class CrimeAlertComponent implements OnInit {
               coordinates: [alert.lon!, alert.lat!], // convert coordinates to valid Position array
             },
             properties: alert,
-            CrimeTypes: alert.postedby,
+            CrimeTypes: alert,
           }));
 
         // Add markers for the filtered crime alerts
