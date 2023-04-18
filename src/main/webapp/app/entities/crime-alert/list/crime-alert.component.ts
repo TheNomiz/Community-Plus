@@ -329,11 +329,13 @@ export class CrimeAlertComponent implements OnInit {
                   img.classList.add('summary-image');
                   imageContainer.appendChild(img);
                 }
+                /*
                 if (selectedListItem) {
                   selectedListItem.classList.remove('selected');
                 }
                 listItem.classList.add('selected');
                 selectedListItem = listItem;
+                */
               });
 
               crimesList.appendChild(listItem);

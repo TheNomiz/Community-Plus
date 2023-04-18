@@ -30,6 +30,12 @@ export class CrimeAlertService {
 
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
 
+  isCrimeIDUnique(crimeID: number): Observable<boolean> {
+    const url = `${this.resourceUrl}/crime-alerts/exists/${crimeID}`;
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return this.http.get<boolean>(url).pipe(map((response: any) => response.isUnique));
+  }
+
   create(crimeAlert: NewCrimeAlert): Observable<EntityResponseType> {
     const copy = this.convertDateFromClient(crimeAlert);
     return this.http

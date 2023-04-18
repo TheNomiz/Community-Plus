@@ -89,6 +89,7 @@ export class CrimeAlertUpdateComponent implements OnInit {
     this.editForm.patchValue({
       lat: coords.lat,
       lon: coords.lon,
+      crimeID: this.generateUniqueCrimeID(),
     });
   }
 
@@ -120,10 +121,29 @@ export class CrimeAlertUpdateComponent implements OnInit {
   previousState(): void {
     window.history.back();
   }
+  generateUniqueCrimeID(): number {
+    let crimeID = Math.floor(Math.random() * -1000000);
+
+    this.isCrimeIDUnique(crimeID).subscribe((isUnique: boolean) => {
+      if (!isUnique) {
+        crimeID = this.generateUniqueCrimeID();
+      }
+    });
+
+    return crimeID;
+  }
+  isCrimeIDUnique(crimeID: number): Observable<boolean> {
+    return this.crimeAlertService.isCrimeIDUnique(crimeID);
+  }
 
   save(): void {
     this.isSaving = true;
     const crimeAlert = this.crimeAlertFormService.getCrimeAlert(this.editForm);
+
+    if (crimeAlert.crimeID === null) {
+      crimeAlert.crimeID = this.generateUniqueCrimeID();
+    }
+
     if (crimeAlert.id !== null) {
       this.subscribeToSaveResponse(this.crimeAlertService.update(crimeAlert));
     } else {
