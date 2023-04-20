@@ -8,7 +8,7 @@ import { ChatMessageService } from 'app/entities/chat-message/service/chat-messa
 import { ChatRoomService } from 'app/entities/chat-room/service/chat-room.service';
 import { EventService } from 'app/entities/event/service/event.service';
 import { IChatRoom } from 'app/entities/chat-room/chat-room.model';
-import { IChatMessage } from 'app/entities/chat-message/chat-message.model';
+import { IChatMessage, NewChatMessage } from 'app/entities/chat-message/chat-message.model';
 import { IEvent } from 'app/entities/event/event.model';
 import { IBusiness } from 'app/entities/business/business.model';
 import * as L from 'leaflet';
@@ -17,6 +17,11 @@ import { EventCategory } from '../enumerations/event-category.model';
 import { Message } from '@stomp/stompjs';
 import { RxStompService } from './rxstomp.service';
 import { Subscription } from 'rxjs';
+import { AccountService } from 'app/core/auth/account.service';
+import { UserService } from '../user/user.service';
+import { IUser } from '../user/user.model';
+import { UserProfileService } from '../user-profile/service/user-profile.service';
+import { IUserProfile } from '../user-profile/user-profile.model';
 
 const iconUrl = '../../../content/images/Location_Marker.png';
 const shadowUrl = '../../../content/images/Location_Marker_Shadow.png';
@@ -45,6 +50,11 @@ export class CommunityComponent implements OnInit {
 
   roomMessages: IChatMessage[] = [];
 
+  // current user
+  user!: IUser | undefined;
+  usersprofile!: IUserProfile | null | undefined;
+  anonymous = false;
+
   // map items
   map!: L.Map;
 
@@ -54,7 +64,6 @@ export class CommunityComponent implements OnInit {
   currentRoom!: string | null | undefined;
   // eslint-disable-next-line @typescript-eslint/no-inferrable-types
   message: string = '';
-
   // eslint-disable-next-line @typescript-eslint/no-inferrable-types
   subscribed: boolean = false;
 
@@ -68,7 +77,10 @@ export class CommunityComponent implements OnInit {
     private chatroomservice: ChatRoomService,
     private messageservice: ChatMessageService,
     private eventservice: EventService,
-    private rxStompService: RxStompService
+    private rxStompService: RxStompService,
+    private accountService: AccountService,
+    private userService: UserService,
+    private userprofileService: UserProfileService
   ) {}
 
   ngOnInit(): void {
@@ -80,6 +92,28 @@ export class CommunityComponent implements OnInit {
       this.roomMessages.push(chatMessage);
     });
 */
+
+    // get current users profile
+    this.accountService.getAuthenticationState().subscribe(account => {
+      if (account) {
+        this.userService.query().subscribe(response => {
+          const users = response.body;
+          if (users) {
+            this.user = users.find(user => user.login === account.login);
+          }
+        });
+      }
+    });
+
+    // get all users profiles and get the current users profile
+    this.userprofileService.query().subscribe((res: HttpResponse<IUserProfile[]>) => {
+      const usersprofile = res.body ?? [];
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+      if (this.user && this.user !== undefined) {
+        this.usersprofile = usersprofile.find(userprofile => userprofile.userID?.id === this.user?.id);
+      }
+    });
+
     // get all the data from the database
     this.chatroomservice.query().subscribe((res: HttpResponse<IChatRoom[]>) => {
       this.chatRooms = res.body ?? [];
@@ -190,16 +224,37 @@ export class CommunityComponent implements OnInit {
   }
 
   onSendMessage() {
-    const chatMessage: IChatMessage = {
-      id: this.chatMessages.length + 1,
+    const chatMessage: NewChatMessage = {
+      id: null,
       content: this.message,
       sentDate: day(),
       postedby: null,
       room: { id: this.roomId },
     };
+
+    if (this.anonymous === true) {
+      const chatMessage: NewChatMessage = {
+        id: null,
+        content: this.message,
+        sentDate: day(),
+        postedby: this.usersprofile,
+        room: { id: this.roomId },
+      };
+    }
     this.rxStompService.publish({ destination: `/topic/${this.roomId}`, body: JSON.stringify(chatMessage) });
     // clear the message
     this.message = '';
+    // send the message to the server
+    this.messageservice.create(chatMessage).subscribe(
+      response => {
+        // handle the response here
+        console.log(response);
+      },
+      error => {
+        // handle the error here
+        console.log(error);
+      }
+    );
   }
 
   joinRoom(room: IChatRoom) {
@@ -227,6 +282,23 @@ export class CommunityComponent implements OnInit {
       this.roomMessages.push(chatMessage);
     });
     this.subscribed = true;
+  }
+
+  formatDate(date: day.Dayjs | null | undefined): string {
+    if (date) {
+      const dayjsDate = typeof date === 'string' ? day(date) : date;
+      return dayjsDate.format('MMM D, YYYY h:mm A');
+    } else {
+      return '';
+    }
+  }
+
+  getUserName(usersprofile: IUserProfile | null | undefined): string {
+    if (usersprofile?.privateAccount === false) {
+      return usersprofile.username ?? '';
+    } else {
+      return 'Anonymous';
+    }
   }
 
   ngOnDestroy() {
