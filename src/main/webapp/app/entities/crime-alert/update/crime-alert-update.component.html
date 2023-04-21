@@ -66,7 +66,15 @@
 
               <div class="row mb-3">
                 <label class="form-label" jhiTranslate="teamprojectApp.crimeAlert.title" for="field_title">Title</label>
-                <input type="text" class="form-control" name="title" id="field_title" data-cy="title" formControlName="title" />
+                <input
+                  type="text"
+                  class="form-control"
+                  name="title"
+                  id="field_title"
+                  data-cy="title"
+                  formControlName="title"
+                  placeholder="Enter a brief title for the crime alert"
+                />
                 <div *ngIf="editForm.get('title')!.invalid && (editForm.get('title')!.dirty || editForm.get('title')!.touched)">
                   <small
                     class="form-text text-danger"
@@ -96,14 +104,15 @@
 
               <div class="row mb-3">
                 <label class="form-label" jhiTranslate="teamprojectApp.crimeAlert.description" for="field_description">Description</label>
-                <input
-                  type="text"
+                <textarea
                   class="form-control"
                   name="description"
                   id="field_description"
                   data-cy="description"
                   formControlName="description"
-                />
+                  placeholder="Provide a detailed description of the crime"
+                  rows="4"
+                ></textarea>
                 <div
                   *ngIf="
                     editForm.get('description')!.invalid && (editForm.get('description')!.dirty || editForm.get('description')!.touched)
@@ -169,7 +178,7 @@
                 <select class="form-control" name="crimeType" formControlName="crimeType" id="field_crimeType" data-cy="crimeType">
                   <option [ngValue]="null">{{ 'teamprojectApp.CrimeTypes.null' | translate }}</option>
                   <option *ngFor="let crimeTypes of crimeTypesValues" [value]="crimeTypes">
-                    {{ 'teamprojectApp.CrimeTypes.' + crimeTypes | translate }}
+                    {{ getCrimeTypeDisplay(crimeTypes) }}
                   </option>
                 </select>
                 <div *ngIf="editForm.get('crimeType')!.invalid && (editForm.get('crimeType')!.dirty || editForm.get('crimeType')!.touched)">
@@ -183,8 +192,8 @@
                 </div>
               </div>
 
-              <div class="row mb-3 w-100">
-                <div class="col">
+              <div class="row mb-3">
+                <div class="col-lg-4 text-center">
                   <div class="upload-btn-wrapper">
                     <button class="btn-upload">Upload Image</button>
                     <input
@@ -198,7 +207,7 @@
                   </div>
                 </div>
 
-                <div class="col">
+                <div class="col-lg-4 text-center">
                   <div class="upload-btn-wrapper">
                     <button class="btn-upload">Upload Image</button>
                     <input
@@ -211,7 +220,7 @@
                     />
                   </div>
                 </div>
-                <div class="col">
+                <div class="col-lg-4 text-center">
                   <div class="upload-btn-wrapper">
                     <button class="btn-upload">Upload Image</button>
                     <input
@@ -225,8 +234,8 @@
                   </div>
                 </div>
               </div>
-              <div class="row mb-3 w-100">
-                <div class="col">
+              <div class="row mb-3">
+                <div class="col-lg-4 text-center">
                   <img
                     [src]="'data:' + editForm.get('crimePhoto1ContentType')!.value + ';base64,' + editForm.get('crimePhoto1')!.value"
                     style="max-height: 100px"
@@ -234,7 +243,7 @@
                     alt="crimeAlert image"
                   />
                 </div>
-                <div class="col">
+                <div class="col-lg-4 text-center">
                   <img
                     [src]="'data:' + editForm.get('crimePhoto2ContentType')!.value + ';base64,' + editForm.get('crimePhoto2')!.value"
                     style="max-height: 100px"
@@ -242,7 +251,7 @@
                     alt="crimeAlert image"
                   />
                 </div>
-                <div class="col">
+                <div class="col-lg-4 text-center">
                   <img
                     [src]="'data:' + editForm.get('crimePhoto3ContentType')!.value + ';base64,' + editForm.get('crimePhoto3')!.value"
                     style="max-height: 100px"

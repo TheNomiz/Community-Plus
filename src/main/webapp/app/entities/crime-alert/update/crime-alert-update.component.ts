@@ -41,37 +41,38 @@ export class CrimeAlertUpdateComponent implements OnInit {
   ) {}
 
   compareUser = (o1: IUser | null, o2: IUser | null): boolean => this.userService.compareUser(o1, o2);
-  getCrimeTypeDisplay(crimeType: CrimeTypes | null | undefined): string {
+
+  getCrimeTypeDisplay(crimeType: string | null | undefined): string {
     switch (crimeType) {
-      case CrimeTypes.ALLCRIME:
+      case CrimeTypes.ALLCRIME.toString():
         return 'All crime';
-      case CrimeTypes.ANTISOCIALBEHAVIOUR:
+      case CrimeTypes.ANTISOCIALBEHAVIOUR.toString():
         return 'Anti-social behaviour';
-      case CrimeTypes.BICYCLETHEFT:
+      case CrimeTypes.BICYCLETHEFT.toString():
         return 'Bicycle theft';
-      case CrimeTypes.BURGLARY:
+      case CrimeTypes.BURGLARY.toString():
         return 'Burglary';
-      case CrimeTypes.CRIMINALDAMAGEARSON:
+      case CrimeTypes.CRIMINALDAMAGEARSON.toString():
         return 'Criminal damage and arson';
-      case CrimeTypes.DRUGS:
+      case CrimeTypes.DRUGS.toString():
         return 'Drugs';
-      case CrimeTypes.OTHERTHEFT:
+      case CrimeTypes.OTHERTHEFT.toString():
         return 'Other theft';
-      case CrimeTypes.POSSESSIONOFWEAPONS:
+      case CrimeTypes.POSSESSIONOFWEAPONS.toString():
         return 'Possession of weapons';
-      case CrimeTypes.PUBLICORDER:
+      case CrimeTypes.PUBLICORDER.toString():
         return 'Public order';
-      case CrimeTypes.ROBBERY:
+      case CrimeTypes.ROBBERY.toString():
         return 'Robbery';
-      case CrimeTypes.SHOPLIFTING:
+      case CrimeTypes.SHOPLIFTING.toString():
         return 'Shoplifting';
-      case CrimeTypes.THEFTFROMTHEPERSON:
+      case CrimeTypes.THEFTFROMTHEPERSON.toString():
         return 'Theft from the person';
-      case CrimeTypes.VEHICLECRIME:
+      case CrimeTypes.VEHICLECRIME.toString():
         return 'Vehicle crime';
-      case CrimeTypes.VIOLENCEANDSEXUALOFFENCES:
+      case CrimeTypes.VIOLENCEANDSEXUALOFFENCES.toString():
         return 'Violence and sexual offences';
-      case CrimeTypes.OTHERCRIME:
+      case CrimeTypes.OTHERCRIME.toString():
         return 'Other crime';
       default:
         return '';
