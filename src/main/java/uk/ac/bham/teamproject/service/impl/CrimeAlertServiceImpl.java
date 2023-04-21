@@ -3,6 +3,7 @@ package uk.ac.bham.teamproject.service.impl;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -155,6 +156,36 @@ public class CrimeAlertServiceImpl implements CrimeAlertService {
         }
     }
 
+    String createTitleFromResponse(JsonObject crimeData) {
+        String category = crimeData.getAsJsonPrimitive("category").getAsString();
+        String title = category.replace("-", " ").toUpperCase();
+        return title;
+    }
+
+    String createDescriptionFromResponse(JsonObject crimeData) {
+        JsonObject location = crimeData.getAsJsonObject("location");
+        String latitude = location.getAsJsonPrimitive("latitude").getAsString();
+        String longitude = location.getAsJsonPrimitive("longitude").getAsString();
+        JsonObject street = location.getAsJsonObject("street");
+        String streetName = street.getAsJsonPrimitive("name").getAsString();
+        String month = crimeData.getAsJsonPrimitive("month").getAsString();
+
+        StringBuilder descriptionBuilder = new StringBuilder();
+        descriptionBuilder
+            .append("A ")
+            .append(createTitleFromResponse(crimeData))
+            .append(" incident occurred on or near ")
+            .append(streetName)
+            .append(" in the month of ")
+            .append(month)
+            .append(". The approximate location coordinates are Latitude: ")
+            .append(latitude)
+            .append(", Longitude: ")
+            .append(longitude)
+            .append(".");
+        return descriptionBuilder.toString();
+    }
+
     private List<CrimeAlert> fetchCrimeAlerts(String poly) {
         RestTemplate restTemplate = new RestTemplate();
         String url = "https://data.police.uk/api/crimes-street/all-crime?poly=" + poly;
@@ -165,10 +196,8 @@ public class CrimeAlertServiceImpl implements CrimeAlertService {
         for (JsonElement jsonElement : jsonArray) {
             JsonPrimitive idJson = jsonElement.getAsJsonObject().getAsJsonPrimitive("id");
             Long id = idJson.getAsLong();
-            JsonPrimitive titleJson = jsonElement.getAsJsonObject().getAsJsonPrimitive("category");
-            String title = titleJson.getAsString();
-            JsonPrimitive descriptionJson = jsonElement.getAsJsonObject().getAsJsonPrimitive("location_type");
-            String description = "This crime happened in: " + descriptionJson.getAsString();
+            String title = createTitleFromResponse(jsonElement.getAsJsonObject());
+            String description = createDescriptionFromResponse(jsonElement.getAsJsonObject());
             JsonPrimitive dateStringJson = jsonElement.getAsJsonObject().getAsJsonPrimitive("month");
             String dateString = dateStringJson.getAsString();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM");
