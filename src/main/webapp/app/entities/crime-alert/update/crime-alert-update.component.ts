@@ -13,6 +13,7 @@ import { DataUtils, FileLoadError } from 'app/core/util/data-util.service';
 import { IUser } from 'app/entities/user/user.model';
 import { UserService } from 'app/entities/user/user.service';
 import { CrimeTypes } from 'app/entities/enumerations/crime-types.model';
+import { AccountService } from 'app/core/auth/account.service';
 
 @Component({
   selector: 'jhi-crime-alert-update',
@@ -24,6 +25,7 @@ export class CrimeAlertUpdateComponent implements OnInit {
   crimeTypesValues = Object.keys(CrimeTypes);
 
   usersSharedCollection: IUser[] = [];
+  private currentUser: IUser | null = null;
 
   editForm: CrimeAlertFormGroup = this.crimeAlertFormService.createCrimeAlertFormGroup();
 
@@ -34,7 +36,8 @@ export class CrimeAlertUpdateComponent implements OnInit {
     protected crimeAlertFormService: CrimeAlertFormService,
     protected userService: UserService,
     protected elementRef: ElementRef,
-    protected activatedRoute: ActivatedRoute
+    protected activatedRoute: ActivatedRoute,
+    private accountService: AccountService
   ) {}
 
   compareUser = (o1: IUser | null, o2: IUser | null): boolean => this.userService.compareUser(o1, o2);
@@ -86,10 +89,13 @@ export class CrimeAlertUpdateComponent implements OnInit {
     });
   }
   onCoordinatesChanged(coords: { lat: number; lon: number }): void {
-    this.editForm.patchValue({
-      lat: coords.lat,
-      lon: coords.lon,
-      crimeID: this.generateUniqueCrimeID(),
+    this.accountService.identity().subscribe(user => {
+      this.editForm.patchValue({
+        lat: coords.lat,
+        lon: coords.lon,
+        crimeID: this.generateUniqueCrimeID(),
+        postedby: { id: 1, login: user?.login },
+      });
     });
   }
 

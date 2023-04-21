@@ -7,6 +7,7 @@ import { createRequestOption } from 'app/core/request/request-util';
 import { isPresent } from 'app/core/util/operators';
 import { Pagination } from 'app/core/request/request.model';
 import { IUser, getUserIdentifier } from './user.model';
+import { EntityResponseType } from '../crime-alert/service/crime-alert.service';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
@@ -17,6 +18,10 @@ export class UserService {
   query(req?: Pagination): Observable<HttpResponse<IUser[]>> {
     const options = createRequestOption(req);
     return this.http.get<IUser[]>(this.resourceUrl, { params: options, observe: 'response' });
+  }
+
+  public findByLogin(login: string): Observable<EntityResponseType> {
+    return this.http.get<IUser>(`${this.resourceUrl}/login/${login}`, { observe: 'response' });
   }
 
   compareUser(o1: Pick<IUser, 'id'> | null, o2: Pick<IUser, 'id'> | null): boolean {

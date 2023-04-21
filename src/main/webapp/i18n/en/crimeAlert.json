@@ -3,7 +3,7 @@
     "crimeAlert": {
       "home": {
         "title": "Crime Alerts",
-        "refreshListLabel": "Refresh list",
+        "refreshListLabel": "Refresh",
         "ListViewListLabel": "Open/Close List View",
         "createLabel": "Create a new Crime Alert",
         "createOrEditLabel": "Create or edit a Crime Alert",
