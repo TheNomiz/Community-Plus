@@ -42,10 +42,12 @@
         </ul>
       </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-8">
       <div class="chatroom">
         <div class="messages">
-          <li *ngFor="let message of roomMessages">{{ message.sentDate }}: {{ message.content }}</li>
+          <li *ngFor="let message of roomMessages">
+            [{{ formatDate(message.sentDate) }}]{{ getUserName(message.postedby) }} : {{ message.content }}
+          </li>
         </div>
         <input type="text" [(ngModel)]="message" placeholder="Type your message here" />
         <button (click)="onSendMessage()">Send</button>

@@ -40,11 +40,6 @@ import { RouterModule } from '@angular/router';
         loadChildren: () => import('../emergency-stations-page/emergency-stations-page.module').then(m => m.EmergencyStationsPageModule),
       },
       {
-        path: 'lost-found-page',
-        data: { pageTitle: 'teamprojectApp.lostFoundPage.home.title' },
-        loadChildren: () => import('./lost-found-page/lost-found-page.module').then(m => m.LostFoundPageModule),
-      },
-      {
         path: 'community',
         loadChildren: () => import('./community/community.module').then(m => m.CommunityModule),
       },

@@ -24,7 +24,6 @@
     <include file="config/liquibase/changelog/20230308133814_added_entity_ChatMessage.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20230309153628_added_entity_EmergencyGuidePage.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20230309153629_added_entity_EmergencyStationsPage.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20230309153630_added_entity_LostFoundPage.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20230315131746_added_entity_UserProfile.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20230322171613_added_entity_EmergencyGuide.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20230322171614_added_entity_EmergencyStations.xml" relativeToChangelogFile="false"/>
