@@ -1,102 +1,53 @@
 <div class="d-flex justify-content-center">
   <div class="col-8">
-    <div *ngIf="crimeAlert">
-      <h2 data-cy="crimeAlertDetailsHeading"><span jhiTranslate="teamprojectApp.crimeAlert.detail.title">Crime Alert</span></h2>
-
-      <hr />
+    <div *ngIf="crimeAlert" class="crime-alert-container">
+      <div class="crime-alert-header">
+        <h2 class="crime-alert-title" data-cy="crimeAlertDetailsHeading">
+          <span>{{ crimeAlert.title }}</span>
+        </h2>
+        <span class="crime-alert-postedby">{{ crimeAlert.postedby?.login }}</span>
+      </div>
 
       <jhi-alert-error></jhi-alert-error>
-
       <jhi-alert></jhi-alert>
 
-      <dl class="row-md jh-entity-details">
-        <dt><span jhiTranslate="global.field.id">ID</span></dt>
-        <dd>
-          <span>{{ crimeAlert.id }}</span>
-        </dd>
-        <dt><span jhiTranslate="teamprojectApp.crimeAlert.title">Title</span></dt>
-        <dd>
-          <span>{{ crimeAlert.title }}</span>
-        </dd>
+      <dl class="crime-alert-details">
         <dt><span jhiTranslate="teamprojectApp.crimeAlert.description">Description</span></dt>
         <dd>
           <span>{{ crimeAlert.description }}</span>
         </dd>
-        <dt><span jhiTranslate="teamprojectApp.crimeAlert.lat">Lat</span></dt>
+        <dt><span jhiTranslate="teamprojectApp.crimeAlert.location">Location</span></dt>
         <dd>
-          <span>{{ crimeAlert.lat }}</span>
-        </dd>
-        <dt><span jhiTranslate="teamprojectApp.crimeAlert.lon">Lon</span></dt>
-        <dd>
-          <span>{{ crimeAlert.lon }}</span>
+          <span>{{ address }}</span>
         </dd>
         <dt><span jhiTranslate="teamprojectApp.crimeAlert.date">Date</span></dt>
         <dd>
           <span>{{ crimeAlert.date | formatMediumDatetime }}</span>
         </dd>
-        <dt><span jhiTranslate="teamprojectApp.crimeAlert.crimeID">Crime ID</span></dt>
-        <dd>
-          <span>{{ crimeAlert.crimeID }}</span>
-        </dd>
         <dt><span jhiTranslate="teamprojectApp.crimeAlert.crimeType">Crime Type</span></dt>
         <dd>
           <span jhiTranslate="{{ 'teamprojectApp.CrimeTypes.' + crimeAlert.crimeType }}">{{ crimeAlert.crimeType }}</span>
         </dd>
-        <dt><span jhiTranslate="teamprojectApp.crimeAlert.crimePhoto1">Crime Photo 1</span></dt>
-        <dd>
-          <div *ngIf="crimeAlert.crimePhoto1">
-            <a (click)="openFile(crimeAlert.crimePhoto1, crimeAlert.crimePhoto1ContentType)">
-              <img
-                [src]="'data:' + crimeAlert.crimePhoto1ContentType + ';base64,' + crimeAlert.crimePhoto1"
-                style="max-width: 100%"
-                alt="crimeAlert image"
-              />
-            </a>
-            {{ crimeAlert.crimePhoto1ContentType }}, {{ byteSize(crimeAlert.crimePhoto1) }}
-          </div>
-        </dd>
-        <dt><span jhiTranslate="teamprojectApp.crimeAlert.crimePhoto2">Crime Photo 2</span></dt>
-        <dd>
-          <div *ngIf="crimeAlert.crimePhoto2">
-            <a (click)="openFile(crimeAlert.crimePhoto2, crimeAlert.crimePhoto2ContentType)">
-              <img
-                [src]="'data:' + crimeAlert.crimePhoto2ContentType + ';base64,' + crimeAlert.crimePhoto2"
-                style="max-width: 100%"
-                alt="crimeAlert image"
-              />
-            </a>
-            {{ crimeAlert.crimePhoto2ContentType }}, {{ byteSize(crimeAlert.crimePhoto2) }}
-          </div>
-        </dd>
-        <dt><span jhiTranslate="teamprojectApp.crimeAlert.crimePhoto3">Crime Photo 3</span></dt>
-        <dd>
-          <div *ngIf="crimeAlert.crimePhoto3">
-            <a (click)="openFile(crimeAlert.crimePhoto3, crimeAlert.crimePhoto3ContentType)">
-              <img
-                [src]="'data:' + crimeAlert.crimePhoto3ContentType + ';base64,' + crimeAlert.crimePhoto3"
-                style="max-width: 100%"
-                alt="crimeAlert image"
-              />
-            </a>
-            {{ crimeAlert.crimePhoto3ContentType }}, {{ byteSize(crimeAlert.crimePhoto3) }}
-          </div>
-        </dd>
-        <dt><span jhiTranslate="teamprojectApp.crimeAlert.postedby">Postedby</span></dt>
-        <dd>
-          <span>{{ crimeAlert.postedby?.login }}</span>
-        </dd>
       </dl>
-      <div *ngFor="let comment of comments">
-        {{ comment.comment }}
+
+      <div class="crime-alert-images d-flex flex-wrap justify-content-center">
+        <ng-container *ngFor="let image of [crimeAlert.crimePhoto1, crimeAlert.crimePhoto2, crimeAlert.crimePhoto3]; let i = index">
+          <div *ngIf="image" class="crime-alert-image">
+            <a (click)="openFile(image, getCrimePhotoContentType(i))">
+              <img [src]="'data:' + getCrimePhotoContentType(i) + ';base64,' + image" style="width: 100%" alt="crimeAlert image" />
+            </a>
+          </div>
+        </ng-container>
       </div>
+      <div class="d-flex justify-content-between">
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
 
-      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
-        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
-      </button>
-
-      <button type="button" [routerLink]="['/crime-alert', crimeAlert.id, 'edit']" class="btn btn-primary">
-        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
-      </button>
+        <button type="button" [routerLink]="['/crime-alert', crimeAlert.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
     </div>
   </div>
 </div>

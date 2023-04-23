@@ -2,21 +2,21 @@
   "teamprojectApp": {
     "CrimeTypes": {
       "null": "",
-      "ALLCRIME": "ALLCRIME",
-      "ANTISOCIALBEHAVIOUR": "ANTISOCIALBEHAVIOUR",
-      "BICYCLETHEFT": "BICYCLETHEFT",
-      "BURGLARY": "BURGLARY",
-      "CRIMINALDAMAGEARSON": "CRIMINALDAMAGEARSON",
-      "DRUGS": "DRUGS",
-      "OTHERTHEFT": "OTHERTHEFT",
-      "POSSESSIONOFWEAPONS": "POSSESSIONOFWEAPONS",
-      "PUBLICORDER": "PUBLICORDER",
-      "ROBBERY": "ROBBERY",
-      "SHOPLIFTING": "SHOPLIFTING",
-      "THEFTFROMTHEPERSON": "THEFTFROMTHEPERSON",
-      "VEHICLECRIME": "VEHICLECRIME",
-      "VIOLENCEANDSEXUALOFFENCES": "VIOLENCEANDSEXUALOFFENCES",
-      "OTHERCRIME": "OTHERCRIME"
+      "ALLCRIME": "All crime",
+      "ANTISOCIALBEHAVIOUR": "Anti-social behaviour",
+      "BICYCLETHEFT": "Bicycle theft",
+      "BURGLARY": "Burglary",
+      "CRIMINALDAMAGEARSON": "Criminal damage and arson",
+      "DRUGS": "Drugs",
+      "OTHERTHEFT": "Other theft",
+      "POSSESSIONOFWEAPONS": "Possession of weapons",
+      "PUBLICORDER": "Public order",
+      "ROBBERY": "Robbery",
+      "SHOPLIFTING": "Shoplifting",
+      "THEFTFROMTHEPERSON": "Theft from the person",
+      "VEHICLECRIME": "Vehicle crime",
+      "VIOLENCEANDSEXUALOFFENCES": "Violence and sexual offences",
+      "OTHERCRIME": "Other crime"
     }
   }
 }

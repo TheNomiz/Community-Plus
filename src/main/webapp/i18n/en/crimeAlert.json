@@ -25,6 +25,7 @@
       "lon": "Lon",
       "date": "Date",
       "crimeID": "Crime ID",
+      "location": "Location",
       "crimeType": "Crime Type",
       "crimePhoto1": "Crime Photo 1",
       "crimePhoto2": "Crime Photo 2",
