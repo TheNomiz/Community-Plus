@@ -7,9 +7,10 @@ import { CrimeAlertDeleteDialogComponent } from './delete/crime-alert-delete-dia
 import { CrimeAlertRoutingModule } from './route/crime-alert-routing.module';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MapInputComponent } from 'app/map-input/map-input.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-  imports: [SharedModule, CrimeAlertRoutingModule, MatProgressBarModule],
+  imports: [SharedModule, CrimeAlertRoutingModule, MatProgressBarModule, ReactiveFormsModule],
   declarations: [
     CrimeAlertComponent,
     CrimeAlertDetailComponent,

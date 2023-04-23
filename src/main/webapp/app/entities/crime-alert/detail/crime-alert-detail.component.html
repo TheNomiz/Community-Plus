@@ -39,9 +39,21 @@
           </div>
         </ng-container>
       </div>
-      <div *ngFor="let comment of comments">
-        <strong>{{ comment.user?.login }}</strong
-        >: {{ comment.comment }}
+      <div class="comment-section">
+        <h3 class="comment-section-title">Comments</h3>
+        <div *ngFor="let comment of comments" class="comment">
+          <strong class="comment-author">{{ comment.user?.login }}</strong
+          >: {{ comment.comment }}
+          <small class="comment-date">{{ comment.date | formatMediumDatetime }}</small>
+        </div>
+
+        <form [formGroup]="commentForm" (ngSubmit)="submitComment()" class="comment-form">
+          <div class="form-group">
+            <label for="comment" class="sr-only">Add a comment</label>
+            <textarea formControlName="comment" id="comment" class="form-control" rows="3" placeholder="Add a comment"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" [disabled]="!commentForm.valid">Submit</button>
+        </form>
       </div>
 
       <div class="d-flex justify-content-between">

@@ -3,12 +3,15 @@ import { ActivatedRoute } from '@angular/router';
 
 import { ICrimeAlert } from '../crime-alert.model';
 import { DataUtils } from 'app/core/util/data-util.service';
-import { IComment } from 'app/entities/comment/comment.model';
+import { IComment, NewComment } from 'app/entities/comment/comment.model';
 import { CommentService } from 'app/entities/comment/service/comment.service';
 import { HttpResponse } from '@angular/common/http'; // Import the Comment model
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { AccountService } from 'app/core/auth/account.service';
+import dayjs from 'dayjs/esm';
 
 @Component({
   selector: 'jhi-crime-alert-detail',
@@ -19,19 +22,50 @@ export class CrimeAlertDetailComponent implements OnInit {
   crimeAlert: ICrimeAlert | null = null;
   comments: IComment[] = []; // Add a property to store the comments
   address = '';
+  commentForm: FormGroup;
+  newComment: NewComment = {
+    id: null,
+    comment: '',
+    date: null,
+    user: null,
+    crime: null,
+  };
 
   constructor(
     protected dataUtils: DataUtils,
     protected activatedRoute: ActivatedRoute,
     private commentService: CommentService,
-    private http: HttpClient
-  ) {}
+    private http: HttpClient,
+    private fb: FormBuilder,
+    private accountService: AccountService
+  ) {
+    this.commentForm = this.fb.group({
+      comment: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(500)]],
+    });
+  }
+
+  submitComment(): void {
+    if (this.newComment.comment) {
+      this.accountService.identity().subscribe(account => {
+        if (account && this.crimeAlert) {
+          this.newComment.user = { id: 1, login: account.login };
+          this.newComment.date = dayjs();
+          this.newComment.crime = { id: this.crimeAlert.id };
+
+          this.commentService.create(this.newComment).subscribe((response: HttpResponse<IComment>) => {
+            this.comments.push(response.body as IComment);
+            this.newComment.comment = '';
+          });
+        }
+      });
+    }
+  }
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ crimeAlert }) => {
       this.crimeAlert = crimeAlert;
       this.commentService
-        .query({ 'crimeAlertId.equals': crimeAlert.id })
+        .query({ 'crimeId.equals': crimeAlert.id })
         .subscribe((res: HttpResponse<IComment[]>) => (this.comments = res.body ?? []));
       this.getAddressFromCoordinates(crimeAlert.lat, crimeAlert.lon);
     });
