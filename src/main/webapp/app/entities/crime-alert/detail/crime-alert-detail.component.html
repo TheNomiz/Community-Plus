@@ -39,6 +39,11 @@
           </div>
         </ng-container>
       </div>
+      <div *ngFor="let comment of comments">
+        <strong>{{ comment.user?.login }}</strong
+        >: {{ comment.comment }}
+      </div>
+
       <div class="d-flex justify-content-between">
         <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
           <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
