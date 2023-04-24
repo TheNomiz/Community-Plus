@@ -3,6 +3,7 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
 import { BusinessService } from 'app/entities/business/service/business.service';
 import { ChatMessageService } from 'app/entities/chat-message/service/chat-message.service';
 import { ChatRoomService } from 'app/entities/chat-room/service/chat-room.service';
@@ -80,7 +81,8 @@ export class CommunityComponent implements OnInit {
     private rxStompService: RxStompService,
     private accountService: AccountService,
     private userService: UserService,
-    private userprofileService: UserProfileService
+    private userprofileService: UserProfileService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -141,6 +143,20 @@ export class CommunityComponent implements OnInit {
           );
           marker.addTo(this.map);
         }
+        // create chatroom for business
+        if (business.name) {
+          this.chatroomservice
+            .create({
+              id: null,
+              name: business.name,
+            })
+            .subscribe(response => {
+              const newChatroom = response.body;
+              if (newChatroom) {
+                this.chatRooms.push(newChatroom);
+              }
+            });
+        }
       });
     });
 
@@ -170,6 +186,23 @@ export class CommunityComponent implements OnInit {
             `<b>${event.name}</b><br>${event.description}</br><br>${event.address}</br><br>${event.startDate}</br><br>${event.endDate}`
           );
           marker.addTo(this.map);
+        }
+      });
+
+      // create chatroom for each event
+      this.events.forEach(event => {
+        if (event.name) {
+          this.chatroomservice
+            .create({
+              id: null,
+              name: event.name,
+            })
+            .subscribe(response => {
+              const newChatroom = response.body;
+              if (newChatroom) {
+                this.chatRooms.push(newChatroom);
+              }
+            });
         }
       });
     });
@@ -233,28 +266,14 @@ export class CommunityComponent implements OnInit {
     };
 
     if (this.anonymous === true) {
-      const chatMessage: NewChatMessage = {
-        id: null,
-        content: this.message,
-        sentDate: day(),
-        postedby: this.usersprofile,
-        room: { id: this.roomId },
-      };
+      chatMessage.postedby = this.usersprofile;
     }
+
     this.rxStompService.publish({ destination: `/topic/${this.roomId}`, body: JSON.stringify(chatMessage) });
     // clear the message
     this.message = '';
     // send the message to the server
-    this.messageservice.create(chatMessage).subscribe(
-      response => {
-        // handle the response here
-        console.log(response);
-      },
-      error => {
-        // handle the error here
-        console.log(error);
-      }
-    );
+    this.messageservice.create(chatMessage).subscribe();
   }
 
   joinRoom(room: IChatRoom) {
@@ -268,10 +287,6 @@ export class CommunityComponent implements OnInit {
     this.currentRoom = room.name;
 
     // get all the messages for the new chatroom
-    this.chatroomservice.query().subscribe((res: HttpResponse<IChatRoom[]>) => {
-      this.chatRooms = res.body ?? [];
-    });
-
     const roomId = this.roomId;
     this.roomMessages = this.chatMessages.filter(message => message.room?.id === roomId);
 
@@ -301,7 +316,17 @@ export class CommunityComponent implements OnInit {
     }
   }
 
+  createNewEvent() {
+    this.router.navigate(['/event/new']);
+  }
+
+  createNewBusiness() {
+    this.router.navigate(['/business/new']);
+  }
+
   ngOnDestroy() {
-    this.topicSubscription.unsubscribe();
+    if (this.subscribed === true) {
+      this.topicSubscription.unsubscribe();
+    }
   }
 }

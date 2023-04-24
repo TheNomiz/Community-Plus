@@ -15,6 +15,7 @@
   <h1>Community Page</h1>
   <div class="row">
     <h2>Upcoming Local Events for this week</h2>
+    <button (click)="createNewEvent()" type="button" class="btn btn-primary">Add Event</button>
     <ngb-carousel [interval]="5000">
       <ng-template ngbSlide *ngFor="let event of getUpcomingEvents()">
         <img [src]="getImage(event)" alt="Event image" />
@@ -30,14 +31,14 @@
   </div>
   <div class="row">
     <h2>Chat Rooms</h2>
+    <div *ngIf="currentRoom">
+      <h4>You are currently in the {{ currentRoom }} room.</h4>
+    </div>
     <div class="col-md-4">
       <div class="rooms">
         <ul>
-          <div *ngIf="currentRoom">
-            <h4>You are currently in the "{{ currentRoom }}" room.</h4>
-          </div>
           <li *ngFor="let room of chatRooms">
-            <a (click)="joinRoom(room)">{{ room.name }}</a>
+            <button class="btn btn-primary" (click)="joinRoom(room)">{{ room.name }}</button>
           </li>
         </ul>
       </div>
@@ -49,13 +50,14 @@
             [{{ formatDate(message.sentDate) }}]{{ getUserName(message.postedby) }} : {{ message.content }}
           </li>
         </div>
-        <input type="text" [(ngModel)]="message" placeholder="Type your message here" />
+        <input type="text" [(ngModel)]="message" placeholder="Type your message here" (keyup.enter)="onSendMessage()" />
         <button (click)="onSendMessage()">Send</button>
       </div>
     </div>
   </div>
   <div class="row">
     <h2>Map of local businesses and events</h2>
+    <button (click)="createNewBusiness()" type="button" class="btn btn-primary">Add Business</button>
     <div class="map-frame">
       <div id="map" style="height: 400px"></div>
     </div>
