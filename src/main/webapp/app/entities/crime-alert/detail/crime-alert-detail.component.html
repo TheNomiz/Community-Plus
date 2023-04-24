@@ -1,5 +1,5 @@
 <div class="d-flex justify-content-center">
-  <div class="col-8">
+  <div class="col-8 mb-3">
     <div *ngIf="crimeAlert" class="crime-alert-container">
       <div class="crime-alert-header">
         <h2 class="crime-alert-title" data-cy="crimeAlertDetailsHeading">
@@ -39,22 +39,9 @@
           </div>
         </ng-container>
       </div>
-      <div class="comment-section">
-        <h3 class="comment-section-title">Comments</h3>
-        <div *ngFor="let comment of comments" class="comment">
-          <strong class="comment-author">{{ comment.user?.login }}</strong
-          >: {{ comment.comment }}
-          <small class="comment-date">{{ comment.date | formatMediumDatetime }}</small>
-        </div>
+      <!-- ... -->
 
-        <form [formGroup]="commentForm" (ngSubmit)="submitComment()" class="comment-form">
-          <div class="form-group">
-            <label for="comment" class="sr-only">Add a comment</label>
-            <textarea formControlName="comment" id="comment" class="form-control" rows="3" placeholder="Add a comment"></textarea>
-          </div>
-          <button type="submit" class="btn btn-primary" [disabled]="!commentForm.valid">Submit</button>
-        </form>
-      </div>
+      <!-- ... -->
 
       <div class="d-flex justify-content-between">
         <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
@@ -64,6 +51,29 @@
         <button type="button" [routerLink]="['/crime-alert', crimeAlert.id, 'edit']" class="btn btn-primary">
           <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
         </button>
+      </div>
+    </div>
+    <div class="d-flex justify-content-center">
+      <div class="comment-container">
+        <div class="comment-section">
+          <h3 class="comment-section-title">Comments</h3>
+          <div *ngFor="let comment of comments" class="comment mb-3">
+            <div class="card">
+              <div class="card-body">
+                <strong class="comment-author">{{ comment.user?.login }}</strong>
+                <small class="comment-date text-muted">{{ comment.date | formatMediumDatetime }}</small>
+                <p class="comment-text">{{ comment.comment }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <form (ngSubmit)="submitComment()">
+          <div class="form-group">
+            <label for="commentInput">Add a comment</label>
+            <input type="text" [(ngModel)]="newComment.comment" name="comment" id="commentInput" class="form-control" required />
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
       </div>
     </div>
   </div>

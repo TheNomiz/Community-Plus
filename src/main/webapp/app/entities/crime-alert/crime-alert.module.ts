@@ -8,9 +8,10 @@ import { CrimeAlertRoutingModule } from './route/crime-alert-routing.module';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MapInputComponent } from 'app/map-input/map-input.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
-  imports: [SharedModule, CrimeAlertRoutingModule, MatProgressBarModule, ReactiveFormsModule],
+  imports: [SharedModule, CrimeAlertRoutingModule, MatProgressBarModule, ReactiveFormsModule, FormsModule],
   declarations: [
     CrimeAlertComponent,
     CrimeAlertDetailComponent,
