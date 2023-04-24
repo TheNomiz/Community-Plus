@@ -1,6 +1,47 @@
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+  integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+  crossorigin=""
+/>
+
+<script
+  src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+  integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+  crossorigin=""
+></script>
+
 <div>
   <h2 id="page-heading" data-cy="EmergencyStationsHeading">
-    <span jhiTranslate="teamprojectApp.emergencyStations.home.title">Emergency Stations</span>
+    <!-- <span jhiTranslate="teamprojectApp.emergencyStations.home.title">Emergency Stations</span> -->
+    <h1 style="text-align: center"><strong>Emergency Stations</strong></h1>
+
+    <br />
+
+    <div class="searchHolder">
+      <input class="searchBar" type="search" placeholder="Search location" style="font-size: 60%" />
+      <button class="searchButtons">
+        <img src="../../../content/images/Microphone_Button.png" class="SBImages" style="width: auto" />
+      </button>
+      <button class="searchButtons"><img src="../../../content/images/Location_Button.png" class="SBImages" style="width: auto" /></button>
+      <button class="searchButtons"><img src="../../../content/images/Search_Button.png" class="SBImages" style="width: auto" /></button>
+    </div>
+
+    <br />
+
+    <div class="holder" id="holder">
+      <div class="filters" id="filters">
+        <h2>Filters</h2>
+        <div class="filterOptionHolder" style="font-size: 65%"><input type="checkbox" /> Police Stations</div>
+        <div class="filterOptionHolder" style="font-size: 65%"><input type="checkbox" /> Fire Stations</div>
+        <div class="filterOptionHolder" style="font-size: 65%"><input type="checkbox" /> Hospitals</div>
+        <div class="filterOptionHolder" style="font-size: 65%"><input type="checkbox" /> Pharmacies</div>
+      </div>
+
+      <div class="map" id="map"></div>
+    </div>
+
+    <br />
 
     <div class="d-flex justify-content-end">
       <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">

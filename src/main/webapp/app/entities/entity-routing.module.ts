@@ -37,7 +37,8 @@ import { RouterModule } from '@angular/router';
       {
         path: 'emergency-stations-page',
         data: { pageTitle: 'teamprojectApp.emergencyStationsPage.home.title' },
-        loadChildren: () => import('../emergency-stations-page/emergency-stations-page.module').then(m => m.EmergencyStationsPageModule),
+        loadChildren: () =>
+          import('../emergency-stations-page-OLD/emergency-stations-page.module').then(m => m.EmergencyStationsPageModule),
       },
       {
         path: 'community',
@@ -60,7 +61,7 @@ import { RouterModule } from '@angular/router';
       {
         path: 'emergency-stations',
         data: { pageTitle: 'teamprojectApp.emergencyStations.home.title' },
-        loadChildren: () => import('./emergency-stations/emergency-stations.module').then(m => m.EmergencyStationsModule),
+        loadChildren: () => import('../emergency-stations/emergency-stations.module').then(m => m.EmergencyStationsModule),
       },
       {
         path: 'lost-found',
