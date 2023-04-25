@@ -28,7 +28,6 @@ import { BusinessService } from 'app/entities/business/service/business.service'
 import { ChatMessageService } from 'app/entities/chat-message/service/chat-message.service';
 import { ChatRoomService } from 'app/entities/chat-room/service/chat-room.service';
 import { EventService } from 'app/entities/event/service/event.service';
-import { MapInputComponent } from './map-input/map-input.component';
 
 @NgModule({
   imports: [

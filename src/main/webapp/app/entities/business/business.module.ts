@@ -5,10 +5,10 @@ import { BusinessDetailComponent } from './detail/business-detail.component';
 import { BusinessUpdateComponent } from './update/business-update.component';
 import { BusinessDeleteDialogComponent } from './delete/business-delete-dialog.component';
 import { BusinessRoutingModule } from './route/business-routing.module';
-import { MapInputComponent } from 'app/map-input/map-input.component';
+import { MapInputModule } from '../mapInput.module';
 
 @NgModule({
-  imports: [SharedModule, BusinessRoutingModule],
-  declarations: [BusinessComponent, BusinessDetailComponent, BusinessUpdateComponent, BusinessDeleteDialogComponent, MapInputComponent],
+  imports: [SharedModule, BusinessRoutingModule, MapInputModule],
+  declarations: [BusinessComponent, BusinessDetailComponent, BusinessUpdateComponent, BusinessDeleteDialogComponent],
 })
 export class BusinessModule {}

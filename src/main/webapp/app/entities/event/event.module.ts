@@ -5,10 +5,10 @@ import { EventDetailComponent } from './detail/event-detail.component';
 import { EventUpdateComponent } from './update/event-update.component';
 import { EventDeleteDialogComponent } from './delete/event-delete-dialog.component';
 import { EventRoutingModule } from './route/event-routing.module';
-import { MapInputComponent } from 'app/map-input/map-input.component';
+import { MapInputModule } from '../mapInput.module';
 
 @NgModule({
-  imports: [SharedModule, EventRoutingModule],
-  declarations: [EventComponent, EventDetailComponent, EventUpdateComponent, EventDeleteDialogComponent, MapInputComponent],
+  imports: [SharedModule, EventRoutingModule, MapInputModule],
+  declarations: [EventComponent, EventDetailComponent, EventUpdateComponent, EventDeleteDialogComponent],
 })
 export class EventModule {}

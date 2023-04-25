@@ -6,18 +6,12 @@ import { CrimeAlertUpdateComponent } from './update/crime-alert-update.component
 import { CrimeAlertDeleteDialogComponent } from './delete/crime-alert-delete-dialog.component';
 import { CrimeAlertRoutingModule } from './route/crime-alert-routing.module';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MapInputComponent } from 'app/map-input/map-input.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
+import { MapInputModule } from '../mapInput.module';
 
 @NgModule({
-  imports: [SharedModule, CrimeAlertRoutingModule, MatProgressBarModule, ReactiveFormsModule, FormsModule],
-  declarations: [
-    CrimeAlertComponent,
-    CrimeAlertDetailComponent,
-    CrimeAlertUpdateComponent,
-    CrimeAlertDeleteDialogComponent,
-    MapInputComponent,
-  ],
+  imports: [SharedModule, CrimeAlertRoutingModule, MatProgressBarModule, ReactiveFormsModule, FormsModule, MapInputModule],
+  declarations: [CrimeAlertComponent, CrimeAlertDetailComponent, CrimeAlertUpdateComponent, CrimeAlertDeleteDialogComponent],
 })
 export class CrimeAlertModule {}
