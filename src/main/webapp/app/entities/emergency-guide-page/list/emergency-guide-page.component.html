@@ -1,24 +1,56 @@
 <div>
   <h2 id="page-heading" data-cy="EmergencyGuidePageHeading">
-    <span jhiTranslate="teamprojectApp.emergencyGuidePage.home.title">Emergency Guide Pages</span>
-
-    <div class="d-flex justify-content-end">
-      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
-        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
-        <span jhiTranslate="teamprojectApp.emergencyGuidePage.home.refreshListLabel">Refresh list</span>
-      </button>
-
-      <button
-        id="jh-create-entity"
-        data-cy="entityCreateButton"
-        class="btn btn-primary jh-create-entity create-emergency-guide-page"
-        [routerLink]="['/emergency-guide-page/new']"
-      >
-        <fa-icon icon="plus"></fa-icon>
-        <span jhiTranslate="teamprojectApp.emergencyGuidePage.home.createLabel"> Create a new Emergency Guide Page </span>
-      </button>
-    </div>
+    <span jhiTranslate="teamprojectApp.emergencyGuidePage.home.title">Emergency Response Guide</span>
   </h2>
+
+  <div class="page-summary" role="presentation">
+    <p>
+      There are many emergency situations that you may come across. Find out more information in the sections below - preparation is the
+      most assured safety.
+    </p>
+  </div>
+
+  <nav class="sub-menu toc-menu" aria-labelledby="toc-menu-heading">
+    <h2 id="toc-menu-heading" class="menu-title">Contents</h2>
+    <ul class="nav-menu">
+      <li class="nav-item"><a href="#toc-0">Fire</a></li>
+      <li class="nav-item"><a href="#toc-3">Car Accident</a></li>
+      <li class="nav-item"><a href="#toc-4">Knife Crime</a></li>
+      <li class="nav-item"><a href="#toc-5">Theft</a></li>
+      <li class="nav-item"><a href="#toc-7">Injury/Bleeding</a></li>
+      <li class="nav-item"><a href="#toc-7">Not Breathing/CPR</a></li>
+      <li class="nav-item"><a href="#toc-1">Terrorism</a></li>
+      <li class="nav-item"><a href="#toc-6">Poisoning</a></li>
+      <li class="nav-item"><a href="#toc-2">Chemical Incident</a></li>
+    </ul>
+  </nav>
+
+  <h2 id="toc-0">Fire</h2>
+  <p>If your clothes catch on fire:</p>
+  <p>
+    Stop what you're doing. Drop to the ground and cover your face if you can. <br />
+    Roll over and over or back and forth until the flames go out. Running will only make the fire burn faster.<br />
+    Once the flames are out, cool the burned skin with water for three to five minutes. Call for medical attention.
+  </p>
+
+  <img src="stopdroproll.jpg" alt="Stop Drop and Roll" />
+
+  <p>Tips for staying safe:</p>
+  <ul>
+    <li>If there is a fire extinguisher in the vicinity, follow the instructions shown to operate it safely</li>
+    <li>Remember to GET OUT, STAY OUT and CALL 9-9-9 or your local emergency phone number.</li>
+    <li>Alert people of the fire. Always use the stairs instead of an elevator. Leave your belongings where they are and save yourself.</li>
+    <li>Never open doors that are warm to the touch. If handles are warm or smoke blocks your primary escape, use a second exit.</li>
+    <li>If you must escape through smoke, get low and go under the smoke to your exit. Close doors behind you.</li>
+    <li>
+      If smoke, heat or flames block your exit routes, stay in the room with doors closed. Place a wet towel under the door and call the
+      fire department or 9-9-9. Open a window and wave a brightly colored cloth or flashlight to signal for help.
+    </li>
+    <li>
+      Once you are outside, go to your meeting place and then send one person to call the fire department. If you cannot get to your meeting
+      place, follow your family emergency communication plan.
+    </li>
+  </ul>
 
   <jhi-alert-error></jhi-alert-error>
 
@@ -26,68 +58,5 @@
 
   <div class="alert alert-warning" id="no-result" *ngIf="emergencyGuidePages?.length === 0">
     <span jhiTranslate="teamprojectApp.emergencyGuidePage.home.notFound">No Emergency Guide Pages found</span>
-  </div>
-
-  <div class="table-responsive table-entities" id="entities" *ngIf="emergencyGuidePages && emergencyGuidePages.length > 0">
-    <table class="table table-striped" aria-describedby="page-heading">
-      <thead>
-        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
-          <th scope="col" jhiSortBy="id">
-            <div class="d-flex">
-              <span jhiTranslate="global.field.id">ID</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="emergencyType">
-            <div class="d-flex">
-              <span jhiTranslate="teamprojectApp.emergencyGuidePage.emergencyType">Emergency Type</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col"></th>
-        </tr>
-      </thead>
-      <tbody
-        infinite-scroll
-        (scrolled)="loadPage(page + 1)"
-        [infiniteScrollDisabled]="page - 1 >= links['last']"
-        [infiniteScrollDistance]="0"
-      >
-        <tr *ngFor="let emergencyGuidePage of emergencyGuidePages; trackBy: trackId" data-cy="entityTable">
-          <td>
-            <a [routerLink]="['/emergency-guide-page', emergencyGuidePage.id, 'view']">{{ emergencyGuidePage.id }}</a>
-          </td>
-          <td>{{ emergencyGuidePage.emergencyType }}</td>
-          <td class="text-end">
-            <div class="btn-group">
-              <button
-                type="submit"
-                [routerLink]="['/emergency-guide-page', emergencyGuidePage.id, 'view']"
-                class="btn btn-info btn-sm"
-                data-cy="entityDetailsButton"
-              >
-                <fa-icon icon="eye"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
-              </button>
-
-              <button
-                type="submit"
-                [routerLink]="['/emergency-guide-page', emergencyGuidePage.id, 'edit']"
-                class="btn btn-primary btn-sm"
-                data-cy="entityEditButton"
-              >
-                <fa-icon icon="pencil-alt"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
-              </button>
-
-              <button type="submit" (click)="delete(emergencyGuidePage)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
-                <fa-icon icon="times"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
-              </button>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
   </div>
 </div>
