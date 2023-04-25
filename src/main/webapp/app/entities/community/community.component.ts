@@ -211,7 +211,11 @@ export class CommunityComponent implements OnInit {
     this.roomId = this.getSelectedChatRoomId();
 
     // Initialize your Leaflet map
-    this.map = L.map('map').setView([52.45, -1.93], 13);
+    this.map = L.map('map', {
+      maxBounds: L.latLngBounds(L.latLng(49.78, -13.13), L.latLng(60.89, 2.87)),
+      maxZoom: 18,
+      minZoom: 6,
+    }).setView([51.4, 0.3], 9);
 
     const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 18,

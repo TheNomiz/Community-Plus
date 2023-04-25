@@ -1,10 +1,11 @@
 <div class="d-flex justify-content-center">
   <div class="col-8">
     <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-      <h2 id="jhi-event-heading" data-cy="EventCreateUpdateHeading" jhiTranslate="teamprojectApp.event.home.createOrEditLabel">
-        Create or edit a Event
-      </h2>
-
+      <h2 id="jhi-event-heading" data-cy="EventCreateUpdateHeading" style="text-align: center">Create an Event</h2>
+      <p style="text-align: center">
+        Here you can create an event, which will be displayed in the map and have a dedicated chatroom on the community page. It will also
+        be displayed on the carousel when the event is coming up in the next 7 days.
+      </p>
       <div>
         <jhi-alert-error></jhi-alert-error>
 
@@ -128,27 +129,6 @@
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" jhiTranslate="teamprojectApp.event.latitude" for="field_latitude">Latitude</label>
-          <input type="number" class="form-control" name="latitude" id="field_latitude" data-cy="latitude" formControlName="latitude" />
-          <div *ngIf="editForm.get('latitude')!.invalid && (editForm.get('latitude')!.dirty || editForm.get('latitude')!.touched)">
-            <small
-              class="form-text text-danger"
-              *ngIf="editForm.get('latitude')?.errors?.required"
-              jhiTranslate="entity.validation.required"
-            >
-              This field is required.
-            </small>
-            <small
-              class="form-text text-danger"
-              [hidden]="!editForm.get('latitude')?.errors?.number"
-              jhiTranslate="entity.validation.number"
-            >
-              This field should be a number.
-            </small>
-          </div>
-        </div>
-
-        <div class="row mb-3">
           <label class="form-label" jhiTranslate="teamprojectApp.event.category" for="field_category">Category</label>
           <select class="form-control" name="category" formControlName="category" id="field_category" data-cy="category">
             <option [ngValue]="null">{{ 'teamprojectApp.EventCategory.null' | translate }}</option>
@@ -163,27 +143,6 @@
               jhiTranslate="entity.validation.required"
             >
               This field is required.
-            </small>
-          </div>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="teamprojectApp.event.longitude" for="field_longitude">Longitude</label>
-          <input type="number" class="form-control" name="longitude" id="field_longitude" data-cy="longitude" formControlName="longitude" />
-          <div *ngIf="editForm.get('longitude')!.invalid && (editForm.get('longitude')!.dirty || editForm.get('longitude')!.touched)">
-            <small
-              class="form-text text-danger"
-              *ngIf="editForm.get('longitude')?.errors?.required"
-              jhiTranslate="entity.validation.required"
-            >
-              This field is required.
-            </small>
-            <small
-              class="form-text text-danger"
-              [hidden]="!editForm.get('longitude')?.errors?.number"
-              jhiTranslate="entity.validation.number"
-            >
-              This field should be a number.
             </small>
           </div>
         </div>
@@ -211,35 +170,8 @@
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" jhiTranslate="teamprojectApp.event.postedby" for="field_postedby">Postedby</label>
-          <select
-            class="form-control"
-            id="field_postedby"
-            data-cy="postedby"
-            name="postedby"
-            formControlName="postedby"
-            [compareWith]="compareUserProfile"
-          >
-            <option [ngValue]="null"></option>
-            <option [ngValue]="userProfileOption" *ngFor="let userProfileOption of userProfilesSharedCollection">
-              {{ userProfileOption.id }}
-            </option>
-          </select>
-        </div>
-
-        <div class="row mb-3">
-          <label jhiTranslate="teamprojectApp.event.eventsroom" for="field_eventsrooms">Eventsroom</label>
-          <select
-            class="form-control"
-            id="field_eventsrooms"
-            data-cy="eventsroom"
-            multiple
-            name="eventsrooms"
-            formControlName="eventsrooms"
-            [compareWith]="compareChatRoom"
-          >
-            <option [ngValue]="chatRoomOption" *ngFor="let chatRoomOption of chatRoomsSharedCollection">{{ chatRoomOption.id }}</option>
-          </select>
+          <label class="form-label">Location</label>
+          <app-map-input (coordinatesChanged)="onCoordinatesChanged($event)"></app-map-input>
         </div>
       </div>
 

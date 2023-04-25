@@ -13,8 +13,9 @@
 
 <div class="container-fluid">
   <h1>Community Page</h1>
+  <p>Welcome to the Community page. Here you can find Upcoming Events, talk in chatrooms, and view a map of businesses and events.</p>
   <div class="row">
-    <h2>Upcoming Local Events for this week</h2>
+    <h2>Upcoming Events for this week</h2>
     <button (click)="createNewEvent()" type="button" class="btn btn-primary">Add Event</button>
     <ngb-carousel [interval]="5000">
       <ng-template ngbSlide *ngFor="let event of getUpcomingEvents()">
@@ -31,6 +32,10 @@
   </div>
   <div class="row">
     <h2>Chat Rooms</h2>
+    <p>Select a chatroom to start talking about an event or business</p>
+    <div *ngIf="!currentRoom">
+      <h4>Please select a chatroom.</h4>
+    </div>
     <div *ngIf="currentRoom">
       <h4>You are currently in the {{ currentRoom }} room.</h4>
     </div>
@@ -51,12 +56,13 @@
           </li>
         </div>
         <input type="text" [(ngModel)]="message" placeholder="Type your message here" (keyup.enter)="onSendMessage()" />
-        <button (click)="onSendMessage()">Send</button>
+        <button class="btn btn-primary" (click)="onSendMessage()">Send</button>
       </div>
     </div>
   </div>
   <div class="row">
-    <h2>Map of local businesses and events</h2>
+    <h2>Map of Businesses and Events</h2>
+    <p>Here you can find a map of Businesses and Events. Pressing on the markers shows you more details about the event or business</p>
     <button (click)="createNewBusiness()" type="button" class="btn btn-primary">Add Business</button>
     <div class="map-frame">
       <div id="map" style="height: 400px"></div>

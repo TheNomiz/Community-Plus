@@ -64,6 +64,17 @@ export class BusinessUpdateComponent implements OnInit {
     }
   }
 
+  onCoordinatesChanged(coords: { lat: number; lon: number }): void {
+    if (coords.lat === 0 && coords.lon === 0) {
+      return;
+    } else {
+      this.editForm.patchValue({
+        latitude: coords.lat,
+        longitude: coords.lon,
+      });
+    }
+  }
+
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IBusiness>>): void {
     result.pipe(finalize(() => this.onSaveFinalize())).subscribe({
       next: () => this.onSaveSuccess(),

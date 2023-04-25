@@ -10,7 +10,9 @@
   text-shadow: 2px 2px 2px black;
   font-weight: bold;
 }
-
+p {
+  text-align: center;
+}
 .row {
   margin: auto;
 }
@@ -66,17 +68,15 @@ h3 {
 .rooms {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   border: 1px solid black;
   padding: 10px;
-  height: 400px;
+  height: 488px;
   overflow-y: auto;
 }
 .row {
   border: 1px solid black;
   padding: 10px;
   margin: 10px;
-  align-items: center;
   text-align: center;
 }
 h1 {
