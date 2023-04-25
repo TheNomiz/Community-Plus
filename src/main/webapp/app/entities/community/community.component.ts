@@ -145,17 +145,21 @@ export class CommunityComponent implements OnInit {
         }
         // create chatroom for business
         if (business.name) {
-          this.chatroomservice
-            .create({
-              id: null,
-              name: business.name,
-            })
-            .subscribe(response => {
-              const newChatroom = response.body;
-              if (newChatroom) {
-                this.chatRooms.push(newChatroom);
-              }
-            });
+          // check if chatroom with same name already exists
+          const chatroomExists = this.chatRooms.some(chatroom => chatroom.name === business.name);
+          if (!chatroomExists) {
+            this.chatroomservice
+              .create({
+                id: null,
+                name: business.name,
+              })
+              .subscribe(response => {
+                const newChatroom = response.body;
+                if (newChatroom) {
+                  this.chatRooms.push(newChatroom);
+                }
+              });
+          }
         }
       });
     });
@@ -192,17 +196,21 @@ export class CommunityComponent implements OnInit {
       // create chatroom for each event
       this.events.forEach(event => {
         if (event.name) {
-          this.chatroomservice
-            .create({
-              id: null,
-              name: event.name,
-            })
-            .subscribe(response => {
-              const newChatroom = response.body;
-              if (newChatroom) {
-                this.chatRooms.push(newChatroom);
-              }
-            });
+          // check if chatroom with same name already exists
+          const chatroomExists = this.chatRooms.some(chatroom => chatroom.name === event.name);
+          if (!chatroomExists) {
+            this.chatroomservice
+              .create({
+                id: null,
+                name: event.name,
+              })
+              .subscribe(response => {
+                const newChatroom = response.body;
+                if (newChatroom) {
+                  this.chatRooms.push(newChatroom);
+                }
+              });
+          }
         }
       });
     });
