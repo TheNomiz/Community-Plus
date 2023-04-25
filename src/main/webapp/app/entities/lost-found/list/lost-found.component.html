@@ -1,11 +1,11 @@
 <div>
   <h2 id="page-heading" data-cy="LostFoundHeading">
-    <span jhiTranslate="teamprojectApp.lostFound.home.title">Lost Founds</span>
+    <span>Lost Founds</span>
 
-    <div class="d-flex justify-content-end">
+    <!-- <div class="d-flex justify-content-end">
       <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
         <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
-        <span jhiTranslate="teamprojectApp.lostFound.home.refreshListLabel">Refresh list</span>
+        <span >Refresh list</span>
       </button>
 
       <button
@@ -15,102 +15,78 @@
         [routerLink]="['/lost-found/new']"
       >
         <fa-icon icon="plus"></fa-icon>
-        <span jhiTranslate="teamprojectApp.lostFound.home.createLabel"> Create a new Lost Found </span>
+        <span > Create a new Lost Found </span>
+      </button>
+    </div> -->
+  </h2>
+
+  <div class="row col-12">
+    <div class="col-8 d-flex align-items-end">
+      <div class="col-3">
+        <label>Item</label>
+        <input type="text" class="form-control" name="item" id="field_item" data-cy="item" [(ngModel)]="filterItem" />
+      </div>
+      &nbsp;
+      <div class="col-3">
+        <label>Date</label>
+        <input class="form-control" type="date" id="start" name="trip-start" [(ngModel)]="filterDate" min="2020-01-01" />
+      </div>
+      &nbsp;
+      <div class="col-2">
+        <label>Location</label>
+        <input type="text" class="form-control" name="item" id="field_item" data-cy="item" [(ngModel)]="filterLocation" />
+      </div>
+
+      <div class="col-4">
+        <label></label>
+        <button id="save-entity" class="btn btn-info" [disabled]="isLoading" (click)="filterBy()">
+          <fa-icon icon="search"></fa-icon>
+          <span>Search</span>
+        </button>
+
+        <button class="btn btn-danger btn-primary" (click)="clearFilters()" [disabled]="isLoading">
+          <fa-icon icon="times"></fa-icon>
+          <span class="d-none d-md-inline">Clear</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="col-4 d-flex justify-content-end">
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-lost-found"
+        [routerLink]="['/lost-found/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span> Create a new Lost Found </span>
       </button>
     </div>
-  </h2>
+  </div>
 
   <jhi-alert-error></jhi-alert-error>
 
   <jhi-alert></jhi-alert>
 
   <div class="alert alert-warning" id="no-result" *ngIf="lostFounds?.length === 0">
-    <span jhiTranslate="teamprojectApp.lostFound.home.notFound">No Lost Founds found</span>
+    <span>No Lost Founds found</span>
   </div>
 
-  <div class="table-responsive table-entities" id="entities" *ngIf="lostFounds && lostFounds.length > 0">
+  <div class="table-responsive" id="entities" *ngIf="lostFounds && lostFounds.length > 0">
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
         <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
-          <th scope="col" jhiSortBy="id">
-            <div class="d-flex">
-              <span jhiTranslate="global.field.id">ID</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="description">
-            <div class="d-flex">
-              <span jhiTranslate="teamprojectApp.lostFound.description">Description</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="date">
-            <div class="d-flex">
-              <span jhiTranslate="teamprojectApp.lostFound.date">Date</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="location">
-            <div class="d-flex">
-              <span jhiTranslate="teamprojectApp.lostFound.location">Location</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="item">
-            <div class="d-flex">
-              <span jhiTranslate="teamprojectApp.lostFound.item">Item</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="name">
-            <div class="d-flex">
-              <span jhiTranslate="teamprojectApp.lostFound.name">Name</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="email">
-            <div class="d-flex">
-              <span jhiTranslate="teamprojectApp.lostFound.email">Email</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="phoneNumber">
-            <div class="d-flex">
-              <span jhiTranslate="teamprojectApp.lostFound.phoneNumber">Phone Number</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="postedby.id">
-            <div class="d-flex">
-              <span jhiTranslate="teamprojectApp.lostFound.postedby">Postedby</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
+          <th scope="col" jhiSortBy="item"><span>Item</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="date"><span>Date</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="location"><span>Location</span> <fa-icon icon="sort"></fa-icon></th>
           <th scope="col"></th>
         </tr>
       </thead>
-      <tbody
-        infinite-scroll
-        (scrolled)="loadPage(page + 1)"
-        [infiniteScrollDisabled]="page - 1 >= links['last']"
-        [infiniteScrollDistance]="0"
-      >
+      <tbody>
         <tr *ngFor="let lostFound of lostFounds; trackBy: trackId" data-cy="entityTable">
-          <td>
-            <a [routerLink]="['/lost-found', lostFound.id, 'view']">{{ lostFound.id }}</a>
-          </td>
-          <td>{{ lostFound.description }}</td>
-          <td>{{ lostFound.date | formatMediumDate }}</td>
-          <td>{{ lostFound.location }}</td>
           <td>{{ lostFound.item }}</td>
-          <td>{{ lostFound.name }}</td>
-          <td>{{ lostFound.email }}</td>
-          <td>{{ lostFound.phoneNumber }}</td>
-          <td>
-            <div *ngIf="lostFound.postedby">
-              <a [routerLink]="['/user-profile', lostFound.postedby.id, 'view']">{{ lostFound.postedby.id }}</a>
-            </div>
-          </td>
+          <td>{{ lostFound.date | formatGenericDate }}</td>
+          <td>{{ lostFound.location }}</td>
           <td class="text-end">
             <div class="btn-group">
               <button
@@ -120,7 +96,7 @@
                 data-cy="entityDetailsButton"
               >
                 <fa-icon icon="eye"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                <span class="d-none d-md-inline">View</span>
               </button>
 
               <button
@@ -130,17 +106,35 @@
                 data-cy="entityEditButton"
               >
                 <fa-icon icon="pencil-alt"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                <span class="d-none d-md-inline">Edit</span>
               </button>
 
               <button type="submit" (click)="delete(lostFound)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
                 <fa-icon icon="times"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                <span class="d-none d-md-inline">Delete</span>
               </button>
             </div>
           </td>
         </tr>
       </tbody>
     </table>
+  </div>
+
+  <div *ngIf="lostFounds && lostFounds.length > 0">
+    <div class="d-flex justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [page]="page"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="navigateToPage($event)"
+      ></ngb-pagination>
+    </div>
   </div>
 </div>

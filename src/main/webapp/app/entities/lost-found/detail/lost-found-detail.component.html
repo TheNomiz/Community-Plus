@@ -48,13 +48,13 @@
             <a [routerLink]="['/user-profile', lostFound.postedby.id, 'view']">{{ lostFound.postedby.id }}</a>
           </div>
         </dd>
-        <dt><span jhiTranslate="teamprojectApp.lostFound.lostItem">Lost Item</span></dt>
-        <dd>
-          <span *ngFor="let lostItem of lostFound.lostItems; let last = last">
-            <a [routerLink]="['/chat-room', lostItem.id, 'view']">{{ lostItem.id }}</a
-            >{{ last ? '' : ', ' }}
-          </span>
-        </dd>
+        <!--        <dt><span jhiTranslate="teamprojectApp.lostFound.lostItem">Lost Item</span></dt>-->
+        <!--        <dd>-->
+        <!--          <span *ngFor="let lostItem of lostFound.lostItems; let last = last">-->
+        <!--            <a [routerLink]="['/chat-room', lostItem.id, 'view']">{{ lostItem.id }}</a-->
+        <!--            >{{ last ? '' : ', ' }}-->
+        <!--          </span>-->
+        <!--        </dd>-->
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

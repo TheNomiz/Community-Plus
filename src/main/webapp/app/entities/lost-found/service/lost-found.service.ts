@@ -122,4 +122,17 @@ export class LostFoundService {
       body: res.body ? res.body.map(item => this.convertDateFromServer(item)) : null,
     });
   }
+
+  filter(filterItem: any, date: string, location: any): Observable<HttpResponse<ILostFound[]>> {
+    const options = {
+      item: filterItem,
+      date,
+      location,
+    };
+
+    return this.http.get<ILostFound[]>(`${this.resourceUrl}/` + 'filter', {
+      params: options,
+      observe: 'response',
+    });
+  }
 }

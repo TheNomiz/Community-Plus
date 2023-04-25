@@ -1,16 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpHeaders } from '@angular/common/http';
+import { HttpHeaders, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute, Data, ParamMap, Router } from '@angular/router';
 import { combineLatest, filter, Observable, switchMap, tap } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { ILostFound } from '../lost-found.model';
 
-import { ITEMS_PER_PAGE } from 'app/config/pagination.constants';
+import { ITEMS_PER_PAGE, PAGE_HEADER, TOTAL_COUNT_RESPONSE_HEADER } from 'app/config/pagination.constants';
 import { ASC, DESC, SORT, ITEM_DELETED_EVENT, DEFAULT_SORT_DATA } from 'app/config/navigation.constants';
 import { EntityArrayResponseType, LostFoundService } from '../service/lost-found.service';
 import { LostFoundDeleteDialogComponent } from '../delete/lost-found-delete-dialog.component';
-import { ParseLinks } from 'app/core/util/parse-links.service';
 
 @Component({
   selector: 'jhi-lost-found',
@@ -24,33 +23,26 @@ export class LostFoundComponent implements OnInit {
   ascending = true;
 
   itemsPerPage = ITEMS_PER_PAGE;
-  links: { [key: string]: number } = {
-    last: 0,
-  };
+  totalItems = 0;
   page = 1;
+
+  filterLocation?: string = '';
+  filterDate?: string = '';
+  filterItem?: string = '';
 
   constructor(
     protected lostFoundService: LostFoundService,
     protected activatedRoute: ActivatedRoute,
     public router: Router,
-    protected parseLinks: ParseLinks,
     protected modalService: NgbModal
   ) {}
-
-  reset(): void {
-    this.page = 1;
-    this.lostFounds = [];
-    this.load();
-  }
-
-  loadPage(page: number): void {
-    this.page = page;
-    this.load();
-  }
 
   trackId = (_index: number, item: ILostFound): number => this.lostFoundService.getLostFoundIdentifier(item);
 
   ngOnInit(): void {
+    this.filterLocation = '';
+    this.filterDate = '';
+    this.filterItem = '';
     this.load();
   }
 
@@ -94,6 +86,8 @@ export class LostFoundComponent implements OnInit {
   }
 
   protected fillComponentAttributeFromRoute(params: ParamMap, data: Data): void {
+    const page = params.get(PAGE_HEADER);
+    this.page = +(page ?? 1);
     const sort = (params.get(SORT) ?? data[DEFAULT_SORT_DATA]).split(',');
     this.predicate = sort[0];
     this.ascending = sort[1] === ASC;
@@ -106,26 +100,11 @@ export class LostFoundComponent implements OnInit {
   }
 
   protected fillComponentAttributesFromResponseBody(data: ILostFound[] | null): ILostFound[] {
-    const lostFoundsNew = this.lostFounds ?? [];
-    if (data) {
-      for (const d of data) {
-        if (lostFoundsNew.map(op => op.id).indexOf(d.id) === -1) {
-          lostFoundsNew.push(d);
-        }
-      }
-    }
-    return lostFoundsNew;
+    return data ?? [];
   }
 
   protected fillComponentAttributesFromResponseHeader(headers: HttpHeaders): void {
-    const linkHeader = headers.get('link');
-    if (linkHeader) {
-      this.links = this.parseLinks.parse(linkHeader);
-    } else {
-      this.links = {
-        last: 0,
-      };
-    }
+    this.totalItems = Number(headers.get(TOTAL_COUNT_RESPONSE_HEADER));
   }
 
   protected queryBackend(page?: number, predicate?: string, ascending?: boolean): Observable<EntityArrayResponseType> {
@@ -134,7 +113,6 @@ export class LostFoundComponent implements OnInit {
     const queryObject = {
       page: pageToLoad - 1,
       size: this.itemsPerPage,
-      eagerload: true,
       sort: this.getSortQueryParam(predicate, ascending),
     };
     return this.lostFoundService.query(queryObject).pipe(tap(() => (this.isLoading = false)));
@@ -160,5 +138,24 @@ export class LostFoundComponent implements OnInit {
     } else {
       return [predicate + ',' + ascendingQueryParam];
     }
+  }
+
+  protected filterBy(): void {
+    const filterItem = this.filterItem ? this.filterItem : '';
+    const date = this.filterDate ? this.filterDate : '';
+    const location = this.filterLocation ? this.filterLocation : '';
+    if (filterItem === '' && date === '' && location === '') {
+      return;
+    }
+    this.lostFoundService.filter(filterItem, date, location).subscribe((res: HttpResponse<ILostFound[]>) => {
+      this.onResponseSuccess(res);
+    });
+  }
+
+  protected clearFilters(): void {
+    this.filterItem = '';
+    this.filterDate = '';
+    this.filterLocation = '';
+    this.load();
   }
 }

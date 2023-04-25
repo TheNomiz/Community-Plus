@@ -146,20 +146,20 @@
           </select>
         </div>
 
-        <div class="row mb-3">
-          <label jhiTranslate="teamprojectApp.lostFound.lostItem" for="field_lostItems">Lost Item</label>
-          <select
-            class="form-control"
-            id="field_lostItems"
-            data-cy="lostItem"
-            multiple
-            name="lostItems"
-            formControlName="lostItems"
-            [compareWith]="compareChatRoom"
-          >
-            <option [ngValue]="chatRoomOption" *ngFor="let chatRoomOption of chatRoomsSharedCollection">{{ chatRoomOption.id }}</option>
-          </select>
-        </div>
+        <!--        <div class="row mb-3">-->
+        <!--          <label jhiTranslate="teamprojectApp.lostFound.lostItem" for="field_lostItems">Lost Item</label>-->
+        <!--          <select-->
+        <!--            class="form-control"-->
+        <!--            id="field_lostItems"-->
+        <!--            data-cy="lostItem"-->
+        <!--            multiple-->
+        <!--            name="lostItems"-->
+        <!--            formControlName="lostItems"-->
+        <!--            [compareWith]="compareChatRoom"-->
+        <!--          >-->
+        <!--            <option [ngValue]="chatRoomOption" *ngFor="let chatRoomOption of chatRoomsSharedCollection">{{ chatRoomOption.id }}</option>-->
+        <!--          </select>-->
+        <!--        </div>-->
       </div>
 
       <div>
