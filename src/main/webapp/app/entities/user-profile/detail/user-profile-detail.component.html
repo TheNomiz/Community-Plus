@@ -1,112 +1,278 @@
 <div class="d-flex justify-content-center">
   <div class="col-8">
-    <div *ngIf="userProfile">
-      <h2 data-cy="userProfileDetailsHeading"><span jhiTranslate="teamprojectApp.userProfile.detail.title">User Profile</span></h2>
-
-      <hr />
+    <div *ngIf="userProfile" class="userp">
+      <h2 class="text-center" effect="drop-shadow">User Profile - {{ userProfile.username }}</h2>
 
       <jhi-alert-error></jhi-alert-error>
 
       <jhi-alert></jhi-alert>
 
-      <dl class="row-md jh-entity-details">
-        <dt><span jhiTranslate="global.field.id">ID</span></dt>
-        <dd>
-          <span>{{ userProfile.id }}</span>
-        </dd>
-        <dt><span jhiTranslate="teamprojectApp.userProfile.username">Username</span></dt>
-        <dd>
-          <span>{{ userProfile.username }}</span>
-        </dd>
-        <dt><span jhiTranslate="teamprojectApp.userProfile.firstnames">Firstnames</span></dt>
-        <dd>
-          <span>{{ userProfile.firstnames }}</span>
-        </dd>
-        <dt><span jhiTranslate="teamprojectApp.userProfile.lastname">Lastname</span></dt>
-        <dd>
-          <span>{{ userProfile.lastname }}</span>
-        </dd>
-        <dt><span jhiTranslate="teamprojectApp.userProfile.password">Password</span></dt>
-        <dd>
-          <span>{{ userProfile.password }}</span>
-        </dd>
-        <dt><span jhiTranslate="teamprojectApp.userProfile.email">Email</span></dt>
-        <dd>
-          <span>{{ userProfile.email }}</span>
-        </dd>
-        <dt><span jhiTranslate="teamprojectApp.userProfile.language">Language</span></dt>
-        <dd>
-          <span>{{ userProfile.language }}</span>
-        </dd>
-        <dt><span jhiTranslate="teamprojectApp.userProfile.verified">Verified</span></dt>
-        <dd>
-          <span>{{ userProfile.verified }}</span>
-        </dd>
-        <dt><span jhiTranslate="teamprojectApp.userProfile.privateAccount">Private Account</span></dt>
-        <dd>
-          <span>{{ userProfile.privateAccount }}</span>
-        </dd>
-        <dt><span jhiTranslate="teamprojectApp.userProfile.age">Age</span></dt>
-        <dd>
-          <span>{{ userProfile.age }}</span>
-        </dd>
-        <dt><span jhiTranslate="teamprojectApp.userProfile.accountType">Account Type</span></dt>
-        <dd>
-          <span>{{ userProfile.accountType }}</span>
-        </dd>
-        <dt><span jhiTranslate="teamprojectApp.userProfile.occupation">Occupation</span></dt>
-        <dd>
-          <span>{{ userProfile.occupation }}</span>
-        </dd>
-        <dt><span jhiTranslate="teamprojectApp.userProfile.streetAddress">Street Address</span></dt>
-        <dd>
-          <span>{{ userProfile.streetAddress }}</span>
-        </dd>
-        <dt><span jhiTranslate="teamprojectApp.userProfile.city">City</span></dt>
-        <dd>
-          <span>{{ userProfile.city }}</span>
-        </dd>
-        <dt><span jhiTranslate="teamprojectApp.userProfile.postalCode">Postal Code</span></dt>
-        <dd>
-          <span>{{ userProfile.postalCode }}</span>
-        </dd>
-        <dt><span jhiTranslate="teamprojectApp.userProfile.bio">Bio</span></dt>
-        <dd>
-          <span>{{ userProfile.bio }}</span>
-        </dd>
-        <dt><span jhiTranslate="teamprojectApp.userProfile.phoneNumber">Phone Number</span></dt>
-        <dd>
-          <span>{{ userProfile.phoneNumber }}</span>
-        </dd>
-        <dt><span jhiTranslate="teamprojectApp.userProfile.communityPoints">Community Points</span></dt>
-        <dd>
-          <span>{{ userProfile.communityPoints }}</span>
-        </dd>
-        <dt><span jhiTranslate="teamprojectApp.userProfile.gPS">G PS</span></dt>
-        <dd>
-          <span>{{ userProfile.gPS }}</span>
-        </dd>
-        <dt><span jhiTranslate="teamprojectApp.userProfile.darkmode">Darkmode</span></dt>
-        <dd>
-          <span>{{ userProfile.darkmode }}</span>
-        </dd>
-        <dt><span jhiTranslate="teamprojectApp.userProfile.fontsize">Fontsize</span></dt>
-        <dd>
-          <span>{{ userProfile.fontsize }}</span>
-        </dd>
-        <dt><span jhiTranslate="teamprojectApp.userProfile.userID">User ID</span></dt>
-        <dd>
-          <span>{{ userProfile.userID?.id }}</span>
-        </dd>
-      </dl>
+      <div class="box box1"></div>
+      <div class="box box2"></div>
+      <div class="box box3"></div>
+      <div class="box box4"></div>
+      <div class="bio bio">Bio :{{ userProfile.bio }}</div>
+      <div class="bio info">
+        Name: {{ userProfile.firstnames }} {{ userProfile.lastname }}<br />
+        Age: {{ userProfile.age }}<br />
+        Occupation: {{ userProfile.occupation }}<br />
+        Community Points: {{ userProfile.communityPoints }}<br />
+        Joined: {{ userProfile.userID }}
+      </div>
+
+      <img
+        src="../content/images/userprofile.jpeg"
+        style="width: 341px; height: 280px; border-radius: 300px; position: absolute; top: 102px; left: 102px"
+      />
+      <style>
+        .userp {
+          width: 782px;
+          height: 800px;
+        }
+
+        .box {
+          height: 688px;
+          border-radius: 25px;
+          position: absolute;
+          top: 70px;
+          opacity: 33%;
+        }
+        .bio {
+          position: absolute;
+          width: 341px;
+          height: 152px;
+          left: 102px;
+          top: 572px;
+          display: block;
+
+          border-radius: 25px;
+          text-align: center;
+          padding-bottom: 120px;
+          padding-right: 10px;
+          padding-left: 10px;
+          padding-top: 10px;
+          overflow: hidden;
+          word-wrap: break-word;
+        }
+        .info {
+          top: 406px;
+        }
+
+        .btn {
+          height: 46px;
+          width: 274px;
+          border-radius: 10px;
+          background-color: #c6c6c6;
+          position: absolute;
+          left: 579px;
+          top: 386px;
+          font-size: 25px;
+          opacity: 70%;
+        }
+
+        .box1 {
+          width: 432px;
+          background-color: #d9d9d9;
+          left: 56px;
+          opacity: 33%;
+          box-shadow: 4px 0px 4px rgba(0, 0, 0, 0.25);
+        }
+
+        .box2 {
+          width: 699px;
+          background-color: #d9d9d9;
+          left: 520px;
+          box-shadow: 4px 0px 4px rgba(0, 0, 0, 0.25);
+        }
+        .box3 {
+          width: 341px;
+          height: 152px;
+          background-color: #ebebeb;
+          left: 102px;
+          top: 572px;
+        }
+
+        .box4 {
+          width: 341px;
+          height: 152px;
+          background-color: #ebebeb;
+          left: 102px;
+          top: 406px;
+        }
+
+        .btn-info {
+          left: 56px;
+          top: 760px;
+        }
+        .btn-primary {
+          left: 106px;
+          top: 760px;
+        }
+
+        .btn-un {
+          top: 430px;
+        }
+
+        .btn-oc {
+          top: 504px;
+        }
+
+        .btn-pa {
+          left: 904px;
+          top: 430px;
+        }
+
+        .btn-bio {
+          left: 904px;
+          top: 504px;
+        }
+
+        .btn-pn {
+          top: 652px;
+        }
+
+        .btn-add {
+          top: 578px;
+        }
+
+        .btn-ea {
+          left: 904px;
+          top: 578px;
+        }
+
+        .btn-lan {
+          left: 904px;
+          top: 652px;
+        }
+
+        .btn-ver {
+          top: 106px;
+        }
+
+        .btn-pub {
+          left: 904px;
+          top: 106px;
+        }
+
+        .btn-set {
+          top: 179px;
+        }
+
+        .btn-deac {
+          left: 904px;
+          top: 179px;
+        }
+
+        .btn-dark {
+          top: 253px;
+        }
+
+        .btn-fontp {
+          width: 132px;
+          left: 1046px;
+          top: 253px;
+        }
+
+        .btn-fontm {
+          width: 132px;
+          left: 904px;
+          top: 253px;
+        }
+      </style>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
         <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
       </button>
 
-      <button type="button" [routerLink]="['/user-profile', userProfile.id, 'edit']" class="btn btn-primary">
-        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      <button type="button" [routerLink]="['/user-profile', userProfile.id, 'edit']" class="btn btn-un">
+        <span>User Name</span>
       </button>
+
+      <button type="button" [routerLink]="['/user-profile', userProfile.id, 'edit']" class="btn btn-oc">
+        <span>Occupation</span>
+      </button>
+
+      <button type="button" [routerLink]="['/account/password']" class="btn btn-pa">
+        <span>Password</span>
+      </button>
+
+      <button type="button" [routerLink]="['/user-profile', userProfile.id, 'edit']" class="btn btn-bio">
+        <span>Bio</span>
+      </button>
+
+      <button type="button" [routerLink]="['/user-profile', userProfile.id, 'edit']" class="btn btn-pn">
+        <span>Phone Number</span>
+      </button>
+
+      <button type="button" [routerLink]="['/user-profile', userProfile.id, 'edit']" class="btn btn-add">
+        <span>Address</span>
+      </button>
+
+      <button type="button" [routerLink]="['/user-profile', userProfile.id, 'edit']" class="btn btn-ea">
+        <span>Email Address</span>
+      </button>
+
+      <button type="button" [routerLink]="['/user-profile', userProfile.id, 'edit']" class="btn btn-lan">
+        <span>Langauge</span>
+      </button>
+
+      <button type="button" (click)="verify()" class="btn btn-ver">
+        <span>{{ verr }}</span>
+      </button>
+
+      <button type="button" (click)="pub()" class="btn btn-pub">
+        <span>{{ pubb }} </span>
+      </button>
+
+      <button type="button" [routerLink]="['/account/settings']" class="btn btn-set">
+        <span>Settings</span>
+      </button>
+
+      <button type="button" class="btn btn-deac">
+        <span>Deactivate</span>
+      </button>
+
+      <button type="button" (click)="darkmode()" class="btn btn-dark">
+        <span>Darkmode</span>
+      </button>
+
+      <button type="button" (click)="fontplus()" class="btn btn-fontp">
+        <span>Fontsize +</span>
+      </button>
+
+      <button type="button" (click)="fontminus()" class="btn btn-fontm">
+        <span>Fontsize -</span>
+      </button>
+
+      <style>
+        .footer {
+          position: absolute;
+          bottom: 0;
+          width: 100%;
+        }
+      </style>
     </div>
+    <style>
+      .footer {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+      }
+    </style>
   </div>
+  <style>
+    .footer {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+    }
+  </style>
 </div>
+
+<style>
+  .footer {
+    position: absolute;
+    top: 950px;
+    width: 100%;
+  }
+</style>

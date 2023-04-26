@@ -1,32 +1,5 @@
-<div>
-  <h2 id="page-heading" data-cy="UserProfileHeading">
-    <span jhiTranslate="teamprojectApp.userProfile.home.title">User Profiles</span>
-
-    <div class="d-flex justify-content-end">
-      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
-        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
-        <span jhiTranslate="teamprojectApp.userProfile.home.refreshListLabel">Refresh list</span>
-      </button>
-
-      <button
-        id="jh-create-entity"
-        data-cy="entityCreateButton"
-        class="btn btn-primary jh-create-entity create-user-profile"
-        [routerLink]="['/user-profile/new']"
-      >
-        <fa-icon icon="plus"></fa-icon>
-        <span jhiTranslate="teamprojectApp.userProfile.home.createLabel"> Create a new User Profile </span>
-      </button>
-    </div>
-  </h2>
-
-  <jhi-alert-error></jhi-alert-error>
-
-  <jhi-alert></jhi-alert>
-
-  <div class="alert alert-warning" id="no-result" *ngIf="userProfiles?.length === 0">
-    <span jhiTranslate="teamprojectApp.userProfile.home.notFound">No User Profiles found</span>
-  </div>
+<div *ngIf="userProfiles && userProfiles.length > 0">
+  <h2 class="text-center">User Profile - {{ userProfiles[2].username }}</h2>
 
   <div class="table-responsive table-entities" id="entities" *ngIf="userProfiles && userProfiles.length > 0">
     <table class="table table-striped" aria-describedby="page-heading">
@@ -142,7 +115,7 @@
           </th>
           <th scope="col" jhiSortBy="gPS">
             <div class="d-flex">
-              <span jhiTranslate="teamprojectApp.userProfile.gPS">G PS</span>
+              <span>GPS</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
@@ -214,7 +187,7 @@
 
               <button
                 type="submit"
-                [routerLink]="['/user-profile', userProfile.id, 'edit']"
+                [routerLink]="['/account', userProfile.id, 'edit']"
                 class="btn btn-primary btn-sm"
                 data-cy="entityEditButton"
               >
@@ -223,7 +196,6 @@
               </button>
 
               <button type="submit" (click)="delete(userProfile)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
-                <fa-icon icon="times"></fa-icon>
                 <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
               </button>
             </div>

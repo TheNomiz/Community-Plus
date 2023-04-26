@@ -29,9 +29,9 @@
         </li>
 
         <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-          <a class="nav-link" routerLink="emergency-stations" (click)="collapseNavbar()">
+          <a class="nav-link" routerLink="emergency-stations-page" (click)="collapseNavbar()">
             <span>
-              <span jhiTranslate="global.menu.emergencyStations">Emergency Stations</span>
+              <span jhiTranslate="global.menu.emergencyStationsPage">Emergency Stations</span>
             </span>
           </a>
         </li>
@@ -105,6 +105,18 @@
             <li>
               <a
                 class="dropdown-item"
+                routerLink="lost-found-page"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                <span jhiTranslate="global.menu.entities.lostFoundPage">Lost Found Page</span>
+              </a>
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
                 routerLink="user-profile"
                 routerLinkActive="active"
                 [routerLinkActiveOptions]="{ exact: true }"
@@ -174,7 +186,7 @@
                 <span jhiTranslate="global.menu.entities.emergencyGuide">Emergency Guide</span>
               </a>
             </li>
-            <!-- <li>
+            <li>
               <a
                 class="dropdown-item"
                 routerLink="emergency-stations"
@@ -185,7 +197,7 @@
                 <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
                 <span jhiTranslate="global.menu.entities.emergencyStations">Emergency Stations</span>
               </a>
-            </li> -->
+            </li>
             <li>
               <a
                 class="dropdown-item"
@@ -196,18 +208,6 @@
               >
                 <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
                 <span jhiTranslate="global.menu.entities.lostFound">Lost Found</span>
-              </a>
-            </li>
-            <li>
-              <a
-                class="dropdown-item"
-                routerLink="comment"
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }"
-                (click)="collapseNavbar()"
-              >
-                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                <span jhiTranslate="global.menu.entities.comment">Comment</span>
               </a>
             </li>
             <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->

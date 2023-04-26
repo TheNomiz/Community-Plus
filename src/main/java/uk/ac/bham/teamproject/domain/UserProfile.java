@@ -1,8 +1,12 @@
 package uk.ac.bham.teamproject.domain;
 
+import java.io.IOException;
 import java.io.Serializable;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import okhttp3.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -209,7 +213,33 @@ public class UserProfile implements Serializable {
     }
 
     public void setVerified(Boolean verified) {
-        this.verified = verified;
+        OkHttpClient client = new OkHttpClient();
+
+        MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
+        RequestBody body = RequestBody.create(mediaType, "type=document");
+        Request request = new Request.Builder()
+            .url("https://api.stripe.com/v1/identity/verification_sessions")
+            .post(body)
+            .addHeader(
+                "Authorization",
+                "Bearer sk_test_51Mrk2UEec5lmlBUDz2OveUQ6CpCzct3haH4HImKbnXgqLPvoNw43klXM0GVY0BhhnWQX6idgum2YY6oEwr327sUp00P7LB1pqO"
+            )
+            .build();
+
+        try (Response responses = client.newCall(request).execute()) {
+            String responseBody = responses.toString();
+            Pattern pattern = Pattern.compile("\"url\":\\s*\"(.*?)\"");
+            Matcher matcher = pattern.matcher(responseBody);
+            if (matcher.find()) {
+                String url = matcher.group(1);
+                ProcessBuilder pb = new ProcessBuilder("x-www-browser", url);
+                pb.start();
+            }
+        } catch (IOException e) {
+            // Handle the exception here
+        }
+
+        this.verified = false;
     }
 
     public Boolean getPrivateAccount() {
