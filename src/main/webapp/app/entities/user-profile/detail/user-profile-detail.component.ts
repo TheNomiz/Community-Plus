@@ -128,6 +128,6 @@ export class UserProfileDetailComponent implements OnInit {
       this.verr = 'Verified';
     }
     const url = parsedBody.url;
-    window.open('www.google.com');
+    window.open(url);
   }
 }
