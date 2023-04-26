@@ -1,25 +1,239 @@
-<div class="row">
+<div *ngIf="account == null" class="row">
   <div class="col-md-9">
-    <h1>Welcome to Community Plus!</h1>
+    <body>
+      <main>
+        <section class="welcome">
+          <h2>Welcome to Community Plus!</h2>
 
-    <p>Safer communities, Stronger communities</p>
+          <p>A place for building safer and stronger communities!</p>
+          <a href="login()" class="cta">Get Started</a>
+        </section>
 
-    <div [ngSwitch]="account !== null">
-      <div class="alert alert-success" *ngSwitchCase="true">
-        <span id="home-logged-message" *ngIf="account" jhiTranslate="home.logged.message" [translateValues]="{ username: account.login }"
-          >You are logged in as user: "{{ account.login }}".</span
-        >
-      </div>
+        <section class="how-to-use">
+          <h2>What is Community Plus?</h2>
 
-      <div class="alert alert-warning" *ngSwitchCase="false">
-        <span> Click here to </span>
-        <a class="alert-link" (click)="login()" jhiTranslate="global.messages.info.authenticated.link">sign in</a>
-      </div>
+          <p>
+            Community Plus is a web application that has been designed and developed by those who want to ensure further safety in
+            communities. The safety and security of a community are of utmost importance, and technology has been playing an increasing role
+            in ensuring this.
+          </p>
 
-      <div class="alert alert-warning" *ngSwitchCase="false">
-        <span jhiTranslate="global.messages.info.register.noaccount">You don't have an account yet?</span>&nbsp;
-        <a class="alert-link" routerLink="account/register" jhiTranslate="global.messages.info.register.link">Register a new account!</a>
-      </div>
+          <p>
+            Community Plus is an innovative solution that has been designed to provide accurate, timely and relevant information to
+            communities and individuals. It is an essential tool for keeping communities safe, particularly in urban areas where crime rates
+            are high. This application ensures that community members are always informed of any criminal activities happening in their
+            surroundings but also provides useful information and creates opportunities for socialising.
+          </p>
+
+          <p>
+            Community Plus provides a platform where users can share information and be informed of any criminal activity. This information
+            is displayed in real-time to ensure that users are aware of any incidents as they happen. Users can also submit anonymous tips
+            and report incidents, which helps law enforcement agencies to respond quickly and effectively. Community Plus is available for
+            all users to help keep everyone safe. This is particularly important in urban areas where people from different walks of life
+            reside. It ensures that everyone in the community can receive information and contribute to keeping the community safe. Users
+            can access this web application and immediately begin interacting with the public to inform others of useful information they
+            may hold. Chatrooms are available for discussions too.
+          </p>
+
+          <p>
+            One of the key benefits of the crime alert application is that it delivers accurate and up-to-date information. This ensures
+            that users are well-informed and can take the necessary precautions to stay safe. Data has been displayed in a visual format on
+            a map to make it easier to use and understand too.
+          </p>
+        </section>
+
+        <section class="what-we-do">
+          <h2>How to get started</h2>
+
+          <p>
+            The application is user-friendly and easy to navigate, ensuring that even individuals with minimal technical skills can use it.
+            Community Plus has been designed to be responsive and adaptable, ensuring that users can access it from their device with ease.
+          </p>
+          <p>
+            To get started you need to register an account with us. We have made this as simple as pressing the "Get Started" button above
+            to help you register. Then you will be given access to more features to ensure that your experience is tailored towards your and
+            you can benefit from our application. During the process of making your account, you may be asked to verify your identity.
+          </p>
+
+          <p>Want to learn more? Read our About Us Page!</p>
+          <a href="#" class="cta">Learn More</a>
+        </section>
+      </main>
+    </body>
+
+    <div class="prompts">
+      <span> Click here to </span>
+      <a class="alert-link" (click)="login()" jhiTranslate="global.messages.info.authenticated.link">sign in</a>
+    </div>
+
+    <div class="prompts">
+      <span jhiTranslate="global.messages.info.register.noaccount">You don't have an account yet?</span>&nbsp;
+      <a class="alert-link" routerLink="account/register" jhiTranslate="global.messages.info.register.link">Register a new account!</a>
     </div>
   </div>
+</div>
+
+<div *ngIf="account !== null">
+  <h1><b>Your Dashboard </b></h1>
+  <div [ngSwitch]="account !== null" class="loginsignup">
+    <div class="alert alert-success" *ngSwitchCase="true">
+      <span id="home-logged-message" *ngIf="account" jhiTranslate="home.logged.message" [translateValues]="{ username: account.login }"
+        >You are logged in as: "{{ account.login }}".</span
+      >
+    </div>
+  </div>
+
+  <p>
+    <b>Welcome back {{ account.login }}!</b>
+  </p>
+
+  <head>
+    <meta charset="UTF-8" />
+    <link />
+    <link href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css" rel="home.component.scss" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+
+  <section class="home-section">
+    <div class="home-content">
+      <div class="overview-boxes">
+        <div class="box" cdkDrag>
+          <div class="right-side">
+            <div class="box-topic">Crimes today</div>
+            <div class="number">2</div>
+            <div class="indicator">
+              <i class="bx bx-up-arrow-alt"> 1 </i>
+              <span class="text">Up from yesterday</span>
+            </div>
+          </div>
+          <i class="bx bx-cart-alt cart">2</i>
+        </div>
+        <div class="box" cdkDrag>
+          <div class="right-side">
+            <div class="box-topic">Crimes this week</div>
+            <div class="number">5</div>
+            <div class="indicator">
+              <i class="bx bx-up-arrow-alt">1</i>
+              <span class="text">Up from yesterday</span>
+            </div>
+          </div>
+          <i class="bx bxs-cart-add cart two">5</i>
+        </div>
+        <div class="box" cdkDrag>
+          <div class="right-side">
+            <div class="box-topic">Events this week</div>
+            <div class="number">1</div>
+            <div class="indicator">
+              <i class="bx bx-up-arrow-alt">0</i>
+              <span class="text">Up from yesterday</span>
+            </div>
+          </div>
+          <i class="bx bx-cart cart three">1</i>
+        </div>
+        <div class="box" cdkDrag>
+          <div class="right-side">
+            <div class="box-topic">Events today</div>
+            <div class="number">0</div>
+            <div class="indicator">
+              <i class="bx bx-down-arrow-alt">0</i>
+              <span class="text">Up from yesterday</span>
+            </div>
+          </div>
+          <i class="bx bxs-cart-download cart three">0</i>
+        </div>
+      </div>
+
+      <div class="sales-boxes">
+        <div class="recent-sales box" cdkDrag>
+          <div class="title">Recent crimes</div>
+          <div class="sales-details">
+            <ul class="details">
+              <li class="topic">Date</li>
+              <li><a href="crime-alert.html">01 Feb 2023</a></li>
+              <li><a href="#">01 Feb 2023</a></li>
+              <li><a href="#">01 Feb 2023</a></li>
+              <li><a href="#">01 Feb 2023</a></li>
+              <li><a href="#">01 Feb 2023</a></li>
+              <li><a href="#">01 Feb 2023</a></li>
+              <li><a href="#">01 Feb 2023</a></li>
+              <li><a href="#">01 Feb 2023</a></li>
+              <li><a href="#">01 Feb 2023</a></li>
+            </ul>
+            <ul class="details">
+              <li class="topic">Crime</li>
+              <li><a href="#">ANTI SOCIAL BEHAVIOUR</a></li>
+              <li><a href="#">BURGLARY</a></li>
+              <li><a href="#">ANTI SOCIAL BEHAVIOUR</a></li>
+              <li><a href="#">BICYCLE THEFT</a></li>
+              <li><a href="#">BURGLARY</a></li>
+              <li><a href="#">ANTI SOCIAL BEHAVIOUR</a></li>
+              <li><a href="#">BICYCLE THEFT</a></li>
+              <li><a href="#">BURGLARY</a></li>
+              <li><a href="#">BURGLARY</a></li>
+            </ul>
+            <ul class="details">
+              <li class="topic">Time</li>
+              <li><a href="#">00:00</a></li>
+              <li><a href="#">00:00</a></li>
+              <li><a href="#">00:00</a></li>
+              <li><a href="#">00:00</a></li>
+              <li><a href="#">00:00</a></li>
+              <li><a href="#">00:00</a></li>
+              <li><a href="#">00:00</a></li>
+              <li><a href="#">00:00</a></li>
+              <li><a href="#">00:00</a></li>
+            </ul>
+            <ul class="details">
+              <li class="topic">Where</li>
+              <li><a href="#">51,37, 0.53</a></li>
+              <li><a href="#">51.42, 0.56</a></li>
+              <li><a href="#">51.31, 0.21</a></li>
+              <li><a href="#">51.39, 0.54</a></li>
+              <li><a href="#">51.27, 0.53</a></li>
+              <li><a href="#">51.41, 0.52</a></li>
+              <li><a href="#">51.31, 0.45</a></li>
+              <li><a href="#">51.34, 0.74</a></li>
+              <li><a href="#">51.38, 0.55</a></li>
+            </ul>
+          </div>
+          <div class="button">
+            <a href="#">See All</a>
+          </div>
+        </div>
+        <div class="top-sales box" cdkDrag>
+          <div class="title">Types of crimes happening</div>
+          <ul class="top-sales-details">
+            <li>
+              <a href="#">
+                <!--<img src="images/sunglasses.jpg" alt="">-->
+                <span class="product">Anti Social Behaviour</span>
+              </a>
+              <span class="price">10+</span>
+            </li>
+            <li>
+              <a href="#">
+                <!--<img src="images/jeans.jpg" alt="">-->
+                <span class="product">Burglary </span>
+              </a>
+              <span class="price">5</span>
+            </li>
+            <li>
+              <a href="#">
+                <!-- <img src="images/nike.jpg" alt="">-->
+                <span class="product">Bicycle Theft</span>
+              </a>
+              <span class="price">5</span>
+            </li>
+            <li>
+              <a href="#">
+                <!--<img src="images/scarves.jpg" alt="">-->
+                <span class="product">Arson</span>
+              </a>
+              <span class="price">1</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
 </div>
