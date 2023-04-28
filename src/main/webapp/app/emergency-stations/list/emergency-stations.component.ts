@@ -108,15 +108,36 @@ export class EmergencyStationsComponent implements OnInit {
       popupAnchor: [0, -55], // point from which the popup should open relative to the iconAnchor
     });
 
-    L.marker([52.429636, -1.949548], { icon: PoliceIcon }).addTo(this.map).bindPopup('Bournville Police Station <br>Police Station');
+    L.marker([52.429636, -1.949548], { icon: PoliceIcon }).addTo(this.map).bindPopup('Bournville Police Station<br>Police Station');
 
-    L.marker([52.4463, -1.9307], { icon: PharmacyIcon }).addTo(this.map).bindPopup('Jhoots Pharmacy Bournbrook <br>Pharmacy');
+    L.marker([52.4463, -1.9307], { icon: PharmacyIcon }).addTo(this.map).bindPopup('Jhoots Pharmacy Bournbrook<br>Pharmacy');
 
-    L.marker([52.4473, -1.92576], { icon: FireStationIcon }).addTo(this.map).bindPopup('Bournbrook Fire Station <br>Fire Station');
+    L.marker([52.4473, -1.92576], { icon: FireStationIcon }).addTo(this.map).bindPopup('Bournbrook Fire Station<br>Fire Station');
 
-    L.marker([52.4514, -1.941], { icon: HospitalIcon }).addTo(this.map).bindPopup('Queen Elizabeth Hospital <br>Hospital').openPopup();
+    L.marker([52.4514, -1.941], { icon: HospitalIcon }).addTo(this.map).bindPopup('Queen Elizabeth Hospital<br>Hospital').openPopup();
 
     this.load();
+  }
+
+  PSButtonPress(): void {
+    const PSCB = document.getElementById('PSCB') as HTMLInputElement;
+    PSCB.checked = !PSCB.checked;
+  }
+  FSButtonPress(): void {
+    const FSCB = document.getElementById('FSCB') as HTMLInputElement;
+    FSCB.checked = !FSCB.checked;
+  }
+  HButtonPress(): void {
+    const HCB = document.getElementById('HCB') as HTMLInputElement;
+    HCB.checked = !HCB.checked;
+  }
+  PButtonPress(): void {
+    const PCB = document.getElementById('PCB') as HTMLInputElement;
+    PCB.checked = !PCB.checked;
+  }
+
+  search(): void {
+    return;
   }
 
   delete(emergencyStations: IEmergencyStations): void {

@@ -9,6 +9,7 @@
       "entities": {
         "main": "Entities",
         "crimeAlert": "Crime Alert",
+        "community": "Community",
         "business": "Business",
         "event": "Event",
         "chatRoom": "Chat Room",
