@@ -65,6 +65,7 @@
           <input type="checkbox" class="form-check" name="parking" id="field_parking" data-cy="parking" formControlName="parking" />
         </div>
 
+        <!--
         <div class="row mb-3">
           <label class="form-label" jhiTranslate="teamprojectApp.emergencyStations.latitude" for="field_latitude">Latitude</label>
           <input type="number" class="form-control" name="latitude" id="field_latitude" data-cy="latitude" formControlName="latitude" />
@@ -85,7 +86,9 @@
             </small>
           </div>
         </div>
+        -->
 
+        <!--
         <div class="row mb-3">
           <label class="form-label" jhiTranslate="teamprojectApp.emergencyStations.longitude" for="field_longitude">Longitude</label>
           <input type="number" class="form-control" name="longitude" id="field_longitude" data-cy="longitude" formControlName="longitude" />
@@ -105,6 +108,13 @@
               This field should be a number.
             </small>
           </div>
+        </div>
+        -->
+
+        <div class="row mb-3">
+          <label class="form-label">Location</label>
+
+          <app-map-input (coordinatesChanged)="onCoordinatesChanged($event)"></app-map-input>
         </div>
       </div>
 

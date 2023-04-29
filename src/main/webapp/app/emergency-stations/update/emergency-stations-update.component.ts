@@ -8,6 +8,7 @@ import { EmergencyStationsFormService, EmergencyStationsFormGroup } from './emer
 import { IEmergencyStations } from '../emergency-stations.model';
 import { EmergencyStationsService } from '../service/emergency-stations.service';
 import { StationsCategory } from 'app/entities/enumerations/stations-category.model';
+import { AccountService } from 'app/core/auth/account.service';
 
 @Component({
   selector: 'jhi-emergency-stations-update',
@@ -23,7 +24,8 @@ export class EmergencyStationsUpdateComponent implements OnInit {
   constructor(
     protected emergencyStationsService: EmergencyStationsService,
     protected emergencyStationsFormService: EmergencyStationsFormService,
-    protected activatedRoute: ActivatedRoute
+    protected activatedRoute: ActivatedRoute,
+    private accountService: AccountService
   ) {}
 
   ngOnInit(): void {
@@ -32,6 +34,13 @@ export class EmergencyStationsUpdateComponent implements OnInit {
       if (emergencyStations) {
         this.updateForm(emergencyStations);
       }
+    });
+  }
+
+  onCoordinatesChanged(coords: { lat: number; lon: number }): void {
+    this.editForm.patchValue({
+      latitude: coords.lat,
+      longitude: coords.lon,
     });
   }
 
