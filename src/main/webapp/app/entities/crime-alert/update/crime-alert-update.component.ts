@@ -95,7 +95,7 @@ export class CrimeAlertUpdateComponent implements OnInit {
         lat: coords.lat,
         lon: coords.lon,
         crimeID: this.generateUniqueCrimeID(),
-        postedby: { id: 1, login: user?.login },
+        postedby: { id: 2, login: user?.login },
       });
     });
   }
