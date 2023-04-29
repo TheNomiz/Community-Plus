@@ -7,6 +7,11 @@ import { DEBUG_INFO_ENABLED } from 'app/app.constants';
 import { Authority } from 'app/config/authority.constants';
 
 import { UserRouteAccessService } from 'app/core/auth/user-route-access.service';
+import { AboutusComponent } from './aboutus/aboutus.component';
+import { PrivacypolicyComponent } from './privacypolicy/privacypolicy.component';
+import { TermsandconditionsComponent } from './termsandconditions/termsandconditions.component';
+import { AccessibilityComponent } from './accessibility/accessibility.component';
+import { FaqsComponent } from './faqs/faqs.component';
 
 @NgModule({
   imports: [
@@ -31,6 +36,26 @@ import { UserRouteAccessService } from 'app/core/auth/user-route-access.service'
         {
           path: '',
           loadChildren: () => import(`./entities/entity-routing.module`).then(m => m.EntityRoutingModule),
+        },
+        {
+          path: 'about-us',
+          component: AboutusComponent,
+        },
+        {
+          path: 'privacy-policy',
+          component: PrivacypolicyComponent,
+        },
+        {
+          path: 'terms-and-conditions',
+          component: TermsandconditionsComponent,
+        },
+        {
+          path: 'accessibility',
+          component: AccessibilityComponent,
+        },
+        {
+          path: 'faqs',
+          component: FaqsComponent,
         },
         navbarRoute,
         ...errorRoute,
