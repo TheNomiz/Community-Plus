@@ -44,6 +44,13 @@ export class UserProfileDetailComponent implements OnInit {
       let v = this.userProfile?.verified;
       let p = this.userProfile?.privateAccount;
       document.body.style.backgroundColor = '#FFFFFF';
+      if (this.userProfile) {
+        if (this.userProfile.darkmode) {
+          document.body.classList.add('dark-mode');
+        } else {
+          document.body.classList.remove('dark-mode');
+        }
+      }
 
       if (v) {
         this.verr = 'Verified';
@@ -60,15 +67,9 @@ export class UserProfileDetailComponent implements OnInit {
       this.userProfile.darkmode = !this.userProfile.darkmode;
 
       if (this.userProfile.darkmode) {
-        document.body.style.color = '#fff';
-        document.body.style.backgroundColor = '#333';
-        this.userp.style.backgroundColor = '#333';
-        this.userp.style.color = 'fff';
+        document.body.classList.add('dark-mode');
       } else {
-        document.body.style.color = this.CC;
-        document.body.style.backgroundColor = this.CBC;
-        this.userp.style.backgroundColor = this.CBC;
-        this.userp.style.color = this.CC;
+        document.body.classList.remove('dark-mode');
       }
     }
   }
@@ -120,14 +121,26 @@ export class UserProfileDetailComponent implements OnInit {
     });
 
     const parsedBody = await response.json();
-    const status = parsedBody.status;
-    console.log(`Status: ${status}`);
+    const url = parsedBody.url;
+    const sessionId = parsedBody.id;
+    window.open(url);
 
-    if (status === 'verified' && this.userProfile) {
+    // Wait for 5 minutes before sending the second fetch request
+    await new Promise(resolve => setTimeout(resolve, 300000));
+
+    const response2 = await fetch(`https://api.stripe.com/v1/identity/verification_sessions/${sessionId}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        Authorization: 'Bearer sk_test_26PHem9AhJZvU623DfE1x4sd',
+      },
+    });
+
+    const parsedBody2 = await response2.json();
+    const status2 = parsedBody2.status;
+    if (status2 === 'verified' && this.userProfile) {
       this.userProfile.verified = true;
       this.verr = 'Verified';
     }
-    const url = parsedBody.url;
-    window.open(url);
   }
 }
