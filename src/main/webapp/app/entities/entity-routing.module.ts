@@ -45,10 +45,6 @@ import { RouterModule } from '@angular/router';
         loadChildren: () => import('./community/community.module').then(m => m.CommunityModule),
       },
       {
-        path: 'gdpr',
-        loadChildren: () => import('./gdpr/gdpr.module').then(m => m.GdprModule),
-      },
-      {
         path: 'user-profile',
         data: { pageTitle: 'teamprojectApp.userProfile.home.title' },
         loadChildren: () => import('./user-profile/user-profile.module').then(m => m.UserProfileModule),

@@ -176,8 +176,6 @@ export class CrimeAlertComponent implements OnInit {
 
   ngOnInit(): void {
     const isMapView = JSON.parse(localStorage.getItem('isMapView') ?? 'true');
-    console.error(isMapView);
-    console.error(this.isListView);
     this.isListView = isMapView;
     this.load();
   }
@@ -316,11 +314,10 @@ export class CrimeAlertComponent implements OnInit {
                 <p><span class="summary-title">Date:</span> ${crime.properties.date}</p>
               </div>
             `;
-              let selectedListItem: HTMLLIElement | null = null; // Keep track of the selected list item
+              const selectedListItem: HTMLLIElement | null = null; // Keep track of the selected list item
 
               listItem.innerHTML = summary;
               listItem.addEventListener('click', () => {
-                console.log('List item clicked!'); // Add this line
                 const imageContainer = document.getElementById('image-container');
                 if (imageContainer) {
                   imageContainer.innerHTML = '';
@@ -381,13 +378,13 @@ export class CrimeAlertComponent implements OnInit {
             }
           });
 
-          //const child = this.index.getChildren(cluster.id as number);
+          // const child = this.index.getChildren(cluster.id as number);
 
           // Calculate the size of a pixel in meters at the given latitude and zoom level
-          //const metersPerPixel = (156543.03392 * Math.cos((cluster.geometry.coordinates[1] * Math.PI) / 180)) / Math.pow(2, zoomLevel);
+          // const metersPerPixel = (156543.03392 * Math.cos((cluster.geometry.coordinates[1] * Math.PI) / 180)) / Math.pow(2, zoomLevel);
 
           // Convert the distance in pixels to meters
-          //const distanceInMeters = 50 * metersPerPixel;
+          // const distanceInMeters = 50 * metersPerPixel;
 
           const circleOptions = {
             color: 'red',
@@ -465,8 +462,8 @@ export class CrimeAlertComponent implements OnInit {
           <p><span style="font-weight: bold;">Date:</span> ${cluster.properties.date}</p>
           <p><span style="font-weight: bold;">Posted by:</span> ${cluster.properties.postedby?.login}</p>
           <button id="button-hi">Discussion</button>
-          <button id="button-yo" onclick="window.location.href='https://communityplus.live/crime-alert/${cluster.properties.id}/view';">Open Report</button>
-        </div>
+          <button id="button-yo" onclick="window.open('https://communityplus.live/crime-alert/${cluster.properties.id}/view', '_blank');">Open Report</button>
+          </div>
       `);
 
         const marker = L.marker([cluster.geometry.coordinates[1], cluster.geometry.coordinates[0]], {
@@ -486,10 +483,47 @@ export class CrimeAlertComponent implements OnInit {
   load(): void {
     if (!this.isListView) {
       this.isLoading = true;
+      const params: { [key: string]: any } = {};
+
+      if (this.filterCrimeType) {
+        params['crimeType.equals'] = this.filterCrimeType;
+      }
+
+      if (this.filterUser) {
+        params['user.equals'] = this.filterUser;
+      }
+      params['size'] = 100000;
+      console.error(this.filterCrimeType);
       this.crimeAlertService.query({ size: 100000 }).subscribe((res: EntityArrayResponseType) => {
         const filteredData = this.fillComponentAttributesFromResponseBody(res.body);
         const pointFeatures: PointFeature<ICrimeAlert>[] = filteredData
-          .filter(alert => alert.lat && alert.lon) // filter out alerts with undefined or null coordinates
+          .filter(alert => {
+            // Filter out alerts with undefined or null coordinates
+            if (!alert.lat || !alert.lon) {
+              return false;
+            }
+
+            // Filter by date
+            if (this.filterDate && alert.date && !alert.date.isSame(this.filterDate, 'day')) {
+              return false;
+            }
+
+            if (this.filterCrimeType) {
+              // Convert the filterCrimeType string to the corresponding enum value
+              const filterCrimeTypeEnum = CrimeTypes[this.filterCrimeType as keyof typeof CrimeTypes];
+
+              if (alert.crimeType !== filterCrimeTypeEnum) {
+                return false;
+              }
+            }
+
+            // Filter by user
+            if (this.filterUser && (!alert.postedby || alert.postedby.login !== this.filterUser)) {
+              return false;
+            }
+
+            return true;
+          }) // filter out alerts with undefined or null coordinates
           .map(alert => ({
             type: 'Feature',
             geometry: {
@@ -523,16 +557,16 @@ export class CrimeAlertComponent implements OnInit {
         });
 
         // Loop through the clusters and add markers to the map
-        //console.error(this.isLoading);
+        // console.error(this.isLoading);
       });
     } else {
-      //this.isLoading=false;
+      // this.isLoading=false;
       this.loadFromBackendWithRouteInformations().subscribe({
         next: (res: EntityArrayResponseType) => {
           this.onResponseSuccess(res);
         },
       });
-      //console.error(this.isLoading);
+      // console.error(this.isLoading);
     }
     // Remove all markers from the map
   }

@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GdprComponent } from './gdpr.component';
+import { FaqsComponent } from './faqs.component';
 
-describe('GdprComponent', () => {
-  let component: GdprComponent;
-  let fixture: ComponentFixture<GdprComponent>;
+describe('FaqsComponent', () => {
+  let component: FaqsComponent;
+  let fixture: ComponentFixture<FaqsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [GdprComponent],
+      declarations: [FaqsComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(GdprComponent);
+    fixture = TestBed.createComponent(FaqsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

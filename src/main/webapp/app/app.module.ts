@@ -28,6 +28,11 @@ import { BusinessService } from 'app/entities/business/service/business.service'
 import { ChatMessageService } from 'app/entities/chat-message/service/chat-message.service';
 import { ChatRoomService } from 'app/entities/chat-room/service/chat-room.service';
 import { EventService } from 'app/entities/event/service/event.service';
+import { AboutusComponent } from './aboutus/aboutus.component';
+import { FaqsComponent } from './faqs/faqs.component';
+import { PrivacypolicyComponent } from './privacypolicy/privacypolicy.component';
+import { TermsandconditionsComponent } from './termsandconditions/termsandconditions.component';
+import { AccessibilityComponent } from './accessibility/accessibility.component';
 
 @NgModule({
   imports: [
@@ -52,7 +57,19 @@ import { EventService } from 'app/entities/event/service/event.service';
     ChatRoomService,
     EventService,
   ],
-  declarations: [MainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, ActiveMenuDirective, FooterComponent],
+  declarations: [
+    MainComponent,
+    NavbarComponent,
+    ErrorComponent,
+    PageRibbonComponent,
+    ActiveMenuDirective,
+    FooterComponent,
+    AboutusComponent,
+    FaqsComponent,
+    PrivacypolicyComponent,
+    TermsandconditionsComponent,
+    AccessibilityComponent,
+  ],
   bootstrap: [MainComponent],
 })
 export class AppModule {

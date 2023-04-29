@@ -11,6 +11,15 @@
   crossorigin=""
 ></script>
 
+<!-- SEARCH PLUGIN BEGINS HERE
+<link rel="stylesheet" href="https://unpkg.com/leaflet-geosearch@3.0.0/dist/geosearch.css"/>
+<script src="https://unpkg.com/leaflet-geosearch@3.0.0/dist/geosearch.umd.js"></script>
+
+
+<link rel="stylesheet" href="../dist/leaflet-search.min.css">
+<script src="../dist/leaflet-search.min.js"></script>
+SEARCH PLUGIN ENDS HERE -->
+
 <div>
   <h2 id="page-heading" data-cy="EmergencyStationsHeading">
     <!-- <span jhiTranslate="teamprojectApp.emergencyStations.home.title">Emergency Stations</span> -->
@@ -32,13 +41,55 @@
     <div class="holder" id="holder">
       <div class="filters" id="filters">
         <h2>Filters</h2>
-        <div class="filterOptionHolder" style="font-size: 65%"><input type="checkbox" /> Police Stations</div>
-        <div class="filterOptionHolder" style="font-size: 65%"><input type="checkbox" /> Fire Stations</div>
-        <div class="filterOptionHolder" style="font-size: 65%"><input type="checkbox" /> Hospitals</div>
-        <div class="filterOptionHolder" style="font-size: 65%"><input type="checkbox" /> Pharmacies</div>
+        <div class="filterOptionHolder" style="font-size: 65%">
+          <input type="checkbox" id="PSCB" /><button class="filterButton" id="PSB" (click)="PSButtonPress()">Police Stations</button>
+        </div>
+        <div class="filterOptionHolder" style="font-size: 65%">
+          <input type="checkbox" id="FSCB" /><button class="filterButton" id="FSB" (click)="FSButtonPress()">Fire Stations</button>
+        </div>
+        <div class="filterOptionHolder" style="font-size: 65%">
+          <input type="checkbox" id="HCB" /><button class="filterButton" id="HB" (click)="HButtonPress()">Hospitals</button>
+        </div>
+        <div class="filterOptionHolder" style="font-size: 65%">
+          <input type="checkbox" id="PCB" /><button class="filterButton" id="PB" (click)="PButtonPress()">Pharmacies</button>
+        </div>
       </div>
 
       <div class="map" id="map"></div>
+      <!-- <app-map-input (coordinatesChanged)="onCoordinatesChanged($event)" ></app-map-input> -->
+      <!-- AAAAA
+      <script>
+      var searchControl = new L.Control.Search({
+      url: 'https://nominatim.openstreetmap.org/search?format=json&q={s}',
+      jsonpParam: 'json_callback',
+      propertyName: 'display_name',
+      propertyLoc: ['lat','lon'],
+      marker: L.circleMarker([0,0],{radius:30}),
+      autoCollapse: true,
+      autoType: false,
+      minLength: 2
+      });
+
+      searchControl.on('search:locationfound', function(e) {
+
+      //console.log('search:locationfound', e);
+
+      //map.removeLayer(this._markerSearch)
+
+      e.layer.setStyle({fillColor: '#3f0', color: '#0f0'});
+      if(e.layer._popup)
+        e.layer.openPopup();
+
+      }).on('search:collapsed', function(e) {
+
+      featuresLayer.eachLayer(function(layer) {   //restore feature color
+      featuresLayer.resetStyle(layer);
+      });
+      });
+
+      map.addControl( searchControl );
+      </script>
+       BBBBB -->
     </div>
 
     <br />

@@ -49,6 +49,10 @@ export class CrimeAlertService {
       .put<RestCrimeAlert>(`${this.resourceUrl}/${this.getCrimeAlertIdentifier(crimeAlert)}`, copy, { observe: 'response' })
       .pipe(map(res => this.convertResponseFromServer(res)));
   }
+  // In your crime-alert.service.ts or similar service file
+  getCrimeAlerts(params: any): Observable<EntityArrayResponseType> {
+    return this.http.get<ICrimeAlert[]>(this.resourceUrl, { params, observe: 'response' });
+  }
 
   partialUpdate(crimeAlert: PartialUpdateCrimeAlert): Observable<EntityResponseType> {
     const copy = this.convertDateFromClient(crimeAlert);

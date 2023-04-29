@@ -1,9 +1,11 @@
 <nav data-cy="navbar" class="navbar navbar-dark navbar-expand-md">
   <div class="container-fluid">
     <a class="navbar-brand logo" routerLink="/" (click)="collapseNavbar()">
-      <span class="logo-img"></span>
+      <span class="logo-img">
+        <img class="logo" src="content/images/logo_community+.png" alt="Logo" width="200px" height="37px" />
+      </span>
       <!-- <span jhiTranslate="global.title"  class="navbar-title">Teamproject</span> -->
-      <span class="navbar-version">{{ version }}</span>
+      <!-- <span class="navbar-version">{{ version }}</span> -->
     </a>
     <a
       class="navbar-toggler d-lg-none"
@@ -29,9 +31,9 @@
         </li>
 
         <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-          <a class="nav-link" routerLink="emergency-stations-page" (click)="collapseNavbar()">
+          <a class="nav-link" routerLink="emergency-stations" (click)="collapseNavbar()">
             <span>
-              <span>Emergency Stations</span>
+              <span jhiTranslate="global.menu.emergencyStations">Emergency Stations</span>
             </span>
           </a>
         </li>
@@ -43,29 +45,45 @@
           </a>
         </li>
         <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-          <a class="nav-link" routerLink="gdpr" (click)="collapseNavbar()">
+          <a class="nav-link" routerLink="crime-alert" (click)="collapseNavbar()">
             <span>
-              <span>GPDR Policy</span>
+              <span>Crime Alerts</span>
+            </span>
+          </a>
+        </li>
+        <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+          <a class="nav-link" routerLink="lost-found" (click)="collapseNavbar()">
+            <span>
+              <span>Lost & Found</span>
+            </span>
+          </a>
+        </li>
+        <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+          <a class="nav-link" routerLink="emergency-guide-page" (click)="collapseNavbar()">
+            <span>
+              <span>Emergency Guide</span>
             </span>
           </a>
         </li>
 
         <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
+
         <li
-          *ngSwitchCase="true"
+          *jhiHasAnyAuthority="'ROLE_ADMIN'"
           ngbDropdown
           class="nav-item dropdown pointer"
           display="dynamic"
           routerLinkActive="active"
           [routerLinkActiveOptions]="{ exact: true }"
         >
-          <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="entity-menu" data-cy="entity">
+          <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="admin-menu" data-cy="adminMenu">
             <span>
-              <fa-icon icon="th-list"></fa-icon>
-              <span jhiTranslate="global.menu.entities.main">Entities</span>
+              <fa-icon icon="users-cog"></fa-icon>
+              <span jhiTranslate="global.menu.admin.main">Administration</span>
             </span>
           </a>
-          <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="entity-menu">
+
+          <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="admin-menu">
             <li>
               <a
                 class="dropdown-item"
@@ -102,18 +120,6 @@
                 <span jhiTranslate="global.menu.entities.emergencyStationsPage">Emergency Stations Page</span>
               </a>
             </li> -->
-            <li>
-              <a
-                class="dropdown-item"
-                routerLink="lost-found-page"
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }"
-                (click)="collapseNavbar()"
-              >
-                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                <span jhiTranslate="global.menu.entities.lostFoundPage">Lost Found Page</span>
-              </a>
-            </li>
             <li>
               <a
                 class="dropdown-item"
@@ -186,6 +192,7 @@
                 <span jhiTranslate="global.menu.entities.emergencyGuide">Emergency Guide</span>
               </a>
             </li>
+            <!--
             <li>
               <a
                 class="dropdown-item"
@@ -198,6 +205,7 @@
                 <span jhiTranslate="global.menu.entities.emergencyStations">Emergency Stations</span>
               </a>
             </li>
+            -->
             <li>
               <a
                 class="dropdown-item"
@@ -211,23 +219,7 @@
               </a>
             </li>
             <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
-          </ul>
-        </li>
-        <li
-          *jhiHasAnyAuthority="'ROLE_ADMIN'"
-          ngbDropdown
-          class="nav-item dropdown pointer"
-          display="dynamic"
-          routerLinkActive="active"
-          [routerLinkActiveOptions]="{ exact: true }"
-        >
-          <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="admin-menu" data-cy="adminMenu">
-            <span>
-              <fa-icon icon="users-cog"></fa-icon>
-              <span jhiTranslate="global.menu.admin.main">Administration</span>
-            </span>
-          </a>
-          <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="admin-menu">
+
             <li>
               <a class="dropdown-item" routerLink="admin/user-management" routerLinkActive="active" (click)="collapseNavbar()">
                 <fa-icon icon="users" [fixedWidth]="true"></fa-icon>
