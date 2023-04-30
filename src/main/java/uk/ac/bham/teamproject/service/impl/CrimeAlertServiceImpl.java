@@ -196,20 +196,21 @@ public class CrimeAlertServiceImpl implements CrimeAlertService {
         for (JsonElement jsonElement : jsonArray) {
             JsonPrimitive idJson = jsonElement.getAsJsonObject().getAsJsonPrimitive("id");
             Long id = idJson.getAsLong();
-            String title = createTitleFromResponse(jsonElement.getAsJsonObject());
+            String titlereal = createTitleFromResponse(jsonElement.getAsJsonObject());
             String description = createDescriptionFromResponse(jsonElement.getAsJsonObject());
             JsonPrimitive dateStringJson = jsonElement.getAsJsonObject().getAsJsonPrimitive("month");
             String dateString = dateStringJson.getAsString();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM");
             Instant date = YearMonth.parse(dateString, formatter).atDay(1).atStartOfDay().toInstant(ZoneOffset.UTC);
             JsonPrimitive latJson = jsonElement.getAsJsonObject().getAsJsonObject("location").getAsJsonPrimitive("latitude");
+            String title = jsonElement.getAsJsonObject().getAsJsonPrimitive("category").getAsString();
 
             BigDecimal lat = new BigDecimal(latJson.getAsString());
             JsonPrimitive lonJson = jsonElement.getAsJsonObject().getAsJsonObject("location").getAsJsonPrimitive("longitude");
             BigDecimal lon = new BigDecimal(lonJson.getAsString());
             CrimeAlert crimeAlert = new CrimeAlert();
             crimeAlert.setId(id);
-            crimeAlert.setTitle(title);
+            crimeAlert.setTitle(titlereal);
             crimeAlert.setDescription(description);
             crimeAlert.setDate(date);
             crimeAlert.setLat(lat);

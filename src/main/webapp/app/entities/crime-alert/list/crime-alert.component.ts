@@ -430,9 +430,9 @@ export class CrimeAlertComponent implements OnInit {
         } else if ((cluster.properties.crimeType as CrimeTypes) === CrimeTypes.BURGLARY) {
           url = `'../../../content/images/burglary.png`;
         } else if ((cluster.properties.crimeType as CrimeTypes) === CrimeTypes.DRUGS) {
-          url = `'../../../content/images/other.png`;
+          url = `'../../../content/images/drugs.png`;
         } else if ((cluster.properties.crimeType as CrimeTypes) === CrimeTypes.OTHERCRIME) {
-          url = `'../../../content/images/arson.png`;
+          url = `'../../../content/images/other.png`;
         } else if ((cluster.properties.crimeType as CrimeTypes) === CrimeTypes.THEFTFROMTHEPERSON) {
           url = `'../../../content/images/pickpocket.png`;
         } else if ((cluster.properties.crimeType as CrimeTypes) === CrimeTypes.PUBLICORDER) {
@@ -442,9 +442,9 @@ export class CrimeAlertComponent implements OnInit {
         } else if ((cluster.properties.crimeType as CrimeTypes) === CrimeTypes.SHOPLIFTING) {
           url = `'../../../content/images/shoplifting.png`;
         } else if ((cluster.properties.crimeType as CrimeTypes) === CrimeTypes.VEHICLECRIME) {
-          url = `'../../../content/images/weapons.png`;
+          url = `'../../../content/images/vehicle.png`;
         } else if ((cluster.properties.crimeType as CrimeTypes) === CrimeTypes.POSSESSIONOFWEAPONS) {
-          url = `'../../../content/images/arson.png`;
+          url = `'../../../content/images/weapons.png`;
         } else if ((cluster.properties.crimeType as CrimeTypes) === CrimeTypes.VIOLENCEANDSEXUALOFFENCES) {
           url = `'../../../content/images/assault.png`;
         } else if ((cluster.properties.crimeType as CrimeTypes) === CrimeTypes.OTHERTHEFT) {
