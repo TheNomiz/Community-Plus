@@ -90,13 +90,21 @@ export class CrimeAlertUpdateComponent implements OnInit {
     });
   }
   onCoordinatesChanged(coords: { lat: number; lon: number }): void {
-    this.accountService.identity().subscribe(user => {
-      this.editForm.patchValue({
-        lat: coords.lat,
-        lon: coords.lon,
-        crimeID: this.generateUniqueCrimeID(),
-        postedby: { id: 2, login: user?.login },
-      });
+    this.accountService.identity().subscribe(account => {
+      if (account) {
+        this.userService.query().subscribe(response => {
+          const users: IUser[] = response.body ? response.body : [];
+          const user = users.find(u => u.login === account.login);
+          if (user) {
+            this.editForm.patchValue({
+              lat: coords.lat,
+              lon: coords.lon,
+              crimeID: this.generateUniqueCrimeID(),
+              postedby: { id: user.id, login: user.login },
+            });
+          }
+        });
+      }
     });
   }
 
