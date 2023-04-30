@@ -54,7 +54,7 @@ export class CommunityComponent implements OnInit {
   // current user
   user!: IUser | undefined;
   usersprofile!: IUserProfile | null | undefined;
-  anonymous = false;
+  anonymous = true;
 
   // map items
   map!: L.Map;
@@ -74,14 +74,14 @@ export class CommunityComponent implements OnInit {
   private topicSubscription: Subscription;
 
   constructor(
-    private busservice: BusinessService,
-    private chatroomservice: ChatRoomService,
-    private messageservice: ChatMessageService,
-    private eventservice: EventService,
-    private rxStompService: RxStompService,
-    private accountService: AccountService,
-    private userService: UserService,
-    private userprofileService: UserProfileService,
+    protected busservice: BusinessService,
+    protected chatroomservice: ChatRoomService,
+    protected messageservice: ChatMessageService,
+    protected eventservice: EventService,
+    protected rxStompService: RxStompService,
+    protected accountService: AccountService,
+    protected userService: UserService,
+    protected userprofileService: UserProfileService,
     private router: Router
   ) {}
 
@@ -95,7 +95,7 @@ export class CommunityComponent implements OnInit {
     });
 */
 
-    // get current users profile
+    // get current user
     this.accountService.getAuthenticationState().subscribe(account => {
       if (account) {
         this.userService.query().subscribe(response => {
@@ -113,6 +113,9 @@ export class CommunityComponent implements OnInit {
       // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
       if (this.user && this.user !== undefined) {
         this.usersprofile = usersprofile.find(userprofile => userprofile.userID?.id === this.user?.id);
+        if (this.usersprofile?.privateAccount === false) {
+          this.anonymous = false;
+        }
       }
     });
 
@@ -276,8 +279,7 @@ export class CommunityComponent implements OnInit {
       postedby: null,
       room: { id: this.roomId },
     };
-
-    if (this.anonymous === true) {
+    if (this.anonymous === false) {
       chatMessage.postedby = this.usersprofile;
     }
 
@@ -321,8 +323,12 @@ export class CommunityComponent implements OnInit {
   }
 
   getUserName(usersprofile: IUserProfile | null | undefined): string {
-    if (usersprofile?.privateAccount === false) {
-      return usersprofile.username ?? '';
+    if (usersprofile) {
+      if (usersprofile.privateAccount === false && usersprofile.username) {
+        return usersprofile.username;
+      } else {
+        return 'Anonymous';
+      }
     } else {
       return 'Anonymous';
     }
