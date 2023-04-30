@@ -82,6 +82,8 @@ export class EmergencyStationsComponent implements OnInit {
 
   map!: L.Map;
 
+  markerGroup = L.layerGroup();
+
   constructor(
     protected emergencyStationsDbService: EmergencyStationsDbService,
     protected activatedRoute: ActivatedRoute,
@@ -113,6 +115,29 @@ export class EmergencyStationsComponent implements OnInit {
       attribution: '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
     }).addTo(this.map);
 
+    this.map.addLayer(this.markerGroup);
+
+    this.populateMap();
+
+    /*
+    L.marker([52.429636, -1.949548], { icon: PoliceIcon }).addTo(this.map).bindPopup('Bournville Police Station<br>Police Station<br>This is a manual test');
+
+    L.marker([52.4463, -1.9307], { icon: PharmacyIcon }).addTo(this.map).bindPopup('Jhoots Pharmacy Bournbrook<br>Pharmacy<br>This is a manual test');
+
+    L.marker([52.4473, -1.92576], { icon: FireStationIcon }).addTo(this.map).bindPopup('Bournbrook Fire Station<br>Fire <br>This is a manual test');
+
+    L.marker([52.4514, -1.941], { icon: HospitalIcon }).addTo(this.map).bindPopup('Queen Elizabeth Hospital<br>Hospital<br>This is a manual test').openPopup();
+     */
+
+    this.load();
+  }
+
+  populateMap(): void {
+    const PSCB = document.getElementById('PSCB') as HTMLInputElement;
+    const FSCB = document.getElementById('FSCB') as HTMLInputElement;
+    const HCB = document.getElementById('HCB') as HTMLInputElement;
+    const PCB = document.getElementById('PCB') as HTMLInputElement;
+
     // get all the data from the database
     this.emergencyStationsDbService.query().subscribe((res: HttpResponse<IBusiness[]>) => {
       this.emergencyStations = res.body ?? [];
@@ -129,38 +154,26 @@ export class EmergencyStationsComponent implements OnInit {
           emergencyStation.longitude >= -180 &&
           emergencyStation.longitude <= 180
         ) {
-          if (emergencyStation.stationType === 'PoliceStation') {
+          if (emergencyStation.stationType === 'PoliceStation' && PSCB.checked) {
             L.marker([emergencyStation.latitude, emergencyStation.longitude], { icon: PoliceIcon })
-              .addTo(this.map)
+              .addTo(this.markerGroup)
               .bindPopup(`<strong>${emergencyStation.name}</strong><br>Police Station`);
-          } else if (emergencyStation.stationType === 'Hospital') {
+          } else if (emergencyStation.stationType === 'Hospital' && HCB.checked) {
             L.marker([emergencyStation.latitude, emergencyStation.longitude], { icon: HospitalIcon })
-              .addTo(this.map)
+              .addTo(this.markerGroup)
               .bindPopup(`<strong>${emergencyStation.name}</strong><br>${emergencyStation.stationType}`);
-          } else if (emergencyStation.stationType === 'FireStation') {
+          } else if (emergencyStation.stationType === 'FireStation' && FSCB.checked) {
             L.marker([emergencyStation.latitude, emergencyStation.longitude], { icon: FireStationIcon })
-              .addTo(this.map)
+              .addTo(this.markerGroup)
               .bindPopup(`<strong>${emergencyStation.name}</strong><br>Fire Station`);
-          } else if (emergencyStation.stationType === 'Pharmacy') {
+          } else if (emergencyStation.stationType === 'Pharmacy' && PCB.checked) {
             L.marker([emergencyStation.latitude, emergencyStation.longitude], { icon: PharmacyIcon })
-              .addTo(this.map)
+              .addTo(this.markerGroup)
               .bindPopup(`<strong>${emergencyStation.name}</strong><br>${emergencyStation.stationType}`);
           }
         }
       });
     });
-
-    /*
-    L.marker([52.429636, -1.949548], { icon: PoliceIcon }).addTo(this.map).bindPopup('Bournville Police Station<br>Police Station<br>This is a manual test');
-
-    L.marker([52.4463, -1.9307], { icon: PharmacyIcon }).addTo(this.map).bindPopup('Jhoots Pharmacy Bournbrook<br>Pharmacy<br>This is a manual test');
-
-    L.marker([52.4473, -1.92576], { icon: FireStationIcon }).addTo(this.map).bindPopup('Bournbrook Fire Station<br>Fire <br>This is a manual test');
-
-    L.marker([52.4514, -1.941], { icon: HospitalIcon }).addTo(this.map).bindPopup('Queen Elizabeth Hospital<br>Hospital<br>This is a manual test').openPopup();
-     */
-
-    this.load();
   }
 
   onKeyUp(event: KeyboardEvent): void {
@@ -194,18 +207,27 @@ export class EmergencyStationsComponent implements OnInit {
   PSButtonPress(): void {
     const PSCB = document.getElementById('PSCB') as HTMLInputElement;
     PSCB.checked = !PSCB.checked;
+    this.CBChanged();
   }
   FSButtonPress(): void {
     const FSCB = document.getElementById('FSCB') as HTMLInputElement;
     FSCB.checked = !FSCB.checked;
+    this.CBChanged();
   }
   HButtonPress(): void {
     const HCB = document.getElementById('HCB') as HTMLInputElement;
     HCB.checked = !HCB.checked;
+    this.CBChanged();
   }
   PButtonPress(): void {
     const PCB = document.getElementById('PCB') as HTMLInputElement;
     PCB.checked = !PCB.checked;
+    this.CBChanged();
+  }
+
+  CBChanged(): void {
+    this.markerGroup.clearLayers();
+    this.populateMap();
   }
 
   delete(emergencyStations: IEmergencyStations): void {

@@ -33,18 +33,24 @@
       <div class="filters" id="filters">
         <h2>Filters</h2>
         <div class="filterOptionHolder" style="font-size: 65%">
-          <input type="checkbox" id="PSCB" checked /><button class="filterButton" id="PSB" (click)="PSButtonPress()">
+          <input type="checkbox" id="PSCB" checked (change)="CBChanged()" /><button class="filterButton" id="PSB" (click)="PSButtonPress()">
             Police Stations
           </button>
         </div>
         <div class="filterOptionHolder" style="font-size: 65%">
-          <input type="checkbox" id="FSCB" checked /><button class="filterButton" id="FSB" (click)="FSButtonPress()">Fire Stations</button>
+          <input type="checkbox" id="FSCB" checked (change)="CBChanged()" /><button class="filterButton" id="FSB" (click)="FSButtonPress()">
+            Fire Stations
+          </button>
         </div>
         <div class="filterOptionHolder" style="font-size: 65%">
-          <input type="checkbox" id="HCB" checked /><button class="filterButton" id="HB" (click)="HButtonPress()">Hospitals</button>
+          <input type="checkbox" id="HCB" checked (change)="CBChanged()" /><button class="filterButton" id="HB" (click)="HButtonPress()">
+            Hospitals
+          </button>
         </div>
         <div class="filterOptionHolder" style="font-size: 65%">
-          <input type="checkbox" id="PCB" checked /><button class="filterButton" id="PB" (click)="PButtonPress()">Pharmacies</button>
+          <input type="checkbox" id="PCB" checked (change)="CBChanged()" /><button class="filterButton" id="PB" (click)="PButtonPress()">
+            Pharmacies
+          </button>
         </div>
       </div>
 
