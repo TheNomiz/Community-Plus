@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
-import { IEmergencyStations } from '../emergency-stations- db.model';
+import { IEmergencyStations } from '../emergency-stations-db.model';
 import {
   sampleWithRequiredData,
   sampleWithNewData,

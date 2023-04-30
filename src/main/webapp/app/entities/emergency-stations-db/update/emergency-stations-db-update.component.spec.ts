@@ -8,7 +8,7 @@ import { of, Subject, from } from 'rxjs';
 
 import { EmergencyStationsDbFormService } from './emergency-stations-db-form.service';
 import { EmergencyStationsDbService } from '../service/emergency-stations-db.service';
-import { IEmergencyStations } from '../emergency-stations- db.model';
+import { IEmergencyStations } from '../emergency-stations-db.model';
 
 import { EmergencyStationsDbUpdateComponent } from './emergency-stations-db-update.component';
 

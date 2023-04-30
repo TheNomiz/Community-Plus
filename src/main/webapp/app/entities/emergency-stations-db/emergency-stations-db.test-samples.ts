@@ -1,6 +1,6 @@
 import { StationsCategory } from 'app/entities/enumerations/stations-category.model';
 
-import { IEmergencyStations, NewEmergencyStations } from './emergency-stations- db.model';
+import { IEmergencyStations, NewEmergencyStations } from './emergency-stations-db.model';
 
 export const sampleWithRequiredData: IEmergencyStations = {
   id: 20444,

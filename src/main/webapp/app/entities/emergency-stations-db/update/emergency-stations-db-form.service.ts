@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
-import { IEmergencyStations, NewEmergencyStations } from '../emergency-stations- db.model';
+import { IEmergencyStations, NewEmergencyStations } from '../emergency-stations-db.model';
 
 /**
  * A partial Type with required key is used as form input.

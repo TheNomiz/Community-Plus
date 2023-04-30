@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
 import { EmergencyStationsDbFormService, EmergencyStationsFormGroup } from './emergency-stations-db-form.service';
-import { IEmergencyStations } from '../emergency-stations- db.model';
+import { IEmergencyStations } from '../emergency-stations-db.model';
 import { EmergencyStationsDbService } from '../service/emergency-stations-db.service';
 import { StationsCategory } from 'app/entities/enumerations/stations-category.model';
 import { AccountService } from 'app/core/auth/account.service';

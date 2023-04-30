@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { IEmergencyStations } from '../emergency-stations- db.model';
+import { IEmergencyStations } from '../emergency-stations-db.model';
 import { EmergencyStationsDbService } from '../service/emergency-stations-db.service';
 import { ITEM_DELETED_EVENT } from 'app/config/navigation.constants';
 

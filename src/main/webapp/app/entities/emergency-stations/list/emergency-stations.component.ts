@@ -1,18 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpHeaders } from '@angular/common/http';
+import { HttpHeaders, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute, Data, ParamMap, Router } from '@angular/router';
 import { combineLatest, filter, Observable, switchMap, tap } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { IEmergencyStations } from '../emergency-stations.model';
+import { IEmergencyStations } from 'app/entities/emergency-stations-db/emergency-stations-db.model';
 
 import { ITEMS_PER_PAGE } from 'app/config/pagination.constants';
 import { ASC, DESC, SORT, ITEM_DELETED_EVENT, DEFAULT_SORT_DATA } from 'app/config/navigation.constants';
-import { EntityArrayResponseType, EmergencyStationsService } from '../service/emergency-stations.service';
-import { EmergencyStationsDeleteDialogComponent } from '../delete/emergency-stations-delete-dialog.component';
+import {
+  EntityArrayResponseType,
+  EmergencyStationsDbService,
+} from 'app/entities/emergency-stations-db/service/emergency-stations-db.service';
+import { EmergencyStationsDbDeleteDialogComponent } from 'app/entities/emergency-stations-db/delete/emergency-stations-db-delete-dialog.component';
 import { ParseLinks } from 'app/core/util/parse-links.service';
 import * as L from 'leaflet';
-import { ENTER } from '@angular/cdk/keycodes';
+import { IBusiness } from '../../business/business.model';
 
 const shadowUrl = '../../../content/images/Location_Marker_Shadow.png';
 const PoliceIcon = L.icon({
@@ -65,7 +68,7 @@ const FireStationIcon = L.icon({
   styleUrls: ['./emergency-stations.component.scss'],
 })
 export class EmergencyStationsComponent implements OnInit {
-  emergencyStations?: IEmergencyStations[];
+  emergencyStations: IEmergencyStations[] = [];
   isLoading = false;
 
   predicate = 'id';
@@ -80,7 +83,7 @@ export class EmergencyStationsComponent implements OnInit {
   map!: L.Map;
 
   constructor(
-    protected emergencyStationsService: EmergencyStationsService,
+    protected emergencyStationsDbService: EmergencyStationsDbService,
     protected activatedRoute: ActivatedRoute,
     public router: Router,
     protected parseLinks: ParseLinks,
@@ -98,7 +101,7 @@ export class EmergencyStationsComponent implements OnInit {
     this.load();
   }
 
-  trackId = (_index: number, item: IEmergencyStations): number => this.emergencyStationsService.getEmergencyStationsIdentifier(item);
+  trackId = (_index: number, item: IEmergencyStations): number => this.emergencyStationsDbService.getEmergencyStationsIdentifier(item);
 
   ngOnInit(): void {
     this.map = L.map('map', {
@@ -110,35 +113,52 @@ export class EmergencyStationsComponent implements OnInit {
       attribution: '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
     }).addTo(this.map);
 
+    // get all the data from the database
+    this.emergencyStationsDbService.query().subscribe((res: HttpResponse<IBusiness[]>) => {
+      this.emergencyStations = res.body ?? [];
+
+      // add markers to map
+      this.emergencyStations.forEach(emergencyStation => {
+        if (
+          emergencyStation.latitude &&
+          emergencyStation.longitude &&
+          emergencyStation.name &&
+          emergencyStation.stationType &&
+          emergencyStation.latitude >= -90 &&
+          emergencyStation.latitude <= 90 &&
+          emergencyStation.longitude >= -180 &&
+          emergencyStation.longitude <= 180
+        ) {
+          if (emergencyStation.stationType === 'PoliceStation') {
+            L.marker([emergencyStation.latitude, emergencyStation.longitude], { icon: PoliceIcon })
+              .addTo(this.map)
+              .bindPopup(`<strong>${emergencyStation.name}</strong><br>Police Station`);
+          } else if (emergencyStation.stationType === 'Hospital') {
+            L.marker([emergencyStation.latitude, emergencyStation.longitude], { icon: HospitalIcon })
+              .addTo(this.map)
+              .bindPopup(`<strong>${emergencyStation.name}</strong><br>${emergencyStation.stationType}`);
+          } else if (emergencyStation.stationType === 'FireStation') {
+            L.marker([emergencyStation.latitude, emergencyStation.longitude], { icon: FireStationIcon })
+              .addTo(this.map)
+              .bindPopup(`<strong>${emergencyStation.name}</strong><br>Fire Station`);
+          } else if (emergencyStation.stationType === 'Pharmacy') {
+            L.marker([emergencyStation.latitude, emergencyStation.longitude], { icon: PharmacyIcon })
+              .addTo(this.map)
+              .bindPopup(`<strong>${emergencyStation.name}</strong><br>${emergencyStation.stationType}`);
+          }
+        }
+      });
+    });
+
     /*
-    // add markers to map
-    this.businesses.forEach(business => {
-      if (
-        business.latitude &&
-        business.longitude &&
-        business.name &&
-        business.description &&
-        business.category &&
-        business.phoneNumber &&
-        business.latitude >= -90 &&
-        business.latitude <= 90 &&
-        business.longitude >= -180 &&
-        business.longitude <= 180
-      ) {
-        const marker = L.marker([business.latitude, business.longitude]).bindPopup(
-          `<b>${business.name}</b><br>${business.description}</br><br>${business.phoneNumber}</br><br>${business.category}`
-        );
-        marker.addTo(this.map);
-      }
+    L.marker([52.429636, -1.949548], { icon: PoliceIcon }).addTo(this.map).bindPopup('Bournville Police Station<br>Police Station<br>This is a manual test');
+
+    L.marker([52.4463, -1.9307], { icon: PharmacyIcon }).addTo(this.map).bindPopup('Jhoots Pharmacy Bournbrook<br>Pharmacy<br>This is a manual test');
+
+    L.marker([52.4473, -1.92576], { icon: FireStationIcon }).addTo(this.map).bindPopup('Bournbrook Fire Station<br>Fire <br>This is a manual test');
+
+    L.marker([52.4514, -1.941], { icon: HospitalIcon }).addTo(this.map).bindPopup('Queen Elizabeth Hospital<br>Hospital<br>This is a manual test').openPopup();
      */
-
-    L.marker([52.429636, -1.949548], { icon: PoliceIcon }).addTo(this.map).bindPopup('Bournville Police Station<br>Police Station');
-
-    L.marker([52.4463, -1.9307], { icon: PharmacyIcon }).addTo(this.map).bindPopup('Jhoots Pharmacy Bournbrook<br>Pharmacy');
-
-    L.marker([52.4473, -1.92576], { icon: FireStationIcon }).addTo(this.map).bindPopup('Bournbrook Fire Station<br>Fire Station');
-
-    L.marker([52.4514, -1.941], { icon: HospitalIcon }).addTo(this.map).bindPopup('Queen Elizabeth Hospital<br>Hospital').openPopup();
 
     this.load();
   }
@@ -189,7 +209,7 @@ export class EmergencyStationsComponent implements OnInit {
   }
 
   delete(emergencyStations: IEmergencyStations): void {
-    const modalRef = this.modalService.open(EmergencyStationsDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
+    const modalRef = this.modalService.open(EmergencyStationsDbDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
     modalRef.componentInstance.emergencyStations = emergencyStations;
     // unsubscribe not needed because closed completes on modal close
     modalRef.closed
@@ -270,7 +290,7 @@ export class EmergencyStationsComponent implements OnInit {
       size: this.itemsPerPage,
       sort: this.getSortQueryParam(predicate, ascending),
     };
-    return this.emergencyStationsService.query(queryObject).pipe(tap(() => (this.isLoading = false)));
+    return this.emergencyStationsDbService.query(queryObject).pipe(tap(() => (this.isLoading = false)));
   }
 
   protected handleNavigation(page = this.page, predicate?: string, ascending?: boolean): void {

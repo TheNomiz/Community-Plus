@@ -5,7 +5,7 @@ import { ActivatedRouteSnapshot, ActivatedRoute, Router, convertToParamMap } fro
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 
-import { IEmergencyStations } from '../emergency-stations- db.model';
+import { IEmergencyStations } from '../emergency-stations-db.model';
 import { EmergencyStationsDbService } from '../service/emergency-stations-db.service';
 
 import { EmergencyStationsDbRoutingResolveService } from './emergency-stations-db-routing-resolve.service';

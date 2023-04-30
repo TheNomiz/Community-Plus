@@ -4,7 +4,7 @@ import { Resolve, ActivatedRouteSnapshot, Router } from '@angular/router';
 import { Observable, of, EMPTY } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 
-import { IEmergencyStations } from '../emergency-stations- db.model';
+import { IEmergencyStations } from '../emergency-stations-db.model';
 import { EmergencyStationsDbService } from '../service/emergency-stations-db.service';
 
 @Injectable({ providedIn: 'root' })
