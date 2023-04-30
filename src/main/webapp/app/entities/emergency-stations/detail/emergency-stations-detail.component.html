@@ -1,0 +1,56 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="emergencyStations">
+      <h2 data-cy="emergencyStationsDetailsHeading">
+        <span jhiTranslate="teamprojectApp.emergencyStations.detail.title">Emergency Stations</span>
+      </h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ emergencyStations.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="teamprojectApp.emergencyStations.name">Name</span></dt>
+        <dd>
+          <span>{{ emergencyStations.name }}</span>
+        </dd>
+        <dt><span jhiTranslate="teamprojectApp.emergencyStations.stationType">Station Type</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'teamprojectApp.StationsCategory.' + emergencyStations.stationType }}">{{
+            emergencyStations.stationType
+          }}</span>
+        </dd>
+        <dt><span jhiTranslate="teamprojectApp.emergencyStations.wheelchairAccess">Wheelchair Access</span></dt>
+        <dd>
+          <span>{{ emergencyStations.wheelchairAccess }}</span>
+        </dd>
+        <dt><span jhiTranslate="teamprojectApp.emergencyStations.parking">Parking</span></dt>
+        <dd>
+          <span>{{ emergencyStations.parking }}</span>
+        </dd>
+        <dt><span jhiTranslate="teamprojectApp.emergencyStations.latitude">Latitude</span></dt>
+        <dd>
+          <span>{{ emergencyStations.latitude }}</span>
+        </dd>
+        <dt><span jhiTranslate="teamprojectApp.emergencyStations.longitude">Longitude</span></dt>
+        <dd>
+          <span>{{ emergencyStations.longitude }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/emergency-stations', emergencyStations.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>
