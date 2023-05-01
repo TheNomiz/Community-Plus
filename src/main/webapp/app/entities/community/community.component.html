@@ -55,28 +55,8 @@
             [{{ formatDate(message.sentDate) }}]{{ getUserName(message.postedby) }} : {{ message.content }}
           </li>
         </div>
-        <!--
-          <input type="text" [(ngModel)]="message" placeholder="Type your message here" (keyup.enter)="onSendMessage()" x-webkit-speech />
+        <input type="text" [(ngModel)]="message" placeholder="Type your message here" (keyup.enter)="onSendMessage()" />
         <button class="btn btn-primary" (click)="onSendMessage()">Send</button>
-        -->
-        <div class="input-group">
-          <input
-            type="text"
-            class="form-control"
-            placeholder="Type your message here"
-            [(ngModel)]="message"
-            (keyup.enter)="onSendMessage()"
-          />
-          <button class="btn btn-outline-secondary" type="button" (click)="toggleService()">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-mic" viewBox="0 0 16 16">
-              <path
-                d="M3.5 6.5A.5.5 0 0 1 4 7v1a4 4 0 0 0 8 0V7a.5.5 0 0 1 1 0v1a5 5 0 0 1-4.5 4.975V15h3a.5.5 0 0 1 0 1h-7a.5.5 0 0 1 0-1h3v-2.025A5 5 0 0 1 3 8V7a.5.5 0 0 1 .5-.5z"
-              />
-              <path d="M10 8a2 2 0 1 1-4 0V3a2 2 0 1 1 4 0v5zM8 0a3 3 0 0 0-3 3v5a3 3 0 0 0 6 0V3a3 3 0 0 0-3-3z" />
-            </svg>
-          </button>
-          <button type="button" class="btn btn-primary" (click)="onSendMessage()">Send</button>
-        </div>
       </div>
     </div>
   </div>
