@@ -23,6 +23,7 @@ import { UserService } from '../user/user.service';
 import { IUser } from '../user/user.model';
 import { UserProfileService } from '../user-profile/service/user-profile.service';
 import { IUserProfile } from '../user-profile/user-profile.model';
+import { VoiceRecognitionService } from 'app/service/voicerecognition.service';
 
 const iconUrl = '../../../content/images/Location_Marker.png';
 const shadowUrl = '../../../content/images/Location_Marker_Shadow.png';
@@ -50,6 +51,10 @@ export class CommunityComponent implements OnInit {
   businesses: IBusiness[] = [];
 
   roomMessages: IChatMessage[] = [];
+
+  // voice recognition vars
+  isStillRecoginze = false;
+  serviceState = false;
 
   // current user
   user!: IUser | undefined;
@@ -82,8 +87,11 @@ export class CommunityComponent implements OnInit {
     protected accountService: AccountService,
     protected userService: UserService,
     protected userprofileService: UserProfileService,
-    private router: Router
-  ) {}
+    private router: Router,
+    public voiceservice: VoiceRecognitionService
+  ) {
+    this.voiceservice.init();
+  }
 
   ngOnInit(): void {
     // subscribe to chatroom
@@ -340,6 +348,24 @@ export class CommunityComponent implements OnInit {
 
   createNewBusiness() {
     this.router.navigate(['/business/new']);
+  }
+
+  toggleService() {
+    this.serviceState = !this.serviceState;
+    if (this.serviceState) {
+      this.startService();
+    } else {
+      this.stopService();
+    }
+  }
+
+  startService() {
+    this.isStillRecoginze = this.voiceservice.start() === true ? true : false;
+  }
+
+  stopService() {
+    this.isStillRecoginze = this.voiceservice.stop() === false ? false : true;
+    this.message = this.voiceservice.text;
   }
 
   ngOnDestroy() {
