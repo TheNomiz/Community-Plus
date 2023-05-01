@@ -1,207 +1,255 @@
 <div *ngIf="userProfiles && userProfiles.length > 0">
-  <h2 class="text-center">User Profile - {{ userProfiles[2].username }}</h2>
+  <h2 class="text-center" effect="drop-shadow">User Profile - {{ userProfile?.username }}</h2>
+  <div>
+    <div class="userp">
+      <jhi-alert-error></jhi-alert-error>
 
-  <div class="table-responsive table-entities" id="entities" *ngIf="userProfiles && userProfiles.length > 0">
-    <table class="table table-striped" aria-describedby="page-heading">
-      <thead>
-        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
-          <th scope="col" jhiSortBy="id">
-            <div class="d-flex">
-              <span jhiTranslate="global.field.id">ID</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="username">
-            <div class="d-flex">
-              <span jhiTranslate="teamprojectApp.userProfile.username">Username</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="firstnames">
-            <div class="d-flex">
-              <span jhiTranslate="teamprojectApp.userProfile.firstnames">Firstnames</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="lastname">
-            <div class="d-flex">
-              <span jhiTranslate="teamprojectApp.userProfile.lastname">Lastname</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="password">
-            <div class="d-flex">
-              <span jhiTranslate="teamprojectApp.userProfile.password">Password</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="email">
-            <div class="d-flex">
-              <span jhiTranslate="teamprojectApp.userProfile.email">Email</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="language">
-            <div class="d-flex">
-              <span jhiTranslate="teamprojectApp.userProfile.language">Language</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="verified">
-            <div class="d-flex">
-              <span jhiTranslate="teamprojectApp.userProfile.verified">Verified</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="privateAccount">
-            <div class="d-flex">
-              <span jhiTranslate="teamprojectApp.userProfile.privateAccount">Private Account</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="age">
-            <div class="d-flex">
-              <span jhiTranslate="teamprojectApp.userProfile.age">Age</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="accountType">
-            <div class="d-flex">
-              <span jhiTranslate="teamprojectApp.userProfile.accountType">Account Type</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="occupation">
-            <div class="d-flex">
-              <span jhiTranslate="teamprojectApp.userProfile.occupation">Occupation</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="streetAddress">
-            <div class="d-flex">
-              <span jhiTranslate="teamprojectApp.userProfile.streetAddress">Street Address</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="city">
-            <div class="d-flex">
-              <span jhiTranslate="teamprojectApp.userProfile.city">City</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="postalCode">
-            <div class="d-flex">
-              <span jhiTranslate="teamprojectApp.userProfile.postalCode">Postal Code</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="bio">
-            <div class="d-flex">
-              <span jhiTranslate="teamprojectApp.userProfile.bio">Bio</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="phoneNumber">
-            <div class="d-flex">
-              <span jhiTranslate="teamprojectApp.userProfile.phoneNumber">Phone Number</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="communityPoints">
-            <div class="d-flex">
-              <span jhiTranslate="teamprojectApp.userProfile.communityPoints">Community Points</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="gPS">
-            <div class="d-flex">
-              <span>GPS</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="darkmode">
-            <div class="d-flex">
-              <span jhiTranslate="teamprojectApp.userProfile.darkmode">Darkmode</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="fontsize">
-            <div class="d-flex">
-              <span jhiTranslate="teamprojectApp.userProfile.fontsize">Fontsize</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="userID.id">
-            <div class="d-flex">
-              <span jhiTranslate="teamprojectApp.userProfile.userID">User ID</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col"></th>
-        </tr>
-      </thead>
-      <tbody
-        infinite-scroll
-        (scrolled)="loadPage(page + 1)"
-        [infiniteScrollDisabled]="page - 1 >= links['last']"
-        [infiniteScrollDistance]="0"
-      >
-        <tr *ngFor="let userProfile of userProfiles; trackBy: trackId" data-cy="entityTable">
-          <td>
-            <a [routerLink]="['/user-profile', userProfile.id, 'view']">{{ userProfile.id }}</a>
-          </td>
-          <td>{{ userProfile.username }}</td>
-          <td>{{ userProfile.firstnames }}</td>
-          <td>{{ userProfile.lastname }}</td>
-          <td>{{ userProfile.password }}</td>
-          <td>{{ userProfile.email }}</td>
-          <td>{{ userProfile.language }}</td>
-          <td>{{ userProfile.verified }}</td>
-          <td>{{ userProfile.privateAccount }}</td>
-          <td>{{ userProfile.age }}</td>
-          <td>{{ userProfile.accountType }}</td>
-          <td>{{ userProfile.occupation }}</td>
-          <td>{{ userProfile.streetAddress }}</td>
-          <td>{{ userProfile.city }}</td>
-          <td>{{ userProfile.postalCode }}</td>
-          <td>{{ userProfile.bio }}</td>
-          <td>{{ userProfile.phoneNumber }}</td>
-          <td>{{ userProfile.communityPoints }}</td>
-          <td>{{ userProfile.gPS }}</td>
-          <td>{{ userProfile.darkmode }}</td>
-          <td>{{ userProfile.fontsize }}</td>
-          <td>
-            {{ userProfile.userID?.id }}
-          </td>
-          <td class="text-end">
-            <div class="btn-group">
-              <button
-                type="submit"
-                [routerLink]="['/user-profile', userProfile.id, 'view']"
-                class="btn btn-info btn-sm"
-                data-cy="entityDetailsButton"
-              >
-                <fa-icon icon="eye"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
-              </button>
+      <jhi-alert></jhi-alert>
 
-              <button
-                type="submit"
-                [routerLink]="['/account', userProfile.id, 'edit']"
-                class="btn btn-primary btn-sm"
-                data-cy="entityEditButton"
-              >
-                <fa-icon icon="pencil-alt"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
-              </button>
+      <div class="box box1"></div>
+      <div class="box box2"></div>
+      <div class="box box3"></div>
+      <div class="box box4"></div>
+      <div class="bio bio">Bio :{{ userProfile?.bio }}</div>
+      <div class="bio info">
+        Name: {{ userProfile?.firstnames }} {{ userProfile?.lastname }}<br />
+        Age: {{ userProfile?.age }}<br />
+        Occupation: {{ userProfile?.occupation }}<br />
+        Community Points: {{ userProfile?.communityPoints }}<br />
+        Joined: {{ userProfile?.userID }}
+      </div>
 
-              <button type="submit" (click)="delete(userProfile)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
-              </button>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+      <img
+        src="../content/images/userprofile.jpeg"
+        style="width: 341px; height: 280px; border-radius: 300px; position: absolute; top: 102px; left: 102px"
+      />
+      <style>
+        .userp {
+          width: 782px;
+          height: 800px;
+        }
+
+        .box {
+          height: 688px;
+          border-radius: 25px;
+          position: absolute;
+          top: 70px;
+          opacity: 33%;
+        }
+        .bio {
+          position: absolute;
+          width: 341px;
+          height: 152px;
+          left: 102px;
+          top: 572px;
+          display: block;
+
+          border-radius: 25px;
+          text-align: center;
+          padding-bottom: 120px;
+          padding-right: 10px;
+          padding-left: 10px;
+          padding-top: 10px;
+          overflow: hidden;
+          word-wrap: break-word;
+        }
+        .info {
+          top: 406px;
+        }
+
+        .btn {
+          height: 46px;
+          width: 274px;
+          border-radius: 10px;
+          background-color: #c6c6c6;
+          position: absolute;
+          left: 579px;
+          top: 386px;
+          font-size: 25px;
+          opacity: 70%;
+        }
+
+        .box1 {
+          width: 432px;
+          background-color: #d9d9d9;
+          left: 56px;
+          opacity: 33%;
+          box-shadow: 4px 0px 4px rgba(0, 0, 0, 0.25);
+        }
+
+        .box2 {
+          width: 699px;
+          background-color: #d9d9d9;
+          left: 520px;
+          box-shadow: 4px 0px 4px rgba(0, 0, 0, 0.25);
+        }
+        .box3 {
+          width: 341px;
+          height: 152px;
+          background-color: #ebebeb;
+          left: 102px;
+          top: 572px;
+        }
+
+        .box4 {
+          width: 341px;
+          height: 152px;
+          background-color: #ebebeb;
+          left: 102px;
+          top: 406px;
+        }
+
+        .btn-info {
+          left: 56px;
+          top: 760px;
+        }
+        .btn-primary {
+          left: 106px;
+          top: 760px;
+        }
+
+        .btn-un {
+          top: 430px;
+        }
+
+        .btn-oc {
+          top: 504px;
+        }
+
+        .btn-pa {
+          left: 904px;
+          top: 430px;
+        }
+
+        .btn-bio {
+          left: 904px;
+          top: 504px;
+        }
+
+        .btn-pn {
+          top: 652px;
+        }
+
+        .btn-add {
+          top: 578px;
+        }
+
+        .btn-ea {
+          left: 904px;
+          top: 578px;
+        }
+
+        .btn-lan {
+          left: 904px;
+          top: 652px;
+        }
+
+        .btn-ver {
+          top: 106px;
+        }
+
+        .btn-pub {
+          left: 904px;
+          top: 106px;
+        }
+
+        .btn-set {
+          top: 179px;
+        }
+
+        .btn-deac {
+          left: 904px;
+          top: 179px;
+        }
+
+        .btn-dark {
+          top: 253px;
+        }
+
+        .btn-fontp {
+          width: 132px;
+          left: 1046px;
+          top: 253px;
+        }
+
+        .btn-fontm {
+          width: 132px;
+          left: 904px;
+          top: 253px;
+        }
+      </style>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/user-profile', userProfile?.id, 'edit']" class="btn btn-un">
+        <span>User Name</span>
+      </button>
+
+      <button type="button" [routerLink]="['/user-profile', userProfile?.id, 'edit']" class="btn btn-oc">
+        <span>Occupation</span>
+      </button>
+
+      <button type="button" [routerLink]="['/account/password']" class="btn btn-pa">
+        <span>Password</span>
+      </button>
+
+      <button type="button" [routerLink]="['/user-profile', userProfile?.id, 'edit']" class="btn btn-bio">
+        <span>Bio</span>
+      </button>
+
+      <button type="button" [routerLink]="['/user-profile', userProfile?.id, 'edit']" class="btn btn-pn">
+        <span>Phone Number</span>
+      </button>
+
+      <button type="button" [routerLink]="['/user-profile', userProfile?.id, 'edit']" class="btn btn-add">
+        <span>Address</span>
+      </button>
+
+      <button type="button" [routerLink]="['/user-profile', userProfile?.id, 'edit']" class="btn btn-ea">
+        <span>Email Address</span>
+      </button>
+
+      <button type="button" [routerLink]="['/user-profile', userProfile?.id, 'edit']" class="btn btn-lan">
+        <span>Langauge</span>
+      </button>
+
+      <button type="button" (click)="verify()" class="btn btn-ver">
+        <span>{{ verr }}</span>
+      </button>
+
+      <button type="button" (click)="pub()" class="btn btn-pub">
+        <span>{{ pubb }} </span>
+      </button>
+
+      <button type="button" [routerLink]="['/account/settings']" class="btn btn-set">
+        <span>Settings</span>
+      </button>
+
+      <button type="button" (click)="userProfile !== null && delete(userProfile)" class="btn btn-deac">
+        <span>Deactivate</span>
+      </button>
+
+      <button type="button" (click)="darkmode()" class="btn btn-dark">
+        <span>Darkmode</span>
+      </button>
+
+      <button type="button" (click)="fontplus()" class="btn btn-fontp">
+        <span>Fontsize +</span>
+      </button>
+
+      <button type="button" (click)="fontminus()" class="btn btn-fontm">
+        <span>Fontsize -</span>
+      </button>
+
+      <style>
+        .footer {
+          position: absolute;
+          bottom: 0;
+          width: 100%;
+        }
+      </style>
+    </div>
   </div>
 </div>

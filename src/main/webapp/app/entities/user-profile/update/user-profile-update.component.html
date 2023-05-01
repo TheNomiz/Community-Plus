@@ -123,6 +123,33 @@
         </div>
 
         <div class="row mb-3">
+          <label class="form-label" jhiTranslate="teamprojectApp.userProfile.privateAccount" for="field_privateAccount"
+            >Private Account</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="privateAccount"
+            id="field_privateAccount"
+            data-cy="privateAccount"
+            formControlName="privateAccount"
+          />
+          <div
+            *ngIf="
+              editForm.get('privateAccount')!.invalid && (editForm.get('privateAccount')!.dirty || editForm.get('privateAccount')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('privateAccount')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
           <label class="form-label" jhiTranslate="teamprojectApp.userProfile.age" for="field_age">Age</label>
           <input type="number" class="form-control" name="age" id="field_age" data-cy="age" formControlName="age" />
           <div *ngIf="editForm.get('age')!.invalid && (editForm.get('age')!.dirty || editForm.get('age')!.touched)">
@@ -135,7 +162,7 @@
           </div>
         </div>
 
-        <div class="row mb-3">
+        <!-- <div class="row mb-3">
           <label class="form-label" jhiTranslate="teamprojectApp.userProfile.accountType" for="field_accountType">Account Type</label>
           <input
             type="text"
@@ -155,6 +182,7 @@
             </small>
           </div>
         </div>
+        -->
 
         <div class="row mb-3">
           <label class="form-label" jhiTranslate="teamprojectApp.userProfile.occupation" for="field_occupation">Occupation</label>
@@ -298,7 +326,7 @@
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" jhiTranslate="teamprojectApp.userProfile.gPS" for="field_gPS">G PS</label>
+          <label class="form-label" for="field_gPS">GPS</label>
           <input type="checkbox" class="form-check" name="gPS" id="field_gPS" data-cy="gPS" formControlName="gPS" />
           <div *ngIf="editForm.get('gPS')!.invalid && (editForm.get('gPS')!.dirty || editForm.get('gPS')!.touched)">
             <small class="form-text text-danger" *ngIf="editForm.get('gPS')?.errors?.required" jhiTranslate="entity.validation.required">
@@ -327,17 +355,7 @@
 
         <div class="row mb-3">
           <label class="form-label" jhiTranslate="teamprojectApp.userProfile.userID" for="field_userID">User ID</label>
-          <select
-            class="form-control"
-            id="field_userID"
-            data-cy="userID"
-            name="userID"
-            formControlName="userID"
-            [compareWith]="compareUser"
-          >
-            <option [ngValue]="null"></option>
-            <option [ngValue]="userOption" *ngFor="let userOption of usersSharedCollection">{{ userOption.id }}</option>
-          </select>
+          <input class="form-control" id="field_userID" data-cy="userID" name="userID" formControlName="userID" />
         </div>
       </div>
 

@@ -79,7 +79,11 @@ export const classInvalid = 'ng-invalid';
 export const classValid = 'ng-valid';
 
 Cypress.Commands.add('authenticatedRequest', data => {
-  const bearerToken = JSON.parse(sessionStorage.getItem(Cypress.env('jwtStorageName')));
+  let session = sessionStorage.getItem(Cypress.env('jwtStorageName'));
+  let bearerToken;
+  if (session) {
+    bearerToken = JSON.parse(session);
+  }
   return cy.request({
     ...data,
     auth: {
@@ -116,7 +120,122 @@ Cypress.Commands.add('login', (username: string, password: string) => {
 declare global {
   namespace Cypress {
     interface Chainable {
-      authenticatedRequest(data): Cypress.Chainable;
+      authenticatedRequest(data: {
+        method?: string;
+        body?:
+          | { username: string; password: string }
+          | {
+              name: string;
+              description: string;
+              category: /// <reference types="cypress" />
+              // ***********************************************
+              // This commands.ts shows you how to
+              // create various custom commands and overwrite
+              // existing commands.
+              //
+              // For more comprehensive examples of custom
+              // commands please read more here:
+              // https://on.cypress.io/custom-commands
+              // ***********************************************
+              // ***********************************************
+              // Begin Specific Selector Attributes for Cypress
+              // ***********************************************
+              // Navbar
+              string;
+              phoneNumber: string;
+              email: string; /// <reference types="cypress" />
+              // ***********************************************
+              // This commands.ts shows you how to
+              // create various custom commands and overwrite
+              // existing commands.
+              //
+              // For more comprehensive examples of custom
+              // commands please read more here:
+              // https://on.cypress.io/custom-commands
+              // ***********************************************
+              // ***********************************************
+              // Begin Specific Selector Attributes for Cypress
+              // ***********************************************
+              // Navbar
+              latitude: number;
+              longitude: number;
+            }
+          | { content: string; sentDate: string }
+          | {
+              // This commands.ts shows you how to
+              // create various custom commands and overwrite
+              // existing commands.
+              //
+              // For more comprehensive examples of custom
+              // commands please read more here:
+              // https://on.cypress.io/custom-commands
+              // ***********************************************
+              // ***********************************************
+              // Begin Specific Selector Attributes for Cypress
+              // ***********************************************
+              // Navbar
+              name: string;
+            }
+          | { emergencyType: string }
+          | {
+              emergencyType: string;
+              panicButton: // existing commands.
+              //
+              // For more comprehensive examples of custom
+              // commands please read more here:
+              // https://on.cypress.io/custom-commands
+              // ***********************************************
+              // ***********************************************
+              // Begin Specific Selector Attributes for Cypress
+              // ***********************************************
+              // Navbar
+              boolean;
+            }
+          | { name: string; stationType: string; latitude: number; longitude: number }
+          | {
+              name: string; // https://on.cypress.io/custom-commands
+              stationType: string;
+              latitude: number;
+              // ***********************************************
+              // ***********************************************
+              // Begin Specific Selector Attributes for Cypress
+              // ***********************************************
+              // Navbar
+              longitude: number;
+            }
+          | {
+              name: string;
+              description: // ***********************************************
+              // Begin Specific Selector Attributes for Cypress
+              // ***********************************************
+              // Navbar
+              string;
+              startDate: string;
+              endDate: string;
+              latitude: number;
+              category: string;
+              longitude: number;
+              address: string;
+            }
+          | { description: string; date: string; location: string; item: string; name: string; email: string; phoneNumber: string }
+          | {
+              username: string;
+              firstnames: string;
+              lastname: string;
+              password: string;
+              email: string;
+              language: string;
+              verified: boolean;
+              privateAccount: boolean;
+              age: number;
+              accountType: string;
+              occupation: string;
+              postalCode: string;
+              phoneNumber: string;
+              gPS: boolean;
+            };
+        url: any;
+      }): Cypress.Chainable;
       login(username: string, password: string): Cypress.Chainable;
     }
   }

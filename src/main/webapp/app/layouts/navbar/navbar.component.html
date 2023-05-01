@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <a class="navbar-brand logo" routerLink="/" (click)="collapseNavbar()">
       <span class="logo-img">
-        <img class="logo" src="content/images/logo_community+.png" alt="Logo" width="200px" height="37px" />
+        <img class="logo" src="content/images/logo_community+.png" alt="Logo" width="200px" height="100%" />
       </span>
       <!-- <span jhiTranslate="global.title"  class="navbar-title">Teamproject</span> -->
       <!-- <span class="navbar-version">{{ version }}</span> -->
@@ -31,9 +31,16 @@
         </li>
 
         <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+          <a class="nav-link" routerLink="crime-alert" (click)="collapseNavbar()">
+            <span>
+              <span>Crime Alerts</span>
+            </span>
+          </a>
+        </li>
+        <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
           <a class="nav-link" routerLink="emergency-stations" (click)="collapseNavbar()">
             <span>
-              <span jhiTranslate="global.menu.emergencyStations">Emergency Stations</span>
+              <span>Emergency Stations</span>
             </span>
           </a>
         </li>
@@ -41,13 +48,6 @@
           <a class="nav-link" routerLink="community" (click)="collapseNavbar()">
             <span>
               <span>Community</span>
-            </span>
-          </a>
-        </li>
-        <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-          <a class="nav-link" routerLink="crime-alert" (click)="collapseNavbar()">
-            <span>
-              <span>Crime Alerts</span>
             </span>
           </a>
         </li>
@@ -96,6 +96,7 @@
                 <span jhiTranslate="global.menu.entities.crimeAlert">Crime Alert</span>
               </a>
             </li>
+            <!--
             <li>
               <a
                 class="dropdown-item"
@@ -108,18 +109,7 @@
                 <span jhiTranslate="global.menu.entities.emergencyGuidePage">Emergency Guide Page</span>
               </a>
             </li>
-            <!-- <li>
-              <a
-                class="dropdown-item"
-                routerLink="emergency-stations-page"
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }"
-                (click)="collapseNavbar()"
-              >
-                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                <span jhiTranslate="global.menu.entities.emergencyStationsPage">Emergency Stations Page</span>
-              </a>
-            </li> -->
+            -->
             <li>
               <a
                 class="dropdown-item"
@@ -178,6 +168,18 @@
               >
                 <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
                 <span jhiTranslate="global.menu.entities.chatMessage">Chat Message</span>
+              </a>
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="emergency-stations-db"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                <span jhiTranslate="global.menu.entities.emergencyStationsDb">Emergency Stations Database</span>
               </a>
             </li>
             <li>
@@ -303,13 +305,7 @@
 
           <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="account-menu">
             <li *ngSwitchCase="true">
-              <a
-                class="dropdown-item"
-                routerLink="user-profile/4/view"
-                routerLinkActive="active"
-                (click)="collapseNavbar()"
-                data-cy="settings"
-              >
+              <a class="dropdown-item" routerLink="user-profile" routerLinkActive="active" (click)="collapseNavbar()" data-cy="settings">
                 <fa-icon icon="user" [fixedWidth]="true"></fa-icon>
                 <span>User Profile</span>
               </a>
