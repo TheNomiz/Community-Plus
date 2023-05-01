@@ -37,7 +37,7 @@ export class CrimeAlertDetailComponent implements OnInit {
     private commentService: CommentService,
     private http: HttpClient,
     private fb: FormBuilder,
-    private accountService: AccountService
+    protected accountService: AccountService
   ) {
     this.commentForm = this.fb.group({
       comment: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(500)]],

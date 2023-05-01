@@ -4,7 +4,6 @@
     "browsehappy": "You are using an <strong>outdated</strong> browser. Please <a href=\"http://browsehappy.com/?locale=en\">upgrade your browser</a> to improve your experience.",
     "menu": {
       "home": "Home",
-      "emergencyStations": "Emergency Stations",
       "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
       "entities": {
         "main": "Entities",
@@ -15,7 +14,8 @@
         "chatRoom": "Chat Room",
         "chatMessage": "Chat Message",
         "emergencyGuidePage": "Emergency Guide Page",
-        "emergencyStationsPage": "Emergency Stations Page",
+        "emergencyStations": "Emergency Stations",
+        "emergencyStationsDb": "Emergency Stations Database",
         "userProfile": "User Profile",
         "emergencyGuide": "Emergency Guide",
         "lostFound": "Lost Found",
