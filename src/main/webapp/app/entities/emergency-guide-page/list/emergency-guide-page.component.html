@@ -5,9 +5,10 @@
   </h2>
 
   <br />
+  <br />
 
   <div class="page-summary" role="presentation">
-    <p style="padding: 10px; border: 2px solid rgb(72, 62, 111); width: 70%; font-weight: bold; font-size: 20px">
+    <p>
       There are many emergency situations that you may come across.
       <br />Find out more information in the sections below - preparation is the most assured safety. <br />This page cannot cover all
       eventualities however.
@@ -18,19 +19,18 @@
   <br />
   <br />
 
-  <nav class="sub-menu toc-menu" aria-labelledby="toc-menu-heading" style="font-size: 20px">
-    <h2 id="toc-menu-heading" class="menu-title">Contents</h2>
-    <ul class="nav-menu">
-      <li><a href="#section1">Fire</a></li>
-      <li><a href="#section2">Traffic Accident</a></li>
-      <li><a href="#section3">Stabbing</a></li>
-      <li><a href="#section4">Theft and Burglary</a></li>
-      <li><a href="#section5">Chemical Incident and Poisoning</a></li>
-      <li><a href="#section6">Not Breathing/CPR</a></li>
-      <li><a href="#section7">Acts of Terrorism</a></li>
-      <li><a href="#section8">Emergency hotlines</a></li>
-    </ul>
-  </nav>
+  <h2 id="toc-menu-heading" class="menu-title">Contents</h2>
+  <br />
+  <ul style="font-size: 20px" class="nav-menu">
+    <li><a (click)="onClick('section1')">Fire</a></li>
+    <li><a (click)="onClick('section2')">Traffic Accident</a></li>
+    <li><a (click)="onClick('section3')">Stabbing</a></li>
+    <li><a (click)="onClick('section4')">Theft and Burglary</a></li>
+    <li><a (click)="onClick('section5')">Chemical Incident and Poisoning</a></li>
+    <li><a (click)="onClick('section6')">Not Breathing/CPR</a></li>
+    <li><a (click)="onClick('section7')">Acts of Terrorism</a></li>
+    <li><a (click)="onClick('section8')">Emergency hotlines</a></li>
+  </ul>
 
   <br />
   <br />
