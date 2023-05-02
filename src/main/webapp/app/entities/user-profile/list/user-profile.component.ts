@@ -75,7 +75,7 @@ export class UserProfileComponent implements OnInit {
   trackId = (_index: number, item: IUserProfile): number => this.userProfileService.getUserProfileIdentifier(item);
 
   async ngOnInit(): Promise<void> {
-    this.load();
+    await this.load();
     await this.loaduser();
   }
 
@@ -158,9 +158,9 @@ export class UserProfileComponent implements OnInit {
   }
 
   fontplus(): void {
-    const max = 30.5;
+    this.CFS *= 1.1;
 
-    document.body.style.fontSize = this.CFS * 1.1 + 'px';
+    document.body.style.fontSize = this.CFS + 'px';
 
     if (this.userProfile) {
       this.userProfile.fontsize = this.CFS;
@@ -169,9 +169,9 @@ export class UserProfileComponent implements OnInit {
   }
 
   fontminus(): void {
-    const min = 2;
+    this.CFS *= 0.9;
 
-    document.body.style.fontSize = this.CFS * 0.9 + 'px';
+    document.body.style.fontSize = this.CFS + 'px';
 
     if (this.userProfile) {
       this.userProfile.fontsize = this.CFS;
