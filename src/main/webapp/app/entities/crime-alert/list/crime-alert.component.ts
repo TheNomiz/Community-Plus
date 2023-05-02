@@ -307,38 +307,52 @@ export class CrimeAlertComponent implements OnInit {
               const crime = crimes[i];
               const listItem = document.createElement('li');
 
+              const hasImage = crime.properties.crimePhoto1 && crime.properties.crimePhoto1.length > 0;
+              const imageIcon = hasImage
+                ? '<i class="fas fa-image image-icon"></i>'
+                : '<i class="fas fa-image image-icon" style="opacity: 0.3;"></i>';
+
               const summary = `
               <div class="summary">
-                <p> <span class="summary-title">Title:</span> ${crime.properties.title}</p>
-                <p><span class="summary-title">Crime Type:</span> ${this.getCrimeTypeDisplay(crime.properties.crimeType)}</p>
-                <p><span class="summary-title">Date:</span> ${crime.properties.date}</p>
-              </div>
+              <p> <span class="summary-title">Title:</span> ${crime.properties.title}${imageIcon}</p>
+              <p><span class="summary-title">Crime Type:</span> ${this.getCrimeTypeDisplay(crime.properties.crimeType)}</p>
+              <p><span class="summary-title">Date:</span> ${crime.properties.date}</p>
+            </div>
             `;
               const selectedListItem: HTMLLIElement | null = null; // Keep track of the selected list item
 
               listItem.innerHTML = summary;
-              listItem.addEventListener('click', () => {
-                const imageContainer = document.getElementById('image-container');
-                if (imageContainer) {
-                  imageContainer.innerHTML = '';
+              if (hasImage) {
+                listItem.addEventListener('click', () => {
+                  const floatingImageContainer = document.createElement('div');
+                  floatingImageContainer.classList.add('floating-image-container');
+
+                  const closeButton = document.createElement('span');
+                  closeButton.classList.add('close-button');
+                  closeButton.innerHTML = '&times;';
+                  closeButton.onclick = () => {
+                    floatingImageContainer.style.display = 'none';
+                  };
+                  floatingImageContainer.appendChild(closeButton);
+
                   const img = document.createElement('img');
                   img.src = `data:${crime.properties.crimePhoto1ContentType};base64,${crime.properties.crimePhoto1}`;
                   img.classList.add('summary-image');
-                  imageContainer.appendChild(img);
-                }
-                /*
+                  floatingImageContainer.appendChild(img);
+
+                  document.body.appendChild(floatingImageContainer);
+                  floatingImageContainer.style.display = 'block';
+                  /*
                 if (selectedListItem) {
                   selectedListItem.classList.remove('selected');
                 }
                 listItem.classList.add('selected');
                 selectedListItem = listItem;
                 */
-              });
+                });
+              }
 
               crimesList.appendChild(listItem);
-              if (i === 0) {
-                listItem.click();
-              }
             }
 
             modal.style.display = 'block';
@@ -461,7 +475,6 @@ export class CrimeAlertComponent implements OnInit {
           <p><span style="font-weight: bold;">Crime Type:</span> ${cluster.properties.crimeType}</p>
           <p><span style="font-weight: bold;">Date:</span> ${cluster.properties.date}</p>
           <p><span style="font-weight: bold;">Posted by:</span> ${cluster.properties.postedby?.login}</p>
-          <button id="button-hi">Discussion</button>
           <button id="button-yo" onclick="window.open('https://communityplus.live/crime-alert/${cluster.properties.id}/view', '_blank');">Open Report</button>
           </div>
       `);
