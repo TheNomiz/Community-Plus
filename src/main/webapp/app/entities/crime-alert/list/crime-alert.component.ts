@@ -472,10 +472,12 @@ export class CrimeAlertComponent implements OnInit {
         <div>
           <p> <span style="font-weight: bold;">Title:</span> ${cluster.properties.title}</p>
           <p><span style="font-weight: bold;">Description:</span> ${cluster.properties.description}</p>
-          <p><span style="font-weight: bold;">Crime Type:</span> ${cluster.properties.crimeType}</p>
+          <p><span style="font-weight: bold;">Crime Type:</span> ${this.getCrimeTypeDisplay(cluster.properties.crimeType)}</p>
           <p><span style="font-weight: bold;">Date:</span> ${cluster.properties.date}</p>
           <p><span style="font-weight: bold;">Posted by:</span> ${cluster.properties.postedby?.login}</p>
-          <button id="button-yo" onclick="window.open('https://communityplus.live/crime-alert/${cluster.properties.id}/view', '_blank');">Open Report</button>
+          <button id="button-yo" onclick="window.open('https://communityplus.live/crime-alert/${
+            cluster.properties.id
+          }/view', '_blank');">Open Report</button>
           </div>
       `);
 
