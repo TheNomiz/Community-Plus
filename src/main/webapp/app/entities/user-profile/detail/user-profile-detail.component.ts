@@ -44,13 +44,6 @@ export class UserProfileDetailComponent implements OnInit {
       let v = this.userProfile?.verified;
       let p = this.userProfile?.privateAccount;
       document.body.style.backgroundColor = '#FFFFFF';
-      if (this.userProfile) {
-        if (this.userProfile.darkmode) {
-          document.body.classList.add('dark-mode');
-        } else {
-          document.body.classList.remove('dark-mode');
-        }
-      }
 
       if (v) {
         this.verr = 'Verified';
@@ -65,6 +58,7 @@ export class UserProfileDetailComponent implements OnInit {
   darkmode(): void {
     if (this.userProfile) {
       this.userProfile.darkmode = !this.userProfile.darkmode;
+      this.userProfileService.update(this.userProfile);
 
       if (this.userProfile.darkmode) {
         document.body.classList.add('dark-mode');
@@ -82,6 +76,7 @@ export class UserProfileDetailComponent implements OnInit {
     this.CFS *= 1.1;
     if (this.userProfile) {
       this.userProfile.fontsize = this.CFS;
+      this.userProfileService.update(this.userProfile);
     }
 
     document.body.style.fontSize = this.CFS + 'px';
@@ -91,6 +86,7 @@ export class UserProfileDetailComponent implements OnInit {
     this.CFS *= 0.9;
     if (this.userProfile) {
       this.userProfile.fontsize = this.CFS;
+      this.userProfileService.update(this.userProfile);
     }
     document.body.style.fontSize = this.CFS + 'px';
   }
@@ -98,6 +94,7 @@ export class UserProfileDetailComponent implements OnInit {
   pub(): void {
     if (this.userProfile) {
       this.userProfile.privateAccount = !this.userProfile.privateAccount;
+      this.userProfileService.update(this.userProfile);
       if (this.userProfile.privateAccount) {
         this.pubb = 'Private';
       } else {
@@ -141,6 +138,7 @@ export class UserProfileDetailComponent implements OnInit {
     if (status2 === 'verified' && this.userProfile) {
       this.userProfile.verified = true;
       this.verr = 'Verified';
+      this.userProfileService.update(this.userProfile);
     }
   }
 }

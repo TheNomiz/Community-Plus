@@ -212,7 +212,7 @@ public class UserProfile implements Serializable {
     }
 
     public void setVerified(Boolean verified) {
-        this.verified = false;
+        this.verified = verified;
     }
 
     public Boolean getPrivateAccount() {

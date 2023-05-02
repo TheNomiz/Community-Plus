@@ -204,4 +204,11 @@ public class UserResource {
         userService.deleteUser(login);
         return ResponseEntity.noContent().headers(HeaderUtil.createAlert(applicationName, "userManagement.deleted", login)).build();
     }
+
+    public ResponseEntity<Long> getUserId(@PathVariable String login) {
+        log.debug("REST request to get user ID for login: {}", login);
+        Optional<User> user = userRepository.findOneByLogin(login);
+
+        return ResponseEntity.ok(user.get().getId());
+    }
 }

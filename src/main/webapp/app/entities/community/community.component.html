@@ -1,16 +1,3 @@
-<link
-  rel="stylesheet"
-  href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
-  integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
-  crossorigin=""
-/>
-<!-- Make sure you put this AFTER Leaflet's CSS -->
-<script
-  src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
-  integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
-  crossorigin=""
-></script>
-
 <div class="container-fluid">
   <h1>Community Page</h1>
   <p>Welcome to the Community page. Here you can find Upcoming Events, talk in chatrooms, and view a map of businesses and events.</p>
@@ -19,7 +6,7 @@
     <button (click)="createNewEvent()" type="button" class="btn btn-primary">Add Event</button>
     <ngb-carousel [interval]="5000">
       <ng-template ngbSlide *ngFor="let event of getUpcomingEvents()">
-        <img [src]="getImage(event)" alt="Event image" />
+        <img [src]="getImage(event)" alt="{{ event.name }}" />
         <div class="carousel-caption">
           <h3>{{ event.name }}</h3>
           <p>Description: {{ event.description }}</p>
@@ -30,22 +17,20 @@
       </ng-template>
     </ngb-carousel>
   </div>
-  <div class="row">
+  <div class="row align-items-stretch">
     <h2>Chat Rooms</h2>
     <p>Select a chatroom to start talking about an event or business</p>
     <div *ngIf="!currentRoom">
-      <h4>Please select a chatroom.</h4>
+      <h4>Please select a chatroom</h4>
     </div>
     <div *ngIf="currentRoom">
-      <h4>You are currently in the {{ currentRoom }} room.</h4>
+      <h3>You are currently in the {{ currentRoom }} room.</h3>
     </div>
     <div class="col-md-4">
       <div class="rooms">
-        <ul>
-          <li *ngFor="let room of chatRooms">
-            <button class="btn btn-primary" (click)="joinRoom(room)">{{ room.name }}</button>
-          </li>
-        </ul>
+        <li *ngFor="let room of chatRooms">
+          <button class="btn btn-primary" (click)="joinRoom(room)">{{ room.name }}</button>
+        </li>
       </div>
     </div>
     <div class="col-md-8">
@@ -55,8 +40,16 @@
             [{{ formatDate(message.sentDate) }}]{{ getUserName(message.postedby) }} : {{ message.content }}
           </li>
         </div>
-        <input type="text" [(ngModel)]="message" placeholder="Type your message here" (keyup.enter)="onSendMessage()" />
-        <button class="btn btn-primary" (click)="onSendMessage()">Send</button>
+        <label for="message-input" class="visually-hidden">Type your message here:</label>
+        <input
+          id="message-input"
+          class="form-control"
+          type="text"
+          [(ngModel)]="message"
+          placeholder="Type your message here"
+          (keyup.enter)="onSendMessage()"
+        />
+        <button class="btn btn-primary" (click)="onSendMessage()" aria-label="Send message">Send</button>
       </div>
     </div>
   </div>
