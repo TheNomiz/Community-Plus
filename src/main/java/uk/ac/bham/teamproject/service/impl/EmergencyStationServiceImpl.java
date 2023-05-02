@@ -11,6 +11,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Scanner;
 import javax.validation.constraints.Null;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -230,12 +231,10 @@ public class EmergencyStationServiceImpl implements EmergencyStationsService {
     public List<EmergencyStationsDb> fetchHospitals() {
         List<EmergencyStationsDb> hospitals = new ArrayList<>();
         try {
-            //System.out.println(new File(".").getCanonicalPath()); //Tests the relative directory
-            BufferedReader reader = new BufferedReader(new FileReader("./src/main/java/uk/ac/bham/teamproject/Hospital.csv"));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] attributes = line.split("¬");
-
+            Scanner sc = new Scanner(new File("./src/main/java/uk/ac/bham/teamproject/Hospital.csv"));
+            sc.useDelimiter("¬"); //sets the delimiter pattern
+            while (sc.hasNextLine()) {
+                String[] attributes = sc.nextLine().split("¬");
                 if (!attributes[0].isEmpty() && !attributes[7].isEmpty() && !attributes[14].isEmpty() && !attributes[15].isEmpty()) {
                     EmergencyStationsDb emergencyStationsDb = new EmergencyStationsDb();
                     emergencyStationsDb.setId(Long.parseLong(attributes[0]));
@@ -247,7 +246,7 @@ public class EmergencyStationServiceImpl implements EmergencyStationsService {
                     hospitals.add(emergencyStationsDb);
                 }
             }
-            reader.close();
+            sc.close(); //closes the scanner
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -272,11 +271,10 @@ public class EmergencyStationServiceImpl implements EmergencyStationsService {
     public List<EmergencyStationsDb> fetchPharmacies() {
         List<EmergencyStationsDb> pharmacies = new ArrayList<>();
         try {
-            BufferedReader reader = new BufferedReader(new FileReader("./src/main/java/uk/ac/bham/teamproject/Pharmacy.csv"));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] attributes = line.split("¬");
-
+            Scanner sc = new Scanner(new File("./src/main/java/uk/ac/bham/teamproject/Pharmacy.csv"));
+            sc.useDelimiter("¬"); //sets the delimiter pattern
+            while (sc.hasNextLine()) {
+                String[] attributes = sc.nextLine().split("¬");
                 if (!attributes[0].isEmpty() && !attributes[7].isEmpty() && !attributes[14].isEmpty() && !attributes[15].isEmpty()) {
                     EmergencyStationsDb emergencyStationsDb = new EmergencyStationsDb();
                     emergencyStationsDb.setId(Long.parseLong(attributes[0]));
@@ -288,7 +286,7 @@ public class EmergencyStationServiceImpl implements EmergencyStationsService {
                     pharmacies.add(emergencyStationsDb);
                 }
             }
-            reader.close();
+            sc.close(); //closes the scanner
         } catch (IOException e) {
             e.printStackTrace();
         }
