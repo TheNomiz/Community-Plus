@@ -160,9 +160,8 @@ export class UserProfileComponent implements OnInit {
   fontplus(): void {
     const max = 30.5;
 
-    if (this.CFS < max) {
-      document.body.style.fontSize = this.CFS * 1.1 + 'px';
-    }
+    document.body.style.fontSize = this.CFS * 1.1 + 'px';
+
     if (this.userProfile) {
       this.userProfile.fontsize = this.CFS;
       this.userProfileService.update(this.userProfile);
@@ -172,9 +171,8 @@ export class UserProfileComponent implements OnInit {
   fontminus(): void {
     const min = 2;
 
-    if (this.CFS > min) {
-      document.body.style.fontSize = this.CFS * 0.9 + 'px';
-    }
+    document.body.style.fontSize = this.CFS * 0.9 + 'px';
+
     if (this.userProfile) {
       this.userProfile.fontsize = this.CFS;
       this.userProfileService.update(this.userProfile);
@@ -213,7 +211,7 @@ export class UserProfileComponent implements OnInit {
     window.open(url);
 
     // Wait for 5 minutes before sending the second fetch request
-    await new Promise(resolve => setTimeout(resolve, 300000));
+    await new Promise(resolve => setTimeout(resolve, 10000));
 
     const response2 = await fetch(`https://api.stripe.com/v1/identity/verification_sessions/${sessionId}`, {
       method: 'GET',
