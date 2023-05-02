@@ -32,12 +32,7 @@ public interface LostFoundRepository extends LostFoundRepositoryWithBagRelations
 
     @Query(
         "select lostFound from LostFound lostFound  where ((:item) is null  or lostFound.item like concat('%',:item,'%')) " +
-        "and ((cast(:lostStartDate as date) is null) or cast(lostFound.date as date) between cast(:lostStartDate as date) and cast(:lostenddate as date) ) and ((:location) is null  or lostFound.location like concat('%',:location,'%') )"
+        " and ((:location) is null  or lostFound.location like concat('%',:location,'%') )"
     )
-    List<LostFound> getByFilters(
-        @Param("item") String item,
-        @Param("lostStartDate") Date lostStartDate,
-        @Param("lostenddate") Date lostenddate,
-        @Param("location") String location
-    );
+    List<LostFound> getByFilters(@Param("item") String item, @Param("location") String location);
 }

@@ -2,6 +2,7 @@ package uk.ac.bham.teamproject.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
@@ -33,7 +34,7 @@ public class LostFound implements Serializable {
 
     @NotNull
     @Column(name = "date", nullable = false)
-    private LocalDate date;
+    private Instant date;
 
     @NotNull
     @Column(name = "location", nullable = false)
@@ -98,16 +99,16 @@ public class LostFound implements Serializable {
         this.description = description;
     }
 
-    public LocalDate getDate() {
+    public Instant getDate() {
         return this.date;
     }
 
-    public LostFound date(LocalDate date) {
+    public LostFound date(Instant date) {
         this.setDate(date);
         return this;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(Instant date) {
         this.date = date;
     }
 

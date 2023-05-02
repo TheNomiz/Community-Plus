@@ -12,9 +12,11 @@ import { PrivacypolicyComponent } from './privacypolicy/privacypolicy.component'
 import { TermsandconditionsComponent } from './termsandconditions/termsandconditions.component';
 import { AccessibilityComponent } from './accessibility/accessibility.component';
 import { FaqsComponent } from './faqs/faqs.component';
+import { EmergencyGuideComponent } from './entities/emergency-guide/list/emergency-guide.component';
 
 @NgModule({
   imports: [
+    RouterModule.forRoot([{ path: 'crisis-list', component: EmergencyGuideComponent }]),
     RouterModule.forRoot(
       [
         {

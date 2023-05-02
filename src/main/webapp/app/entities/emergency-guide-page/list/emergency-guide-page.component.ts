@@ -12,9 +12,12 @@ import { EntityArrayResponseType, EmergencyGuidePageService } from '../service/e
 import { EmergencyGuidePageDeleteDialogComponent } from '../delete/emergency-guide-page-delete-dialog.component';
 import { ParseLinks } from 'app/core/util/parse-links.service';
 
+import { ViewportScroller } from '@angular/common';
+
 @Component({
   selector: 'jhi-emergency-guide-page',
   templateUrl: './emergency-guide-page.component.html',
+  styleUrls: ['./emergency-guide-page.component.scss'],
 })
 export class EmergencyGuidePageComponent implements OnInit {
   emergencyGuidePages?: IEmergencyGuidePage[];
@@ -34,8 +37,13 @@ export class EmergencyGuidePageComponent implements OnInit {
     protected activatedRoute: ActivatedRoute,
     public router: Router,
     protected parseLinks: ParseLinks,
-    protected modalService: NgbModal
+    protected modalService: NgbModal,
+    private viewportScroller: ViewportScroller
   ) {}
+
+  public onClick(elementId: string): void {
+    this.viewportScroller.scrollToAnchor(elementId);
+  }
 
   reset(): void {
     this.page = 1;
