@@ -100,7 +100,7 @@ export class LostFoundService {
   protected convertDateFromClient<T extends ILostFound | NewLostFound | PartialUpdateLostFound>(lostFound: T): RestOf<T> {
     return {
       ...lostFound,
-      date: lostFound.date?.toJSON() ?? null,
+      date: lostFound.date?.format(DATE_FORMAT) ?? null,
     };
   }
 

@@ -1,14 +1,13 @@
 <div>
-  <h2 id="page-heading" data-cy="LostFoundHeading" style="text-align: center">
+  <h2 id="page-heading" data-cy="LostFoundHeading">
     <span>Lost & Found Page</span>
     <p>
       <font size="3"
         >Welcome to the Lost & Found page. On this page you can find and make reports on missing items to help return them to their rightful
-        owners.</font
+        owners</font
       >
     </p>
   </h2>
-  <h4>Lost Items Catalogue:</h4>
 
   <div class="row col-12">
     <div class="col-8 d-flex align-items-end">
@@ -49,7 +48,7 @@
         [routerLink]="['/lost-found/new']"
       >
         <fa-icon icon="plus"></fa-icon>
-        <span> Report a Lost Item </span>
+        <span> Create a new Lost Found </span>
       </button>
     </div>
   </div>
@@ -69,7 +68,7 @@
         <mat-grid-tile-header>{{ lostFound.item }}</mat-grid-tile-header>
         <mat-card class="my-card">
           <mat-card-content> {{ lostFound.location }}</mat-card-content>
-          <mat-card-content> {{ lostFound.date | formatMediumDate }}</mat-card-content>
+          <mat-card-content> {{ lostFound.date }}</mat-card-content>
         </mat-card>
 
         <mat-grid-tile-footer>
