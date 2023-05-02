@@ -12,6 +12,8 @@ import { HttpClient } from '@angular/common/http';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AccountService } from 'app/core/auth/account.service';
 import dayjs from 'dayjs/esm';
+import { UserService } from 'app/entities/user/user.service';
+import { IUser } from 'app/entities/user/user.model';
 
 @Component({
   selector: 'jhi-crime-alert-detail',
@@ -37,7 +39,8 @@ export class CrimeAlertDetailComponent implements OnInit {
     private commentService: CommentService,
     private http: HttpClient,
     private fb: FormBuilder,
-    protected accountService: AccountService
+    protected accountService: AccountService,
+    protected userService: UserService
   ) {
     this.commentForm = this.fb.group({
       comment: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(500)]],
@@ -48,13 +51,19 @@ export class CrimeAlertDetailComponent implements OnInit {
     if (this.newComment.comment) {
       this.accountService.identity().subscribe(account => {
         if (account && this.crimeAlert) {
-          this.newComment.user = { id: 1, login: account.login };
-          this.newComment.date = dayjs();
-          this.newComment.crime = { id: this.crimeAlert.id };
+          this.userService.query().subscribe(response => {
+            const users: IUser[] = response.body ? response.body : [];
+            const user = users.find(u => u.login === account.login);
+            if (user && this.crimeAlert) {
+              this.newComment.user = { id: user.id, login: account.login };
+              this.newComment.date = dayjs();
+              this.newComment.crime = { id: this.crimeAlert.id };
 
-          this.commentService.create(this.newComment).subscribe((response: HttpResponse<IComment>) => {
-            this.comments.push(response.body as IComment);
-            this.newComment.comment = '';
+              this.commentService.create(this.newComment).subscribe((responsean: HttpResponse<IComment>) => {
+                this.comments.push(responsean.body as IComment);
+                this.newComment.comment = '';
+              });
+            }
           });
         }
       });

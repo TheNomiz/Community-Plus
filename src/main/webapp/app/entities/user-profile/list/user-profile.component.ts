@@ -74,9 +74,9 @@ export class UserProfileComponent implements OnInit {
 
   trackId = (_index: number, item: IUserProfile): number => this.userProfileService.getUserProfileIdentifier(item);
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.load();
-    this.loaduser();
+    await this.loaduser();
   }
 
   async loaduser(): Promise<void> {
@@ -94,26 +94,26 @@ export class UserProfileComponent implements OnInit {
           } else {
             const userProfile: NewUserProfile = {
               id: null,
-              username: null,
-              firstnames: null,
-              lastname: null,
-              password: null,
-              email: null,
-              language: null,
+              username: 'default',
+              firstnames: 'default',
+              lastname: 'default',
+              password: 'default',
+              email: 'default@gmail.com',
+              language: 'English',
               verified: false,
               privateAccount: false,
-              age: null,
-              accountType: null,
-              occupation: null,
-              streetAddress: null,
-              city: null,
-              communityPoints: null,
-              postalCode: null,
-              bio: null,
-              phoneNumber: null,
-              gPS: null,
-              fontsize: null,
-              darkmode: null,
+              age: 0,
+              accountType: 'user',
+              occupation: 'default',
+              streetAddress: 'default',
+              city: 'default',
+              communityPoints: 0,
+              postalCode: 'default',
+              bio: 'default',
+              phoneNumber: '00000000000',
+              gPS: true,
+              fontsize: 16,
+              darkmode: false,
               userID: user,
             };
 
@@ -158,22 +158,27 @@ export class UserProfileComponent implements OnInit {
   }
 
   fontplus(): void {
-    this.CFS *= 1.1;
+    const max = 30.5;
+
+    if (this.CFS < max) {
+      document.body.style.fontSize = this.CFS * 1.1 + 'px';
+    }
     if (this.userProfile) {
       this.userProfile.fontsize = this.CFS;
       this.userProfileService.update(this.userProfile);
     }
-
-    document.body.style.fontSize = this.CFS + 'px';
   }
 
   fontminus(): void {
-    this.CFS *= 0.9;
+    const min = 2;
+
+    if (this.CFS > min) {
+      document.body.style.fontSize = this.CFS * 0.9 + 'px';
+    }
     if (this.userProfile) {
       this.userProfile.fontsize = this.CFS;
       this.userProfileService.update(this.userProfile);
     }
-    document.body.style.fontSize = this.CFS + 'px';
   }
 
   pub(): void {
