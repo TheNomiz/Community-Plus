@@ -148,89 +148,36 @@
           <div class="title">Recent crimes</div>
           <div class="sales-details">
             <ul class="details">
-              <li class="topic">Date</li>
-              <li><a href="crime-alert.html">01 Feb 2023</a></li>
-              <li><a href="#">01 Feb 2023</a></li>
-              <li><a href="#">01 Feb 2023</a></li>
-              <li><a href="#">01 Feb 2023</a></li>
-              <li><a href="#">01 Feb 2023</a></li>
-              <li><a href="#">01 Feb 2023</a></li>
-              <li><a href="#">01 Feb 2023</a></li>
-              <li><a href="#">01 Feb 2023</a></li>
-              <li><a href="#">01 Feb 2023</a></li>
+              <li class="topic">Date and Time</li>
+              <li *ngFor="let crimealert of crimealerts">
+                <a href="#">{{ formatDate(crimealert.date) }}</a>
+              </li>
             </ul>
             <ul class="details">
               <li class="topic">Crime</li>
-              <li><a href="#">ANTI SOCIAL BEHAVIOUR</a></li>
-              <li><a href="#">BURGLARY</a></li>
-              <li><a href="#">ANTI SOCIAL BEHAVIOUR</a></li>
-              <li><a href="#">BICYCLE THEFT</a></li>
-              <li><a href="#">BURGLARY</a></li>
-              <li><a href="#">ANTI SOCIAL BEHAVIOUR</a></li>
-              <li><a href="#">BICYCLE THEFT</a></li>
-              <li><a href="#">BURGLARY</a></li>
-              <li><a href="#">BURGLARY</a></li>
-            </ul>
-            <ul class="details">
-              <li class="topic">Time</li>
-              <li><a href="#">00:00</a></li>
-              <li><a href="#">00:00</a></li>
-              <li><a href="#">00:00</a></li>
-              <li><a href="#">00:00</a></li>
-              <li><a href="#">00:00</a></li>
-              <li><a href="#">00:00</a></li>
-              <li><a href="#">00:00</a></li>
-              <li><a href="#">00:00</a></li>
-              <li><a href="#">00:00</a></li>
+              <li *ngFor="let crimealert of crimealerts">
+                <a href="#">{{ crimealert.crimeType }}</a>
+              </li>
             </ul>
             <ul class="details">
               <li class="topic">Where</li>
-              <li><a href="#">51,37, 0.53</a></li>
-              <li><a href="#">51.42, 0.56</a></li>
-              <li><a href="#">51.31, 0.21</a></li>
-              <li><a href="#">51.39, 0.54</a></li>
-              <li><a href="#">51.27, 0.53</a></li>
-              <li><a href="#">51.41, 0.52</a></li>
-              <li><a href="#">51.31, 0.45</a></li>
-              <li><a href="#">51.34, 0.74</a></li>
-              <li><a href="#">51.38, 0.55</a></li>
+              <li *ngFor="let crimealert of crimealerts">
+                <a href="#">{{ crimealert.lon }}, {{ crimealert.lat }} </a>
+              </li>
             </ul>
           </div>
           <div class="button">
-            <a href="#">See All</a>
+            <a routerLink="crime-alert">See All</a>
           </div>
         </div>
         <div class="top-sales box" cdkDrag>
-          <div class="title">Types of crimes happening</div>
+          <div class="title">Recently lost items</div>
           <ul class="top-sales-details">
-            <li>
-              <a href="#">
-                <!--<img src="images/sunglasses.jpg" alt="">-->
-                <span class="product">Anti Social Behaviour</span>
-              </a>
-              <span class="price">10+</span>
+            <li *ngFor="let lostFound of lostfound">
+              <a href="#">{{ lostFound.item }}</a>
             </li>
-            <li>
-              <a href="#">
-                <!--<img src="images/jeans.jpg" alt="">-->
-                <span class="product">Burglary </span>
-              </a>
-              <span class="price">5</span>
-            </li>
-            <li>
-              <a href="#">
-                <!-- <img src="images/nike.jpg" alt="">-->
-                <span class="product">Bicycle Theft</span>
-              </a>
-              <span class="price">5</span>
-            </li>
-            <li>
-              <a href="#">
-                <!--<img src="images/scarves.jpg" alt="">-->
-                <span class="product">Arson</span>
-              </a>
-              <span class="price">1</span>
-            </li>
+
+            <li></li>
           </ul>
         </div>
       </div>

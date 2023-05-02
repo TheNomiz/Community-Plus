@@ -113,6 +113,7 @@
     "geojs": "^1.10.13",
     "leaflet": "^1.9.3",
     "leaflet.markercluster": "^1.5.3",
+    "moment": "^2.29.4",
     "ngx-bootstrap": "^6.2.0",
     "ngx-infinite-scroll": "14.0.0",
     "ngx-leaflet": "^0.0.16",

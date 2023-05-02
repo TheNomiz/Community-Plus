@@ -1,19 +1,22 @@
 package uk.ac.bham.teamproject.domain;
 
+import com.fasterxml.jackson.databind.ser.impl.PropertyBasedObjectIdGenerator;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import uk.ac.bham.teamproject.domain.enumeration.StationsCategory;
 
 /**
- * A EmergencyStationsPage.
+ * A EmergencyStations.
  */
 @Entity
-@Table(name = "emergency_stations_page")
+@Table(name = "emergency_stations")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @SuppressWarnings("common-java:DuplicatedBlocks")
-public class EmergencyStationsPage implements Serializable {
+public class EmergencyStationsDb implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -28,8 +31,15 @@ public class EmergencyStationsPage implements Serializable {
     private String name;
 
     @NotNull
+    @Enumerated(EnumType.STRING)
     @Column(name = "station_type", nullable = false)
-    private String stationType;
+    private StationsCategory stationType;
+
+    @Column(name = "wheelchair_access")
+    private Boolean wheelchairAccess;
+
+    @Column(name = "parking")
+    private Boolean parking;
 
     @NotNull
     @Column(name = "latitude", nullable = false)
@@ -45,7 +55,7 @@ public class EmergencyStationsPage implements Serializable {
         return this.id;
     }
 
-    public EmergencyStationsPage id(Long id) {
+    public EmergencyStationsDb id(Long id) {
         this.setId(id);
         return this;
     }
@@ -58,7 +68,7 @@ public class EmergencyStationsPage implements Serializable {
         return this.name;
     }
 
-    public EmergencyStationsPage name(String name) {
+    public EmergencyStationsDb name(String name) {
         this.setName(name);
         return this;
     }
@@ -67,24 +77,50 @@ public class EmergencyStationsPage implements Serializable {
         this.name = name;
     }
 
-    public String getStationType() {
+    public StationsCategory getStationType() {
         return this.stationType;
     }
 
-    public EmergencyStationsPage stationType(String stationType) {
+    public EmergencyStationsDb stationType(StationsCategory stationType) {
         this.setStationType(stationType);
         return this;
     }
 
-    public void setStationType(String stationType) {
+    public void setStationType(StationsCategory stationType) {
         this.stationType = stationType;
+    }
+
+    public Boolean getWheelchairAccess() {
+        return this.wheelchairAccess;
+    }
+
+    public EmergencyStationsDb wheelchairAccess(Boolean wheelchairAccess) {
+        this.setWheelchairAccess(wheelchairAccess);
+        return this;
+    }
+
+    public void setWheelchairAccess(Boolean wheelchairAccess) {
+        this.wheelchairAccess = wheelchairAccess;
+    }
+
+    public Boolean getParking() {
+        return this.parking;
+    }
+
+    public EmergencyStationsDb parking(Boolean parking) {
+        this.setParking(parking);
+        return this;
+    }
+
+    public void setParking(Boolean parking) {
+        this.parking = parking;
     }
 
     public Double getLatitude() {
         return this.latitude;
     }
 
-    public EmergencyStationsPage latitude(Double latitude) {
+    public EmergencyStationsDb latitude(Double latitude) {
         this.setLatitude(latitude);
         return this;
     }
@@ -97,7 +133,7 @@ public class EmergencyStationsPage implements Serializable {
         return this.longitude;
     }
 
-    public EmergencyStationsPage longitude(Double longitude) {
+    public EmergencyStationsDb longitude(Double longitude) {
         this.setLongitude(longitude);
         return this;
     }
@@ -113,10 +149,10 @@ public class EmergencyStationsPage implements Serializable {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof EmergencyStationsPage)) {
+        if (!(o instanceof EmergencyStationsDb)) {
             return false;
         }
-        return id != null && id.equals(((EmergencyStationsPage) o).id);
+        return id != null && id.equals(((EmergencyStationsDb) o).id);
     }
 
     @Override
@@ -128,10 +164,12 @@ public class EmergencyStationsPage implements Serializable {
     // prettier-ignore
     @Override
     public String toString() {
-        return "EmergencyStationsPage{" +
+        return "EmergencyStations{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
             ", stationType='" + getStationType() + "'" +
+            ", wheelchairAccess='" + getWheelchairAccess() + "'" +
+            ", parking='" + getParking() + "'" +
             ", latitude=" + getLatitude() +
             ", longitude=" + getLongitude() +
             "}";

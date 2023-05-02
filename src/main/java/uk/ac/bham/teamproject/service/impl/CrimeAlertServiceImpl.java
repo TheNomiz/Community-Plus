@@ -174,9 +174,9 @@ public class CrimeAlertServiceImpl implements CrimeAlertService {
         descriptionBuilder
             .append("A ")
             .append(createTitleFromResponse(crimeData))
-            .append(" incident occurred on or near ")
+            .append(" incident occurred ")
             .append(streetName)
-            .append(" in the month of ")
+            .append(" in the time of ")
             .append(month)
             .append(". The approximate location coordinates are Latitude: ")
             .append(latitude)
