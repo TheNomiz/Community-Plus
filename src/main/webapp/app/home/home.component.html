@@ -149,19 +149,19 @@
           <div class="sales-details">
             <ul class="details">
               <li class="topic">Date and Time</li>
-              <li *ngFor="let crimealert of crimealerts">
+              <li *ngFor="let crimealert of crimealerts | slice: 0:8">
                 <a href="#">{{ formatDate(crimealert.date) }}</a>
               </li>
             </ul>
             <ul class="details">
               <li class="topic">Crime</li>
-              <li *ngFor="let crimealert of crimealerts">
+              <li *ngFor="let crimealert of crimealerts | slice: 0:8">
                 <a href="#">{{ crimealert.crimeType }}</a>
               </li>
             </ul>
             <ul class="details">
               <li class="topic">Where</li>
-              <li *ngFor="let crimealert of crimealerts">
+              <li *ngFor="let crimealert of crimealerts | slice: 0:8">
                 <a href="#">{{ crimealert.lon }}, {{ crimealert.lat }} </a>
               </li>
             </ul>
