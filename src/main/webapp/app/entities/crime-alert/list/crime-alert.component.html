@@ -29,23 +29,24 @@
     <div class="row mb-3" style="width: 100%">
       <div class="col-md-3">
         <label for="dateFilter">Filter by Date:</label>
-        <input type="date" class="form-control" id="dateFilter" [(ngModel)]="filterDate" (ngModelChange)="load()" />
+        <input type="date" class="form-control" id="dateFilter" [(ngModel)]="filterDate" (ngModelChange)="applyFilters()" />
       </div>
       <div class="col-md-3">
         <label for="crimeTypeFilter">Filter by Crime Type:</label>
-        <select class="form-control" id="crimeTypeFilter" [(ngModel)]="filterCrimeType" (ngModelChange)="load()">
+        <select class="form-control" id="crimeTypeFilter" [(ngModel)]="filterCrimeType" (ngModelChange)="applyFilters()">
           <option [ngValue]="null">All Crime Types</option>
           <option *ngFor="let crimeType of crimeTypes" [ngValue]="crimeType">{{ getCrimeTypeDisplay(crimeType) }}</option>
         </select>
       </div>
       <div class="col-md-3">
-        <label for="userFilter">Filter by User:</label>
+        <label for="userFilter" *ngIf="!isListView">Filter by User:</label>
         <input
+          *ngIf="!isListView"
           type="text"
           class="form-control"
           id="userFilter"
           [(ngModel)]="filterUser"
-          (ngModelChange)="load()"
+          (ngModelChange)="applyFilters()"
           placeholder="User's name"
         />
       </div>
@@ -73,6 +74,7 @@
         <table class="table table-striped" aria-describedby="page-heading">
           <tbody
             infinite-scroll
+            #infiniteScroll
             (scrolled)="loadPage(page + 1)"
             [infiniteScrollDisabled]="page - 1 >= links['last']"
             [infiniteScrollDistance]="0"

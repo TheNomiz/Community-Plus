@@ -33,12 +33,15 @@ import { CrimeTypes } from 'app/entities/enumerations/crime-types.model';
 import { DataUtils } from 'app/core/util/data-util.service';
 import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { fas } from '@fortawesome/free-solid-svg-icons';
+import { ViewChild } from '@angular/core';
 
 @Component({
   selector: 'jhi-crime-alert',
   templateUrl: './crime-alert.component.html',
 })
 export class CrimeAlertComponent implements OnInit {
+  @ViewChild('infiniteScroll') infiniteScroll: any;
+
   mapInitialized = false;
 
   showFilters = false;
@@ -55,6 +58,8 @@ export class CrimeAlertComponent implements OnInit {
   links: { [key: string]: number } = {
     last: 0,
   };
+
+  queryParams: { [key: string]: any } = {};
 
   filterDate: string | null = null;
   filterCrimeType: CrimeTypes | null = null;
@@ -495,21 +500,20 @@ export class CrimeAlertComponent implements OnInit {
     });
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+  resetInfiniteScroll(): void {
+    // Reset the infinite scroll component (replace `infiniteScroll` with the reference to your infinite scroll component)
+    this.infiniteScroll.disabled = false;
+    this.infiniteScroll.position = 0;
+  }
+
+  clearData(): void {
+    // Clear the existing data (replace this with the logic to clear the data in your specific implementation)
+    this.crimeAlerts = [];
+  }
 
   load(): void {
     if (!this.isListView) {
       this.isLoading = true;
-      const params: { [key: string]: any } = {};
-
-      if (this.filterCrimeType) {
-        params['crimeType.equals'] = this.filterCrimeType;
-      }
-
-      if (this.filterUser) {
-        params['user.equals'] = this.filterUser;
-      }
-      params['size'] = 100000;
       console.error(this.filterCrimeType);
       this.crimeAlertService.query({ size: 100000 }).subscribe((res: EntityArrayResponseType) => {
         const filteredData = this.fillComponentAttributesFromResponseBody(res.body);
@@ -578,11 +582,12 @@ export class CrimeAlertComponent implements OnInit {
       });
     } else {
       // this.isLoading=false;
-      this.loadFromBackendWithRouteInformations().subscribe({
+      this.loadFromBackendWithRouteInformations1().subscribe({
         next: (res: EntityArrayResponseType) => {
           this.onResponseSuccess(res);
         },
       });
+
       // console.error(this.isLoading);
     }
     // Remove all markers from the map
@@ -590,7 +595,33 @@ export class CrimeAlertComponent implements OnInit {
   navigateToWithComponentValues(): void {
     this.handleNavigation(this.page, this.predicate, this.ascending);
   }
+  applyFilters(): void {
+    if (this.isListView) {
+      this.clearData(); // Clear the existing data
+      this.resetInfiniteScroll(); // Reset the infinite scroll
 
+      // Set up the query parameters based on the applied filters
+      this.queryParams = {};
+
+      if (this.filterCrimeType) {
+        this.queryParams['crimeType.equals'] = this.filterCrimeType;
+      }
+
+      if (this.filterUser) {
+        this.queryParams['user.equals'] = this.filterUser;
+      }
+
+      if (this.filterDate) {
+        const filterDateObj = new Date(this.filterDate);
+        filterDateObj.setHours(0, 0, 0, 0);
+        this.queryParams['date.greaterThanOrEqual'] = filterDateObj.toISOString();
+
+        filterDateObj.setDate(filterDateObj.getDate() + 1);
+        this.queryParams['date.lessThan'] = filterDateObj.toISOString();
+      }
+    }
+    this.load();
+  }
   navigateToPage(page = this.page): void {
     this.handleNavigation(page, this.predicate, this.ascending);
   }
@@ -599,6 +630,16 @@ export class CrimeAlertComponent implements OnInit {
     return combineLatest([this.activatedRoute.queryParamMap, this.activatedRoute.data]).pipe(
       tap(([params, data]) => this.fillComponentAttributeFromRoute(params, data)),
       switchMap(() => this.queryBackend(this.page, this.predicate, this.ascending))
+    );
+  }
+  protected loadFromBackendWithRouteInformations1(): Observable<EntityArrayResponseType> {
+    return combineLatest([this.activatedRoute.queryParamMap, this.activatedRoute.data]).pipe(
+      tap(([params, data]) => this.fillComponentAttributeFromRoute(params, data)),
+      switchMap(() => {
+        // Merge queryParams with the route parameters
+        const mergedParams = { ...this.queryParams };
+        return this.queryBackend1(this.page, this.predicate, this.ascending, mergedParams);
+      })
     );
   }
 
@@ -645,6 +686,18 @@ export class CrimeAlertComponent implements OnInit {
       size: this.itemsPerPage,
       eagerload: true,
       sort: this.getSortQueryParam(predicate, ascending),
+    };
+    return this.crimeAlertService.query(queryObject).pipe(tap(() => (this.isLoading = false)));
+  }
+  protected queryBackend1(page?: number, predicate?: string, ascending?: boolean, params?: any): Observable<EntityArrayResponseType> {
+    this.isLoading = true;
+    const pageToLoad: number = page ?? 1;
+    const queryObject = {
+      page: pageToLoad - 1,
+      size: this.itemsPerPage,
+      eagerload: true,
+      sort: this.getSortQueryParam(predicate, ascending),
+      ...params, // Merge the additional query parameters with the queryObject
     };
     return this.crimeAlertService.query(queryObject).pipe(tap(() => (this.isLoading = false)));
   }
