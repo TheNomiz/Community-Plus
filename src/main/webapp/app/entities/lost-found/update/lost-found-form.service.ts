@@ -2,8 +2,6 @@ import { Injectable } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { ILostFound, NewLostFound } from '../lost-found.model';
-import dayjs from 'dayjs/esm';
-import { DATE_TIME_FORMAT } from 'app/config/input.constants';
 
 /**
  * A partial Type with required key is used as form input.
@@ -16,25 +14,19 @@ type PartialWithRequiredKeyOf<T extends { id: unknown }> = Partial<Omit<T, 'id'>
  */
 type LostFoundFormGroupInput = ILostFound | PartialWithRequiredKeyOf<NewLostFound>;
 
-type FormValueOf<T extends ILostFound | NewLostFound> = Omit<T, 'date'> & {
-  date?: string | null;
-};
-
-type LostFoundFormRawValue = FormValueOf<ILostFound>;
-type NewLostFoundFormRawValue = FormValueOf<NewLostFound>;
-type LostFoundFormDefaults = Pick<NewLostFound, 'id' | 'date'>;
+type LostFoundFormDefaults = Pick<NewLostFound, 'id' | 'lostItems'>;
 
 type LostFoundFormGroupContent = {
-  id: FormControl<LostFoundFormRawValue['id'] | NewLostFound['id']>;
-  description: FormControl<LostFoundFormRawValue['description']>;
-  date: FormControl<LostFoundFormRawValue['date']>;
-  location: FormControl<LostFoundFormRawValue['location']>;
-  item: FormControl<LostFoundFormRawValue['item']>;
-  name: FormControl<LostFoundFormRawValue['name']>;
-  email: FormControl<LostFoundFormRawValue['email']>;
-  phoneNumber: FormControl<LostFoundFormRawValue['phoneNumber']>;
-  postedby: FormControl<LostFoundFormRawValue['postedby']>;
-  lostItems: FormControl<LostFoundFormRawValue['lostItems']>;
+  id: FormControl<ILostFound['id'] | NewLostFound['id']>;
+  description: FormControl<ILostFound['description']>;
+  date: FormControl<ILostFound['date']>;
+  location: FormControl<ILostFound['location']>;
+  item: FormControl<ILostFound['item']>;
+  name: FormControl<ILostFound['name']>;
+  email: FormControl<ILostFound['email']>;
+  phoneNumber: FormControl<ILostFound['phoneNumber']>;
+  postedby: FormControl<ILostFound['postedby']>;
+  lostItems: FormControl<ILostFound['lostItems']>;
 };
 
 export type LostFoundFormGroup = FormGroup<LostFoundFormGroupContent>;
@@ -42,10 +34,10 @@ export type LostFoundFormGroup = FormGroup<LostFoundFormGroupContent>;
 @Injectable({ providedIn: 'root' })
 export class LostFoundFormService {
   createLostFoundFormGroup(lostFound: LostFoundFormGroupInput = { id: null }): LostFoundFormGroup {
-    const lostFoundRawValue = this.convertLostFoundToLostFoundRawValue({
+    const lostFoundRawValue = {
       ...this.getFormDefaults(),
       ...lostFound,
-    });
+    };
     return new FormGroup<LostFoundFormGroupContent>({
       id: new FormControl(
         { value: lostFoundRawValue.id, disabled: true },
@@ -81,11 +73,11 @@ export class LostFoundFormService {
   }
 
   getLostFound(form: LostFoundFormGroup): ILostFound | NewLostFound {
-    return this.convertLostFoundValueToLostFOund(form.getRawValue() as LostFoundFormRawValue | NewLostFoundFormRawValue);
+    return form.getRawValue() as ILostFound | NewLostFound;
   }
 
   resetForm(form: LostFoundFormGroup, lostFound: LostFoundFormGroupInput): void {
-    const lostFoundRawValue = this.convertLostFoundToLostFoundRawValue({ ...this.getFormDefaults(), ...lostFound });
+    const lostFoundRawValue = { ...this.getFormDefaults(), ...lostFound };
     form.reset(
       {
         ...lostFoundRawValue,
@@ -95,26 +87,9 @@ export class LostFoundFormService {
   }
 
   private getFormDefaults(): LostFoundFormDefaults {
-    const currentTime = dayjs();
     return {
       id: null,
-      date: currentTime,
-    };
-  }
-
-  private convertLostFoundValueToLostFOund(lostFound: LostFoundFormRawValue | NewLostFoundFormRawValue): ILostFound | NewLostFound {
-    return {
-      ...lostFound,
-      date: dayjs(lostFound.date, DATE_TIME_FORMAT),
-    };
-  }
-
-  private convertLostFoundToLostFoundRawValue(
-    lostFound: ILostFound | (Partial<NewLostFound> & LostFoundFormDefaults)
-  ): LostFoundFormRawValue | PartialWithRequiredKeyOf<NewLostFoundFormRawValue> {
-    return {
-      ...lostFound,
-      date: lostFound.date ? lostFound.date.format(DATE_TIME_FORMAT) : undefined,
+      lostItems: [],
     };
   }
 }
