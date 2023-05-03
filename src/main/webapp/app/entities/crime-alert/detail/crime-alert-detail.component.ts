@@ -89,8 +89,8 @@ export class CrimeAlertDetailComponent implements OnInit {
   }
 
   getAddressFromCoordinates(lat: number, lon: number): void {
-    const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat.toFixed(3)}&lon=${lon.toFixed(
-      3
+    const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat.toFixed(2)}&lon=${lon.toFixed(
+      2
     )}&zoom=18&addressdetails=1`;
 
     this.http
@@ -98,6 +98,9 @@ export class CrimeAlertDetailComponent implements OnInit {
       .pipe(
         catchError(() => {
           console.error('Error getting address from coordinates');
+          // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
+          this.address = 'Latitude: ' + lat + ', longitude: ' + lon;
+
           return throwError('');
         })
       )
