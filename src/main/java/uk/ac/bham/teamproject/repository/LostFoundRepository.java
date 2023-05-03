@@ -5,8 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import uk.ac.bham.teamproject.domain.LostFound;
@@ -33,12 +32,7 @@ public interface LostFoundRepository extends LostFoundRepositoryWithBagRelations
 
     @Query(
         "select lostFound from LostFound lostFound  where ((:item) is null  or lostFound.item like concat('%',:item,'%')) " +
-        "and ((cast(:lostStartDate as date) is null) or cast(lostFound.date as date) between cast(:lostStartDate as date) and cast(:lostenddate as date) ) and ((:location) is null  or lostFound.location like concat('%',:location,'%') )"
+        " and ((:location) is null  or lostFound.location like concat('%',:location,'%') )"
     )
-    List<LostFound> getByFilters(
-        @Param("item") String item,
-        @Param("lostStartDate") Date lostStartDate,
-        @Param("lostenddate") Date lostenddate,
-        @Param("location") String location
-    );
+    List<LostFound> getByFilters(@Param("item") String item, @Param("location") String location);
 }

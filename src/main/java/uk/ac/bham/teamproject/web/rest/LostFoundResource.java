@@ -6,6 +6,7 @@ import java.net.URISyntaxException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.stream.Collectors;
 import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -151,17 +152,23 @@ public class LostFoundResource {
         @RequestParam(name = "location") String location
     ) throws ParseException {
         log.debug("REST request to get all filtered Problemas");
-        Date startDate = null;
-        Date endDate = null;
         item = item.isEmpty() ? null : item;
         location = location.isEmpty() ? null : location;
+        List<LostFound> lostFoundList = lostFoundRepository.getByFilters(item, location);
         if (!date.isEmpty()) {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            startDate = setTimeToBeginningOfDay(sdf.parse(date));
-            endDate = setTimeToEndOfDay(sdf.parse(date));
+            Date startDate = setTimeToBeginningOfDay(sdf.parse(date));
+            Date endDate = setTimeToEndOfDay(sdf.parse(date));
+            lostFoundList =
+                lostFoundList
+                    .stream()
+                    .filter(lostFound ->
+                        lostFound.getDate().isAfter(startDate.toInstant()) && lostFound.getDate().isBefore(endDate.toInstant())
+                    )
+                    .collect(Collectors.toList());
         }
 
-        return lostFoundRepository.getByFilters(item, startDate, endDate, location);
+        return lostFoundList;
     }
 
     public static Date setTimeToBeginningOfDay(Date date) {
