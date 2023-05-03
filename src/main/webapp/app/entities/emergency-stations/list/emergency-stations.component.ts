@@ -230,6 +230,16 @@ export class EmergencyStationsComponent implements OnInit {
     this.populateMap();
   }
 
+  geoLocation(): void {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(position => {
+        this.map.setView([position.coords.latitude, position.coords.longitude]);
+      });
+    } else {
+      alert('Geolocation is not supported by this browser.');
+    }
+  }
+
   delete(emergencyStations: IEmergencyStations): void {
     const modalRef = this.modalService.open(EmergencyStationsDbDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
     modalRef.componentInstance.emergencyStations = emergencyStations;
