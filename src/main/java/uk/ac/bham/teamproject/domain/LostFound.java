@@ -2,12 +2,12 @@ package uk.ac.bham.teamproject.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
-import java.time.Instant;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -34,7 +34,7 @@ public class LostFound implements Serializable {
 
     @NotNull
     @Column(name = "date", nullable = false)
-    private Instant date;
+    private LocalDate date;
 
     @NotNull
     @Column(name = "location", nullable = false)
@@ -99,16 +99,16 @@ public class LostFound implements Serializable {
         this.description = description;
     }
 
-    public Instant getDate() {
+    public LocalDate getDate() {
         return this.date;
     }
 
-    public LostFound date(Instant date) {
+    public LostFound date(LocalDate date) {
         this.setDate(date);
         return this;
     }
 
-    public void setDate(Instant date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
