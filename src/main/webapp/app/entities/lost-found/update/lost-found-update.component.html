@@ -35,9 +35,9 @@
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" jhiTranslate="teamprojectApp.lostFound.date" for="field_date">Date</label>
-          <div class="input-group">
-            <!--<input
+          <label class="form-label" jhiTranslate="teamprojectApp.crimeAlert.date" for="field_date">Date</label>
+          <div class="d-flex">
+            <input
               id="field_date"
               data-cy="date"
               type="datetime-local"
@@ -45,22 +45,18 @@
               name="date"
               formControlName="date"
               placeholder="YYYY-MM-DD HH:mm"
-            /> -->
-            <input
-              id="field_date"
-              data-cy="date"
-              type="text"
-              class="form-control"
-              name="date"
-              ngbDatepicker
-              #dateDp="ngbDatepicker"
-              formControlName="date"
             />
-            <button type="button" class="btn btn-secondary" (click)="dateDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
           </div>
           <div *ngIf="editForm.get('date')!.invalid && (editForm.get('date')!.dirty || editForm.get('date')!.touched)">
             <small class="form-text text-danger" *ngIf="editForm.get('date')?.errors?.required" jhiTranslate="entity.validation.required">
               This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('date')?.errors?.datetimelocal"
+              jhiTranslate="entity.validation.datetimelocal"
+            >
+              This field should be a date and time.
             </small>
           </div>
         </div>
