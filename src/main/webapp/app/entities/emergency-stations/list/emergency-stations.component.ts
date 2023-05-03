@@ -119,15 +119,44 @@ export class EmergencyStationsComponent implements OnInit {
 
     this.populateMap();
 
-    /*
-    L.marker([52.429636, -1.949548], { icon: PoliceIcon }).addTo(this.map).bindPopup('Bournville Police Station<br>Police Station<br>This is a manual test');
+    L.marker([52.429636, -1.949548], { icon: PoliceIcon }).addTo(this.map).bindPopup('Bournville Police Station<br>Police Station');
 
-    L.marker([52.4463, -1.9307], { icon: PharmacyIcon }).addTo(this.map).bindPopup('Jhoots Pharmacy Bournbrook<br>Pharmacy<br>This is a manual test');
+    L.marker([52.4463, -1.9307], { icon: PharmacyIcon }).addTo(this.map).bindPopup('Jhoots Pharmacy Bournbrook<br>Pharmacy');
 
-    L.marker([52.4473, -1.92576], { icon: FireStationIcon }).addTo(this.map).bindPopup('Bournbrook Fire Station<br>Fire <br>This is a manual test');
+    L.marker([52.4473, -1.92576], { icon: FireStationIcon }).addTo(this.map).bindPopup('Bournbrook Fire Station<br>Fire Station');
 
-    L.marker([52.4514, -1.941], { icon: HospitalIcon }).addTo(this.map).bindPopup('Queen Elizabeth Hospital<br>Hospital<br>This is a manual test').openPopup();
-     */
+    L.marker([52.4514, -1.941], { icon: HospitalIcon }).addTo(this.map).bindPopup('Queen Elizabeth Hospital<br>Hospital').openPopup();
+
+    //For VIDEO
+    L.marker([51.49952394008494, -0.11825633975782981], { icon: HospitalIcon })
+      .addTo(this.map)
+      .bindPopup('St Thomas` Hospital<br>Hospital');
+    L.marker([51.50341941291588, -0.12463073839796288], { icon: PoliceIcon })
+      .addTo(this.map)
+      .bindPopup('New Scotland Yard<br>Police Station');
+    L.marker([51.51012317732203, -0.12456701809505202], { icon: PoliceIcon })
+      .addTo(this.map)
+      .bindPopup('Charing Cross Police Station<br>Police Station');
+
+    L.marker([51.49714036257569, -0.1342546549105648], { icon: FireStationIcon })
+      .addTo(this.map)
+      .bindPopup('West Minster Fire Station<br>Fire Station');
+    L.marker([51.493744794285874, -0.12257644040182937], { icon: FireStationIcon })
+      .addTo(this.map)
+      .bindPopup('Lambeth Fire Station<br>Fire Station');
+    L.marker([51.50309784903768, -0.11069261253357603], { icon: FireStationIcon })
+      .addTo(this.map)
+      .bindPopup('L C C Fire Brigade Station<br>Fire Station');
+
+    L.marker([51.49999601578773, -0.11801692437928468], { icon: PharmacyIcon })
+      .addTo(this.map)
+      .bindPopup('Lloyds Outpatient Pharmacy<br>Pharmacy');
+    L.marker([51.49941348577067, -0.13396614469360305], { icon: PharmacyIcon }).addTo(this.map).bindPopup('Dolphins Pharmacy<br>Pharmacy');
+    L.marker([51.49759658361587, -0.13375767655274381], { icon: PharmacyIcon }).addTo(this.map).bindPopup('Star Pharmacy<br>Pharmacy');
+    L.marker([51.494736934381216, -0.12741748227330435], { icon: PharmacyIcon }).addTo(this.map).bindPopup('Victoria Pharmacy<br>Pharmacy');
+    L.marker([51.497491023247846, -0.13740893271482119], { icon: PharmacyIcon }).addTo(this.map).bindPopup('Booots<br>Pharmacy');
+    L.marker([51.50961888214278, -0.12376185322637577], { icon: PharmacyIcon }).addTo(this.map).bindPopup('Boots<br>Pharmacy');
+    L.marker([51.50943191322504, -0.12401934528767004], { icon: PharmacyIcon }).addTo(this.map).bindPopup('Superdrug<br>Pharmacy');
 
     this.load();
   }
