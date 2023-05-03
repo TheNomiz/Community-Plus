@@ -227,6 +227,7 @@ export class CrimeAlertComponent implements OnInit {
       .subscribe({
         next: (res: EntityArrayResponseType) => {
           this.onResponseSuccess(res);
+          window.location.reload();
         },
       });
   }
