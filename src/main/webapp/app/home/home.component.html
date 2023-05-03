@@ -100,46 +100,46 @@
         <div class="box" cdkDrag>
           <div class="right-side">
             <div class="box-topic">Crimes today</div>
-            <div class="number">2</div>
+            <div class="number">0</div>
             <div class="indicator">
-              <i class="bx bx-up-arrow-alt"> 1 </i>
+              <i class="bx bx-up-arrow-alt"> 0 </i>
               <span class="text">Up from yesterday</span>
             </div>
           </div>
-          <i class="bx bx-cart-alt cart">2</i>
+          <i class="bx bx-cart-alt cart">0</i>
         </div>
         <div class="box" cdkDrag>
           <div class="right-side">
             <div class="box-topic">Crimes this week</div>
-            <div class="number">5</div>
-            <div class="indicator">
-              <i class="bx bx-up-arrow-alt">1</i>
-              <span class="text">Up from yesterday</span>
-            </div>
-          </div>
-          <i class="bx bxs-cart-add cart two">5</i>
-        </div>
-        <div class="box" cdkDrag>
-          <div class="right-side">
-            <div class="box-topic">Events this week</div>
-            <div class="number">1</div>
+            <div class="number">0</div>
             <div class="indicator">
               <i class="bx bx-up-arrow-alt">0</i>
               <span class="text">Up from yesterday</span>
             </div>
           </div>
-          <i class="bx bx-cart cart three">1</i>
+          <i class="bx bxs-cart-add cart two">0</i>
         </div>
         <div class="box" cdkDrag>
           <div class="right-side">
-            <div class="box-topic">Events today</div>
-            <div class="number">0</div>
+            <div class="box-topic">Events this week</div>
+            <div class="number">2</div>
+            <div class="indicator">
+              <i class="bx bx-up-arrow-alt">0</i>
+              <span class="text">Up from yesterday</span>
+            </div>
+          </div>
+          <i class="bx bx-cart cart three">2</i>
+        </div>
+        <div class="box" cdkDrag>
+          <div class="right-side">
+            <div class="box-topic">Lost this week</div>
+            <div class="number">{{ lostfound.length }}</div>
             <div class="indicator">
               <i class="bx bx-down-arrow-alt">0</i>
               <span class="text">Up from yesterday</span>
             </div>
           </div>
-          <i class="bx bxs-cart-download cart three">0</i>
+          <i class="bx bxs-cart-download cart three">{{ lostfound.length }}</i>
         </div>
       </div>
 

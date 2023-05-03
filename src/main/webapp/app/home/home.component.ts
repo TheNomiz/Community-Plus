@@ -6,6 +6,8 @@ import { CrimeAlertService } from '../entities/crime-alert/service/crime-alert.s
 import { ICrimeAlert } from '../entities/crime-alert/crime-alert.model';
 import { LostFoundService } from '../entities/lost-found/service/lost-found.service';
 import { ILostFound } from '../entities/lost-found/lost-found.model';
+import { EventService } from '../entities/event/service/event.service';
+import { IEvent } from 'app/entities/event/event.model';
 import day from 'dayjs/esm';
 
 import { AccountService } from 'app/core/auth/account.service';
@@ -13,7 +15,10 @@ import { Account } from 'app/core/auth/account.model';
 import { data } from 'cypress/types/jquery';
 import { EntityArrayResponseType } from '../entities/event/service/event.service';
 import { HttpResponse } from '@angular/common/http';
-import { IEvent } from 'app/entities/event/event.model';
+import dayjs from 'dayjs/esm';
+import { EventCategory } from '../entities/enumerations/event-category.model';
+import { IUserProfile } from '../entities/user-profile/user-profile.model';
+import { IChatRoom } from '../entities/chat-room/chat-room.model';
 
 @Component({
   selector: 'jhi-home',
@@ -35,12 +40,15 @@ export class HomeComponent implements OnInit, OnDestroy {
   crimealerts: ICrimeAlert[] = [];
   lostfound: ILostFound[] = [];
 
+  eventsarray: IEvent[] = [];
+
   protected _crimes: EntityArrayResponseType | undefined;
 
   constructor(
     private accountService: AccountService,
     private router: Router,
     private repo: CrimeAlertService,
+    private eventrepo: EventService,
     private lostrepo: LostFoundService
   ) {}
 
@@ -84,6 +92,12 @@ export class HomeComponent implements OnInit, OnDestroy {
           phoneNumber: item.phoneNumber,
           postedby: item.postedby,
         }));
+      }
+    });
+
+    this.eventrepo.query().subscribe(data => {
+      if (data.body) {
+        this.eventsarray = data.body;
       }
     });
   }
