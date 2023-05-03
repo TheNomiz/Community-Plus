@@ -493,6 +493,7 @@ export class CrimeAlertComponent implements OnInit {
       }
     });
   }
+
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 
   load(): void {

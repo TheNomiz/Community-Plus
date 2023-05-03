@@ -249,21 +249,25 @@ export class CommunityComponent implements OnInit {
 
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   getImage(event: IEvent) {
-    switch (event.category) {
-      case EventCategory.Conference:
-        return '../../../content/images/conference.png';
-      case EventCategory.Meetup:
-        return '../../../content/images/meeting.png';
-      case EventCategory.Seminar:
-        return '../../../content/images/seminar.png';
-      case EventCategory.Sport:
-        return '../../../content/images/sport.png';
-      case EventCategory.Webinar:
-        return '../../../content/images/webinar.png';
-      case EventCategory.Workshop:
-        return '../../../content/images/workshop.png';
-      default:
-        return '../../../content/images/defaultevent.png';
+    if (event.imageUrl) {
+      return event.imageUrl;
+    } else {
+      switch (event.category) {
+        case EventCategory.Conference:
+          return '../../../content/images/conference.png';
+        case EventCategory.Meetup:
+          return '../../../content/images/meeting.png';
+        case EventCategory.Seminar:
+          return '../../../content/images/seminar.png';
+        case EventCategory.Sport:
+          return '../../../content/images/sport.png';
+        case EventCategory.Webinar:
+          return '../../../content/images/webinar.png';
+        case EventCategory.Workshop:
+          return '../../../content/images/workshop.png';
+        default:
+          return '../../../content/images/defaultevent.png';
+      }
     }
   }
 

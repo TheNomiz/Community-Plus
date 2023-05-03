@@ -18,22 +18,22 @@ export class EmergencyStationsDbService {
 
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
 
-  create(emergencyStations: NewEmergencyStations): Observable<EntityResponseType> {
-    return this.http.post<IEmergencyStations>(this.resourceUrl, emergencyStations, { observe: 'response' });
+  create(emergencyStationsDb: NewEmergencyStations): Observable<EntityResponseType> {
+    return this.http.post<IEmergencyStations>(this.resourceUrl, emergencyStationsDb, { observe: 'response' });
   }
 
-  update(emergencyStations: IEmergencyStations): Observable<EntityResponseType> {
+  update(emergencyStationsDb: IEmergencyStations): Observable<EntityResponseType> {
     return this.http.put<IEmergencyStations>(
-      `${this.resourceUrl}/${this.getEmergencyStationsIdentifier(emergencyStations)}`,
-      emergencyStations,
+      `${this.resourceUrl}/${this.getEmergencyStationsIdentifier(emergencyStationsDb)}`,
+      emergencyStationsDb,
       { observe: 'response' }
     );
   }
 
-  partialUpdate(emergencyStations: PartialUpdateEmergencyStations): Observable<EntityResponseType> {
+  partialUpdate(emergencyStationsDb: PartialUpdateEmergencyStations): Observable<EntityResponseType> {
     return this.http.patch<IEmergencyStations>(
-      `${this.resourceUrl}/${this.getEmergencyStationsIdentifier(emergencyStations)}`,
-      emergencyStations,
+      `${this.resourceUrl}/${this.getEmergencyStationsIdentifier(emergencyStationsDb)}`,
+      emergencyStationsDb,
       { observe: 'response' }
     );
   }
@@ -81,3 +81,24 @@ export class EmergencyStationsDbService {
     return emergencyStationsCollection;
   }
 }
+
+import axios from 'axios';
+
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+const getPoliceStationData = async () => {
+  const response = await axios.get('https://data.police.uk/api/leicestershire/NC04');
+
+  const policeStations: NewEmergencyStations[] = response.data.map((PS: any) => {
+    return {
+      id: null,
+      name: PS.locations.name,
+      stationType: 'PoliceStation',
+      latitude: PS.locations.latitude,
+      longitude: PS.locations.longitude,
+    };
+  });
+
+  return policeStations;
+};
+
+export default getPoliceStationData();

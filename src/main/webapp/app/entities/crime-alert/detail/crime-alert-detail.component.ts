@@ -89,7 +89,9 @@ export class CrimeAlertDetailComponent implements OnInit {
   }
 
   getAddressFromCoordinates(lat: number, lon: number): void {
-    const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&zoom=18&addressdetails=1`;
+    const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat.toFixed(3)}&lon=${lon.toFixed(
+      3
+    )}&zoom=18&addressdetails=1`;
 
     this.http
       .get(url, { headers: { 'User-Agent': 'YourAppName' } })

@@ -97,6 +97,16 @@
                       <small class="text-muted">{{ crimeAlert.date | formatMediumDatetime }}</small>
                     </p>
                     <a [routerLink]="['/crime-alert', crimeAlert.id, 'view']" class="btn btn-primary">View Details</a>
+                    <a
+                      *ngIf="accountService.hasAnyAuthority('ROLE_ADMIN')"
+                      id="jhi-confirm-delete-crimeAlert"
+                      data-cy="entityConfirmDeleteButton"
+                      type="submit"
+                      class="btn btn-danger"
+                      (click)="delete(crimeAlert)"
+                    >
+                      <fa-icon icon="times"></fa-icon>&nbsp;<span jhiTranslate="entity.action.delete">Delete</span>
+                    </a>
                   </div>
                 </div>
               </div>
