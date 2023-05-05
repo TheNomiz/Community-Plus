@@ -112,13 +112,16 @@ public class EmergencyStationServiceImpl implements EmergencyStationsService {
     }
 
     /*
-    @Scheduled(fixedDelay = 100)
+    int count = 0;
+
+    @Scheduled(fixedDelay = 1000)
     public void updatePoliceStations() {
+        count = 0;
         // fetch data from the APIs
         List<EmergencyStationsDb> policeStations = new ArrayList<>();
 
-        policeStations.addAll(fetchPoliceStations("leicestershire/NC66"));
-        policeStations.addAll(fetchPoliceStations("leicestershire/NC67"));
+        policeStations.addAll(fetchForces("leicestershire"));
+        policeStations.addAll(fetchForces("London"));
 
 
         // save new entries to the database
@@ -129,10 +132,24 @@ public class EmergencyStationServiceImpl implements EmergencyStationsService {
         }
     }
 
-    private List<EmergencyStationsDb> fetchPoliceStations(String place) {
-        System.out.println("fetchPoliceStationsExecuted");
-        Long id;
+    public List<EmergencyStationsDb> fetchForces(String county) {
+        RestTemplate restTemplate = new RestTemplate();
+        String url = "https://data.police.uk/api/" + county + "/neighbourhoods";
+        ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
+        Gson gson = new Gson();
+        JsonArray jsonList = gson.fromJson(response.getBody(), JsonArray.class);
 
+        List<EmergencyStationsDb> policeStations = new ArrayList<>();
+        for (JsonElement jsonElement : jsonList) {
+            String forceId = jsonElement.getAsJsonObject().getAsJsonPrimitive("id").toString();
+            forceId = forceId.substring(1, forceId.length() - 1);
+            System.out.println(forceId);
+            policeStations.addAll(fetchPoliceStations(county + "/" + forceId));
+        }
+        return policeStations;
+    }
+
+    private List<EmergencyStationsDb> fetchPoliceStations(String place) {
         RestTemplate restTemplate = new RestTemplate();
         String url = "https://data.police.uk/api/" + place;
         ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
@@ -142,33 +159,36 @@ public class EmergencyStationServiceImpl implements EmergencyStationsService {
 
         List<EmergencyStationsDb> policeStations = new ArrayList<>();
         for (JsonElement jsonElement : locations) {
-            if (!jsonElement.getAsJsonObject().getAsJsonPrimitive("id").isJsonNull()) {
-                id = jsonElement.getAsJsonObject().getAsJsonPrimitive("id").getAsLong();
-            }
-            String name = jsonElement.getAsJsonObject().getAsJsonPrimitive("name").getAsString();
+            if (!jsonElement.getAsJsonObject().get("name").isJsonNull() &&
+                !jsonElement.getAsJsonObject().get("latitude").isJsonNull() &&
+                !jsonElement.getAsJsonObject().get("longitude").isJsonNull()
+            ) {
+                Long id = (long)count;
+                count++;
+                String name = jsonElement.getAsJsonObject().getAsJsonPrimitive("name").getAsString();
+                Double latitude = new Double(jsonElement.getAsJsonObject().getAsJsonPrimitive("latitude").getAsString());
+                Double longitude = new Double(jsonElement.getAsJsonObject().getAsJsonPrimitive("longitude").getAsString());
 
-            Double latitude = new Double(jsonElement.getAsJsonObject().getAsJsonPrimitive("latitude").getAsString());
-            Double longitude = new Double(jsonElement.getAsJsonObject().getAsJsonPrimitive("longitude").getAsString());
+                String type = jsonElement.getAsJsonObject().getAsJsonPrimitive("type").getAsString();
 
-            String type = jsonElement.getAsJsonObject().getAsJsonPrimitive("type").getAsString();
+                if (type.equals("station")) {
+                    EmergencyStationsDb emergencyStationsDb = new EmergencyStationsDb();
+                    emergencyStationsDb.setId(id);
+                    emergencyStationsDb.setName(name);
+                    emergencyStationsDb.setStationType(StationsCategory.PoliceStation);
+                    emergencyStationsDb.setLatitude(latitude);
+                    emergencyStationsDb.setLongitude(longitude);
 
-            if (type.equals("station")) {
-                EmergencyStationsDb emergencyStationsDb = new EmergencyStationsDb();
-                emergencyStationsDb.setId(id);
-                emergencyStationsDb.setName(name);
-                emergencyStationsDb.setStationType(StationsCategory.PoliceStation);
-                emergencyStationsDb.setLatitude(latitude);
-                emergencyStationsDb.setLongitude(longitude);
-
-                policeStations.add(emergencyStationsDb);
+                    policeStations.add(emergencyStationsDb);
+                }
             }
         }
         return policeStations;
     }
-    */
+     */
 
     /*
-    @Scheduled(fixedDelay = 10000)
+    @Scheduled(fixedDelay = 3600000)
     public void updateFireStations() {
         // fetch data from the APIs
         List<EmergencyStationsDb> fireStations = new ArrayList<>();
@@ -235,7 +255,13 @@ public class EmergencyStationServiceImpl implements EmergencyStationsService {
             sc.useDelimiter("¬"); //sets the delimiter pattern
             while (sc.hasNextLine()) {
                 String[] attributes = sc.nextLine().split("¬");
-                if (!attributes[0].isEmpty() && !attributes[7].isEmpty() && !attributes[14].isEmpty() && !attributes[15].isEmpty()) {
+                if (
+                    !attributes[0].isEmpty() &&
+                    !attributes[7].isEmpty() &&
+                    !attributes[14].isEmpty() &&
+                    !attributes[15].isEmpty() &&
+                    attributes[7].toLowerCase().contains("hospital")
+                ) {
                     EmergencyStationsDb emergencyStationsDb = new EmergencyStationsDb();
                     emergencyStationsDb.setId(Long.parseLong(attributes[0]));
                     emergencyStationsDb.setName(attributes[7]);
@@ -253,7 +279,7 @@ public class EmergencyStationServiceImpl implements EmergencyStationsService {
         return hospitals;
     }
 
-    @Scheduled(fixedDelay = 3600000, initialDelay = 10000)
+    @Scheduled(fixedDelay = 3600000, initialDelay = 1000)
     public void updatePharmacies() {
         // fetch data from the APIs
         List<EmergencyStationsDb> pharmacies = new ArrayList<>();

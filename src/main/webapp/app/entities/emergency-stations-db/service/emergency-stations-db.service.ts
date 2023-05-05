@@ -14,7 +14,7 @@ export type EntityArrayResponseType = HttpResponse<IEmergencyStations[]>;
 
 @Injectable({ providedIn: 'root' })
 export class EmergencyStationsDbService {
-  protected resourceUrl = this.applicationConfigService.getEndpointFor('api/emergency-stations');
+  protected resourceUrl = this.applicationConfigService.getEndpointFor('api/emergency-stations?page=0&size=1000');
 
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
 

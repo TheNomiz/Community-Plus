@@ -15,7 +15,6 @@ import {
 import { EmergencyStationsDbDeleteDialogComponent } from 'app/entities/emergency-stations-db/delete/emergency-stations-db-delete-dialog.component';
 import { ParseLinks } from 'app/core/util/parse-links.service';
 import * as L from 'leaflet';
-import { IBusiness } from '../../business/business.model';
 
 const shadowUrl = '../../../content/images/Location_Marker_Shadow.png';
 const PoliceIcon = L.icon({
@@ -139,9 +138,12 @@ export class EmergencyStationsComponent implements OnInit {
     const PCB = document.getElementById('PCB') as HTMLInputElement;
 
     // get all the data from the database
-    this.emergencyStationsDbService.query().subscribe((res: HttpResponse<IBusiness[]>) => {
+    this.emergencyStationsDbService.query().subscribe((res: HttpResponse<IEmergencyStations[]>) => {
       this.emergencyStations = res.body ?? [];
 
+      var centre = this.map.getCenter();
+      var lat = centre.lat;
+      var lon = centre.lng;
       // add markers to map
       this.emergencyStations.forEach(emergencyStation => {
         if (
@@ -149,10 +151,10 @@ export class EmergencyStationsComponent implements OnInit {
           emergencyStation.longitude &&
           emergencyStation.name &&
           emergencyStation.stationType &&
-          emergencyStation.latitude >= -90 &&
-          emergencyStation.latitude <= 90 &&
-          emergencyStation.longitude >= -180 &&
-          emergencyStation.longitude <= 180
+          emergencyStation.latitude >= lat - 0.2 &&
+          emergencyStation.latitude <= lat + 0.2 &&
+          emergencyStation.longitude >= lon - 0.5 &&
+          emergencyStation.longitude <= lon + 0.5
         ) {
           if (emergencyStation.stationType === 'PoliceStation' && PSCB.checked) {
             L.marker([emergencyStation.latitude, emergencyStation.longitude], { icon: PoliceIcon })
@@ -193,6 +195,8 @@ export class EmergencyStationsComponent implements OnInit {
           const lat = results[0].lat;
           const lon = results[0].lon;
           this.map.setView([lat, lon], 15);
+          this.markerGroup.clearLayers();
+          this.populateMap();
         }
       });
   }
@@ -234,6 +238,8 @@ export class EmergencyStationsComponent implements OnInit {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(position => {
         this.map.setView([position.coords.latitude, position.coords.longitude]);
+        this.markerGroup.clearLayers();
+        this.populateMap();
       });
     } else {
       alert('Geolocation is not supported by this browser.');
